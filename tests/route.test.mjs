@@ -1,0 +1,134 @@
+// 毎日のルート・段階（ならし→ふつう→しっかり）・合格ライン・ツッコミバトルの動きを確かめる。
+//   node --test tests/route.test.mjs
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { loadCore } from '../scripts/headless.mjs';
+
+const NAMES = ['S', 'setToday', 'routeFor', 'present', 'judge', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'dayOK', 'dayScore', 'calibNote',
+  'toTF', 'drillItems', 'BK', 'ITEMS', 'GEN', 'makeGen', 'tierFor', 'baseTier', 'TIERS', 'peekDay', 'stageKeys', 'correctText', 'drillXP', 'curStreak', 'correctText'];
+const START = '2026-10-19';
+
+/** 1日ぶんを、正答率 acc で最後までやる（宿題・ふりかえりも）。やった日の合格ライン判定も返す */
+function doDay(C, date, acc = 0.8, only = null) {
+  C.setToday(date);
+  const route = C.routeFor(date);
+  for (const st of route) {
+    if (only && !only.includes(st.id)) continue;
+    if (st.kind === 'session' && st.items.length) {
+      let ok = 0;
+      for (const it of st.items) { const g = Math.random() < acc; C.recordAnswer(it, g); C.noteAnswer(g); if (g) ok++; }
+      C.completeStage(date, st.id, { ok, n: st.items.length, sec: st.items.length * 12, boss: !!st.boss });
+    } else C.completeStage(date, st.id, { ok: 0, n: 0, sec: 0, min: 1 });
+  }
+  return route;
+}
+
+test('段階：最初の2週間は「ならし」、そのあと少しずつ増える', () => {
+  const C = loadCore(NAMES);
+  const tiers = [];
+  for (let i = 0; i < 42; i++) { const d = C.addDays(START, i); doDay(C, d, 0.8); tiers.push(C.S.rt.tier); }
+  assert.deepEqual([...new Set(tiers.slice(0, 14))], [1], '1〜14日目はならし');
+  assert.deepEqual([...new Set(tiers.slice(14, 28))], [2], '15〜28日目はふつう');
+  assert.deepEqual([...new Set(tiers.slice(28))], [3], '29日目からしっかり');
+});
+
+test('段階：おやすみが多い週は1つもどる', () => {
+  const C = loadCore(NAMES);
+  for (let i = 0; i < 30; i++) doDay(C, C.addDays(START, i), 0.8);
+  // 31〜37日目をほぼ休む（2日だけやる）
+  for (const i of [30, 33]) doDay(C, C.addDays(START, i), 0.8, ['mem']);
+  const d = C.addDays(START, 38);
+  C.setToday(d);
+  assert.equal(C.tierFor(d), 2, 'しっかり → ふつう に戻る');
+});
+
+test('ならし期は、短くて、宿題とふりかえり以外は暗記と数学だけ', () => {
+  const C = loadCore(NAMES);
+  const route = doDay(C, START, 0.8);
+  const ids = route.map((s) => s.id);
+  assert.ok(ids.includes('mem') && ids.includes('math') && ids.includes('hw') && ids.includes('ref'));
+  assert.ok(!ids.includes('sub') && !ids.includes('mis'));
+  const n = route.reduce((t, s) => t + s.items.length, 0);
+  assert.ok(n <= 24, `1日の問題数が多すぎる: ${n}`);
+  assert.ok(ids.indexOf('mem') < ids.indexOf('hw'), '宿題チェックは、ドリルのあと');
+});
+
+test('どの日も：ステージが空でない・同じ問題が重複しない・全問が出題できる', () => {
+  const C = loadCore(NAMES);
+  for (let i = 0; i < 45; i++) {
+    const d = C.addDays(START, i);
+    const route = doDay(C, d, 0.7);
+    const seen = new Set();
+    for (const st of route) {
+      if (st.kind === 'session' && st.id !== 'mis') assert.ok(st.items.length > 0, `${d} ${st.id} が空`);
+      for (const it of st.items) {
+        assert.ok(!seen.has(it.id), `${d} 重複: ${it.id}`); seen.add(it.id);
+        const V = C.present(it);
+        assert.ok(V && V.q, `${d} ${it.id} が出題できない`);
+      }
+    }
+  }
+});
+
+test('ルートは1日のあいだ変わらない（問題に答えても、ほかのステージの中身が動かない）', () => {
+  const C = loadCore(NAMES);
+  C.setToday(START);
+  const a = C.routeFor().map((s) => s.items.map((i) => i.id).join(','));
+  const r = C.routeFor();
+  for (const it of r[0].items) { C.recordAnswer(it, true); C.noteAnswer(true); }
+  const b = C.routeFor().map((s) => s.items.map((i) => i.id).join(','));
+  assert.deepEqual(a, b);
+});
+
+test('合格ライン：ならし期はドリル1つ、ふつう以上はドリル＋もう1つ', () => {
+  const C = loadCore(NAMES);
+  C.setToday(START);
+  C.routeFor();
+  C.completeStage(START, 'hw', { n: 0, min: 5 });
+  assert.equal(C.dayOK(C.peekDay(START), 1), false, '宿題だけでは合格ラインにならない');
+  C.completeStage(START, 'mem', { ok: 5, n: 6, sec: 60 });
+  assert.equal(C.dayOK(C.peekDay(START), 1), true);
+  assert.equal(C.peekDay(START).ok, 1, 'ならし期は mem + hw で連続記録');
+  const rec = { stg: { mem: {} } };
+  assert.equal(C.dayOK(rec, 2), false); assert.equal(C.dayOK(rec, 3), false);
+  assert.equal(C.dayOK({ stg: { mem: {}, math: {} } }, 2), true);
+});
+
+test('ステージのXPは1日1回だけ', () => {
+  const C = loadCore(NAMES);
+  C.setToday(START); C.routeFor();
+  const r1 = C.completeStage(START, 'mem', { ok: 5, n: 6, sec: 60 });
+  const r2 = C.completeStage(START, 'mem', { ok: 6, n: 6, sec: 60 });
+  assert.ok(r1.xp > 0 && r1.first); assert.equal(r2.xp, 0); assert.equal(r2.first, false);
+});
+
+test('自己採点とデータ採点の比較', () => {
+  const C = loadCore(NAMES);
+  assert.equal(C.calibNote(5, 2).k, 'amai');
+  assert.equal(C.calibNote(1, 4).k, 'kibishii');
+  assert.equal(C.calibNote(3, 3).k, 'ok');
+  C.setToday(START); C.routeFor();
+  assert.equal(C.dayScore(START), 1, 'まだやっていない日は1');
+  C.completeStage(START, 'mem', { ok: 10, n: 10, sec: 60 });
+  C.completeStage(START, 'math', { ok: 10, n: 10, sec: 60 });
+  assert.ok(C.dayScore(START) >= 4);
+});
+
+test('ツッコミバトル：4択の問題から ○× を作り、判定できる', () => {
+  const C = loadCore(NAMES);
+  C.setToday(START);
+  for (const it of C.BK.EW.items.slice(0, 30)) C.recordAnswer(it, true);
+  const items = C.drillItems({ type: 'tf', n: 10 });
+  assert.ok(items.length >= 8, 'ツッコミ用の問題が集まる');
+  let right = 0, wrong = 0;
+  for (let i = 0; i < 200; i++) {
+    const it = items[i % items.length], V = C.present(it);
+    if (V.kind !== 'mc') continue;
+    const T = C.toTF(V);
+    assert.equal(T.kind, 'tf');
+    assert.equal(C.judge(T, T.truth), true); assert.equal(C.judge(T, !T.truth), false);
+    assert.ok(C.correctText(T).length > 0);
+    if (T.truth) { right++; assert.equal(T.claim, T.okText); } else { wrong++; assert.notEqual(T.claim, T.okText); }
+  }
+  assert.ok(right > 20 && wrong > 20, '正しい／まちがいが、まんべんなく出る');
+});
