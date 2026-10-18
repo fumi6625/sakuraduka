@@ -79,7 +79,8 @@ const Tts={
 /* ----- 演出：インクのしぶき ----- */
 const FX=(()=>{
  let P=[],run=false,cv,cx,SPL=[];
- try{SPL=[3,11,19,27,35,43].map(i=>new Path2D(splatPath(i,9,100)))}catch(e){SPL=[]}
+ /* 飛沫の粒：とげ12本の本体＋しずく円（画面の飛沫と同じ形） */
+ try{SPL=[3,11,19,27,35,43].map(i=>{const q=new Path2D(splatPath(i,12,100)),r=mulberry(i+5);for(let k=0;k<3;k++){const a=r()*6.28,d=135+r()*40,rad=9+r()*9;q.moveTo(Math.cos(a)*d+rad,Math.sin(a)*d);q.arc(Math.cos(a)*d,Math.sin(a)*d,rad,0,7)}return q})}catch(e){SPL=[]}
  const init=()=>{cv=cv||$('#fx');if(cv&&!cx){cx=cv.getContext('2d')}return !!cx};
  const reduce=()=>window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
  function loop(){
@@ -100,8 +101,8 @@ const FX=(()=>{
  return{
   burst(x,y,n,spread){
    if(reduce()||!init())return;const C=cols();
-   for(let i=0;i<(n||26);i++){const a=Math.random()*Math.PI*2,s=(spread||9)*(.35+Math.random());
-    P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-3,g:.38,r:9+Math.random()*16,pi:Math.random()*6|0,el:.55+Math.random()*.45,rot:Math.random()*6,vr:(Math.random()-.5)*.3,c:C[Math.random()*C.length|0],life:44+Math.random()*30})}
+   for(let i=0;i<(n||14);i++){const a=Math.random()*Math.PI*2,s=(spread||8)*(.35+Math.random());
+    P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-2.5,g:.2,r:12+Math.random()*14,pi:Math.random()*6|0,el:.55+Math.random()*.45,rot:Math.random()*6,vr:(Math.random()-.5)*.3,c:C[Math.random()*C.length|0],life:44+Math.random()*30})}
    go();
   },
   confetti(n){
@@ -109,7 +110,7 @@ const FX=(()=>{
    for(let i=0;i<(n||90);i++){P.push({x:Math.random()*innerWidth,y:-20-Math.random()*220,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,g:.06,r:6+Math.random()*6,sq:1,rot:Math.random()*6,vr:(Math.random()-.5)*.35,c:C[Math.random()*C.length|0],life:150+Math.random()*80})}
    go();
   },
-  at(el,n){if(!el)return;const b=el.getBoundingClientRect();this.burst(b.left+b.width/2,b.top+b.height/2,n||26)}
+  at(el,n){if(!el)return;const b=el.getBoundingClientRect();this.burst(b.left+b.width/2,b.top+b.height/2,n||14)}
  };
 })();
 

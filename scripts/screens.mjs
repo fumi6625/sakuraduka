@@ -46,7 +46,7 @@ async function solveOne(P, correct = true) {
   if (info.k === 'mc') await P.click(`.ch >> nth=${info.idx}`);
   else if (info.k === 'tf') await P.click(info.v ? '.tfy' : '.tfn');
   else if (info.k === 'num') { for (const c of info.text) await P.evaluate((c) => __sq.ACT.plKey(c === '-' ? '−' : c), c); await P.click('[data-act="plNum"]'); }
-  else if (info.k === 'typ') { await P.fill('#tyIn', info.text); await P.click('[data-act="plTyp"]'); }
+  else if (info.k === 'typ') { await P.evaluate((t) => { const i = document.querySelector('#tyIn'); i.value = t; }, info.text); await P.click('[data-act="plTyp"]'); }
   else if (info.k === 'order') {
     if (!correct) await P.click('[data-act="plSkip"]');
     else { const used = new Set(); for (const w of info.order) { const i = info.tokens.findIndex((t, j) => t === w && !used.has(j)); used.add(i); await P.click(`#bank [data-a="${i}"]`); } await P.click('[data-act="plOrder"]'); }
@@ -108,7 +108,7 @@ await run('ipad-portrait', { w: 820, h: 1180 }, async ({ page: P, shot }) => {
   const gens = await P.evaluate(() => [__sq.makeGen('sim_add', 2, 55)]);
   await P.evaluate((g) => __sq.startSession({ title: 'テスト', subj: '数', items: [g], skipBrief: true }), gens[0]); await P.waitForTimeout(400); await shot('11-question-number-alpha'); await closeAny(P);
   const ids = await P.evaluate(() => ({ typ: __sq.BK.EW.items[40].id, order: __sq.BK.EO.items[3].id, read: __sq.BK.ER.items[0].id, self: __sq.BK.EC.items[1].id }));
-  await P.evaluate((id) => { __sq.S.srs[id] = { b: 5, n: 3, w: 0, d: 0 }; __sq.startSession({ title: 'テスト', subj: '英', items: [__sq.ITEMS[id]], skipBrief: true }); }, ids.typ); await P.waitForTimeout(400); await P.fill('#tyIn', 'abc'); await shot('12-question-typing'); await closeAny(P);
+  await P.evaluate((id) => { __sq.S.srs[id] = { b: 5, n: 3, w: 0, d: 0 }; __sq.startSession({ title: 'テスト', subj: '英', items: [__sq.ITEMS[id]], skipBrief: true }); }, ids.typ); await P.waitForTimeout(400); for (const c of 'abc') await P.click(`[data-act="plLet"][data-a="${c}"]`); await shot('12-question-typing'); await closeAny(P);
   await P.evaluate((id) => __sq.startSession({ title: 'テスト', subj: '英', items: [__sq.ITEMS[id]], skipBrief: true }), ids.order); await P.waitForTimeout(400); await P.click('.bank .tk >> nth=0'); await shot('13-question-order'); await closeAny(P);
   await P.evaluate((id) => __sq.startSession({ title: 'テスト', subj: '英', items: [__sq.ITEMS[id]], skipBrief: true }), ids.read); await P.waitForTimeout(400); await shot('14-question-reading'); await closeAny(P);
   await P.evaluate((id) => __sq.startSession({ title: 'テスト', subj: '英', items: [__sq.ITEMS[id]], skipBrief: true }), ids.self); await P.waitForTimeout(400); await P.click('[data-act="plShow"]'); await shot('15-question-self-check'); await closeAny(P);

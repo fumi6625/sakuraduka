@@ -88,6 +88,12 @@ const ACT={
   if(c==='⌫')PL.val=PL.val.slice(0,-1);else if(c==='C')PL.val='';else if(PL.val.length<24)PL.val+=c;
   const e=$('#lcdV');if(e)e.textContent=PL.val;Snd.tap();
  },
+ plLet(c){
+  if(!PL||PL.phase!=='q')return;
+  const i=$('#tyIn');if(!i)return;
+  if(c==='⌫')i.value=i.value.slice(0,-1);else if(i.value.length<24)i.value+=c;
+  Snd.tap();
+ },
  plNum(){if(PL&&PL.phase==='q'&&PL.val)answerQ(PL.val)},
  plTyp(){const i=$('#tyIn');if(PL&&PL.phase==='q'&&i&&i.value.trim())answerQ(i.value)},
  plHint(){const V=PL&&PL.V;if(!V||V.kind!=='typ')return;$('#hintT').textContent=V.len?'ヒント：「'+V.first+'」からはじまる '+V.len+'文字':'ひらがなで入力してね'},
@@ -205,6 +211,7 @@ document.addEventListener('keydown',e=>{
  else if(PL.V.kind==='num'){
   if(/^[0-9.,\/xy=()π]$/.test(e.key))ACT.plKey(e.key);else if(e.key==='-')ACT.plKey('−');else if(e.key==='Backspace'){e.preventDefault();ACT.plKey('⌫')}
  }
+ else if(PL.V.kind==='typ'){const i=$('#tyIn');if(i&&i.readOnly&&!e.metaKey&&!e.ctrlKey){if(/^[a-z]$/i.test(e.key))ACT.plLet(e.key.toLowerCase());else if(e.key==='Backspace'){e.preventDefault();ACT.plLet('⌫')}}}
 });
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!PL&&!PG)refresh()});
 document.addEventListener('touchstart',()=>{},{passive:true});

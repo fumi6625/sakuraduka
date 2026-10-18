@@ -64,6 +64,7 @@ function renderQ(){
  const {V,cur:e}=PL,it=e.it,isNew=!e.rep&&!S.srs[it.id]&&it.k!=='gen'&&it.k!=='mist';
  const ql=String(V.q).length,long=ql>70?' long':(ql<=8&&(V.kind==='mc'||V.kind==='tf'||V.kind==='self')||ql<=12&&V.kind==='tf')?' short':'';
  let ans='';
+ const useKb=V.kind==='typ'&&!V.hira&&V.len>0&&V.accept.every(a=>/^[A-Za-z]+$/.test(a));
  if(V.kind==='mc'){
   ans=`<div class="chs ${choiceCols(V)}">${V.choices.map((c,i)=>`<button class="ch" data-act="plPick" data-a="${i}"><span class="ab">${'ABCD'[i]}</span><span class="ct">${esc(c.t)}</span></button>`).join('')}</div>`;
  }else if(V.kind==='tf'){
@@ -78,6 +79,13 @@ function renderQ(){
   ${ex.length?`<div class="kx">${ex.map(c=>k(c)).join('')}</div>`:''}
   <div class="kp">${keys.map(c=>k(c)).join('')}<button class="key go" data-act="plNum">こたえる</button>${k('0','w2')}${k('−')}</div>
   <div class="row act"><button class="bt sm gh" data-act="plSkip">わからない</button></div>`;
+ }else if(V.kind==='typ'&&useKb){
+  /* 英語のつづり：画面のキーボード（iPadの標準キーボードは出さない。自動修正・大文字化もなし） */
+  const kr=['qwertyuiop','asdfghjkl','zxcvbnm'];
+  ans=`<div class="tyw"><input id="tyIn" type="text" readonly inputmode="none" autocomplete="off" placeholder="${esc(Array(V.len).fill('_').join(' '))}" aria-label="こたえ"><button class="bt pri xl" data-act="plTyp">こたえる</button></div>
+  <div class="hint"><button class="bt sm gh" data-act="plHint">ヒント</button> <span id="hintT"></span></div>
+  <div class="kb">${kr.map((r,i)=>`<div class="kr">${[...r].map(c=>`<button class="key" data-act="plLet" data-a="${c}">${c}</button>`).join('')}${i===2?'<button class="key fn bk" data-act="plLet" data-a="⌫" aria-label="1文字消す">⌫</button>':''}</div>`).join('')}</div>
+  <div class="row act"><button class="bt sm gh" data-act="plSkip">わからない</button></div>`;
  }else if(V.kind==='typ'){
   ans=`<div class="tyw"><input id="tyIn" type="text" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="${esc(V.ph||'')}" aria-label="こたえ"><button class="bt pri xl" data-act="plTyp">こたえる</button></div>
   <div class="hint">${V.len?'<button class="bt sm gh" data-act="plHint">ヒント</button> ':''}<span id="hintT"></span></div>
@@ -90,12 +98,12 @@ function renderQ(){
  }
  const pass=V.passage?`<details class="pass" open><summary>${ico('book')}長文を読む：${esc(V.passage.title)}</summary><div class="ptx">${esc(V.passage.text)}</div></details>`:'';
  const aud=V.audio?`<button class="bt sm cy sayb" data-act="plSay" aria-label="もう一度きく">${ico('vol')}もう一度きく</button>`:'';
- plRoot().innerHTML=`${topBar()}<div class="plb"><div class="qa ${V.kind}">
+ plRoot().innerHTML=`${topBar()}<div class="plb"><div class="qa ${V.kind}${useKb?' kbd':''}">
   <div class="qcard" data-s="${it.subj}"><div class="qsp">${splatSVG(hashStr(it.id)%97,'#fff',{drops:5})}</div><div class="qm"><span class="cat">${esc(itemCat(it))}</span>${e.rep?'<span class="chp w">リトライ</span>':''}${isNew?'<span class="chp t">新しい問題</span>':''}</div>
   <div class="qbody">${V.sub&&V.sub!==itemCat(it)?`<div class="qs">${esc(V.sub)}</div>`:''}${pass}<div class="qt${long}">${esc(V.q)}</div>${aud}</div></div>
   <div class="ans">${ans}</div></div></div><div class="fb" id="fb"></div><div class="cmb" id="cmb" hidden></div>`;
  if(V.kind==='order')drawOrder();
- if(V.kind==='typ')setTimeout(()=>{const i=$('#tyIn');if(i)i.focus()},120);
+ if(V.kind==='typ'&&!useKb)setTimeout(()=>{const i=$('#tyIn');if(i)i.focus()},120);
  plRoot().querySelector('.plb').scrollTop=0;
 }
 function drawOrder(){
@@ -146,7 +154,7 @@ function showFb(ok,V,resp,lvTxt){
   $$('.ans button, .ans input',root).forEach(b=>b.disabled=true);
  }
  const anchor=(V.kind==='mc'&&$$('.ch.ok',root)[0])||(V.kind==='tf'&&$$('.tfb button.ok',root)[0])||$('.qcard',root);
- if(ok){Snd.ok();if(PL.combo>=3)setTimeout(()=>Snd.combo(PL.combo),160);FX.at(anchor,PL.combo>=5?44:24)}
+ if(ok){Snd.ok();if(PL.combo>=3)setTimeout(()=>Snd.combo(PL.combo),160);FX.at(anchor,PL.combo>=5?24:12)}
  else{Snd.ng();const q=$('.qcard',root);q&&q.classList.add('shake')}
  if(V.say&&(ok||V.kind==='mc'))setTimeout(()=>Tts.say(V.say),320);
  const cm=$('#cmb');if(PL.combo>=3){cm.hidden=false;cm.innerHTML=`<b>COMBO</b> ×${PL.combo}`;cm.classList.remove('pop');void cm.offsetWidth;cm.classList.add('pop')}else cm.hidden=true;
@@ -180,7 +188,7 @@ function plNext(){
 function roundBanner(){
  const r=plRoot(),n=PL.rn||1,left=PL.total-PL.segs.filter(x=>x).length;
  const b=document.createElement('div');b.className='rbn';b.innerHTML=`<span>ROUND ${n}</span><b>CLEAR!</b><small>あと${left}問</small>`;
- r.appendChild(b);Snd.combo(6);FX.burst(innerWidth/2,innerHeight*.35,30,10);
+ r.appendChild(b);Snd.combo(6);FX.burst(innerWidth/2,innerHeight*.35,18,9);
  setTimeout(()=>{if(b.parentNode)b.parentNode.removeChild(b)},1300);
 }
 

@@ -17,7 +17,7 @@ function turfHTML(){
    else if(ds>t)c='fut';
    else{const st=dayState(ds);c=st==='none'?'mis':st}
    if(ds===t)c+=' today';
-   cells+=`<button class="tl ${c}" data-act="tile" data-a="${ds}" aria-label="${ds}"></button>`;
+   cells+=`<span class="tl ${c}" aria-hidden="true"></span>`;
   }
   return `<div class="mr"><span class="ml">${String(y).slice(2)}/${pad(m)}</span><div class="ms">${cells}</div></div>`}).join('')}</div>
   <div class="lg" style="margin-top:12px"><span><i style="background:var(--team);box-shadow:0 0 6px var(--team)"></i>ぜんぶクリア</span><span><i style="background:rgba(var(--team-rgb),.78)"></i>合格ライン</span><span><i style="background:rgba(var(--team-rgb),.38)"></i>ちょっとやった</span><span><i style="background:#2b2166"></i>おやすみ</span><span><i style="background:var(--yellow)"></i>入試</span></div>`;

@@ -53,16 +53,17 @@ function vowChip(okDay){
  const at=S.at||'',late=at&&nowHM()>at;
  return `<button class="vowb${late?' late':''}" data-act="vow">${ico('timer')}${late?'やくそくの時間をすぎたよ。3分だけ！':at?'やくそく '+at+' にスタート':'やくそくの時間を決める'}</button>`;
 }
+const briefDesc=(d,n=22)=>{let out='';for(const p of String(d||'').split('・')){const nx=out?out+'・'+p:p;if(nx.length>n&&out)break;out=nx}return out.length>n?out.slice(0,n-1)+'…':out};
 function nowCard(next,tier,okDay,rec){
  const T=TIERS[tier],isS=next.kind==='session';
  const need=tier===1?(okDay?0:1):Math.max(0,2-stageKeys(rec).length);
  const goal=okDay?`<span class="chp ok">✓ きょうの合格ライン達成！</span> れんぞく ${curStreak()}日`:`<span class="chp w">合格ライン</span> ${tier===1?'どれか1つクリアでOK！':'あと'+Math.max(1,need)+'つクリアでOK！'}`;
  return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'#ffe81a',{drops:7,stroke:'#000',sw:5})}</div>
   <span class="lb">いま やること</span>
-  <div class="nrow"><div class="nico">${ico(stageIcon(next))}</div><div class="ntx"><h2>${esc(next.t)}</h2><p>${esc(next.desc)}</p></div></div>
+  <div class="nrow"><div class="nico">${ico(stageIcon(next))}</div><div class="ntx"><h2>${esc(next.t)}</h2><p>${esc(briefDesc(next.desc))}</p></div></div>
   <div class="chips">${isS?`<span class="chp">約${Math.max(1,next.min)}分</span><span class="chp">${next.items.length}問</span>`:''}<span class="chp xp">+${next.xp}XP</span></div>
   <button class="bt pri xl w100" data-act="stageGo" data-a="${next.id}">${goBtn(next)}</button>
-  <p class="goal">${goal}</p>${vowChip(okDay)}</div>`;
+  <p class="goal">${goal}</p><p class="tnote">${esc(tierNote(today(),tier))}</p>${vowChip(okDay)}</div>`;
 }
 function clearedCard(){
  return `<div class="nowc cleared"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'#000',sw:5})}</div><span class="lb y">ぜんぶクリア！</span>
@@ -84,7 +85,6 @@ function renderHome(){
   <div class="sp1">${splatSVG(5,'var(--team)',{stroke:'#000',sw:4})}</div>
   <div class="t1"><span class="lb sm">きょうのミッション</span><span class="date">${dateJa(date)}</span><span class="chp t">${T.name}モード</span></div>
   <div class="gp"><div class="tank"><i style="--w:${Math.round(done.length/real.length*100)}%"></i></div><b>${done.length}/${real.length}</b></div>
-  <p class="tn">${esc(tierNote(date,tier))}</p>
  </div>
  ${next?nowCard(next,tier,okDay,rec):clearedCard()}
  <div class="route" aria-label="きょうの流れ">${route.map(s=>`<button class="nd ${s.auto?'auto':s.done?'done':s===next?'now':''}" data-act="stageGo" data-a="${s.id}"><span class="dot">${s.done&&!s.auto?ico('check'):ico(stageIcon(s))}</span>${esc(stageShort(s,wd))}</button>`).join('')}</div>
@@ -103,12 +103,11 @@ ${intro}${diagTip}
 let hwTimer=null,hwLenM=25;
 function hwSheet(){
  const s=routeFor().find(x=>x.id==='hw'),done=!!s.res,pin=S.pinOn&&S.pin;
- openSheet(`<h2>宿題・提出物</h2><p>学校の宿題と提出物を、ぜんぶ終わらせよう。<b>内申にいちばん効く</b>のは、提出物を落とさないこと。</p>
+ openSheet(`<h2>宿題・提出物</h2><p>ぜんぶ終わらせよう。<b>提出物を落とさない</b>のが、内申にいちばん効く。</p>
   <div class="timer" id="hwT">25:00</div>
   <div class="seg" id="hwLen">${[15,25,40].map(m=>`<button data-act="hwLen" data-a="${m}" aria-pressed="${m===25}">${m}分</button>`).join('')}</div>
   <div class="row" style="justify-content:center"><button class="bt cy" data-act="hwGo" id="hwBtn">集中タイマー スタート</button></div>
-  <p class="mini" style="text-align:center">タイマーは使わなくてもOK。終わったら、下で おうちの人に見せよう。</p>
-  ${pin?`<div class="pinbox"><b>おうちの人のOK</b><p class="mini" style="margin:2px 0 8px">宿題を見せて、4けたの暗証番号を入れてもらう。</p><input id="pinIn" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="● ● ● ●" aria-label="暗証番号"></div>`:`<p class="mini" style="text-align:center">おうちの人に、宿題を見せてから押そう。（保護者の設定で「OKの暗証番号」を決めると、ここで必要になります）</p>`}
+  ${pin?`<div class="pinbox"><b>おうちの人のOK</b><p class="mini" style="margin:2px 0 8px">見せて、4けたの番号を入れてもらう。</p><input id="pinIn" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="● ● ● ●" aria-label="暗証番号"></div>`:`<p class="mini" style="text-align:center">おうちの人に見せてから押そう。</p>`}
   <div class="row" style="justify-content:center;margin-top:12px"><button class="bt pri xl" data-act="hwDone">${done?'もう一度おわった':pin?'OKをもらった！':'おわった！'} +${XPST.hw}XP</button></div>`);
  hwTick(true);
 }
