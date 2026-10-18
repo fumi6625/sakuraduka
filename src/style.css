@@ -765,3 +765,6 @@ details.later .st:first-child{margin-top:6px}
 .qa.typ.kbd .ans{margin-top:auto}
 .qa.typ.kbd .tyw input{font-size:clamp(28px,4.6vw,40px);letter-spacing:.14em;min-height:72px;caret-color:transparent}
 @media (orientation:portrait){.qa.typ:not(.kbd) .qcard{min-height:34vh}.qa.typ.kbd .qcard{min-height:150px}}
+
+/* ラウンドクリアの札は body 直下に出すので、画面に固定する（しぶきより手前） */
+.rbn{position:fixed;z-index:120}
