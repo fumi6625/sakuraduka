@@ -127,8 +127,8 @@ function dayScore(date=today()){
 /* 自己採点（self）とデータ採点（data）のちがいから、ひとことを返す */
 function calibNote(self,data){
  const d=self-data;
- if(d>=2)return{k:'amai',t:'ちょっと甘めかも。データだと'+data+'点。まちがえた問題を1つ見なおしてみよう。'};
- if(d<=-2)return{k:'kibishii',t:'厳しすぎるかも。データだと'+data+'点。できたところも、ちゃんと数えよう。'};
+ if(d>=2)return{k:'amai',t:'ちょっと高めにつけたかも。データだと'+data+'点。まちがえた問題を1つ見なおしてみよう。'};
+ if(d<=-2)return{k:'kibishii',t:'ちょっと低めにつけたかも。データだと'+data+'点。できたところも、ちゃんと数えよう。'};
  return{k:'ok',t:'いい目をしてる！データの'+data+'点とほぼ同じ。自分をちゃんと見られているよ。'};
 }
 

@@ -60,21 +60,24 @@ function nextQ(){
 }
 function choiceCols(V){const m=Math.max(...V.choices.map(c=>String(c.t).length));return m<=14?'c2':'c1'}
 function renderQ(){
+ plRoot().classList.remove('fbon');
  const {V,cur:e}=PL,it=e.it,isNew=!e.rep&&!S.srs[it.id]&&it.k!=='gen'&&it.k!=='mist';
- const ql=String(V.q).length,long=ql>70?' long':ql<=14&&V.kind!=='num'?' short':'';
+ const ql=String(V.q).length,long=ql>70?' long':(ql<=8&&(V.kind==='mc'||V.kind==='tf'||V.kind==='self')||ql<=12&&V.kind==='tf')?' short':'';
  let ans='';
  if(V.kind==='mc'){
   ans=`<div class="chs ${choiceCols(V)}">${V.choices.map((c,i)=>`<button class="ch" data-act="plPick" data-a="${i}"><span class="ab">${'ABCD'[i]}</span><span class="ct">${esc(c.t)}</span></button>`).join('')}</div>`;
  }else if(V.kind==='tf'){
   ans=`<div class="rival"><i>ライバルの答え</i><p>「${esc(V.claim)}」</p></div><div class="tfb"><button class="tfy" data-act="plTF" data-a="1"><b>○</b>合ってる</button><button class="tfn" data-act="plTF" data-a="0"><b>×</b>ちがう！</button></div>`;
  }else if(V.kind==='num'){
-  const alpha=V.accept.some(a=>/[xy=π±()]/.test(a)),k=(c,cls)=>`<button class="key ${cls||''}" data-act="plKey" data-a="${c}">${c}</button>`;
+  const A=V.accept.join(''),alpha=/[xy=π±()]/.test(A);
+  const keys=['7','8','9','⌫','4','5','6','C','1','2','3'];
+  const ex=[];if(/\./.test(A))ex.push('.');if(/\//.test(A))ex.push('/');if(/,/.test(A))ex.push(',');
+  if(alpha)['x','y','=','π','(',')','±','²'].forEach(c=>{if(c==='x'||c==='y'||c==='='||c==='('||c===')'||(c==='π'&&/π|pi/i.test(A))||(c==='±'&&/±/.test(A))||(c==='²'&&/²/.test(A)))ex.push(c)});
+  const k=(c,cls)=>`<button class="key${/[0-9]/.test(c)?'':' fn'}${cls?' '+cls:''}" data-act="plKey" data-a="${c}"${c==='⌫'?' aria-label="1文字消す"':c==='C'?' aria-label="ぜんぶ消す"':''}>${c}</button>`;
   ans=`<div class="lcd"><span id="lcdV" class="v"></span><span class="u">${V.unit&&V.unit.length<=3?esc(V.unit):''}</span></div>${V.unit&&V.unit.length>3?`<div class="hint">${esc(V.unit)}</div>`:''}
-  <div class="kp">${['7','8','9'].map(k).join('')}<button class="key fn" data-act="plKey" data-a="⌫" aria-label="1文字消す">⌫</button>
-  ${['4','5','6'].map(k).join('')}<button class="key fn" data-act="plKey" data-a="C" aria-label="ぜんぶ消す">C</button>
-  ${['1','2','3'].map(k).join('')}${k(',','fn')}${k('−','fn')}${k('0')}${k('.','fn')}${k('/','fn')}
-  ${alpha?['x','y','=','π'].map(c=>k(c,'fn')).join('')+['(',')','±','²'].map(c=>k(c,'fn')).join(''):''}</div>
-  <div class="row act"><button class="bt sm gh" data-act="plSkip">わからない</button><button class="bt pri xl" data-act="plNum">こたえる</button></div>`;
+  ${ex.length?`<div class="kx">${ex.map(c=>k(c)).join('')}</div>`:''}
+  <div class="kp">${keys.map(c=>k(c)).join('')}<button class="key go" data-act="plNum">こたえる</button>${k('0','w2')}${k('−')}</div>
+  <div class="row act"><button class="bt sm gh" data-act="plSkip">わからない</button></div>`;
  }else if(V.kind==='typ'){
   ans=`<div class="tyw"><input id="tyIn" type="text" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="${esc(V.ph||'')}" aria-label="こたえ"><button class="bt pri xl" data-act="plTyp">こたえる</button></div>
   <div class="hint">${V.len?'<button class="bt sm gh" data-act="plHint">ヒント</button> ':''}<span id="hintT"></span></div>
@@ -88,8 +91,8 @@ function renderQ(){
  const pass=V.passage?`<details class="pass" open><summary>${ico('book')}長文を読む：${esc(V.passage.title)}</summary><div class="ptx">${esc(V.passage.text)}</div></details>`:'';
  const aud=V.audio?`<button class="bt sm cy sayb" data-act="plSay" aria-label="もう一度きく">${ico('vol')}もう一度きく</button>`:'';
  plRoot().innerHTML=`${topBar()}<div class="plb"><div class="qa ${V.kind}">
-  <div class="qcard" data-s="${it.subj}"><div class="qm"><span class="cat">${esc(itemCat(it))}</span>${e.rep?'<span class="chp w">リトライ</span>':''}${isNew?'<span class="chp t">新しい問題</span>':''}</div>
-  ${V.sub&&V.sub!==itemCat(it)?`<div class="qs">${esc(V.sub)}</div>`:''}${pass}<div class="qt${long}">${esc(V.q)}</div>${aud}</div>
+  <div class="qcard" data-s="${it.subj}"><div class="qsp">${splatSVG(hashStr(it.id)%97,'#fff',{drops:5})}</div><div class="qm"><span class="cat">${esc(itemCat(it))}</span>${e.rep?'<span class="chp w">リトライ</span>':''}${isNew?'<span class="chp t">新しい問題</span>':''}</div>
+  <div class="qbody">${V.sub&&V.sub!==itemCat(it)?`<div class="qs">${esc(V.sub)}</div>`:''}${pass}<div class="qt${long}">${esc(V.q)}</div>${aud}</div></div>
   <div class="ans">${ans}</div></div></div><div class="fb" id="fb"></div><div class="cmb" id="cmb" hidden></div>`;
  if(V.kind==='order')drawOrder();
  if(V.kind==='typ')setTimeout(()=>{const i=$('#tyIn');if(i)i.focus()},120);
@@ -161,13 +164,15 @@ function showFb(ok,V,resp,lvTxt){
   fb.className='fb ng on';
   fb.innerHTML=`<div class="fbh"><b>${V.kind==='tf'?pick(['だまされた！','ツッコミそこね！','おしい！']):pick(MISS)}</b>${re}${lvMsg}</div>${V.kind==='self'?'':`<div class="fbc"><small>せいかいは</small> <b>${esc(ct)}</b></div>${exp?`<div class="fbx">${esc(exp).replace(/\n/g,'<br>')}</div>`:''}`}${rev}<button class="bt pri xl w100" data-act="plNext">わかった！つぎへ ▶</button>`;
  }
- const nb=fb.querySelector('[data-act="plNext"]');
- if(nb)setTimeout(()=>{try{nb.scrollIntoView({block:'nearest'})}catch(e){}},50);
+ /* 下から出るパネルが答えのボタンをかくさないよう、パネルの高さぶんだけ問題エリアをちぢめる */
+ root.classList.add('fbon');
+ requestAnimationFrame(()=>{root.style.setProperty('--fbh',fb.offsetHeight+'px');const g=$('.ch.ok',root)||$('.tfb button.ok',root);if(g)try{g.scrollIntoView({block:'nearest'})}catch(e){}});
 }
 function plNext(){
  if(!PL||PL.phase!=='fb')return;
  clearTimeout(PL.timer);
  const fb=$('#fb');if(fb)fb.className='fb';
+ plRoot().classList.remove('fbon');
  nextQ();
 }
 
@@ -200,7 +205,7 @@ function renderResult(R){
  const rank=rankOfAcc(acc);
  const head=o.boss?(win?'BOSS DOWN!':'おしい！'):acc>=.5||n===0?'CLEAR!':'おつかれ！';
  plRoot().innerHTML=`<div class="plb mid"><div class="rs2" data-rank="${rank}">
-  <div class="splw">${splatSVG(hashStr(o.title)%97,'rgba(var(--team-rgb),.85)',{drops:9,stroke:'#000',sw:5})}</div>
+  <div class="splw">${splatSVG(hashStr(o.title)%97,'var(--team)',{drops:7,stroke:'#000',sw:5})}</div>
   <div class="clear">${head}</div>
   <div class="rk"><i>${rank}</i><span>ランク</span></div>
   <p class="rt">${esc(o.title)}${o.boss?(win?'　ボスをたおした！':'　あと'+(8-ok)+'問でたおせた…'):''}</p>

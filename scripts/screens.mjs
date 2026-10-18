@@ -87,17 +87,23 @@ async function run(name, size, fn) {
 await run('ipad-portrait', { w: 820, h: 1180 }, async ({ page: P, shot }) => {
   await shot('01-home-first-run');
   await P.evaluate(() => { __sq.S.nick = 'さくら'; __sq.refresh(); });
-  await P.click('[data-act="stageGo"][data-a="mem"] >> nth=0'); await P.waitForTimeout(300); await shot('02-brief');
-  await P.click('[data-act="plGo"]'); await P.waitForTimeout(500); await shot('03-question-choice');
+  await P.click('[data-act="stageGo"][data-a="mem"] >> nth=0'); await P.waitForTimeout(500); await shot('03-question-choice');
   await solveOne(P, false); await P.waitForTimeout(450); await shot('04-feedback-wrong');
   await P.evaluate(() => __sq.ACT.plNext()); await P.waitForTimeout(300);
   await solveOne(P, true); await P.waitForTimeout(450); await shot('05-feedback-correct');
   await solveAll(P, 0.8, async (n) => { if (n === 5) { await P.waitForTimeout(500); await shot('06-round-banner'); } });
   await P.waitForTimeout(1800); await shot('07-result');
   await P.click('[data-act="plHome"]'); await P.waitForTimeout(800); await shot('08-home-after-first-stage');
+  // コンボ（3問つづけて正解）／全問正解のSランク結果／レベルアップ
+  await P.evaluate(() => { __sq.startSession({ title: 'コンボ', subj: '英', items: __sq.BK.EW.items.slice(60, 72), skipBrief: true }); });
+  await P.waitForTimeout(400);
+  for (let i = 0; i < 4; i++) { await solveOne(P, true); await P.waitForTimeout(300); if (i === 3) await shot('06b-combo'); await P.evaluate(() => __sq.ACT.plNext()); await P.waitForTimeout(200); }
+  await solveAll(P, 1); await P.waitForTimeout(2200); await shot('07b-result-rank-s');
+  await P.click('[data-act="plHome"]'); await P.waitForTimeout(600);
+  await P.evaluate(() => __sq.levelUp(6)); await P.waitForTimeout(700); await shot('07c-level-up'); await closeAny(P); await P.waitForTimeout(3200);
   await P.evaluate(() => { __sq.S.xp = 0; });
   await seed(P); await P.waitForTimeout(300); await shot('09-home-with-progress');
-  await P.click('[data-act="stageGo"][data-a="math"] >> nth=0'); await P.waitForTimeout(300); await P.click('[data-act="plGo"]'); await P.waitForTimeout(500); await shot('10-question-number-keypad');
+  await P.click('[data-act="stageGo"][data-a="math"] >> nth=0'); await P.waitForTimeout(500); await shot('10-question-number-keypad');
   await closeAny(P);
   const gens = await P.evaluate(() => [__sq.makeGen('sim_add', 2, 55)]);
   await P.evaluate((g) => __sq.startSession({ title: 'テスト', subj: '数', items: [g], skipBrief: true }), gens[0]); await P.waitForTimeout(400); await shot('11-question-number-alpha'); await closeAny(P);
@@ -106,7 +112,7 @@ await run('ipad-portrait', { w: 820, h: 1180 }, async ({ page: P, shot }) => {
   await P.evaluate((id) => __sq.startSession({ title: 'テスト', subj: '英', items: [__sq.ITEMS[id]], skipBrief: true }), ids.order); await P.waitForTimeout(400); await P.click('.bank .tk >> nth=0'); await shot('13-question-order'); await closeAny(P);
   await P.evaluate((id) => __sq.startSession({ title: 'テスト', subj: '英', items: [__sq.ITEMS[id]], skipBrief: true }), ids.read); await P.waitForTimeout(400); await shot('14-question-reading'); await closeAny(P);
   await P.evaluate((id) => __sq.startSession({ title: 'テスト', subj: '英', items: [__sq.ITEMS[id]], skipBrief: true }), ids.self); await P.waitForTimeout(400); await P.click('[data-act="plShow"]'); await shot('15-question-self-check'); await closeAny(P);
-  await P.evaluate(() => __sq.ACT.tsukkomi()); await P.waitForTimeout(400); await P.click('[data-act="plGo"]'); await P.waitForTimeout(400); await shot('16-tsukkomi-battle'); await closeAny(P);
+  await P.evaluate(() => __sq.ACT.tsukkomi()); await P.waitForTimeout(400); await shot('02-brief-tsukkomi'); await P.click('[data-act="plGo"]'); await P.waitForTimeout(400); await shot('16-tsukkomi-battle'); await closeAny(P);
   await P.click('.route [data-a="ref"]'); await P.waitForTimeout(300); await P.click('[data-act="refStar"][data-a="5"]'); await P.waitForTimeout(300); await shot('17-reflection-calibration'); await closeAny(P);
   await P.evaluate(() => __sq.ACT.stageGo('hw')); await P.waitForTimeout(300); await shot('18-homework-check'); await closeAny(P);
   for (const tab of ['drill', 'map', 'reward', 'menu']) { await P.click(`#dock [data-tab="${tab}"]`); await P.waitForTimeout(500); await shot('20-tab-' + tab); }
@@ -116,12 +122,12 @@ await run('ipad-portrait', { w: 820, h: 1180 }, async ({ page: P, shot }) => {
 /* ② iPad よこ */
 await run('ipad-landscape', { w: 1180, h: 820 }, async ({ page: P, shot }) => {
   await seed(P); await shot('40-landscape-home');
-  await P.click('[data-act="stageGo"][data-a="mem"] >> nth=0'); await P.waitForTimeout(300); await P.click('[data-act="plGo"]'); await P.waitForTimeout(500); await shot('41-landscape-question');
+  await P.click('[data-act="stageGo"][data-a="mem"] >> nth=0'); await P.waitForTimeout(500); await shot('41-landscape-question');
 });
 /* ③ スマホ */
 await run('phone', { w: 390, h: 844, dpr: 2 }, async ({ page: P, shot }) => {
   await seed(P); await shot('50-phone-home');
-  await P.click('[data-act="stageGo"][data-a="mem"] >> nth=0'); await P.waitForTimeout(300); await P.click('[data-act="plGo"]'); await P.waitForTimeout(500); await shot('51-phone-question');
+  await P.click('[data-act="stageGo"][data-a="mem"] >> nth=0'); await P.waitForTimeout(500); await shot('51-phone-question');
 });
 console.log(log.length ? '\n注意:\n' + log.join('\n') : '\nエラーなし');
 console.log('→', out);

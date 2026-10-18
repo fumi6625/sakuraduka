@@ -36,7 +36,7 @@ const ACT={
   if(id==='hw'){hwSheet();return}
   if(id==='ref'){refSheet();return}
   if(s.auto){toast('いまは再戦するミスがありません。ミスが出ると、ここに集まります');return}
-  startSession({title:s.t,subj:s.subj,items:s.items,stageId:s.done?null:s.id,boss:s.boss,desc:s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,brk:s.brk,min:s.min,xp:s.done?0:s.xp});
+  startSession({title:s.t,subj:s.subj,items:s.items,skipBrief:!s.boss,stageId:s.done?null:s.id,boss:s.boss,desc:s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,brk:s.brk,min:s.min,xp:s.done?0:s.xp});
  },
  hwLen(m){hwLenM=+m;$$('#hwLen button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a===hwLenM)));hwTick(true)},
  hwGo(){
@@ -73,6 +73,11 @@ const ACT={
   startSession({title:'ツッコミバトル',subj:'総',items,tf:true,desc:'ライバルが答えた。合ってる？ まちがってる？　見ぬけたら勝ち！',brk:[{name:'ライバルの答えチェック',n:items.length,nw:0}],min:Math.ceil(items.length*.3),xp:0});
  },
  plTF(v){answerQ(v==='1')},
+ vow(){
+  const at=S.at||'';
+  openSheet(`<h2>やる時間を決めよう</h2><p class="mini">「何時に始めるか」を先に決めておくと、始めやすい。時間がきても通知は出ないので、ホームを開いたときに思い出せるよ。</p><div class="seg">${['16:00','17:00','18:00','19:00','20:00','21:00'].map(t=>`<button data-act="vowSet" data-a="${t}" aria-pressed="${at===t}">${t}</button>`).join('')}<button data-act="vowSet" data-a="none" aria-pressed="${!at}">きめない</button></div>`);
+ },
+ vowSet(t){S.at=t==='none'?'':t;save();closeSheet();renderHome();toast(S.at?'やくそく：'+S.at+' にスタート！':'やくそくを消した')},
  light(){const d=today();if(S.light[d])delete S.light[d];else S.light[d]=1;save();refresh();toast(S.light[d]?'いそがしい日モード：量をへらしたよ':'ふつうのルートにもどしたよ')},
  nickSet(){const v=($('#nickIn').value||'').trim().slice(0,12);if(!v){toast('なまえを入れてね');return}S.nick=v;save();toast(v+'、よろしく！');FX.confetti(50);refresh()},
  /* ---- プレイヤー ---- */
@@ -114,6 +119,7 @@ const ACT={
  },
  tile(ds){toast(tileInfo(ds))},
  /* ---- ごほうび ---- */
+ rwEdit(){rwEdit=!rwEdit;renderReward()},
  shBuy(i){const s=S.shop[+i];if(!s||S.coin<s.c)return;S.coin-=s.c;logReward(s.n,s.c);save();toast('こうかんした：'+s.n+'（保護者に見せよう）');FX.confetti(60);Snd.clear();refresh()},
  shDel(i){S.shop.splice(+i,1);save();renderReward()},
  shAdd(){const n=$('#shN').value.trim(),c=Math.max(10,+$('#shC').value||100);if(!n)return;S.shop.push({n,c});save();renderReward()},

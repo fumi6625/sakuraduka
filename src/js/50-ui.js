@@ -23,21 +23,27 @@ const SJIC={国:'jp',数:'math',英:'eng',理:'sci',社:'soc',総:'all'};
 const sjTag=s=>`<span class="sj" data-s="${s}">${SJN[s]||s}</span>`;
 const f1=x=>Math.round(x*10)/10;
 
-/* ----- インクの飛沫（SVG）：シードで形が決まる ----- */
-function splatPath(seed,N=14,R=100){
- const r=mulberry(seed),pts=[];
- for(let i=0;i<N;i++){const a=i/N*Math.PI*2,k=i%2?0.52+r()*.26:0.86+r()*.36;pts.push([Math.cos(a)*R*k,Math.sin(a)*R*k])}
+/* ----- インクの飛沫（SVG）：シードで形が決まる。とげ12本＋しずく（ぬりつぶし・不透明） ----- */
+function splatPath(seed,N=12,R=100){
+ const r=mulberry(seed),pts=[],n=N*2;
+ for(let i=0;i<n;i++){
+  const a=i/n*Math.PI*2+(r()-.5)*.16,spike=i%2===0;
+  const k=spike?(r()<.45?1.42+r()*.36:.98+r()*.26):.68+r()*.14;
+  pts.push([Math.cos(a)*R*k,Math.sin(a)*R*k]);
+ }
  const mid=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2];
- let d='M'+mid(pts[N-1],pts[0]).map(f1).join(',');
- for(let i=0;i<N;i++){const p=pts[i],m=mid(p,pts[(i+1)%N]);d+=`Q${f1(p[0])},${f1(p[1])} ${f1(m[0])},${f1(m[1])}`}
+ let d='M'+mid(pts[n-1],pts[0]).map(f1).join(',');
+ for(let i=0;i<n;i++){const p=pts[i],m=mid(p,pts[(i+1)%n]);d+=`Q${f1(p[0])},${f1(p[1])} ${f1(m[0])},${f1(m[1])}`}
  return d+'Z';
 }
 function splatSVG(seed,col,o={}){
  const r=mulberry(seed+7),R=100;let dr='';
- const K=o.drops==null?8:o.drops;
- for(let i=0;i<K;i++){const a=r()*Math.PI*2,dist=R*(1.2+r()*.62),rad=R*(.05+r()*.12)*(1.5-dist/R*.45);dr+=`<circle cx="${f1(Math.cos(a)*dist)}" cy="${f1(Math.sin(a)*dist)}" r="${f1(rad)}"/>`}
- for(let i=0;i<3;i++){const a=r()*Math.PI*2,x1=Math.cos(a)*R*.9,y1=Math.sin(a)*R*.9,x2=Math.cos(a)*R*(1.3+r()*.3),y2=Math.sin(a)*R*(1.3+r()*.3),w=7+r()*6;
-  dr+=`<path d="M${f1(x1-Math.sin(a)*w)},${f1(y1+Math.cos(a)*w)}L${f1(x2)},${f1(y2)}L${f1(x1+Math.sin(a)*w)},${f1(y1-Math.cos(a)*w)}Z"/>`}
+ const K=Math.min(o.drops==null?6:o.drops,7);
+ for(let i=0;i<K;i++){
+  const a=r()*Math.PI*2,dist=R*(1.4+r()*.5),rad=Math.max(7,R*(.09+r()*.1)*(1.35-dist/R*.3));
+  dr+=`<circle cx="${f1(Math.cos(a)*dist)}" cy="${f1(Math.sin(a)*dist)}" r="${f1(rad)}"/>`;
+  if(r()<.55)dr+=`<circle cx="${f1(Math.cos(a)*dist*.8)}" cy="${f1(Math.sin(a)*dist*.8)}" r="${f1(Math.max(5,rad*.5))}"/>`;
+ }
  return `<svg viewBox="-200 -200 400 400" aria-hidden="true"${o.cls?` class="${o.cls}"`:''}><g fill="${col}"${o.stroke?` stroke="${o.stroke}" stroke-width="${o.sw||6}" stroke-linejoin="round"`:''}><path d="${splatPath(seed)}"/>${dr}</g></svg>`;
 }
 const sakura=(r=1)=>`<g transform="scale(${r})"><g fill="#fff" stroke="#16001f" stroke-width="5" stroke-linejoin="round">${[0,1,2,3,4].map(k=>`<ellipse cx="0" cy="-30" rx="19" ry="27" transform="rotate(${k*72})"/>`).join('')}</g><circle r="10" fill="#ffd400" stroke="#16001f" stroke-width="4"/></g>`;
@@ -47,7 +53,7 @@ function avatarSVG(){
 const lvHex=(lv,w=54)=>`<svg class="lvh" style="width:${w}px;height:${Math.round(w*1.1)}px" viewBox="0 0 60 66" aria-label="レベル${lv}"><polygon points="30,3 57,17 57,49 30,63 3,49 3,17" fill="#ffe81a" stroke="#000" stroke-width="4" stroke-linejoin="round"/><polygon points="30,9 52,20 52,46 30,57 8,46 8,20" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><text x="30" y="26" text-anchor="middle" font-size="11" font-weight="900" fill="#16001f" font-family="var(--f-d)">Lv</text><text x="30" y="49" text-anchor="middle" font-size="${lv>=10?22:26}" fill="#16001f" font-family="var(--f-d)">${lv}</text></svg>`;
 function paintBg(){
  const b=$('#bg');if(!b)return;
- b.innerHTML=[[3,'var(--team)',.20,'right:-120px;top:70px;width:420px'],[8,'#1ee6ff',.12,'left:-150px;top:46%;width:380px'],[21,'#b8ff00',.10,'right:-80px;bottom:-60px;width:340px']].map(s=>`<div style="position:absolute;opacity:${s[2]};${s[3]}">${splatSVG(s[0],s[1],{drops:10})}</div>`).join('');
+ b.innerHTML=[[3,'var(--team)',.30,'right:-130px;top:60px;width:440px'],[8,'#1ee6ff',.22,'left:-160px;top:46%;width:400px'],[21,'#b8ff00',.20,'right:-90px;bottom:-70px;width:360px'],[30,'#ffe81a',.16,'left:-100px;top:-90px;width:300px']].map(s=>`<div style="position:absolute;opacity:${s[2]};${s[3]}">${splatSVG(s[0],s[1],{drops:10,stroke:'#000',sw:5})}</div>`).join('');
 }
 
 /* ----- 音（効果音）と英語の読み上げ ----- */
@@ -72,7 +78,8 @@ const Tts={
 
 /* ----- 演出：インクのしぶき ----- */
 const FX=(()=>{
- let P=[],run=false,cv,cx;
+ let P=[],run=false,cv,cx,SPL=[];
+ try{SPL=[3,11,19,27,35,43].map(i=>new Path2D(splatPath(i,9,100)))}catch(e){SPL=[]}
  const init=()=>{cv=cv||$('#fx');if(cv&&!cx){cx=cv.getContext('2d')}return !!cx};
  const reduce=()=>window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
  function loop(){
@@ -83,6 +90,7 @@ const FX=(()=>{
    const a=Math.min(1,p.life/18);cx.save();cx.globalAlpha=a;cx.translate(p.x,p.y);cx.rotate(p.rot);
    cx.fillStyle=p.c;cx.strokeStyle='#000';cx.lineWidth=2.5;
    if(p.sq){cx.fillRect(-p.r,-p.r*.55,p.r*2,p.r*1.1);cx.strokeRect(-p.r,-p.r*.55,p.r*2,p.r*1.1)}
+   else if(SPL[p.pi]){const k=p.r/60;cx.scale(k,k);cx.lineWidth=2.5/k;cx.fill(SPL[p.pi]);cx.stroke(SPL[p.pi])}
    else{cx.beginPath();cx.ellipse(0,0,p.r,p.r*(p.el||1),0,0,7);cx.fill();cx.stroke()}
    cx.restore()});
   if(P.length)requestAnimationFrame(loop);else{run=false;cx.clearRect(0,0,W,H)}
@@ -93,7 +101,7 @@ const FX=(()=>{
   burst(x,y,n,spread){
    if(reduce()||!init())return;const C=cols();
    for(let i=0;i<(n||26);i++){const a=Math.random()*Math.PI*2,s=(spread||9)*(.35+Math.random());
-    P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-3,g:.38,r:5+Math.random()*9,el:.55+Math.random()*.45,rot:Math.random()*6,vr:(Math.random()-.5)*.3,c:C[Math.random()*C.length|0],life:44+Math.random()*30})}
+    P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-3,g:.38,r:9+Math.random()*16,pi:Math.random()*6|0,el:.55+Math.random()*.45,rot:Math.random()*6,vr:(Math.random()-.5)*.3,c:C[Math.random()*C.length|0],life:44+Math.random()*30})}
    go();
   },
   confetti(n){

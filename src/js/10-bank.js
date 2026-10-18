@@ -40,6 +40,8 @@ const POOL={};
 ['SQ','OQ','JI','JS'].forEach(b=>BK[b].items.forEach(it=>tagKeys(it).forEach(k=>(POOL[k]||(POOL[k]=[])).push(it))));
 const EWPOS={};BK.EW.items.forEach(it=>(EWPOS[it.pos]||(EWPOS[it.pos]=[])).push(it));
 const lenOK=(a,b)=>{const x=String(a).length,y=String(b).length;return x<=y*2+2&&y<=x*2+2};
+/* 片方がもう片方をふくむ（例：「土一揆」と「正長の土一揆」）ものは、まぎらわしいので、まちがいの選択肢に使わない */
+const nested=(a,b)=>{a=String(a);b=String(b);const s=a.length<=b.length?a:b,l=s===a?b:a;return s.length>=2&&l.includes(s)};
 function distractQA(it,f,n=3){
  const ans=it[f],seen=new Set([ans]),out=[],keys=tagKeys(it);
  for(const pass of [0,1]){
@@ -48,7 +50,7 @@ function distractQA(it,f,n=3){
    if(pool.length<n+2&&k!==keys[keys.length-1])continue;
    for(const c of shuffle(pool)){
     if(out.length>=n)break;
-    if(c.id===it.id||seen.has(c[f]))continue;
+    if(c.id===it.id||seen.has(c[f])||nested(c[f],ans))continue;
     if(f==='w'&&c.m===it.m)continue;
     if(pass===0&&!lenOK(c[f],ans))continue;
     seen.add(c[f]);out.push(c[f]);

@@ -45,7 +45,7 @@ p{margin:.45em 0}
 ul,ol{margin:.4em 0;padding-left:1.35em}li{margin:.15em 0}
 b,strong{font-weight:900}
 .px{font-family:var(--f-d)}
-.mini{font-size:13.5px;color:var(--tx2);font-weight:500}
+.mini{font-size:14.5px;color:var(--tx2);font-weight:500}
 .nw{white-space:nowrap}
 .sp{margin-left:auto}
 #bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
@@ -55,9 +55,9 @@ b,strong{font-weight:900}
 /* ---- ラベル・チップ・ボタン ---- */
 .lb{display:inline-block;font-family:var(--f-d);font-size:15px;line-height:1.2;padding:.28em .95em .34em;color:#16001f;background:var(--team);border:3px solid #fff;border-radius:10px;transform:rotate(-2.2deg) skewX(-8deg);box-shadow:4px 4px 0 #000;white-space:nowrap}
 .lb.y{background:var(--yellow)}.lb.c{background:var(--cyan)}.lb.l{background:var(--lime)}.lb.o{background:var(--orange)}.lb.p{background:var(--purple);color:#fff}.lb.w{background:#fff}
-.lb.sm{font-size:12.5px;border-width:2px;box-shadow:3px 3px 0 #000}
-.sj{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:26px;padding:0 9px;font-family:var(--f-d);font-size:13px;color:#16001f;background:var(--sc,#a98bff);border:2px solid #000;border-radius:8px;transform:skewX(-8deg);box-shadow:2px 2px 0 #000;white-space:nowrap}
-.chp{display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:2px 11px;font-size:13.5px;font-weight:900;color:var(--tx);background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.28);border-radius:999px;white-space:nowrap}
+.lb.sm{font-size:13.5px;border-width:2px;box-shadow:3px 3px 0 #000}
+.sj{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:28px;padding:0 10px;font-family:var(--f-d);font-size:14px;color:#16001f;background:var(--sc,#a98bff);border:2px solid #000;border-radius:8px;transform:skewX(-8deg);box-shadow:2px 2px 0 #000;white-space:nowrap}
+.chp{display:inline-flex;align-items:center;gap:5px;min-height:30px;padding:2px 12px;font-size:14px;font-weight:900;color:var(--tx);background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.28);border-radius:999px;white-space:nowrap}
 .chp.xp{color:#16001f;background:var(--yellow);border-color:#000}
 .chp.ok{color:#042814;background:var(--green);border-color:#000}
 .chp.w{color:#16001f;background:var(--orange);border-color:#000}
@@ -116,14 +116,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;heigh
 .av svg{width:100%;height:100%;display:block}
 .nm{min-width:0}
 .nm b{display:block;font-family:var(--f-d);font-weight:900;font-size:19px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:34vw}
-.nm span{display:block;font-size:12.5px;color:var(--tx2);white-space:nowrap}
+.nm span{display:block;font-size:13.5px;color:var(--tx2);white-space:nowrap}
 .lvh{flex:none;width:54px;height:60px;filter:drop-shadow(3px 4px 0 #000)}
 .hud{display:flex;gap:8px;align-items:center;flex:none}
 .pl{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:64px;padding:3px 10px 4px;background:#000;border:3px solid #fff;border-radius:14px;transform:rotate(-1.5deg);box-shadow:3px 4px 0 rgba(0,0,0,.7);line-height:1}
-.pl small{font-size:10.5px;color:var(--tx2);font-weight:900}
+.pl small{font-size:12px;color:var(--tx2);font-weight:900}
 .pl b{font-family:var(--f-d);font-weight:900;font-size:21px;color:var(--yellow)}
 .pl.cd b{color:#fff}.pl.fl b{color:var(--orange)}
-.pl i{font-style:normal;font-size:11px;color:var(--tx2)}
+.pl i{font-style:normal;font-size:12px;color:var(--tx2)}
 
 /* ---- インクタンク（進みぐあい） ---- */
 .tank{position:relative;height:22px;overflow:hidden;background:#07041a;border:3px solid #000;border-radius:99px;box-shadow:inset 0 3px 6px rgba(0,0,0,.7),0 0 0 2px rgba(255,255,255,.18)}
@@ -154,7 +154,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;heigh
 
 /* ルートのバー（一目でわかる） */
 .route{display:flex;align-items:flex-start;margin:4px 2px 14px;padding:0}
-.route .nd{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;font-size:11.5px;line-height:1.2;text-align:center;font-weight:900;color:var(--tx2);background:none;border:0;padding:0}
+.route .nd{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;font-size:13px;line-height:1.2;text-align:center;font-weight:900;color:var(--tx2);background:none;border:0;padding:0}
 .route .nd::before{content:"";position:absolute;top:22px;left:-50%;right:50%;height:6px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.28) 0 8px,transparent 8px 14px);z-index:0}
 .route .nd:first-child::before{display:none}
 .route .nd.done::before{background:var(--team);height:8px;top:21px;border:2px solid #000;border-width:2px 0}
@@ -188,9 +188,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;heigh
 
 /* 今週の流れ・あしたの予告 */
 .week{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
-.week .wd{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 2px 8px;background:rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.18);border-radius:15px;font-size:11.5px;line-height:1.25;text-align:center;font-weight:900}
+.week .wd{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 2px 8px;background:rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.18);border-radius:15px;font-size:13px;line-height:1.25;text-align:center;font-weight:900}
 .week .wd b{font-family:var(--f-d);font-weight:900;font-size:16px}
-.week .wd i{font-style:normal;color:var(--tx2);font-size:11px}
+.week .wd i{font-style:normal;color:var(--tx2);font-size:12.5px}
 .week .wd.today{background:var(--team);color:#16001f;border-color:#fff;transform:translateY(-4px) rotate(-2deg);box-shadow:3px 4px 0 #000}
 .week .wd.today i{color:#16001f}
 .week .wd.past.ok{border-color:var(--team);background:rgba(var(--team-rgb),.25)}
@@ -204,7 +204,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;heigh
 
 /* ---- ナビ（ドック） ---- */
 .dock{position:fixed;left:50%;bottom:calc(10px + var(--sab));z-index:30;display:flex;gap:4px;padding:7px;transform:translateX(-50%);background:#08051c;border:3px solid #fff;border-radius:28px;box-shadow:0 0 0 3px #000,0 8px 0 3px #000,0 0 34px rgba(var(--team-rgb),.35)}
-.dock button{position:relative;width:74px;min-height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:4px 0 3px;border:3px solid transparent;border-radius:20px;background:transparent;font-family:var(--f-d);font-size:11.5px;color:var(--tx2);transition:transform .15s}
+.dock button{position:relative;width:74px;min-height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:4px 0 3px;border:3px solid transparent;border-radius:20px;background:transparent;font-family:var(--f-d);font-size:12.5px;color:var(--tx2);transition:transform .15s}
 .dock button svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 .dock button[aria-selected=true]{color:#16001f;background:var(--team);border-color:#000;transform:translateY(-8px) rotate(-3deg);box-shadow:3px 5px 0 #000}
 .dock button .nb{position:absolute;right:6px;top:2px;min-width:21px;height:21px;padding:0 5px;border-radius:99px;background:var(--red);border:2px solid #000;color:#fff;font-size:11px;line-height:17px;text-align:center}
@@ -237,7 +237,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;heigh
 .res{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
 .res>div{flex:1;min-width:130px;padding:12px 8px;text-align:center;background:rgba(0,0,0,.32);border:3px solid #000;border-radius:18px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.16)}
 .res b{display:block;font-family:var(--f-d);font-weight:900;font-size:30px;line-height:1.1;color:var(--yellow);text-shadow:2px 2px 0 #000}
-.res span{font-size:12.5px;color:var(--tx2);font-weight:700}
+.res span{font-size:14px;color:var(--tx2);font-weight:700}
 .nai{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:6px 10px;align-items:center;max-width:520px}
 .nai select{width:100%}
 .opt{display:block;width:100%;min-height:54px;margin:8px 0;padding:10px 16px;text-align:left;font-weight:900;font-size:17px;color:var(--tx);background:rgba(0,0,0,.32);border:3px solid rgba(255,255,255,.3);border-radius:16px}
@@ -247,7 +247,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;heigh
 .shop>span:first-child{flex:1 1 100%;font-weight:700}
 .shop>b{margin-right:auto}
 .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.bd{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 8px;text-align:center;background:rgba(0,0,0,.3);border:3px solid rgba(255,255,255,.14);border-radius:18px;opacity:.5;font-size:12px;line-height:1.35}
+.bd{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 8px;text-align:center;background:rgba(0,0,0,.3);border:3px solid rgba(255,255,255,.14);border-radius:18px;opacity:.5;font-size:13px;line-height:1.35}
 .bd i{font-style:normal;font-size:26px;filter:grayscale(1)}
 .bd b{font-family:var(--f-d);font-weight:900;font-size:14.5px}
 .bd.on{opacity:1;background:linear-gradient(160deg,rgba(var(--team-rgb),.45),rgba(0,0,0,.3));border-color:#fff;box-shadow:3px 4px 0 #000}
@@ -315,9 +315,9 @@ details.m .mb{padding:4px 16px 16px}
 .dc:active{transform:translateY(4px);box-shadow:0 1px 0 #000,inset 0 0 0 2px rgba(255,255,255,.12)}
 .dc .dh{display:flex;align-items:center;gap:8px;padding-left:4px;font-family:var(--f-d);font-size:16px;line-height:1.25}
 .dc .dh svg{width:24px;height:24px;flex:none;color:var(--sc,#a98bff)}
-.dc .dn{padding-left:4px;font-size:13px;color:var(--tx2);font-weight:700}
+.dc .dn{padding-left:4px;font-size:14px;color:var(--tx2);font-weight:700}
 .dc .dn span{color:var(--mu);font-weight:500}
-.dc .dm{padding-left:4px;font-size:12px;color:var(--mu);font-weight:500}
+.dc .dm{padding-left:4px;font-size:13px;color:var(--mu);font-weight:500}
 .dc .tank{margin-left:4px}
 .dc .nb{margin-left:auto;padding:0 8px;min-height:22px;line-height:18px;font-family:var(--f-b);font-size:11.5px;font-weight:900;color:#fff;background:var(--red);border:2px solid #000;border-radius:99px;white-space:nowrap}
 .mtiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px}
@@ -377,7 +377,6 @@ ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:38
 .qt.short{font-size:clamp(40px,8vw,68px);line-height:1.2;letter-spacing:.02em}
 .plb.mid{display:flex;flex-direction:column;justify-content:center}
 .plb.mid>*{width:100%}
-@media (orientation:portrait){.qcard{min-height:clamp(200px,30vh,360px);display:flex;flex-direction:column;justify-content:center}.qa.order .qcard,.qa.self .qcard,.qa.num .qcard,.qa.tf .qcard{min-height:0}}
 .qcard .sayb{margin-top:12px}
 .pass{margin:2px 0 10px;border:2px solid rgba(255,255,255,.28);border-radius:14px;background:rgba(0,0,0,.28)}
 .pass>summary{padding:0 12px;font-weight:900;font-size:14px;color:var(--cyan)}
@@ -429,7 +428,7 @@ ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:38
 .fbh b{font-family:var(--f-d);font-weight:900;font-size:30px;line-height:1.1;text-shadow:2px 2px 0 rgba(0,0,0,.3);transform:rotate(-2deg) skewX(-6deg);display:inline-block}
 .fbc{font-size:15px;font-weight:700;margin:2px 0}
 .fbc b{font-size:clamp(20px,3vw,26px);font-weight:900}
-.fbc small,.fbx small{font-size:12px;font-weight:900;opacity:.75;margin-right:4px}
+.fbc small,.fbx small{font-size:13px;font-weight:900;opacity:.75;margin-right:4px}
 .fbx{margin:8px 0;padding:10px 14px;font-size:15.5px;font-weight:500;line-height:1.65;background:rgba(0,0,0,.22);border-radius:14px}
 .fb .bt{margin-top:8px}
 .cmb{position:absolute;right:14px;top:calc(var(--sat) + 62px);z-index:4;padding:3px 14px;font-family:var(--f-d);font-size:20px;color:#16001f;background:var(--yellow);border:3px solid #000;border-radius:12px;transform:rotate(5deg) skewX(-8deg);box-shadow:3px 3px 0 #000}
@@ -448,7 +447,7 @@ ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:38
 .bfi small{font-size:12px;color:var(--tx2)}
 .rule{margin:10px 0 16px;font-size:14px;color:var(--tx2);font-weight:500}
 .rs2{position:relative;text-align:center;padding-top:10px}
-.rs2 .splw{position:absolute;left:50%;top:-26px;width:min(560px,100%);transform:translateX(-50%);opacity:.9;pointer-events:none}
+.rs2 .splw{position:absolute;left:50%;top:-6px;width:min(430px,86%);transform:translateX(-50%);opacity:.9;pointer-events:none}
 .rs2>*:not(.splw){position:relative}
 .rs2 .clear{display:inline-block;margin:50px 0 6px;font-family:var(--f-d);font-size:clamp(54px,12vw,92px);line-height:1;color:#fff;-webkit-text-stroke:3px #000;paint-order:stroke fill;text-shadow:5px 6px 0 #000;transform:rotate(-5deg) skewX(-8deg);animation:drop .6s cubic-bezier(.2,1.4,.4,1)}
 .rs2 .rk{position:absolute;right:2%;top:30px;display:grid;place-items:center;width:92px;height:92px;border-radius:24px;background:var(--yellow);border:4px solid #000;box-shadow:5px 6px 0 #000;transform:rotate(9deg);color:#16001f;animation:drop .8s cubic-bezier(.2,1.4,.4,1)}
@@ -458,10 +457,10 @@ ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:38
 .rs2[data-rank=C] .rk{background:#9d93da}
 .rs2 .rt{font-family:var(--f-d);font-size:19px;margin:6px 0 14px}
 .rtl{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:8px 0}
-.rtl>div{padding:12px 6px;background:rgba(10,6,40,.78);border:3px solid #000;border-radius:18px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.18)}
+.rtl>div{padding:12px 6px;background:#0f0a33;border:3px solid #000;border-radius:18px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.18)}
 .rtl b{display:block;font-family:var(--f-d);font-weight:900;font-size:30px;line-height:1.15;color:var(--yellow);text-shadow:2px 2px 0 #000}
 .rtl b small{font-size:16px;color:var(--tx2)}
-.rtl span{font-size:12.5px;color:var(--tx2);font-weight:700}
+.rtl span{font-size:14px;color:var(--tx2);font-weight:700}
 .nt{margin:8px 0}
 .rs2 .fold{text-align:left;margin:12px 0;background:rgba(10,6,40,.7)}
 .mrow{padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.2)}
@@ -518,7 +517,7 @@ ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:38
 .cbx.amai{border-color:var(--orange)}.cbx.kibishii{border-color:var(--cyan)}.cbx.ok{border-color:var(--green)}
 .cbx .cs{text-align:center;min-width:64px}
 .cbx .cs b{display:block;font-family:var(--f-d);font-weight:900;font-size:36px;line-height:1;color:var(--yellow);text-shadow:2px 2px 0 #000}
-.cbx .cs span{font-size:12px;color:var(--tx2)}
+.cbx .cs span{font-size:13px;color:var(--tx2)}
 .cbx p{flex:1;min-width:200px;margin:0;font-weight:700}
 .tsk{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:14px 0;padding:14px 18px;border:3px solid #fff;border-radius:24px;background:linear-gradient(120deg,#6d28d9,#c026d3 55%,#ff3d9a);box-shadow:0 0 0 3px #000,4px 7px 0 3px #000}
 .tsk h3{font-size:22px;text-shadow:2px 2px 0 #000}
@@ -548,6 +547,171 @@ body.inpl .toast.on{transform:translate(-50%,0) rotate(-1.5deg) skewX(-5deg)}
 .vow.late{color:var(--yellow)}
 
 @supports not (aspect-ratio:1/1){.tl{height:0;padding-bottom:100%}}
+
+/* ===== 第1回の評価を受けた手直し ===== */
+html{--comp:#b8ff00}html[data-team=lime]{--comp:#ff3d9a}html[data-team=cyan]{--comp:#ffe81a}html[data-team=orange]{--comp:#1ee6ff}html[data-team=purple]{--comp:#b8ff00}
+.dc .dn .chp{color:#16001f}
+.nowc{color:#16001f;background:linear-gradient(135deg,var(--team) 0%,var(--team) 62%,var(--team2) 100%);box-shadow:0 0 0 4px #000,6px 11px 0 4px #000,0 0 56px rgba(var(--team-rgb),.55)}
+.nowc::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(115deg,rgba(255,255,255,.16) 0 14px,transparent 14px 34px)}
+.nowc .sp1{opacity:.95}
+.nowc .lb{background:#16001f;color:#fff;border-color:#fff}
+.nowc h2{color:#16001f;text-shadow:3px 3px 0 rgba(255,255,255,.55)}
+.nowc .ntx p{color:#16001f;text-shadow:none;font-weight:900}
+.nowc .chp{background:#16001f;color:#fff;border-color:#16001f}
+.nowc .chp.xp{background:var(--yellow);color:#16001f}
+.nowc .chp.ok{background:var(--green);color:#042814}
+.nowc .chp.w{background:var(--orange);color:#16001f}
+.nowc .bt.pri{background:linear-gradient(#fff,var(--comp) 40%,var(--comp))}
+.nowc .goal{color:#16001f;text-shadow:none;font-weight:900}
+.nowc.cleared{background:linear-gradient(135deg,#ffe81a -10%,#ff8f1f 55%,#ff3d9a 125%)}
+.vowb{display:inline-flex;align-items:center;gap:8px;min-height:46px;margin-top:12px;padding:0 16px;font-size:15px;font-weight:900;color:#16001f;background:rgba(255,255,255,.62);border:3px solid #16001f;border-radius:14px;box-shadow:3px 4px 0 #16001f}
+.vowb svg{width:22px;height:22px}
+.vowb.late{background:var(--yellow);animation:pulse 1.4s ease-in-out infinite}
+.hero.cmp .tn{font-size:14px}
+.stages .st:nth-child(odd){transform:rotate(-.35deg)}.stages .st:nth-child(even){transform:rotate(.35deg)}
+.st::before{width:14px}
+.st .no{width:62px;height:62px}
+.st .no svg{width:34px;height:34px}
+.sec h2{display:inline-block;padding:2px 14px 4px;color:#16001f;background:var(--yellow);border:3px solid #fff;border-radius:10px;transform:rotate(-1.5deg) skewX(-6deg);box-shadow:3px 4px 0 #000;text-shadow:none;font-size:18px}
+.plb{display:flex;flex-direction:column}
+.plb>.qa{margin-top:max(20px,9vh);margin-bottom:auto;width:100%}
+.plb>.bf,.plb>.rs2{margin-top:auto;margin-bottom:auto;width:100%}
+.qcard{min-height:0}
+.sayb{align-self:flex-start}
+.key.w3{grid-column:span 3}
+.ch.ng{border-color:var(--red);box-shadow:0 6px 0 #000,0 0 0 3px var(--red)}
+.ch.ng::after{content:"×";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:34px;font-family:var(--f-d);color:var(--red)}
+.ch{min-height:76px;font-size:clamp(18px,2.6vw,24px)}
+@media (orientation:portrait) and (min-height:880px){
+ .ch{min-height:100px;font-size:clamp(21px,3vw,28px)}
+ .ch .ab{width:44px;height:44px;font-size:22px}
+ .chs{gap:16px}
+ .key{min-height:88px;font-size:32px}
+ .kp{gap:12px}
+ .tfb button{min-height:150px;font-size:26px}
+ .tfb b{font-size:60px}
+ .tk{min-height:68px;font-size:clamp(20px,3vw,26px)}
+ .lcd{min-height:92px}.lcd .v{font-size:44px}
+ .qt{font-size:clamp(24px,4vw,34px)}
+ .qcard{padding-top:22px;padding-bottom:24px}
+}
+.rwe{display:flex;justify-content:flex-end;margin:-4px 0 4px}
+.editonly{display:none!important}
+.editing .editonly{display:flex!important}
+.editing .editonly.blk{display:block!important}
+
+/* ===== 第2回の評価を受けた手直し ===== */
+
+/* --- 問題画面：画面いっぱいに使う（上＝問題カード、下＝答え。親指が届く下側に押すところ） --- */
+.plb>.qa{flex:1 0 auto;display:flex;flex-direction:column;gap:14px;width:100%;margin:4px auto 0}
+.qa .qcard{flex:1 1 auto;display:flex;flex-direction:column;margin:0;min-height:160px}
+.qcard .qbody{margin:auto 0;width:100%}
+.qa .ans{flex:none;margin-top:0}
+.qa.typ .qcard{flex:0 0 auto;min-height:0}
+.qa.typ .qbody{margin:0}
+.qa.num .row.act{justify-content:flex-start}
+.ch.dim{filter:none;opacity:.4}
+.segs i.ok{background:var(--green);box-shadow:0 0 8px rgba(52,240,138,.75)}
+.segs i.ng{background:repeating-linear-gradient(135deg,var(--red) 0 5px,#8a1030 5px 10px)}
+.rs2 .splw{opacity:1}
+
+/* 数字キー：「こたえる」は右下の大きなキー。x や = などは上の段 */
+.kx{display:flex;gap:10px;margin-top:10px}
+.kx .key{flex:1;min-width:0;min-height:56px;font-size:24px}
+.key.w2{grid-column:span 2}
+.key.go{grid-row:span 2;display:flex;align-items:center;justify-content:center;padding:0 6px;font-size:24px;line-height:1.25;color:#16001f;background:linear-gradient(#eaff7a,var(--lime))}
+.qa.num .row.act .bt{min-height:48px}
+
+@media (orientation:portrait) and (min-height:880px){
+ .chs.c2{grid-template-columns:1fr}
+ .ch{min-height:clamp(104px,11.5vh,140px)}
+ .key{min-height:clamp(66px,7.4vh,84px)}
+ .key.go{font-size:30px}
+ .kx .key{min-height:60px}
+ .qt.short{font-size:clamp(50px,9.5vw,84px)}
+}
+@media (orientation:landscape) and (min-width:900px){
+ .plb>.qa{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:20px;align-items:stretch}
+ .plb>.qa.order,.plb>.qa.self,.plb>.qa.typ{display:flex;flex-direction:column}
+ .plb>.qa .qcard{min-height:0}
+ .plb>.qa:not(.order):not(.self):not(.typ) .ans{display:flex;flex-direction:column;justify-content:center}
+ .qa .chs.c2{grid-template-columns:1fr}
+ .qa .chs{flex:1 1 auto;grid-auto-rows:minmax(70px,1fr)}
+ .qa .ch{min-height:0}
+ .key{min-height:clamp(58px,8.6vh,76px)}
+}
+@media (max-width:560px){
+ .nowc .sp1{width:190px;height:190px;right:-64px;top:-76px}
+}
+
+/* --- 文字は14px以上（HUD・ドック・ルート・曜日・ランクなど） --- */
+.nm span,.pl small,.pl i,.route .nd,.week .wd,.week .wd i,.dock button,.lb.sm,.card .eyebrow,label,.hero .busy,.busy,.st .brk,.dc .dm,.lg,.turf .ml,.mtile>span:last-child,.qm .cat,.mx,.vow,.fbc small,.fbx small,.cbx .cs span,.rival i,.bfi i,.bfi small,.cmb b,.hero.cmp .tn{font-size:14px}
+.rs2 .rk span{font-size:13px}
+.dock button .nb,.dc .nb,.st .no b{font-size:12.5px}
+.pl{min-width:66px}
+.nm b{max-width:36vw}
+.dock button{width:76px}
+
+/* --- カードの色・見出し --- */
+.cta{background:linear-gradient(120deg,#8cffbf,#2fe58a 62%,#19d97a);color:#02210f}
+.cta h3,.cta p{color:#02210f}
+.cta .bt.pri{background:linear-gradient(#fff6a8,var(--yellow))}
+.sec[data-s] h2{background:var(--sc,var(--yellow))}
+.st::before{width:22px}
+.st .sbd{padding-left:2px}
+.res b small{font-size:15px;color:var(--tx2);text-shadow:none;margin-left:2px}
+.res span i{display:block;font-style:normal;font-size:14px;color:var(--mu);font-weight:500}
+
+/* ホーム：「きょうのミッション」は1行にして、「いま やること」を主役に */
+.hero.cmp{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding:10px 16px;margin:2px 0 12px;border-radius:22px}
+.hero.cmp .t1{flex:none;gap:8px}
+.hero.cmp .gp{flex:1 1 190px;min-width:0}
+.hero.cmp .tn{flex:1 0 100%;margin:0}
+.hero.cmp .sp1{opacity:.5}
+details.later{padding:0 12px;margin:8px 0 14px}
+details.later>summary{gap:10px;font-weight:900}
+details.later .lt{font-size:15px;color:var(--tx2);font-weight:700}
+details.later[open]>summary{margin-bottom:2px}
+details.later .st:first-child{margin-top:6px}
+
+/* 下から出る「せいかい／ざんねん」パネルが、答えのボタンをかくさない */
+.plr.fbon .plb{padding-bottom:calc(var(--fbh,210px) + 14px)}
+.plr.fbon .qa .qcard{min-height:120px}
+/* 問題カードのかざり（飛沫）と、ラベルの大きさ */
+.qcard{overflow:hidden}
+.qcard>*{position:relative}
+.qcard .qsp{position:absolute;right:-60px;bottom:-70px;width:300px;height:300px;opacity:.16;pointer-events:none}
+.qcard .qsp svg{width:100%;height:100%}
+.qs{font-size:17px}
+@media (orientation:portrait) and (min-height:880px){
+ .qt{font-size:clamp(30px,5vw,44px)}
+ .qt.long{font-size:clamp(20px,3vw,26px)}
+}
+.plr.fbon .ch{min-height:76px}
+.plr.fbon .chs{gap:10px}
+.plr.fbon .key{min-height:54px}
+.plr.fbon .tfb button{min-height:96px}
+.plr.fbon .qa .qcard{min-height:0}
+.hint{font-size:14.5px}
+
+/* ページ（学校・診断・教科・AI先生・保護者・ミス図鑑）：紫一色にならないよう、色帯と貼り札の見出しをつける */
+.pg .card{border-top-width:14px;border-top-color:var(--cc,var(--team))}
+.pg .card:nth-of-type(4n+1){--cc:var(--team)}
+.pg .card:nth-of-type(4n+2){--cc:var(--cyan)}
+.pg .card:nth-of-type(4n+3){--cc:var(--lime)}
+.pg .card:nth-of-type(4n){--cc:var(--orange)}
+.pg .card>h2:first-child,.pg .card>.rowh>h2:first-child{display:inline-block;max-width:100%;padding:2px 14px 4px;font-size:19px;line-height:1.35;color:#16001f;background:var(--cc,var(--yellow));border:3px solid #fff;border-radius:10px;transform:rotate(-1deg) skewX(-6deg);box-shadow:3px 4px 0 #000;text-shadow:none}
+
+/* スマホ幅での折り返し・はみ出しの手直し */
+.hero.cmp .t1{flex:1 1 auto;flex-wrap:wrap}
+.nm{overflow:hidden}
+.nm span{overflow:hidden;text-overflow:ellipsis}
+@media (max-width:560px){
+ .dock{max-width:calc(100vw - 12px)}
+ .dock button{width:calc((100vw - 42px)/5);min-width:58px}
+ .pl{min-width:56px;padding:3px 7px 4px}
+ .hud{gap:6px}
+}
 </style>
 <div id="bg" aria-hidden="true"></div>
 <div class="app">
@@ -670,13 +834,13 @@ body.inpl .toast.on{transform:translate(-50%,0) rotate(-1.5deg) skewX(-5deg)}
 <section class="pg" id="pg-family" hidden><div class="in"><div class="bar"><button class="bt sm" data-act="back">← もどる</button><h1>保護者ガイド・設定</h1></div>
 <div class="card"><p class="eyebrow px">FOR PARENTS</p><h1>保護者ガイド・設定</h1>
   <p>保護者の仕事は、教えることではなく、<b>環境づくり・見守り・約束を守ること</b>の3つです。</p></div>
- <div class="card"><span class="eyebrow px">FOR THIS CHILD</span><h2>この子に合わせた関わり方</h2>
-  <p class="mini">想定している子：ふだんあまり勉強せず、集中が続かない。人には厳しく、自分には甘い。</p>
+ <div class="card"><span class="eyebrow px">FOR PARENTS</span><h2>続けるための関わり方</h2>
+  <p class="mini">勉強の習慣づくりの途中の子に向けた、このアプリの考え方です。</p>
   <ul>
    <li><b>まず「毎日つづく」こと。</b>最初の2週間は3〜10分（アプリが自動で短くしています）。量はあとから、少しずつ。</li>
-   <li><b>始めるハードルを下げる。</b>「何時に・どこで・最初の1つ」を子どもと決める（例：夕食のあと、リビングで、暗記バトルだけ）。</li>
-   <li><b>自己申告にたよらない。</b>宿題チェックは「保護者OK」（暗証番号）をオン。ふりかえりの自己採点とデータの差は、責めずに「どこが違ったかな？」と一緒に見る。</li>
-   <li><b>人に厳しい目を、自分の答案へ。</b>家族や先生への批判が出たら、まず「そう思ったんだね」と受けとめる。ツッコミバトルなど「まちがい探し」が得意な力を、自分の見なおし（検算）に向けていく。きょうだいや友だちとは比べない。</li>
+   <li><b>始めるハードルを下げる。</b>「何時に・どこで・最初の1つ」を子どもと決める（例：夕食のあと、リビングで、暗記バトルだけ）。ホームの「やくそくの時間」も使えます。</li>
+   <li><b>自己申告だけにしない。</b>宿題チェックは「保護者OK」（暗証番号）をオンに。ふりかえりの自己採点とデータの差は、責めずに「どこが違ったかな？」と一緒に見る。</li>
+   <li><b>人の答えを見る目を、自分にも。</b>「ツッコミバトル」は、ライバルの答えのまちがいを見つける遊び。見ぬく力を、自分の答案の見なおし（検算）にも向けていく。きょうだいや友だちとは比べない。</li>
    <li><b>集中は短く区切る。</b>5問ごとにラウンド、1ステージ3〜5分。終わったら立って休む。ゲーム・動画は別の部屋に置き、タイマーは1つだけ。</li>
    <li><b>叱らない・取りあげない。</b>できなかった日は、お休みトークンとミニモードで続ける。「できなかった」より「3分だけやった」を認める。</li>
    <li><b>見直しのサイン：</b>ミニモードでも3日以上できない／「どうせ無理」が増える → 量をさらに減らして、先に話を聞く。</li></ul></div>
@@ -3735,6 +3899,668 @@ let RAW_JS=`
 一生懸命|ひたむき
 思いやり|いたわり
 `;
+/* 国語 文法・敬語（4択）  書式：#分野 の下に  問い|正解|誤1|誤2|誤3|解説 */
+let RAW_JG=`
+#品詞
+「花」「学校」「東京」のように、物事の名前を表す自立語は？|名詞|動詞|副詞|助詞|名詞は活用せず、「が」「は」などをつけて主語になれる。
+「走る」「読む」のように、動作や存在を表し、言い切りがウ段の音で終わる自立語は？|動詞|名詞|形容詞|助動詞|動詞は活用する自立語で、述語になる。
+「美しい」「高い」のように、性質や状態を表し、言い切りが「い」で終わる自立語は？|形容詞|形容動詞|動詞|名詞|形容詞の言い切りは必ず「い」で終わる。
+「静かだ」「きれいだ」のように、性質や状態を表し、言い切りが「だ」で終わる自立語は？|形容動詞|形容詞|動詞|助動詞|形容動詞の言い切りは「だ」。
+「もし」「ゆっくり」「とても」のように、活用せず、おもに用言を修飾する自立語は？|副詞|連体詞|接続詞|感動詞|副詞は活用せず、おもに用言（動詞・形容詞・形容動詞）を修飾する。
+「この」「大きな」「あらゆる」のように、活用せず、体言だけを修飾する自立語は？|連体詞|副詞|形容詞|接続詞|連体詞は体言（名詞）だけを修飾する。
+「そして」「しかし」「だから」のように、文や文節をつなぐ自立語は？|接続詞|副詞|助詞|連体詞|接続詞は活用せず、前後の関係をつなぐ。
+「おや」「はい」「やあ」のように、感動・呼びかけ・応答を表す自立語は？|感動詞|副詞|接続詞|名詞|感動詞は活用せず、単独で独立語になれる。
+自立語で活用がなく、「が」をつけて主語になれる品詞は？|名詞|副詞|連体詞|接続詞|主語になれるのは名詞（体言）だけ。
+活用する付属語は？|助動詞|助詞|動詞|形容詞|付属語は、活用しない助詞と、活用する助動詞の2種類。
+活用しない付属語は？|助詞|助動詞|形容動詞|連体詞|「が」「を」「に」などは助詞。
+「これは本だ。」の「だ」の品詞は？|助動詞|助詞|形容動詞|名詞|名詞「本」について断定を表す助動詞。
+「机の上に本がある。」の「の」「に」「が」の品詞は？|助詞|助動詞|名詞|副詞|語と語の関係を示す付属語は助詞。
+「雨が降った。」の「た」の品詞は？|助動詞|助詞|動詞|形容詞|「た」は過去・完了などを表す助動詞。
+「小さな花が咲いた。」の「小さな」の品詞は？|連体詞|形容詞|形容動詞|副詞|「小さい」は形容詞だが、「小さな」は活用せず体言を修飾する連体詞。
+「ゆっくり歩く。」の「ゆっくり」の品詞は？|副詞|形容詞|形容動詞|連体詞|活用せず、動詞「歩く」を修飾するので副詞。
+「あっ、雨だ。」の「あっ」の品詞は？|感動詞|副詞|接続詞|助詞|驚きを表す感動詞。
+「雨が降った。だから、試合は中止だ。」の「だから」の品詞は？|接続詞|副詞|助詞|連体詞|前後をつなぐ接続詞。
+「あの人は先生だ。」の「あの」の品詞は？|連体詞|代名詞|形容詞|副詞|「この・その・あの・どの」は活用せず体言を修飾する連体詞。
+名詞のうち、「ぼく」「これ」「あそこ」のように、人や物事の名前の代わりに使う語は？|代名詞|固有名詞|数詞|形式名詞|人・物・場所・方向をさす代名詞。
+名詞のうち、「東京」「夏目漱石」のように、一つしかないものの名前を表す語は？|固有名詞|普通名詞|代名詞|数詞|人名・地名などは固有名詞。
+名詞のうち、「三つ」「五人」のように、数や量を表す語は？|数詞|代名詞|固有名詞|形式名詞|数や量、順序を表す名詞。
+名詞のうち、「見ること」「行くため」の「こと」「ため」のように、意味がうすく、ほかの語に修飾されて使われる語は？|形式名詞|普通名詞|固有名詞|代名詞|形式名詞は、修飾語がないと使えない。
+名詞を「体言」ともいう。では、動詞・形容詞・形容動詞をまとめて何という？|用言|体言|付属語|修飾語|用言は、活用があり単独で述語になれる自立語。
+次のうち、用言ではないものは？|ゆっくり|走る|美しい|静かだ|「ゆっくり」は活用しない副詞。ほかの三つは活用する用言。
+次のうち、活用する自立語でないものは？|名詞|動詞|形容詞|形容動詞|活用する自立語は動詞・形容詞・形容動詞の三つ。名詞は活用しない。
+次のうち、活用しない品詞は？|副詞|動詞|形容詞|助動詞|副詞は活用しない。助動詞は活用する付属語。
+#文の成分
+「だれが」「何が」にあたる、述語に対応する部分は？|主語|述語|修飾語|接続語|主語は「〜が」「〜は」の形が多い。
+「どうする」「どんなだ」「何だ」にあたり、文の終わりに来ることが多い部分は？|述語|主語|修飾語|独立語|述語は主語の動作・状態・性質などを述べる。
+「昨日　兄は　大きな　魚を　釣った。」の「大きな」が修飾している文節は？|魚を|兄は|釣った|昨日|「大きな魚」と、体言「魚」の様子をくわしくしている。
+「雨が降ったので、試合は中止になった。」の「雨が降ったので」の文の成分は？|接続語|主語|修飾語|独立語|前後をつなぐ働きをする部分は接続語。
+「あっ、危ない。」の「あっ」の文の成分は？|独立語|主語|接続語|修飾語|ほかの文節と直接関係せず、独立している。
+「私は　本を　読む。」の「本を」の文の成分は？|修飾語|主語|述語|独立語|「何を」にあたる連用修飾語。
+体言を修飾する修飾語は？|連体修飾語|連用修飾語|接続語|独立語|連体修飾語は、体言（名詞）を修飾する。
+用言を修飾する修飾語は？|連用修飾語|連体修飾語|主語|述語|連用修飾語は、用言（動詞・形容詞・形容動詞）を修飾する。
+「小さな　花が　咲く。」の「小さな」の文の成分は？|連体修飾語|連用修飾語|主語|接続語|名詞「花」を修飾している。
+「花が　ゆっくり　咲く。」の「ゆっくり」の文の成分は？|連用修飾語|連体修飾語|主語|独立語|動詞「咲く」を修飾している。
+「山や　川が　美しい。」の「山や」と「川が」の関係は？|並立の関係|主・述の関係|補助の関係|接続の関係|対等に並んでいる関係。
+「雨が　降る。」の「雨が」と「降る」の関係は？|主・述の関係|修飾・被修飾の関係|並立の関係|補助の関係|「何が―どうする」の関係。
+「本を　読んで　いる。」の「読んで」と「いる」の関係は？|補助の関係|並立の関係|主・述の関係|接続の関係|「いる」は補助的な意味を添えている。
+「雨が　降りだした。そこで、私は　傘を　さした。」の「そこで」の文の成分は？|接続語|独立語|修飾語|主語|前後をつなぐ働きなので接続語。
+#活用
+語の形が、あとに続く言葉によって変わることを何という？|活用|接続|修飾|転成|「書か（ない）」「書き（ます）」のように形が変わる。
+「ない」をつけたとき、直前の音がア段になる動詞の活用の種類は？|五段活用|上一段活用|下一段活用|サ行変格活用|「書か（ない）」「読ま（ない）」はア段なので五段活用。
+「ない」をつけたとき、直前の音がイ段になる「〜る」の動詞は？|上一段活用|下一段活用|五段活用|カ行変格活用|「起き（ない）」「見（ない）」はイ段なので上一段活用。
+「ない」をつけたとき、直前の音がエ段になる「〜る」の動詞は？|下一段活用|上一段活用|五段活用|サ行変格活用|「食べ（ない）」「寝（ない）」はエ段なので下一段活用。
+「書く」の活用の種類は？|五段活用|上一段活用|下一段活用|カ行変格活用|書かない（カ＝ア段）。
+「起きる」の活用の種類は？|上一段活用|下一段活用|五段活用|サ行変格活用|起きない（キ＝イ段）。
+「食べる」の活用の種類は？|下一段活用|上一段活用|五段活用|カ行変格活用|食べない（ベ＝エ段）。
+「帰る」の活用の種類は？|五段活用|上一段活用|下一段活用|サ行変格活用|帰らない（ラ＝ア段）。「る」で終わっても五段活用のものがある。
+「見る」の活用の種類は？|上一段活用|下一段活用|五段活用|カ行変格活用|見ない（ミ＝イ段）。
+「寝る」の活用の種類は？|下一段活用|上一段活用|五段活用|サ行変格活用|寝ない（ネ＝エ段）。
+「借りる」の活用の種類は？|上一段活用|下一段活用|五段活用|サ行変格活用|借りない（リ＝イ段）。
+「考える」の活用の種類は？|下一段活用|上一段活用|五段活用|カ行変格活用|考えない（エ段）。
+「話す」の活用の種類は？|五段活用|上一段活用|下一段活用|サ行変格活用|話さない（サ＝ア段）。
+「来る」の活用の種類は？|カ行変格活用|サ行変格活用|五段活用|上一段活用|「来る」は特別な活用をするカ行変格活用。
+「する」「勉強する」の活用の種類は？|サ行変格活用|カ行変格活用|五段活用|下一段活用|「する」と「〜する」の形の動詞はサ行変格活用。
+「ない」「う・よう」「れる・られる」「せる・させる」に続く活用形は？|未然形|連用形|終止形|仮定形|これらに続くのは未然形。
+「ます」「た」「て」に続く活用形は？|連用形|未然形|終止形|仮定形|これらに続くのは連用形。
+「ば」に続く活用形は？|仮定形|未然形|連用形|命令形|「書け（ば）」のように仮定形に続く。
+体言（名詞）に続く活用形は？|連体形|連用形|終止形|仮定形|「書く（とき）」のように、体言に続くのは連体形。
+「書かない」の「書か」の活用形は？|未然形|連用形|終止形|仮定形|「ない」に続くので未然形。
+「書きます」の「書き」の活用形は？|連用形|未然形|終止形|連体形|「ます」に続くので連用形。
+「書けば」の「書け」の活用形は？|仮定形|未然形|連用形|命令形|「ば」に続くので仮定形。
+「書くとき」の「書く」の活用形は？|連体形|終止形|連用形|仮定形|名詞「とき」に続くので連体形。
+「早く書け。」の「書け」の活用形は？|命令形|仮定形|未然形|連用形|命令して言い切る形。
+「書こう」の「書こ」の活用形は？|未然形|連用形|終止形|連体形|「う」に続くので未然形。
+「食べられる」の「食べ」の活用形は？|未然形|連用形|終止形|仮定形|「られる」に続くので未然形。
+「読ませる」の「読ま」の活用形は？|未然形|連用形|連体形|仮定形|「せる」に続くので未然形。
+「見て」の「見」の活用形は？|連用形|未然形|終止形|仮定形|「て」に続くので連用形。
+「美しければ」の「美しけれ」の活用形は？|仮定形|未然形|連用形|連体形|「ば」に続くので仮定形。
+「美しく咲く」の「美しく」の活用形は？|連用形|未然形|終止形|連体形|用言「咲く」に続くので連用形。
+「美しかった」の「美しかっ」の活用形は？|連用形|未然形|終止形|仮定形|「た」に続くので連用形。
+「静かな町」の「静かな」の活用形は？|連体形|連用形|終止形|仮定形|体言「町」に続くので連体形。
+「静かだった」の「静かだっ」の活用形は？|連用形|未然形|連体形|仮定形|「た」に続くので連用形。
+「知らない」の「ない」の品詞は？|助動詞（打ち消し）|形容詞|名詞|副詞|「知らぬ」と「ぬ」に言いかえられるので、打ち消しの助動詞。
+「お金がない」の「ない」の品詞は？|形容詞|助動詞（打ち消し）|名詞|副詞|「ぬ」に言いかえられず、「ある」の反対の意味なので形容詞。
+#助詞・助動詞
+「先生にほめられる」の「られる」の意味は？|受け身|可能|自発|尊敬|ほかから動作を受ける意味。
+「ひとりで早く起きられる」の「られる」の意味は？|可能|受け身|自発|尊敬|「〜することができる」の意味。
+「秋の気配が感じられる」の「られる」の意味は？|自発|受け身|可能|尊敬|自然にそうなる、という意味。
+「昔のことが思い出される」の「れる」の意味は？|自発|受け身|可能|尊敬|自然にそうなる、という意味。
+「先生が話される」の「れる」の意味は？|尊敬|受け身|可能|自発|先生の動作を高めている。
+「友だちに笑われた」の「れた」の意味は？|受け身|可能|自発|尊敬|ほかから動作を受ける意味。
+「この魚は生で食べられる」の「られる」の意味は？|可能|受け身|自発|尊敬|「食べることができる」という意味。
+「弟に荷物を持たせる」の「せる」の意味は？|使役|受け身|可能|尊敬|ほかの人にさせる意味。
+「雨が降るそうだ」の「そうだ」の意味は？|伝聞|様態|推量|断定|人から聞いた話を伝える。終止形に続く。
+「今にも雨が降りそうだ」の「そうだ」の意味は？|様態|伝聞|推量|断定|様子を表す。連用形に続く。
+「まるで夢のようだ」の「ようだ」の意味は？|比喩|推定|例示|断定|「まるで」があるので、たとえ。
+「どうやら雨のようだ」の「ようだ」の意味は？|推定|比喩|例示|意志|「どうやら」があるので、根拠のある推し量り。
+「彼のような人になりたい」の「ような」の意味は？|例示|比喩|推定|意志|例をあげる言い方。
+「さあ、いっしょに行こう」の「う」の意味は？|勧誘|意志|推量|過去|いっしょにやろうと誘っている。
+「必ず合格しよう」の「よう」の意味は？|意志|勧誘|推量|過去|自分の決意を表す。
+「あしたは晴れるだろう」の「う」の意味は？|推量|意志|勧誘|過去|ものごとを推し量っている。
+「昨日は雨が降った」の「た」の意味は？|過去|完了|存続|断定|昨日のことなので過去。
+「宿題がたった今終わった」の「た」の意味は？|完了|過去|存続|断定|動作が終わったことを表す。
+「壁にかかった絵」の「た」の意味は？|存続|過去|完了|断定|「かかっている絵」と言いかえられるので存続。
+「ぼくは水が飲みたい」の「たい」の意味は？|希望|意志|推量|断定|「〜したい」と望む気持ち。
+「彼は帰ったらしい」の「らしい」の意味は？|推定|断定|比喩|希望|根拠をもとに推し量る言い方。
+「ば」「ても」「のに」「ので」のように、前後の文節をつなぐ助詞は？|接続助詞|格助詞|副助詞|終助詞|前後の関係をつなぐ助詞は接続助詞。
+「が」「の」「を」「に」「へ」「と」「から」「で」「より」のように、おもに体言について語と語の関係を示す助詞は？|格助詞|接続助詞|副助詞|終助詞|文の成分の関係を示すのが格助詞。
+「は」「も」「こそ」「さえ」「だけ」「しか」のように、いろいろな語について意味を添える助詞は？|副助詞|格助詞|接続助詞|終助詞|副助詞は、意味を付け加える。
+「か」「な」「ね」「よ」「ぞ」のように、文の終わりについて、疑問・禁止・感動などを表す助詞は？|終助詞|格助詞|接続助詞|副助詞|文末にあるのが終助詞。
+「雨が降っても、行く」の「ても」の働きは？|逆接|順接|並立|添加|前と反対のことが続く関係。
+「勉強したのに、点が悪い」の「のに」の働きは？|逆接|順接|並立|選択|予想と反対のことが続く関係。
+「雨なので、中止だ」の「ので」の働きは？|順接（理由）|逆接|並立|転換|原因・理由を表す。
+「歌は上手だが、ダンスは苦手だ」の「が」の働きは？|逆接の接続助詞|主語を示す格助詞|並立の助詞|終助詞|前と反対のことが続く。
+「これは私の本だ」の「の」の働きは？|連体修飾（持ち主）|主語を示す|体言の代わり|疑問|「私の本」と、体言「本」を修飾している。
+「ぼくの買った本」の「の」は、どの助詞に言いかえられる？|が|を|に|へ|「ぼくが買った本」と言いかえられる、主語を示す「の」。
+「この本は私のだ」の「の」の働きは？|体言の代わり|連体修飾|主語を示す|疑問|「私の本」の「本」の代わりをしている。
+#接続詞・副詞
+前の事がらが原因・理由になって、あとに続く関係をつくる接続詞は？|だから|しかし|または|ところで|「だから」「そのため」は順接。
+前の事がらと反対のことをあとに続ける接続詞は？|しかし|だから|そして|つまり|「しかし」「だが」「けれども」は逆接。
+「寒い。（　）、上着を着た。」の（　）に入る接続詞は？|だから|しかし|または|ところで|前が理由で、あとが結果なので順接。
+「雨が降っている。（　）、試合は行われる。」の（　）に入る接続詞は？|しかし|だから|つまり|そして|前と反対のことが続くので逆接。
+「紅茶にしますか。（　）、コーヒーにしますか。」の（　）に入る接続詞は？|それとも|そして|しかも|だから|どちらかを選ぶ関係（選択）。
+「彼は足が速い。（　）、頭もいい。」の（　）に入る接続詞は？|しかも|しかし|だから|ところで|あとに同じ方向のことを付け加える（添加）。
+「彼は毎日走っている。（　）、マラソン大会に出るからだ。」の（　）に入る接続詞は？|なぜなら|しかし|そして|ところで|前のことの理由を説明する。
+「天気の話は終わりです。（　）、宿題はやりましたか。」の（　）に入る接続詞は？|ところで|だから|しかも|なぜなら|話題を変える（転換）。
+「だから」「すると」「そのため」は、どの種類の接続詞？|順接|逆接|対比・選択|転換|前の事がらが原因・理由になる。
+「しかし」「けれども」「ところが」は、どの種類の接続詞？|逆接|順接|並立・累加|説明・補足|前と反対のことが続く。
+「そして」「また」「しかも」「さらに」は、どの種類の接続詞？|並立・累加|逆接|転換|対比・選択|同じ種類のことを並べたり付け加えたりする。
+「または」「あるいは」「それとも」は、どの種類の接続詞？|対比・選択|順接|説明・補足|並立・累加|どちらかを選ぶ・くらべる関係。
+「つまり」「たとえば」「なぜなら」は、どの種類の接続詞？|説明・補足|順接|逆接|転換|前の内容を説明したり補ったりする。
+「ところで」「さて」「では」は、どの種類の接続詞？|転換|順接|逆接|並立・累加|話題を変える。
+「（　）うそはつかない。」の（　）に入る副詞は？|決して|まるで|もし|なぜ|「決して〜ない」と打ち消しの言葉と呼応する。
+「（　）雪のように白い。」の（　）に入る副詞は？|まるで|決して|もし|たとえ|「まるで〜ようだ」とたとえの言葉と呼応する。
+「（　）雨が降ったら、中止だ。」の（　）に入る副詞は？|もし|決して|まるで|なぜ|「もし〜たら」と仮定の言葉と呼応する。
+「（　）失敗しても、あきらめない。」の（　）に入る副詞は？|たとえ|決して|まるで|おそらく|「たとえ〜ても」と仮定の言葉と呼応する。
+「（　）あしたは晴れるだろう。」の（　）に入る副詞は？|おそらく|決して|たとえ|もし|「おそらく〜だろう」と推量の言葉と呼応する。
+「（　）泣いているのですか。」の（　）に入る副詞は？|なぜ|決して|まるで|たとえ|「なぜ〜か」と疑問の言葉と呼応する。
+「（　）お願いします。」の（　）に入る副詞は？|どうか|決して|まるで|なぜ|「どうか〜ください」と依頼の言葉と呼応する。
+#熟語の構成
+「高低」の熟語の構成は？|反対の意味の字の組み合わせ|似た意味の字の組み合わせ|上の字が下の字を修飾する|下の字が上の字の目的になる|高い⇔低い。
+「岩石」の熟語の構成は？|似た意味の字の組み合わせ|反対の意味の字の組み合わせ|上の字が下の字を修飾する|主語と述語の関係|岩＝石。
+「青空」の熟語の構成は？|上の字が下の字を修飾する|似た意味の字の組み合わせ|下の字が上の字の目的になる|打ち消しの字が上につく|青い空。
+「読書」の熟語の構成は？|下の字が上の字の目的になる|上の字が下の字を修飾する|主語と述語の関係|打ち消しの字が上につく|書を読む。
+「日没」の熟語の構成は？|主語と述語の関係|上の字が下の字を修飾する|下の字が上の字の目的になる|似た意味の字の組み合わせ|日が没する。
+「不安」の熟語の構成は？|打ち消しの字が上につく|上の字が下の字を修飾する|主語と述語の関係|反対の意味の字の組み合わせ|安らかでない。
+「登山」の熟語の構成は？|下の字が上の字の目的になる|上の字が下の字を修飾する|似た意味の字の組み合わせ|打ち消しの字が上につく|山に登る。
+「地震」の熟語の構成は？|主語と述語の関係|上の字が下の字を修飾する|反対の意味の字の組み合わせ|下の字が上の字の目的になる|地が震える。
+「善悪」の熟語の構成は？|反対の意味の字の組み合わせ|似た意味の字の組み合わせ|上の字が下の字を修飾する|打ち消しの字が上につく|善い⇔悪い。
+「道路」の熟語の構成は？|似た意味の字の組み合わせ|反対の意味の字の組み合わせ|主語と述語の関係|下の字が上の字の目的になる|道＝路。
+「大木」の熟語の構成は？|上の字が下の字を修飾する|似た意味の字の組み合わせ|反対の意味の字の組み合わせ|下の字が上の字の目的になる|大きな木。
+「無理」の熟語の構成は？|打ち消しの字が上につく|上の字が下の字を修飾する|主語と述語の関係|似た意味の字の組み合わせ|理がない。
+「就職」の熟語の構成は？|下の字が上の字の目的になる|主語と述語の関係|上の字が下の字を修飾する|反対の意味の字の組み合わせ|職に就く。
+「頭痛」の熟語の構成は？|主語と述語の関係|上の字が下の字を修飾する|似た意味の字の組み合わせ|下の字が上の字の目的になる|頭が痛い。
+「洋画」の熟語の構成は？|上の字が下の字を修飾する|反対の意味の字の組み合わせ|主語と述語の関係|打ち消しの字が上につく|西洋の絵。
+「未知」の熟語の構成は？|打ち消しの字が上につく|似た意味の字の組み合わせ|下の字が上の字の目的になる|主語と述語の関係|まだ知らない。
+「増減」の熟語の構成は？|反対の意味の字の組み合わせ|似た意味の字の組み合わせ|上の字が下の字を修飾する|主語と述語の関係|増える⇔減る。
+「作文」の熟語の構成は？|下の字が上の字の目的になる|上の字が下の字を修飾する|打ち消しの字が上につく|反対の意味の字の組み合わせ|文を作る。
+「温暖」の熟語の構成は？|似た意味の字の組み合わせ|反対の意味の字の組み合わせ|上の字が下の字を修飾する|打ち消しの字が上につく|温かい＝暖かい。
+#ことばの単位
+言葉の単位を、大きいものから順にならべたものは？|文章→段落→文→文節→単語|文章→文→段落→文節→単語|段落→文章→文→単語→文節|文章→段落→文→単語→文節|文章は段落から、段落は文から、文は文節から、文節は単語からできている。
+意味が不自然にならない範囲で、文をできるだけ短く区切った単位は？|文節|単語|段落|文章|「ネ」を入れて区切れる単位が文節。
+言葉の単位のうち、いちばん小さいものは？|単語|文節|文|段落|文節をさらに分けた、意味をもつ最小の単位が単語。
+「花が咲く。」の単語の数は？|3|2|4|5|花／が／咲く、の3つ。
+「雨が降っていた。」の文節の数は？|3|2|4|6|雨が／降って／いた、の3つ。
+「雨が降っていた。」の単語の数は？|6|5|4|3|雨／が／降っ／て／い／た、の6つ。
+「です」「ます」で終わる文体は？|敬体|常体|文語体|口語体|丁寧な言い方の文体。
+「だ」「である」で終わる文体は？|常体|敬体|文語体|口語体|言い切りの文体。
+全国どこでも通じる、標準的な言葉は？|共通語|方言|古語|俗語|ある地域だけで使われる言葉は方言。
+「山」「川」のように、昔から日本にあった言葉は？|和語|漢語|外来語|熟語|訓読みで表せる、もとからある日本語。
+「勉強」「学校」のように、漢字の音読みで表される言葉は？|漢語|和語|外来語|方言|中国から入った読み方の言葉。
+「テレビ」「パン」のように、外国から入って日本語になった言葉は？|外来語|和語|漢語|方言|ふつうカタカナで書く。
+「食べれる」を、正しい言い方に直すと？|食べられる|食べさせる|食べれられる|食べさす|「ら抜き言葉」は、正しい言い方ではない。
+#敬語
+相手や話題の人の動作を高めて、敬意を表す敬語は？|尊敬語|謙譲語|丁寧語|美化語|相手を高める。
+自分や身内の動作をへりくだって、相手に敬意を表す敬語は？|謙譲語|尊敬語|丁寧語|美化語|自分をひくくして、相手を高める。
+文末に「です」「ます」をつけて、聞き手に丁寧に言う敬語は？|丁寧語|尊敬語|謙譲語|美化語|話し手が聞き手に敬意を示す。
+「お水」「お料理」のように、ものごとを上品に言う敬語は？|美化語|丁寧語|尊敬語|謙譲語|言葉づかいを上品にする。
+「お読みになる」は、どの敬語？|尊敬語|謙譲語|丁寧語|美化語|「お〜になる」は、相手の動作を高める。
+「お届けする」は、どの敬語？|謙譲語|尊敬語|丁寧語|美化語|「お〜する」は、自分の動作をへりくだる。
+次のうち、謙譲語はどれ？|申し上げる|いらっしゃる|なさる|召し上がる|ほかの三つは相手の動作を高める尊敬語。
+次のうち、尊敬語はどれ？|おっしゃる|申し上げる|伺う|いただく|ほかの三つは自分の動作をへりくだる謙譲語。
+次のうち、丁寧語はどれ？|でございます|おっしゃる|拝見する|召し上がる|「です」の丁寧な言い方が「でございます」。
+「言う」の尊敬語は？|おっしゃる|申す|申し上げる|いたす|相手が言うときは「おっしゃる」。
+「言う」の謙譲語は？|申す|おっしゃる|ご覧になる|くださる|自分が言うときは「申す」「申し上げる」。
+「行く」の尊敬語は？|いらっしゃる|伺う|参る|申す|相手が行くときは「いらっしゃる」「おいでになる」。
+「行く」の謙譲語は？|伺う|いらっしゃる|おいでになる|なさる|自分が行くときは「伺う」「参る」。
+「来る」の尊敬語は？|いらっしゃる|参る|伺う|いたす|相手が来るときは「いらっしゃる」「おいでになる」。
+「来る」の謙譲語は？|参る|いらっしゃる|おいでになる|お越しになる|自分が来るときは「参る」。
+「いる」の尊敬語は？|いらっしゃる|おる|参る|伺う|相手がいるときは「いらっしゃる」。
+「いる」の謙譲語（へりくだった言い方）は？|おる|いらっしゃる|おいでになる|なさる|自分がいるときは「おる」。
+「食べる」の尊敬語は？|召し上がる|いただく|いたす|申し上げる|相手が食べるときは「召し上がる」。
+「食べる」の謙譲語は？|いただく|召し上がる|くださる|なさる|自分が食べるときは「いただく」。
+「見る」の尊敬語は？|ご覧になる|拝見する|いただく|伺う|相手が見るときは「ご覧になる」。
+「見る」の謙譲語は？|拝見する|ご覧になる|おっしゃる|召し上がる|自分が見るときは「拝見する」。
+「する」の尊敬語は？|なさる|いたす|申す|参る|相手がするときは「なさる」。
+「する」の謙譲語は？|いたす|なさる|いらっしゃる|くださる|自分がするときは「いたす」。
+「くれる」の尊敬語は？|くださる|いただく|差し上げる|召し上がる|相手がくれるときは「くださる」。
+「もらう」の謙譲語は？|いただく|くださる|差し上げる|召し上がる|自分がもらうときは「いただく」。
+「あげる」の謙譲語は？|差し上げる|くださる|いただく|いらっしゃる|自分があげるときは「差し上げる」。
+「聞く」の謙譲語は？|伺う|お聞きになる|おっしゃる|ご覧になる|自分が聞くときは「伺う」。「お聞きになる」は尊敬語。
+「知っている」の尊敬語は？|ご存じだ|存じ上げる|いたす|おる|相手が知っているときは「ご存じだ」。
+「知っている」の謙譲語は？|存じ上げる|ご存じだ|いらっしゃる|なさる|自分が知っているときは「存じ上げる」。
+「会う」の謙譲語は？|お目にかかる|お会いになる|いらっしゃる|なさる|自分が会うときは「お目にかかる」。
+「着る」の尊敬語は？|お召しになる|召し上がる|いただく|いたす|相手が着るときは「お召しになる」。
+「ある」の丁寧語（丁寧な言い方）は？|ございます|いらっしゃる|おる|存じる|「あります」の丁寧な言い方が「ございます」。
+「訪ねる」の謙譲語は？|伺う|いらっしゃる|なさる|お訪ねになる|自分が訪ねるときは「伺う」。
+「お客様が料理を（　）。」の（　）に入る言葉は？|召し上がる|いただく|拝見する|申し上げる|お客様の動作なので尊敬語。
+「私が先生にお手紙を（　）。」の（　）に入る言葉は？|差し上げた|くださった|召し上がった|いらっしゃった|自分の動作なので謙譲語。
+「明日、私が先生のお宅に（　）。」の（　）に入る言葉は？|伺います|いらっしゃいます|おっしゃいます|召し上がります|自分の動作なので謙譲語。
+「校長先生が、体育館に（　）。」の（　）に入る言葉は？|いらっしゃる|参る|伺う|いたす|校長先生の動作なので尊敬語。
+「先生が私に本を（　）。」の（　）に入る言葉は？|くださった|いただいた|差し上げた|申し上げた|先生の動作なので尊敬語。
+「私は先生から本を（　）。」の（　）に入る言葉は？|いただいた|くださった|召し上がった|なさった|自分の動作なので謙譲語。
+「社長は、いま部屋に（　）か。」の（　）に入る言葉は？|いらっしゃいます|おります|参ります|伺います|社長の動作なので尊敬語。
+取引先の人に「弊社の社長は、いま外出して（　）」と言う。（　）に入る言葉は？|おります|いらっしゃいます|お見えになります|召し上がります|身内（自分の会社の人）のことは、謙譲語で話す。
+「先生がおっしゃられました」の、まちがいは？|二重敬語になっている|謙譲語を使っている|丁寧語がない|尊敬語を自分に使っている|「おっしゃる」に「れる」を重ねた二重敬語。
+次のうち、二重敬語で適切でないものは？|先生がおっしゃられた|先生がおっしゃった|先生が言われた|先生がお話しになった|「おっしゃる」だけで十分に尊敬語。
+「お客様が参られました」の、まちがいは？|謙譲語を相手の動作に使っている|尊敬語を自分の動作に使っている|丁寧語を使っていない|敬語が足りない|「参る」は謙譲語。相手には「いらっしゃる」を使う。
+「私が資料をご覧になります」の、まちがいは？|尊敬語を自分の動作に使っている|謙譲語を相手の動作に使っている|二重敬語になっている|丁寧語を使っていない|「ご覧になる」は尊敬語。自分には「拝見する」。
+他社の人に、自社の田中部長のことを言うとき、正しいのは？|田中は席を外しております|田中部長さんは席を外していらっしゃいます|田中部長様は席を外されております|田中部長は席をお外しになっています|社外の人には、身内を高めず、へりくだった言い方をする。
+「（　）住所をお書きください。」の（　）に入るのは？|ご|お|み|おん|漢語（音読みの言葉）には「ご」をつけることが多い。
+「（　）名前をお書きください。」の（　）に入るのは？|お|ご|み|もと|和語（訓読みの言葉）には「お」をつけることが多い。
+手紙の書き出しの「拝啓」に対応する結びの言葉は？|敬具|草々|前略|謹啓|「拝啓」と「敬具」を組み合わせる。
+手紙の書き出しの「前略」に対応する結びの言葉は？|草々|敬具|拝啓|敬白|「前略」と「草々」を組み合わせる。
+`;
+/* 国語 古文・漢文・和歌・文学（4択）  書式：#分野 の下に  問い|正解|誤1|誤2|誤3|解説 */
+RAW_JG+=`
+#歴史的仮名遣い
+語中・語尾の「は・ひ・ふ・へ・ほ」は、現代仮名遣いでは何に直す？|わ・い・う・え・お|ば・び・ぶ・べ・ぼ|あ・い・う・え・お|直さずそのまま|「あはれ→あわれ」「いふ→いう」のように直す。
+「ゐ」「ゑ」「を」は、現代仮名遣いでは何に直す？|い・え・お|あ・う・お|わ・え・を|ひ・へ・ほ|「ゐなか→いなか」「こゑ→こえ」「をかし→おかし」。
+「づ」「ぢ」は、現代仮名遣いでは何に直す？|ず・じ|す・し|ど・で|そのまま|「みづ→みず」「いづれ→いずれ」。
+「あはれ」を現代仮名遣いに直すと？|あわれ|あはれ|あばれ|あおれ|語中の「は」は「わ」に直す。
+「いふ」を現代仮名遣いに直すと？|いう|いふ|いぶ|ゆう|語尾の「ふ」は「う」に直す。表記は「ゆう」ではなく「いう」。
+「をかし」を現代仮名遣いに直すと？|おかし|をかし|わかし|おがし|「を」は「お」に直す。
+「けふ」を現代仮名遣いに直すと？|きょう|きゅう|けう|けふ|「けふ」は「きょう」。
+「やうやう」を現代仮名遣いに直すと？|ようよう|やうやう|やようよう|ようやく|「やう」は「よう」に直す。
+「てふてふ」を現代仮名遣いに直すと？|ちょうちょう|てうてう|ちゅうちゅう|ちょうてふ|「てふ」は「ちょう」。
+「まゐる」を現代仮名遣いに直すと？|まいる|まゐる|まうる|まえる|「ゐ」は「い」に直す。
+「ゐなか」を現代仮名遣いに直すと？|いなか|ゐなか|おなか|うなか|「ゐ」は「い」に直す。
+「かはづ」を現代仮名遣いに直すと？|かわず|かはづ|かわづ|かはず|「は」→「わ」、「づ」→「ず」と二か所直す。
+「みづ」を現代仮名遣いに直すと？|みず|みづ|みう|みふ|「づ」は「ず」に直す。
+「思ふ」を現代仮名遣いに直すと？|思う|思ふ|思ぶ|思お|語尾の「ふ」は「う」に直す。
+「にほひ」を現代仮名遣いに直すと？|におい|にほひ|にわい|におひ|「ほ」→「お」、「ひ」→「い」。
+「まへ」を現代仮名遣いに直すと？|まえ|まへ|まゑ|まお|語中の「へ」は「え」に直す。
+「いづれ」を現代仮名遣いに直すと？|いずれ|いづれ|いぢれ|いじれ|「づ」は「ず」に直す。
+#古語の意味
+古文の「いと」の意味は？|とても|少し|もう|すぐに|「いとをかし」は「とても趣がある」。
+古文の「をかし」の意味は？|趣がある|悲しい|恐ろしい|いやらしい|明るくはなやかな美しさ・おもしろさを表す。
+古文の「あはれなり」の意味は？|しみじみとした趣がある|はなやかだ|おそろしい|にぎやかだ|しみじみと心を動かされる気持ち。
+古文の「うつくし」の意味は？|かわいらしい|立派だ|恐ろしい|めんどうだ|小さなものへの愛らしさを表す。
+古文の「ありがたし」の意味は？|めったにない|感謝したい|ありふれている|とても多い|「有り難し」＝存在することが難しい、という意味。
+古文の「やうやう」の意味は？|だんだん|ついに|すっかり|急に|「やうやう白くなりゆく山ぎは」＝だんだん白くなっていく山の端。
+古文の「つとめて」の意味は？|早朝|夕方|夜中|昼間|「冬はつとめて」＝冬は早朝がいい。
+古文の「いみじ」の意味は？|程度がはなはだしい|ありふれている|穏やかだ|ささやかだ|良い意味にも悪い意味にも使う。
+古文の「めでたし」の意味は？|すばらしい|おそろしい|いまいましい|つまらない|ほめる気持ちを表す。
+古文の「ゆかし」の意味は？|見たい・知りたい|恐ろしい|うれしい|さびしい|心がひかれる気持ち。
+古文の「おどろく」の意味は？|はっと気づく|腹を立てる|喜ぶ|がっかりする|ふと気づく、目が覚める、という意味。
+古文の「つれづれなり」の意味は？|退屈だ|にぎやかだ|忙しい|うれしい|することがなくて手持ちぶさたな様子。
+古文の「あさまし」の意味は？|驚きあきれる|うれしい|おだやかだ|けっこうだ|思いがけないことに驚く気持ち。
+古文の「おもしろし」の意味は？|趣深い|つまらない|いそがしい|にくらしい|景色などがすばらしく心が晴れる様子。
+古文の「やがて」の意味は？|そのまま・すぐに|ずっと|ふたたび|決して|現代の「そのうち」とは意味がちがう。
+古文の「さらなり」の意味は？|言うまでもない|新しい|うっとうしい|ひどい|「夏は夜。月のころはさらなり」。
+古文の「ののしる」の意味は？|大声で騒ぐ|ほめる|だまる|悲しむ|現代の「悪口を言う」とは意味がちがう。
+古文の「あたらし」の意味は？|惜しい|新しい|珍しい|恐ろしい|現代の「新しい」とはちがい、「惜しい」という意味。
+古文の「いかが」の意味は？|どう|どれ|どこ|いつ|「どのように」と、様子や方法をたずねる。
+古文の「いづれ」の意味は？|どれ|いつ|だれ|なぜ|「どれ」「どちら」と選ぶときに使う。
+古文の「げに」の意味は？|本当に|ぜひとも|急に|すっかり|「なるほど本当に」という気持ち。
+古文の「ゆゑ」の意味は？|理由|身分|場所|時間|「ゆゑ」は、わけ・理由のこと。
+古文の「ほどなく」の意味は？|まもなく|いつまでも|はるばる|急に|時間があまりたたないうちに。
+古文の「心もとなし」の意味は？|じれったい・不安だ|安心だ|心強い|おもしろい|はっきりせず気がかりな様子。
+古文の「はかなし」の意味は？|あっけない・むなしい|しっかりしている|はげしい|にぎやかだ|頼りなく、むなしい様子。
+古文の「なほ」の意味は？|やはり|もはや|すこしも|けっして|「なお」「やはり」と同じ意味。
+古文の「かたじけなし」の意味は？|恐れ多い・ありがたい|情けない|うらやましい|つまらない|身にあまる、ありがたい気持ち。
+古文の「いとほし」の意味は？|気の毒だ・かわいそうだ|うらやましい|おそろしい|にくらしい|相手を思ってつらくなる気持ち。
+古文の「ことわり」の意味は？|道理|約束|言い訳|出来事|「ことわり」は、物事の筋道・当然の理屈。
+古文の「わろし」の意味は？|よくない|すばらしい|おもしろい|ふつうだ|「よし」の反対で、あまりよくない。
+古文の「あやし」の意味は？|不思議だ|うれしい|たのしい|すばらしい|ふしぎだ、いぶかしい、という意味。
+古文の「ゐる」（居る）の意味は？|座る|歩く|眠る|走る|現代語の「いる」と同じではなく、「座る」の意味が中心。
+古文の「いはく」の意味は？|言うことには|言わなかった|言いたい|言ってはならない|「〜曰く」＝言うことには。
+古文の「ありく」の意味は？|歩き回る|座っている|眠る|食べる|あちこち歩く、という意味。
+古文の「かたち」の意味は？|容姿・顔だち|心|手紙|品物|「かたち」は、姿や顔つきのこと。
+古文の「ひねもす」の意味は？|一日中|夜通し|朝のうち|夕方|「春の海ひねもすのたりのたりかな」。
+古文の「よもすがら」の意味は？|一晩中|一日中|明け方|昼間|夜の間じゅう、ずっと。
+古文の「つごもり」の意味は？|月の最後の日|月の初めの日|月の半ば|年の初め|「つごもり」は月末。
+古文の「ついたち」の意味は？|月の初めの日|月の最後の日|月の半ば|年の終わり|「月立ち」がもとの言葉で、月の第一日。
+古文の「いざ」の意味は？|さあ|なぜ|ついに|もしも|人を誘うときの言葉。
+古文の「おのづから」の意味は？|自然に|無理に|急いで|わざと|「おのずから」と同じ。ひとりでに。
+古文の「いたづらなり」の意味は？|むだだ|いたずら好きだ|にぎやかだ|大切だ|何の役にも立たず、むなしい様子。
+古文の「すさまじ」の意味は？|興ざめだ|恐ろしい|うれしい|美しい|期待はずれで、しらける気持ち。
+#古文のきまり
+古文の係り結びで、「ぞ」「なむ」「や」「か」があると、文末はどうなる？|連体形になる|終止形になる|已然形になる|命令形になる|係助詞「ぞ・なむ・や・か」の結びは連体形。
+古文の係り結びで、「こそ」があると、文末はどうなる？|已然形になる|連体形になる|終止形になる|連用形になる|係助詞「こそ」の結びは已然形。
+係り結びの働きは？|意味を強める・疑問や反語を表す|過去を表す|打ち消しを表す|尊敬を表す|文末の形を変えて、意味を強める。
+次のうち、係り結びをつくる係助詞はどれ？|こそ|ばや|とも|ども|係助詞は、ぞ・なむ・や・か・こそ。
+「花ぞ散りける」で、係助詞はどれ？|ぞ|花|散り|ける|「ぞ」があるので、結びの「ける」が連体形になる。
+古文の助動詞「ず」の意味は？|打ち消し|過去|推量|完了|「〜ない」という意味。
+古文の助動詞「けり」の意味は？|過去・詠嘆|打ち消し|推量|断定|「〜た」「〜だなあ」という意味。
+古文の助動詞「む」の意味は？|推量・意志|打ち消し|過去|完了|「〜だろう」「〜よう」という意味。
+古文の助動詞「べし」の意味は？|当然・推量・意志など|打ち消し|過去|断定|「〜べきだ」「〜だろう」「〜よう」などの意味。
+古文の助動詞「き」の意味は？|過去|打ち消し|推量|断定|「〜た」という意味。
+旧暦の1月の別名は？|睦月|如月|弥生|卯月|1月＝睦月。
+旧暦の2月の別名は？|如月|睦月|弥生|皐月|2月＝如月。
+旧暦の3月の別名は？|弥生|如月|卯月|水無月|3月＝弥生。
+旧暦の4月の別名は？|卯月|弥生|皐月|文月|4月＝卯月。
+旧暦の5月の別名は？|皐月|卯月|水無月|葉月|5月＝皐月。
+旧暦の6月の別名は？|水無月|皐月|文月|神無月|6月＝水無月。
+旧暦の7月の別名は？|文月|水無月|葉月|長月|7月＝文月。
+旧暦の8月の別名は？|葉月|文月|長月|霜月|8月＝葉月。
+旧暦の9月の別名は？|長月|葉月|神無月|師走|9月＝長月。
+旧暦の10月の別名は？|神無月|長月|霜月|睦月|10月＝神無月。
+旧暦の11月の別名は？|霜月|神無月|師走|長月|11月＝霜月。
+旧暦の12月の別名は？|師走|霜月|睦月|如月|12月＝師走。
+旧暦で、7月〜9月はどの季節？|秋|春|夏|冬|旧暦は、1〜3月が春、4〜6月が夏、7〜9月が秋、10〜12月が冬。
+十二支で「北」を表すのは？|子|午|卯|酉|子＝北、卯＝東、午＝南、酉＝西。
+十二支で「南」を表すのは？|午|子|卯|酉|午＝南。
+十二支で「東」を表すのは？|卯|子|午|酉|卯＝東。
+昔の時刻で「午の刻」は、今のいつごろ？|正午ごろ|午前0時ごろ|午前6時ごろ|午後6時ごろ|「正午」の「午」はここから。午前・午後の境目。
+古文の「のたまふ」の意味は？|おっしゃる|申し上げる|いらっしゃる|いただく|「言ふ」の尊敬語。
+古文の「おはす」の意味は？|いらっしゃる|申し上げる|おっしゃる|差し上げる|「あり・をり・行く・来」の尊敬語。
+古文の「はべり」の意味は？|ございます|いらっしゃる|おっしゃる|お与えになる|丁寧語。「あり」の丁寧な言い方。
+古文の「まゐる」の意味は？|参上する・差し上げる|おっしゃる|いらっしゃる|お与えになる|謙譲語。
+古文の「たまふ」の意味は？|お与えになる・〜なさる|差し上げる|参上する|申し上げる|尊敬語。
+古文の「きこゆ」の意味は？|申し上げる|おっしゃる|お聞きになる|お与えになる|「言ふ」の謙譲語。
+#古典の作品
+『枕草子』の作者は？|清少納言|紫式部|兼好法師|鴨長明|平安時代の随筆。「春はあけぼの」。
+『源氏物語』の作者は？|紫式部|清少納言|紀貫之|和泉式部|平安時代の長編物語。主人公は光源氏。
+『徒然草』の作者は？|兼好法師（吉田兼好）|鴨長明|清少納言|松尾芭蕉|鎌倉時代の終わりごろの随筆。
+『方丈記』の作者は？|鴨長明|兼好法師|紀貫之|清少納言|鎌倉時代の随筆。「ゆく河の流れは絶えずして」。
+『土佐日記』の作者は？|紀貫之|紫式部|清少納言|鴨長明|平安時代の日記。仮名で書かれた。
+『土佐日記』は、男性の作者が、だれのふりをして書いた？|女性|僧侶|天皇|子ども|「男もすなる日記といふものを、女もしてみむとてするなり」。
+『おくのほそ道』の作者は？|松尾芭蕉|与謝蕪村|小林一茶|井原西鶴|江戸時代の紀行文。同行者は曽良。
+『平家物語』が語った内容は？|平氏一門の栄えとおとろえ|源氏の将軍の活躍|平安貴族の恋|天皇家の系図|平氏の栄華と滅亡を、仏教の無常観で語った。
+『平家物語』を語り伝えた人たちは？|琵琶法師|能楽師|狂言師|歌舞伎役者|琵琶を弾きながら語って広めた。
+『枕草子』『徒然草』『方丈記』のように、見聞きしたことや感想を自由に書いた文章のジャンルは？|随筆|軍記物語|日記|説話|作者の見方・考え方が表れる。
+『平家物語』のジャンルは？|軍記物語|随筆|歌物語|日記文学|合戦を中心に語った物語。
+『竹取物語』のジャンルは？|作り物語|随筆|軍記物語|説話集|「物語の出で来はじめの祖」といわれる。
+『今昔物語集』『宇治拾遺物語』のように、各地に伝わる短い話を集めた作品のジャンルは？|説話集|随筆|日記|軍記物語|民間の話を集めた作品。
+『伊勢物語』のように、和歌を中心にした短い物語のジャンルは？|歌物語|軍記物語|随筆|説話集|和歌にまつわる話を集めた物語。
+日本最古の物語とされる作品は？|竹取物語|源氏物語|平家物語|伊勢物語|かぐや姫の話。
+現存する日本最古の歌集は？|万葉集|古今和歌集|新古今和歌集|百人一首|奈良時代の終わりごろにまとめられた。
+最初の勅撰和歌集（天皇の命令でつくられた歌集）は？|古今和歌集|万葉集|新古今和歌集|小倉百人一首|平安時代の初め（905年）にできた。
+『古今和歌集』の編集の中心になった人物は？|紀貫之|大伴家持|藤原定家|柿本人麻呂|仮名序を書いた人物でもある。
+『万葉集』の編者の一人とされる人物は？|大伴家持|紀貫之|藤原定家|清少納言|奈良時代の歌人。
+『小倉百人一首』を選んだとされる人物は？|藤原定家|紀貫之|大伴家持|柿本人麻呂|鎌倉時代初めの歌人。
+『新古今和歌集』の撰者の一人は？|藤原定家|紀貫之|大伴家持|山上憶良|鎌倉時代の初めにできた勅撰和歌集。
+『源氏物語』の主人公は？|光源氏|在原業平|藤原道長|平清盛|光源氏の一生と子孫を描く。
+『源氏物語』が書かれたのは何時代？|平安時代|奈良時代|鎌倉時代|室町時代|11世紀はじめごろ。
+『枕草子』が書かれたのは何時代？|平安時代|奈良時代|鎌倉時代|江戸時代|10世紀末〜11世紀はじめごろ。
+『平家物語』が成立したのは何時代？|鎌倉時代|平安時代|室町時代|江戸時代|平氏の滅亡を語った物語。
+『方丈記』が書かれたのは何時代？|鎌倉時代|平安時代|室町時代|奈良時代|1212年ごろ。
+『おくのほそ道』が書かれたのは何時代？|江戸時代|鎌倉時代|室町時代|平安時代|1689年に芭蕉が旅に出た。
+「祇園精舎の鐘の声、諸行無常の響きあり」ではじまる作品は？|平家物語|方丈記|徒然草|枕草子|仏教の無常観が表れた冒頭。
+「つれづれなるままに、日暮らし、硯にむかひて」ではじまる作品は？|徒然草|方丈記|枕草子|平家物語|することもなく一日じゅう硯に向かって、と書き出す。
+「春はあけぼの。やうやう白くなりゆく山ぎは」ではじまる作品は？|枕草子|徒然草|方丈記|源氏物語|四季の美しさを書いた冒頭。
+「ゆく河の流れは絶えずして、しかももとの水にあらず」ではじまる作品は？|方丈記|徒然草|平家物語|枕草子|川の流れにたとえて、世の無常を述べる。
+「今は昔、竹取の翁といふものありけり」ではじまる作品は？|竹取物語|伊勢物語|源氏物語|土佐日記|かぐや姫の物語。
+「月日は百代の過客にして、行きかふ年もまた旅人なり」ではじまる作品は？|おくのほそ道|土佐日記|方丈記|徒然草|月日は永遠の旅人である、と書き出す。
+「男もすなる日記といふものを、女もしてみむとてするなり」ではじまる作品は？|土佐日記|更級日記|枕草子|竹取物語|女性のふりをして仮名で書いた日記。
+『平家物語』の冒頭に表れている考え方は？|無常観（すべては移り変わる）|恋愛の喜び|自然の美しさ|武士の忠義|「諸行無常」「盛者必衰」の考え方。
+「盛者必衰」の意味は？|栄えている者もいつかはおとろえる|勝者がつねに栄える|強い者がかならず勝つ|おとろえた者がまた栄える|栄華は永遠には続かない、という意味。
+「もののあはれ」の文学といわれる作品は？|源氏物語|枕草子|徒然草|竹取物語|しみじみとした情趣を描いた。
+「をかし」の文学といわれる作品は？|枕草子|源氏物語|平家物語|方丈記|明るく知的なおもしろさを描いた。
+#和歌・俳句
+短歌の音数は？|五・七・五・七・七|五・七・五|七・五・七・五|五・七・七・五・七|合わせて三十一音。
+俳句の音数は？|五・七・五|五・七・五・七・七|七・五・七|五・五・七・七|合わせて十七音。
+短歌の、はじめの三句（五・七・五）を何という？|上の句|下の句|初句|結句|のこりの七・七が下の句。
+俳句に詠みこむ、季節を表す言葉は？|季語|切れ字|枕詞|掛詞|「有季定型」が基本。
+「や」「かな」「けり」のように、句の切れ目を示し、感動を表す言葉は？|切れ字|季語|枕詞|序詞|俳句の大切な決まり。
+和歌で、特定の語を導く五音の言葉（「あしひきの」など）を何という？|枕詞|掛詞|縁語|切れ字|決まった言葉にかかる。
+「あしひきの」は、どの言葉にかかる枕詞？|山|母|奈良|旅|「あしひきの山」。
+「たらちねの」は、どの言葉にかかる枕詞？|母|山|奈良|旅|「たらちねの母」。
+「ひさかたの」は、どの言葉にかかる枕詞？|光|母|奈良|旅|「ひさかたの光」「ひさかたの天」など。
+「くさまくら」は、どの言葉にかかる枕詞？|旅|山|母|光|「くさまくら旅」。
+「あをによし」は、どの言葉にかかる枕詞？|奈良|旅|山|母|「あをによし奈良」。
+一つの言葉に二つの意味を重ねて使う、和歌の技法は？|掛詞|枕詞|切れ字|体言止め|「松」と「待つ」など。
+『万葉集』の歌風は？|素朴で力強い|優美で繊細|幽玄|滑稽|「ますらをぶり」といわれる。
+『古今和歌集』の歌風は？|優美で繊細|素朴で力強い|滑稽|写実的|「たをやめぶり」といわれる。
+『万葉集』に収められた、九州北部の守りについた兵士の歌を何という？|防人の歌|東歌|相聞歌|挽歌|防人は、おもに東国から送られた。
+『万葉集』の分類で、恋愛や親しい人への思いを詠んだ歌は？|相聞|挽歌|雑歌|防人の歌|万葉集の三大部立ては、雑歌・相聞・挽歌。
+『万葉集』の分類で、死者をいたむ歌は？|挽歌|相聞|雑歌|東歌|万葉集の三大部立ては、雑歌・相聞・挽歌。
+『万葉集』で使われた、漢字の音や訓で日本語を表す書き方は？|万葉仮名|ひらがな|カタカナ|ローマ字|のちにひらがな・カタカナが生まれるもとになった。
+「古池や蛙飛びこむ水の音」の作者は？|松尾芭蕉|与謝蕪村|小林一茶|正岡子規|蕉風を確立した江戸時代の俳人。
+「古池や蛙飛びこむ水の音」の切れ字は？|や|の|こむ|音|「古池や」と、初句で切れる。
+「閑さや岩にしみ入る蝉の声」を詠んだ場所は？|山寺（立石寺）|平泉|最上川|松島|『おくのほそ道』の中の句。
+「夏草や兵どもが夢の跡」を詠んだ場所は？|平泉|山寺|松島|最上川|藤原氏の栄華のあとを思って詠んだ句。
+「五月雨をあつめて早し最上川」の季語は？|五月雨|最上川|早し|あつめて|旧暦5月の長雨で、季節は夏。
+「荒海や佐渡によこたふ天河」の「天河」は何のこと？|天の川|雲|雨|雷|季節は秋の句。
+「菜の花や月は東に日は西に」の作者は？|与謝蕪村|松尾芭蕉|小林一茶|正岡子規|絵画的な句風の江戸時代の俳人。
+「春の海ひねもすのたりのたりかな」の作者は？|与謝蕪村|松尾芭蕉|小林一茶|正岡子規|のどかな春の海を詠んだ句。
+「やせ蛙まけるな一茶これにあり」の作者は？|小林一茶|与謝蕪村|松尾芭蕉|正岡子規|身近な生き物を詠んだ江戸時代の俳人。
+「柿くへば鐘が鳴るなり法隆寺」の作者は？|正岡子規|松尾芭蕉|与謝蕪村|小林一茶|写生を唱えた明治時代の俳人。
+「菜の花」は、俳句ではどの季節の季語？|春|夏|秋|冬|春に黄色い花が咲く。
+「天の川」は、俳句ではどの季節の季語？|秋|春|夏|冬|七夕と同じく、秋の季語。
+「木枯らし」は、俳句ではどの季節の季語？|冬|春|夏|秋|冬のはじめに吹く強い風。
+『みだれ髪』の作者は？|与謝野晶子|石川啄木|俵万智|斎藤茂吉|明治時代の歌人。
+『一握の砂』の作者は？|石川啄木|与謝野晶子|正岡子規|若山牧水|生活を詠んだ明治時代の歌集。
+『サラダ記念日』の作者は？|俵万智|与謝野晶子|石川啄木|斎藤茂吉|口語で詠んだ現代短歌の歌集。
+季語や切れ字のきまりがなく、世相や人情をユーモアや風刺で詠む五七五の詩は？|川柳|俳句|短歌|連歌|江戸時代に広まった。
+『百人一首』は、百人の歌人の歌を何首ずつ選んだもの？|1首ずつ|2首ずつ|3首ずつ|5首ずつ|百人の歌人から1首ずつ、計100首。
+#漢文
+漢文を日本語の語順と読み方で読むことを何という？|訓読|音読|黙読|朗読|返り点や送り仮名を使って読む。
+返り点も送り仮名もない漢文を何という？|白文|書き下し文|訓読文|口語文|漢字だけが並んだ文。
+訓読のきまりに従って、漢字仮名交じり文に書き直した文を何という？|書き下し文|白文|訓点|現代語訳|助詞・助動詞はひらがなで書く。
+漢文で、下の一字から上の一字に返って読むことを示す記号は？|レ点|一二点|上下点|句点|一字だけ返る。
+漢文で、二字以上離れた上の字に返って読むことを示す記号は？|一二点|レ点|句読点|ふりがな|一二点・上下点などで、二字以上返る。
+漢文の書き下し文で、助詞・助動詞にあたる字は、どう書く？|ひらがな|カタカナ|漢字|ローマ字|書き下し文では、ひらがなに直す。
+漢文の「不」は、書き下し文で何と読む？|ず|べし|なり|けり|打ち消しを表す字。
+漢文の「曰」は、何と読む？|いはく（いわく）|おもはく|ゆゑ|あたはず|「言うことには」の意味。
+『論語』の「子曰」の「子」は、だれのこと？|孔子|孟子|老子|荘子|『論語』は孔子の言葉。
+『論語』は、だれの言行を、弟子たちがまとめた書物？|孔子|孟子|老子|荘子|儒教の基本の書物。
+『論語』の「過ぎたるは猶及ばざるが如し」の意味は？|やりすぎは、足りないのと同じようによくない|努力はいつか実る|急がば回れ|古いものを大切にする|ほどほどが大切という教え。
+『論語』の「己の欲せざる所は人に施すこと勿かれ」の意味は？|自分がいやなことは人にもしてはいけない|欲しいものは自分で手に入れよ|人に施しをすべきだ|欲を持ってはいけない|思いやりの心（恕）を説く言葉。
+『孟子』が説いた考え方は？|人の本性は善だという考え|人の本性は悪だという考え|自然のままに生きる|法で国を治める|「性善説」。
+『老子』『荘子』が説いた考え方は？|自然のままに生きる|礼儀と仁を重んじる|法で国を治める|武力で国を治める|「道家」の思想。
+『韓非子』が説いた考え方は？|法によって国を治める|自然のままに生きる|仁と礼を重んじる|すべての人を等しく愛する|「法家」の思想。
+「矛盾」の話が書かれている書物は？|韓非子|論語|史記|孟子|矛と盾を売る商人の話。
+「矛盾」の話に出てくる商人が売っていたものは？|矛と盾|刀とよろい|弓と矢|やりとかぶと|何でも突き通す矛と、何でも防ぐ盾。
+「五十歩百歩」の話が書かれている書物は？|孟子|論語|史記|韓非子|孟子が王に語った話。
+「五十歩百歩」の話は、何の場面のたとえ？|戦場から逃げた兵士|田畑を耕す農民|川を渡る旅人|買い物をする商人|五十歩逃げた兵が百歩逃げた兵を笑った話。
+「蛇足」「漁夫の利」の話が書かれている書物は？|戦国策|論語|孟子|韓非子|戦国時代の策略や弁舌を集めた書物。
+「蛇足」の話で、余計に描き足したものは？|蛇の足|蛇の角|蛇の翼|蛇の目|蛇の絵に足を描き足して負けた話。
+「漁夫の利」の話で、争っていたのは何と何？|しぎとはまぐり|虎と竜|犬と猿|鳥と魚|争っているすきに漁師が両方をつかまえた。
+「杞憂」の話は、何を心配した話？|天が落ちてくること|病気になること|貧しくなること|戦争になること|杞の国の人が、天が落ちてこないか心配した。
+「背水の陣」「四面楚歌」「完璧」などの話が書かれている、司馬遷の歴史書は？|史記|論語|戦国策|孟子|中国最初の本格的な歴史書。
+一句が五字で四句からなる漢詩は？|五言絶句|七言絶句|五言律詩|七言律詩|五字×四句。
+一句が七字で四句からなる漢詩は？|七言絶句|五言絶句|七言律詩|五言律詩|七字×四句。
+一句が五字で八句からなる漢詩は？|五言律詩|五言絶句|七言律詩|七言絶句|五字×八句。
+一句が七字で八句からなる漢詩は？|七言律詩|七言絶句|五言律詩|五言絶句|七字×八句。
+絶句の四句の構成を、順に何という？|起・承・転・結|序・破・急|序論・本論・結論|主・述・修・補|起承転結の構成。
+漢詩で、句の終わりに同じ響きの字をそろえることを何という？|押韻|対句|倒置|反復|音の響きをそろえる。
+漢詩で、語の数や品詞が対応する二つの句を並べる技法は？|対句|押韻|体言止め|倒置|律詩では中の二組を対句にする。
+『春暁』（春眠暁を覚えず）の作者は？|孟浩然|李白|杜甫|白居易|唐の詩人。
+『春望』（国破れて山河在り）の作者は？|杜甫|李白|孟浩然|王維|戦乱の世を嘆く詩。
+『静夜思』（牀前月光を看る）の作者は？|李白|杜甫|孟浩然|白居易|ふるさとを思う詩。
+「詩仙」とよばれる唐の詩人は？|李白|杜甫|王維|白居易|天才的な詩風。
+「詩聖」とよばれる唐の詩人は？|杜甫|李白|孟浩然|王維|人々の苦しみをよんだ詩人。
+漢詩が最も栄えた中国の王朝は？|唐|漢|宋|明|「唐詩」ともいう。
+「春眠暁を覚えず」の意味は？|春の眠りは心地よく、夜が明けたのにも気づかない|春は夜明けが早い|春は眠れない|春は朝からいそがしい|『春暁』の冒頭。
+#表現技法
+「ようだ」「ごとし」などを使って、ほかのものにたとえる表現技法は？|直喩（明喩）|隠喩（暗喩）|擬人法|倒置法|「〜のようだ」とたとえる。
+「ようだ」などを使わずに、「AはBだ」とたとえる表現技法は？|隠喩（暗喩）|直喩（明喩）|擬人法|体言止め|たとえだと言わずに言い切る。
+人でないものを、人のようにたとえる表現技法は？|擬人法|直喩|倒置法|反復法|「風がささやく」など。
+「雪のように白い肌」は、何という表現技法？|直喩|隠喩|擬人法|体言止め|「ように」を使ったたとえ。
+「時は金なり」は、何という表現技法？|隠喩|直喩|擬人法|倒置法|「ように」を使わないたとえ。
+「風がささやく」は、何という表現技法？|擬人法|直喩|隠喩|反復法|風を人のようにたとえている。
+「ザーザー」「ワンワン」のような、音や声をまねた言葉は？|擬音語（擬声語）|擬態語|擬人法|慣用句|実際の音や声をまねる。
+「キラキラ」「ふわふわ」のような、様子や状態を音にたとえた言葉は？|擬態語|擬音語（擬声語）|擬人法|四字熟語|音のしないものの様子を表す。
+文の終わりを名詞（体言）で止める表現技法は？|体言止め|倒置法|反復法|対句法|余韻や印象を強める。
+言葉の順序を普通と逆にして、強調する表現技法は？|倒置法|体言止め|対句法|反復法|「走れ、メロスよ。」など。
+同じ言葉をくり返して、強調する表現技法は？|反復法|倒置法|対句法|省略法|リズムや強調の効果がある。
+形やつくりが対応する言葉を並べる表現技法は？|対句法|反復法|倒置法|比喩|「山は高く、海は深い。」など。
+次のうち、倒置法を使った文は？|走れ、メロスよ。|メロスは走る。|メロスの走る道。|走るメロスの姿。|「メロスよ、走れ」の語順を入れかえている。
+次のうち、体言止めを使った文は？|ゆれるススキの白い穂。|白い穂がゆれている。|ススキが風にゆれた。|穂は白かった。|文末が名詞「穂」で終わっている。
+次のうち、擬人法を使った文は？|月がほほえむ。|月が出た。|月のような顔。|月は丸い。|月を人のようにたとえている。
+次のうち、対句法を使った文は？|山は高く、海は深い。|山は高い。|海へ行った。|空が青い。|「山は高く」と「海は深い」が対応している。
+次のうち、直喩を使った表現は？|海のように広い心|海は広い|海が泣いている|海、海、海|「ように」を使ってたとえている。
+次のうち、擬音語はどれ？|ドンドン|ふわふわ|きらきら|のろのろ|ほかの三つは様子を表す擬態語。
+次のうち、擬態語はどれ？|ふわふわ|ワンワン|ザーザー|ドンドン|ほかの三つは音や声をまねた擬音語。
+結論を文章の最初に書く構成を何という？|頭括型|尾括型|双括型|中括型|はじめに結論を述べる。
+結論を文章の最後に書く構成を何という？|尾括型|頭括型|双括型|中括型|おわりに結論を述べる。
+結論を文章の最初と最後の両方に書く構成を何という？|双括型|頭括型|尾括型|中括型|最初と最後の両方で結論を述べる。
+作者の体験や感想を、自由な形式で書いた文章は？|随筆|論説文|説明文|小説|エッセイのこと。
+現代の話し言葉で書かれ、音数にきまりがない詩は？|口語自由詩|口語定型詩|文語自由詩|文語定型詩|現代の詩に多い形。
+作者の感情を中心にうたった詩は？|叙情詩|叙景詩|叙事詩|散文詩|内容による詩の分類。
+景色をうたった詩は？|叙景詩|叙情詩|叙事詩|散文詩|内容による詩の分類。
+歴史や出来事を語るようにうたった詩は？|叙事詩|叙景詩|叙情詩|散文詩|内容による詩の分類。
+物語がもっとも盛り上がる部分を何という？|山場（クライマックス）|発端|展開|結末|発端→展開→山場→結末と進む。
+景色や場面の様子を描いた表現は？|情景描写|心情描写|会話文|地の文|場面の雰囲気を伝える。
+登場人物の気持ちを描いた表現は？|心情描写|情景描写|会話文|地の文|気持ちを直接表す表現や、行動に表れる気持ち。
+「私」の目から見たように語る形の視点は？|一人称視点|三人称視点|二人称視点|客観視点|語り手が「私」の小説。
+文章の最初に問いを投げかけ、話題を示す部分を何という？|問題提起|結論|具体例|まとめ|読み手の興味をひく。
+論説文で、筆者の主張を支える具体的な例を何という？|事例（具体例）|結論|問題提起|要約|例のあとに主張が述べられることが多い。
+#文学作品
+『吾輩は猫である』『坊っちゃん』『こころ』の作者は？|夏目漱石|芥川龍之介|太宰治|森鷗外|明治時代を代表する小説家。
+『羅生門』『蜘蛛の糸』の作者は？|芥川龍之介|夏目漱石|太宰治|宮沢賢治|大正時代の小説家。
+『走れメロス』『人間失格』の作者は？|太宰治|芥川龍之介|三島由紀夫|川端康成|昭和時代の小説家。
+『銀河鉄道の夜』『注文の多い料理店』の作者は？|宮沢賢治|新美南吉|夏目漱石|太宰治|岩手県出身の詩人・童話作家。
+『舞姫』『高瀬舟』の作者は？|森鷗外|夏目漱石|芥川龍之介|島崎藤村|軍医でもあった明治時代の小説家。
+『たけくらべ』『にごりえ』の作者は？|樋口一葉|与謝野晶子|紫式部|清少納言|明治時代の女性小説家。
+『山月記』『李陵』の作者は？|中島敦|芥川龍之介|太宰治|宮沢賢治|中国の古典にもとづく作品が多い。
+『伊豆の踊子』『雪国』の作者は？|川端康成|三島由紀夫|太宰治|夏目漱石|日本人初のノーベル文学賞作家。
+『ごんぎつね』『手袋を買いに』の作者は？|新美南吉|宮沢賢治|芥川龍之介|太宰治|愛知県出身の童話作家。
+『故郷』『阿Q正伝』の作者は？|魯迅|ヘッセ|サン＝テグジュペリ|ドストエフスキー|中国の小説家。
+『少年の日の思い出』の作者は？|ヘルマン・ヘッセ|魯迅|サン＝テグジュペリ|モーパッサン|ドイツの作家。
+『星の王子さま』の作者は？|サン＝テグジュペリ|ヘルマン・ヘッセ|魯迅|アンデルセン|フランスの作家。
+『金閣寺』の作者は？|三島由紀夫|川端康成|太宰治|夏目漱石|昭和時代の小説家。
+『蟹工船』の作者は？|小林多喜二|太宰治|芥川龍之介|宮沢賢治|プロレタリア文学の代表的作家。
+『破戒』『若菜集』の作者は？|島崎藤村|夏目漱石|森鷗外|樋口一葉|詩人としても小説家としても活躍した。
+『道程』『智恵子抄』の作者は？|高村光太郎|萩原朔太郎|中原中也|宮沢賢治|詩人・彫刻家。
+『月に吠える』の作者は？|萩原朔太郎|高村光太郎|中原中也|北原白秋|口語自由詩の確立に貢献した。
+『山羊の歌』の作者は？|中原中也|萩原朔太郎|高村光太郎|谷川俊太郎|山口県出身の詩人。
+『春と修羅』『雨ニモマケズ』の作者は？|宮沢賢治|新美南吉|高村光太郎|中原中也|岩手県出身の詩人・童話作家。
+『二十億光年の孤独』の作者は？|谷川俊太郎|茨木のり子|金子みすゞ|吉野弘|現代を代表する詩人。
+『自分の感受性くらい』の作者は？|茨木のり子|谷川俊太郎|金子みすゞ|石垣りん|現代の女性詩人。
+「わたしと小鳥とすずと」の作者は？|金子みすゞ|谷川俊太郎|茨木のり子|与謝野晶子|「みんなちがって、みんないい」。
+『雪国』の書き出し「国境の長いトンネルを抜けると雪国であった」の作者は？|川端康成|夏目漱石|芥川龍之介|三島由紀夫|新潟県の雪国が舞台。
+『走れメロス』のもとになった作品を書いた、ドイツの詩人は？|シラー|ヘッセ|ゲーテ|カフカ|シラーの詩『人質』がもと。
+『羅生門』の主人公は？|下人|旅人|侍|僧|平安時代の荒れはてた羅生門が舞台。
+『蜘蛛の糸』で、地獄に蜘蛛の糸を垂らしたのは？|お釈迦様|閻魔様|観音様|天皇|カンダタを救おうとした。
+『走れメロス』で、メロスの身代わりになった友人は？|セリヌンティウス|ディオニス|フィロストラトス|ピタゴラス|メロスの親友の石工。
+『走れメロス』に出てくる、人を信じない王の名前は？|ディオニス|セリヌンティウス|フィロストラトス|ダモン|邪智暴虐の王。
+『坊っちゃん』の主人公が赴任した中学校は、どの地方にある？|四国|九州|北海道|東北|四国の中学校が舞台。
+『舞姫』の主人公が留学した国は？|ドイツ|フランス|イギリス|ロシア|ベルリンが舞台。
+『山月記』で、主人公の李徴は何に変身した？|虎|熊|狼|蛇|虎になった李徴が友人に語る。
+『少年の日の思い出』で、「ぼく」がつぶしてしまったものは？|クジャクヤママユ|ミヤマカラスアゲハ|モンシロチョウ|カブトムシ|エーミールのチョウを台なしにした。
+`;
+/* 国語の読解  qs の並び：[問い, 正解, 誤1, 誤2, 誤3, 解説]   ＋ 作文のセルフチェック（RAW_JC） */
+const PASS_J=[
+{id:'j01',title:'覚えるということ',text:`スマートフォンがあれば、知らない言葉もすぐに調べられる。道順も、天気も、漢字の書き方も、画面を見ればわかる。だから、「わざわざ覚えなくてもいい」と考える人が増えている。
+
+しかし、本当にそうだろうか。調べることと、わかっていることは同じではない。たとえば、歴史の流れを知らないまま「江戸時代」と検索しても、出てきた説明が自分の知識とどうつながるのか、判断できない。知識は、頭の中にあってはじめて、新しい情報を理解するための「ものさし」になるのである。
+
+もちろん、すべてを暗記する必要はない。大切なのは、調べればわかることと、自分の頭に入れておくべきこととを区別することだ。そして、考えるための土台になる知識は、自分で覚えておきたい。
+
+道具は便利だが、道具が考えてくれるわけではない。使う私たちの側に「ものさし」がなければ、情報の海でおぼれてしまうだろう。`,qs:[
+[`筆者は、「わざわざ覚えなくてもいい」という考え方に対して、どう述べていますか。`,`本当にそうだろうかと、疑問を投げかけている`,`その通りだと、強く賛成している`,`時代おくれの考えだと、強く怒っている`,`自分には関係がないと、ふれずにいる`,`「しかし、本当にそうだろうか」と、疑問を示している。`],
+[`「ものさし」は、何をたとえた言葉ですか。`,`新しい情報を理解するための、頭の中の知識`,`道具を作るための材料`,`情報を調べるための検索の道具`,`長さや重さを測るための機械`,`「知識は、頭の中にあってはじめて、新しい情報を理解するための『ものさし』になる」とある。`],
+[`筆者が大切だと述べていることは何ですか。`,`調べればわかることと、覚えておくべきこととを区別すること`,`調べることをやめて、すべて暗記すること`,`新しい道具を、できるだけ早く使いこなすこと`,`情報をたくさん集めて、すべて保存しておくこと`,`「大切なのは、調べればわかることと、自分の頭に入れておくべきこととを区別すること」とある。`],
+[`「情報の海でおぼれてしまうだろう」の「情報の海」は、何を表していますか。`,`あふれるほどたくさんの情報`,`情報を送る電波の流れ`,`情報を整理する便利な仕組み`,`世界じゅうの海に関する知識`,`情報の多さを海にたとえた比喩。ものさしがないと、判断できずにおぼれてしまう、という意味。`]]},
+{id:'j02',title:'祖母の梅干し',text:`毎年六月になると、祖母は庭の梅の実を収穫して梅干しを漬ける。私は小学生のころから、その手伝いをしてきた。
+
+漬けた梅は、夏の土用のころに三日間、ざるに並べて天日に干す。夜は露にあてないよう、家の中にしまう。朝になると、また縁側に出す。祖母は毎朝、「今日は風がいいねえ」とつぶやきながら、梅を一つずつひっくり返す。
+
+「面倒じゃないの？」と私が聞いたことがある。祖母は笑って、「手をかけた分だけ、ちゃんと味に出るんだよ」と答えた。そのときは、よくわからなかった。
+
+去年の冬、風邪をひいて食欲がなかった私に、祖母はおかゆと梅干しを出してくれた。口に含むと、すっぱさのあとに、やさしい甘みが広がった。ああ、これが「手をかけた味」なのだと思った。
+
+今年の六月、私は初めて、一人で梅をひっくり返した。「今日は風がいいねえ」と、つい口に出していた。`,qs:[
+[`祖母は、梅をどのくらいの間、天日に干しますか。`,`三日間`,`一日`,`一週間`,`一か月`,`「夏の土用のころに三日間、ざるに並べて天日に干す」とある。`],
+[`「手をかけた分だけ、ちゃんと味に出るんだよ」とは、どういう意味ですか。`,`丁寧に世話をした分だけ、おいしくなる`,`塩をたくさん使うほど、味が濃くなる`,`早く漬けるほど、おいしくなる`,`高い梅を選ぶほど、おいしくなる`,`毎日ひっくり返すなど、手間をかけることが味につながる、という意味。`],
+[`筆者が「これが『手をかけた味』なのだ」と思ったのは、なぜですか。`,`祖母の言葉の意味が、体験を通して実感できたから`,`風邪が治って、うれしかったから`,`祖母にほめられて、自信がついたから`,`梅干しの作り方を、すべて覚えたから`,`すっぱさのあとのやさしい甘みを味わい、祖母の言葉の意味がわかった。`],
+[`最後の一文の「つい口に出していた」から読み取れることは何ですか。`,`祖母のやり方や思いが、筆者に自然と受けつがれたこと`,`筆者が、祖母の言葉をばかにしていること`,`筆者が、梅干しづくりに飽きたこと`,`筆者が、祖母に会いたくないと思っていること`,`祖母と同じつぶやきを、無意識に口にしたことから、受けつがれた思いがわかる。`]]},
+{id:'j03',title:'最後の試合',text:`九回の裏、ツーアウト。スコアは三対二で、うちのチームが一点リードしていた。
+
+ぼくはベンチの端に座って、グラウンドを見つめていた。三年間、一度も公式戦に出られなかった。ベンチ入りできたのは、最後の大会だけだ。
+
+「声を出せ、声を！」
+キャプテンの健太の声が、ベンチに響く。ぼくは、のどが張りつくのを感じながら、思い切り叫んだ。
+「あと一つ！　しまっていこう！」
+自分の声が、思ったより大きくてびっくりした。マウンドの投手が、ちらりとこちらを見て、小さくうなずいた。
+
+次の球で、打球は高く上がり、ライトのグラブにおさまった。ベンチから、みんなが飛び出していく。ぼくも走った。足がもつれて転びそうになったが、そんなことはどうでもよかった。
+
+輪の中で、健太がぼくの肩をたたいた。
+「おまえの声、最後までちゃんと聞こえてたぞ。」
+目の前がにじんで、空の青さだけがやけに濃く見えた。`,qs:[
+[`試合の状況として、正しいものはどれですか。`,`九回の裏で、うちのチームが一点リードしている`,`九回の裏で、うちのチームが一点負けている`,`九回の表で、うちのチームが一点リードしている`,`七回の裏で、両チームが同点である`,`「九回の裏、ツーアウト。スコアは三対二で、うちのチームが一点リード」とある。`],
+[`「ぼく」は、三年間どのような立場でしたか。`,`一度も公式戦に出られなかった`,`エースとして活やくしていた`,`キャプテンとしてチームをまとめていた`,`一年前に転校してきた`,`「三年間、一度も公式戦に出られなかった」とある。`],
+[`「自分の声が、思ったより大きくてびっくりした」から読み取れる気持ちはどれですか。`,`自分でも気づかないほど、夢中で応援していた`,`声が出なくなって、困っていた`,`大声を出して、はずかしくなった`,`キャプテンの命令に、腹を立てていた`,`のどが張りつくほど必死だったので、声の大きさに自分でも驚いた。`],
+[`最後の場面で、「目の前がにじんで」いるのはなぜですか。`,`うれしさや、こみ上げる思いで涙が出てきたから`,`打球が目に当たって、痛かったから`,`試合に負けて、くやしかったから`,`空がまぶしくて、目が疲れたから`,`勝利と、健太の言葉への感動で涙があふれた。「空の青さ」は、晴れやかな気持ちを重ねている。`]]},
+{id:'j04',title:'ミツバチのダンス',text:`ミツバチは、花のみつがある場所を見つけると、巣にもどって仲間にその場所を教える。言葉を使わずに、「ダンス」で伝えるのである。
+
+みつのある場所が巣の近くのとき、ハチは円をえがくように回る。これを「円形ダンス」という。一方、場所が遠いときは、体をふりながら直進し、半円をえがいてもどり、また直進して反対側へ半円をえがく。8の字をえがくような動きで、「8の字ダンス」とよばれる。
+
+8の字ダンスでは、直進するときの向きが、みつのある方向を表している。巣の中の垂直な壁を上向きに進めば、太陽の方向にみつがあるという意味だ。また、直進する時間が長いほど、みつまでの距離が遠いことを表す。
+
+仲間のハチたちは、暗い巣の中で、踊るハチにさわりながらその動きを読み取る。そして、教えられた方向へ飛んでいく。小さな虫が、これほど正確に情報を伝え合っていることは、驚くべきことだ。`,qs:[
+[`ミツバチが「円形ダンス」をするのは、どんなときですか。`,`みつのある場所が、巣の近くのとき`,`みつのある場所が、巣から遠いとき`,`巣に敵が近づいているとき`,`巣の中の温度が下がったとき`,`「みつのある場所が巣の近くのとき、ハチは円をえがくように回る」とある。`],
+[`8の字ダンスで、みつまでの距離は何で表されますか。`,`直進する時間の長さ`,`8の字の大きさ`,`体をふる速さ`,`踊るハチの数`,`「直進する時間が長いほど、みつまでの距離が遠い」とある。`],
+[`巣の中の壁を、上向きに直進するダンスは、みつがどの方向にあることを表しますか。`,`太陽の方向`,`太陽と反対の方向`,`巣の真下の方向`,`風がふいてくる方向`,`「巣の中の垂直な壁を上向きに進めば、太陽の方向にみつがある」とある。`],
+[`仲間のハチは、暗い巣の中で、どのように情報を読み取りますか。`,`踊るハチにさわって、動きを感じ取る`,`踊るハチの出す光を見る`,`踊るハチの鳴き声を聞き分ける`,`踊るハチのにおいを追いかける`,`「踊るハチにさわりながらその動きを読み取る」とある。`]]},
+{id:'j05',title:'ごみを減らすには',text:`ごみを減らす取り組みとして、「リサイクル」ということばはよく知られている。ペットボトルや空き缶を分別して出し、新しい製品の原料として再び使うことだ。
+
+しかし、リサイクルには、運んだり、溶かしたり、作り直したりするための電気や燃料が必要である。つまり、リサイクルも環境に負担をかけているのだ。
+
+そこで注目されているのが、「リデュース」と「リユース」である。リデュースは、ごみになるものをそもそも減らすこと。リユースは、使えるものをくり返し使うことである。たとえば、買い物にマイバッグを持っていけば、レジぶくろというごみを減らせる。ガラスびんを洗って何度も使うのは、リユースにあたる。
+
+この三つの取り組みは「3R」とよばれ、リデュース、リユース、リサイクルの順に優先するのがよいとされている。ごみを出さないことが、いちばん環境にやさしいのである。`,qs:[
+[`筆者が「リサイクルも環境に負担をかけている」と述べる理由は何ですか。`,`運んだり溶かしたりするために、電気や燃料が必要だから`,`リサイクルをすると、ごみがかえって増えるから`,`分別の手間がかかって、人が疲れるから`,`原料となる資源が、足りなくなるから`,`「運んだり、溶かしたり、作り直したりするための電気や燃料が必要」とある。`],
+[`「リユース」の例として、文章にあげられているものはどれですか。`,`ガラスびんを洗って、何度も使うこと`,`マイバッグを持っていって、レジぶくろを減らすこと`,`ペットボトルを分別して出すこと`,`空き缶を溶かして、新しい製品を作ること`,`マイバッグはリデュース、ガラスびんをくり返し使うのがリユース。`],
+[`3Rのうち、優先するのがよいとされる順番はどれですか。`,`リデュース、リユース、リサイクル`,`リサイクル、リユース、リデュース`,`リユース、リサイクル、リデュース`,`リサイクル、リデュース、リユース`,`「リデュース、リユース、リサイクルの順に優先するのがよい」とある。`],
+[`筆者の主張に最も近いものはどれですか。`,`ごみを出さないことが、いちばん環境にやさしい`,`リサイクルは、まったく意味がない`,`ごみは、すべて燃やして処分すればよい`,`分別は、しなくてもよい`,`最後の文に、筆者の主張が述べられている。`]]},
+{id:'j06',title:'自転車のパンク',text:`学校の帰り道、自転車の後輪がぺしゃんこになっていることに気づいた。パンクだ。
+
+家まではまだ三キロもある。しかたなく、自転車を押して歩きはじめた。夕日がまぶしくて、鞄の重みが肩にくいこむ。「今日はついてないな」と、ため息ばかりが出た。
+
+歩いて十五分ほどたったころ、商店街の小さな自転車屋の前を通りかかった。店先で、おじさんが「どうした、パンクか」と声をかけてくれた。お金が足りるかどうか不安だったが、見てもらうことにした。
+
+おじさんは、チューブを水の入った桶にひたして、小さな穴を見つけた。「ほら、ここだ。くぎでも踏んだんだろう。」手際よく修理しながら、おじさんは言った。「穴の場所がわかれば、直せる。人間も同じだ。原因がわかれば、手の打ちようがある。」
+
+修理は十分ほどで終わり、修理代は思ったよりずっと安かった。走り出すと、さっきまで重かった足が、うそのように軽かった。`,qs:[
+[`筆者がため息ばかりついていた理由は何ですか。`,`パンクで自転車に乗れず、三キロも歩かなければならなくなったから`,`学校で、先生にしかられたから`,`鞄を、学校に忘れてきたから`,`自転車屋のおじさんが、こわかったから`,`「家まではまだ三キロもある」、「今日はついてないな」とある。`],
+[`おじさんは、どうやって穴を見つけましたか。`,`チューブを水の入った桶にひたした`,`チューブに空気を入れて、音を聞いた`,`チューブを日光にかざして、目でさがした`,`新しいチューブと取りかえた`,`「チューブを水の入った桶にひたして、小さな穴を見つけた」とある。`],
+[`おじさんの「原因がわかれば、手の打ちようがある」は、どういう意味ですか。`,`問題の原因がわかれば、解決の方法を考えられる`,`人間は、自転車よりもこわれにくい`,`パンクは、どんなに気をつけても防げない`,`手を打ち合わせると、気持ちが落ち着く`,`穴の場所がわかれば直せるように、人間の悩みも原因がわかれば対処できる、というたとえ。`],
+[`最後の「足が、うそのように軽かった」から読み取れる気持ちはどれですか。`,`不安が消えて、晴れやかな気分になった`,`疲れが出て、足を動かせなくなった`,`値段が高くて、がっかりした`,`まだ歩き足りなくて、物足りなかった`,`修理が終わり、修理代も安かったので、不安が解消して気持ちが軽くなった。`]]},
+{id:'j07',title:'雨の日の傘',text:`放課後、昇降口で空を見上げると、灰色の雲から雨がしとしとと落ちていた。ぼくは傘を忘れた。
+
+「どうしよう。」ぼくがつぶやくと、隣にいた陽菜が、黙って自分の傘を開いた。ふたりで入るには小さい傘だったが、ぼくは何も言わずに入れてもらった。
+
+肩がふれ合うほど近いのに、ぼくたちは話さなかった。三日前、ぼくは陽菜がかいた絵を「ふつうだね」と言ってしまったのだ。それきり、ふたりとも気まずくて、教室でも目を合わせなかった。
+
+信号の前で立ち止まったとき、陽菜が小さな声で言った。
+「あのときは、ちょっとだけ、悲しかった。」
+ぼくは、水たまりに映る信号の赤を見つめたまま、答えた。
+「ごめん。本当は、すごくいい絵だと思ったんだ。でも、うまく言えなくて。」
+陽菜は少しだけ笑った。信号が青に変わった。傘をたたく雨音が、さっきより軽やかに聞こえた。`,qs:[
+[`ふたりが話さなかったのは、なぜですか。`,`三日前、ぼくが陽菜の絵を「ふつうだね」と言い、気まずかったから`,`陽菜が、傘を貸してくれなかったから`,`陽菜が、来週引っ越してしまうから`,`雨の音が大きくて、声が聞こえなかったから`,`「三日前、ぼくは陽菜がかいた絵を『ふつうだね』と言ってしまった」とある。`],
+[`「肩がふれ合うほど近いのに、ぼくたちは話さなかった」から読み取れることは何ですか。`,`体は近くにいても、心の距離は離れている`,`ふたりはとても仲がよく、話さなくても通じ合っている`,`ふたりとも急いでいて、話す時間がない`,`傘が小さくて、雨音で話しにくい`,`「近いのに」という逆の関係から、気まずさと心の距離が表れている。`],
+[`陽菜の「あのときは、ちょっとだけ、悲しかった。」に表れている気持ちはどれですか。`,`傷ついたことを伝えて、仲直りのきっかけをつくろうとしている`,`ぼくを責めて、絶交しようとしている`,`絵のことは、すっかり忘れている`,`絵がうまくかけたことを、自慢している`,`「ちょっとだけ」と言いながら素直に伝え、ぼくが謝る機会をつくっている。`],
+[`最後の「傘をたたく雨音が、さっきより軽やかに聞こえた」は、何を表していますか。`,`仲直りができて、ぼくの心が軽くなったこと`,`雨が小降りになったこと`,`傘が壊れてしまったこと`,`ふたりが急ぎ足になったこと`,`情景描写に、ぼくの心情が重ねられている。`]]},
+{id:'j08',title:'犬と翁（古文）',text:`今は昔、山里に、年老いたる翁ありけり。ある日、翁、山にて薪を取りて帰るに、道のほとりに小さき犬の、いたく弱りて伏したるを見つけたり。翁、あはれがりて、懐に入れて家に連れて帰りぬ。
+
+粥を煮て食はせければ、犬、やうやう力づきて、尾を振りて喜びけり。翁も、いとうれしく思ひて、「汝、わが家にとどまれ」と言ひけり。
+
+その後、犬は翁に従ひて、山にも野にも、離れずありきけり。ある夜、翁の家に盗人入りけるを、犬、高く吠えて知らせければ、翁、目を覚まして、難を逃れけり。人々、「犬の恩返しなり」とめでたがりけり。
+
+（注）翁＝おじいさん　薪＝たきぎ　粥＝おかゆ　盗人＝どろぼう　難＝災い`,qs:[
+[`「あはれがりて」の意味として、最も適切なものはどれですか。`,`かわいそうに思って`,`おもしろがって`,`うらやましく思って`,`腹を立てて`,`「あはれがる」は、しみじみと心を動かされる・かわいそうに思う、という意味。`],
+[`翁が小さな犬を家に連れて帰ったのは、なぜですか。`,`道ばたで弱っているのを見つけ、かわいそうに思ったから`,`犬を飼いたいと、前から願っていたから`,`犬が、自分の後をついてきたから`,`盗人から家を守る番犬が必要だったから`,`「いたく弱りて伏したるを見つけたり。翁、あはれがりて」とある。`],
+[`「やうやう力づきて」の意味は、どれですか。`,`だんだん元気になって`,`急に怒り出して`,`すっかり弱ってしまって`,`とても眠たくなって`,`「やうやう」は「だんだん」の意味。粥を食べて少しずつ元気になった。`],
+[`犬は、どのようにして翁を助けましたか。`,`盗人が入ったとき、高く吠えて知らせた`,`山で、薪を運ぶのを手伝った`,`粥を煮て、翁に食べさせた`,`盗人にかみついて、追い払った`,`「犬、高く吠えて知らせければ、翁、目を覚まして、難を逃れけり」とある。`]]},
+{id:'j09',title:'方言のおもしろさ',text:`同じものを指すのに、地域によってちがう言葉が使われることがある。たとえば、かたつむりは、「でんでんむし」「まいまい」「つぶり」など、地域によってさまざまなよび方がある。このような、ある地域だけで使われる言葉を「方言」という。
+
+一方、全国どこでも通じる言葉は「共通語」とよばれる。学校の授業やニュースでは、共通語が使われることが多い。共通語のおかげで、私たちは遠くの人とも誤解なく話ができる。
+
+では、方言はなくしたほうがよいのだろうか。そうではない、と私は考える。方言には、その土地の暮らしや歴史、人々の気持ちが込められているからだ。たとえば、関西のあいさつ「おおきに」には、感謝のなかに親しみがある。
+
+共通語と方言は、どちらかを選ぶものではない。場面に応じて使い分けることができれば、私たちの言葉はもっと豊かになるはずだ。`,qs:[
+[`文章中の「方言」の説明として、正しいものはどれですか。`,`ある地域だけで使われる言葉`,`全国どこでも通じる言葉`,`外国から入ってきた言葉`,`昔の人だけが使っていた言葉`,`「ある地域だけで使われる言葉を『方言』という」とある。`],
+[`共通語のよい点として述べられているのは、どれですか。`,`遠くの人とも、誤解なく話ができる`,`聞いた人に、親しみが伝わる`,`その土地の歴史を知ることができる`,`発音がやさしく、すぐに覚えられる`,`「共通語のおかげで、私たちは遠くの人とも誤解なく話ができる」とある。`],
+[`筆者は、方言についてどう考えていますか。`,`なくさなくてよい。その土地の暮らしや気持ちが込められている`,`なくしたほうがよい。共通語のほうが正確だから`,`学校では、決して使ってはいけない`,`ニュースでも、使ったほうがよい`,`「そうではない」と述べ、方言に込められたものを理由にあげている。`],
+[`この文章で、筆者が最も言いたいことはどれですか。`,`共通語と方言を、場面に応じて使い分けると、言葉が豊かになる`,`方言は、共通語より正しい言葉である`,`これからは、共通語だけを使うべきだ`,`地域の言葉は、覚えなくてもよい`,`最後の段落が結論で、筆者の主張が述べられている。`]]},
+{id:'j10',title:'三つの俳句',text:`（A）古池や蛙飛びこむ水の音　　　　松尾芭蕉
+（B）菜の花や月は東に日は西に　　　与謝蕪村
+（C）やせ蛙まけるな一茶これにあり　小林一茶`,qs:[
+[`三つの句に共通して詠まれている季節は、どれですか。`,`春`,`夏`,`秋`,`冬`,`「蛙」も「菜の花」も、春の季語。「やせ蛙」も春の季語。`],
+[`「水の音」のように、耳で感じる音に注目して詠んでいる句は、どれですか。`,`A（古池や蛙飛びこむ水の音）`,`B（菜の花や月は東に日は西に）`,`C（やせ蛙まけるな一茶これにあり）`,`どの句にも当てはまらない`,`静けさの中に聞こえる「水の音」を詠んだ、芭蕉の有名な句。`],
+[`菜の花の黄色、月、日など、広い景色を詠んでいる句は、どれですか。`,`B（菜の花や月は東に日は西に）`,`A（古池や蛙飛びこむ水の音）`,`C（やせ蛙まけるな一茶これにあり）`,`どの句にも当てはまらない`,`蕪村の句。東の月と西の日の広がりが、絵のように目に浮かぶ。`],
+[`作者が蛙に呼びかけて、はげましているのは、どの句ですか。`,`C（やせ蛙まけるな一茶これにあり）`,`A（古池や蛙飛びこむ水の音）`,`B（菜の花や月は東に日は西に）`,`どの句にも当てはまらない`,`「まけるな」と呼びかけるのは擬人法。一茶は小さな生き物へのやさしい目をもっていた。`]]}
+];
+
+/* 作文のセルフチェック  書式：#分野 の下に  お題|見本|ひとこと */
+let RAW_JC=`
+#呼応・たとえ
+「たとえ〜ても」を使って、決意を表す文を作ろう。|例：たとえ失敗しても、最後までやりぬく。|「たとえ」と「ても」がペアになっているか確かめよう。
+「まるで〜ようだ」を使って、夕焼けを表す文を作ろう。|例：夕焼けは、まるで空が燃えているようだった。|たとえの文。「まるで」と「ようだ」がペアになっているか。
+「なぜなら〜からだ」を使って、理由を述べる文を作ろう。|例：私は早起きをする。なぜなら、朝は頭がすっきりしているからだ。|理由の文は「〜からだ」で終える。
+「決して〜ない」を使った文を作ろう。|例：約束は、決して忘れない。|「決して」のあとは、打ち消しの言葉がくる。
+擬態語を一つ入れて、教室の様子を書こう。|例：休み時間、教室はざわざわしていた。|「ざわざわ」「そわそわ」のような様子の言葉が入っているか。
+体言止めを使って、朝の様子を書こう。|例：まだ人のいない通学路。しずかな朝。|文の終わりが名詞になっているか。
+倒置法を使って、強い気持ちを表す文を作ろう。|例：行こう、みんなで。|言葉の順序を入れかえて、強調できているか。
+「しかし」を使って、前後で反対の内容になる二文を書こう。|例：宿題は多い。しかし、やればできる量だ。|前の文と後ろの文が、反対の内容になっているか。
+「うれしい」という言葉を使わずに、うれしい気持ちを表す文を書こう。|例：スキップしたくなるほど、足が軽かった。|行動や様子で気持ちを表すと、読み手に伝わる。
+#敬語
+先生に質問する文を、尊敬語を使って書こう。|例：先生は、明日の会議にいらっしゃいますか。|相手の動作には「いらっしゃる」「おっしゃる」など。
+先生に自分の予定を伝える文を、謙譲語を使って書こう。|例：明日、先生のお宅に伺います。|自分の動作には「伺う」「参る」「申し上げる」など。
+「ぼくは先生から本をもらった」を、先生の動作を高める言い方に直そう。|例：先生が、ぼくに本をくださった。（または「先生から本をいただいた」）|もらう→いただく（自分）、くれる→くださる（先生）。
+「時間がない」を、丁寧な言い方（敬体）に直そう。|例：時間がありません。|「ない」を「ありません」にする。
+先生に、宿題の提出が遅れた理由とおわびを書こう（敬語で二文）。|例：宿題の提出が遅れてしまい、申し訳ございません。明日の朝までに、必ずお持ちいたします。|おわび＋約束。自分の動作には謙譲語を使う。
+#要約・書き直し
+次の文を、20字ぐらいに短くまとめよう。「私は毎朝六時に起きて、犬を連れて近くの公園まで散歩に行き、帰ってから朝ごはんを食べる。」|例：毎朝、犬と散歩してから朝食を食べる。|主語や動作の順序を残して、かざりを減らす。
+「雨が降っている」を、体言止めで書き直そう。|例：降りつづく雨。|文の終わりを名詞で止める。
+次の二文を、一文にしよう。「雨が降った。試合は中止になった。」|例：雨が降ったので、試合は中止になった。|「ので」「から」でつなぐと、理由がはっきりする。
+次の二文を、一文にしよう。「兄は走る。速い。」|例：兄は速く走る。|「速い」を「速く」に変えて、「走る」を修飾する。
+「あの人は親切だ」を、具体的なエピソードを加えて書き直そう。|例：あの人は親切だ。道に迷っていた私を、目的地まで案内してくれた。|主張のあとに具体例を添えると説得力が出る。
+#意見を書く
+「スマートフォンは、中学生が持つべきか」について、賛成か反対かと理由を書こう。|例：私は賛成だ。なぜなら、災害のときに家族と連絡を取れるからだ。|結論→理由の順で、短くまとめる。
+「宿題は必要か」について、理由を二つあげて意見を書こう。|例：宿題は必要だと思う。理由は二つある。一つは、習ったことを忘れにくくなるから。もう一つは、毎日勉強する習慣がつくからだ。|「理由は二つある」のように、数を示すとわかりやすい。
+「自分に足りないもの」を一つあげて、直すためにすることを書こう。|例：私に足りないのは、続ける力だ。だから、毎日五分だけ、必ず机に向かう。|課題→方法の順に。小さな方法ほど続けやすい。
+テストで悪い点を取って落ち込んでいる友達を、はげます言葉を二文で書こう。|例：一回の点数がすべてじゃないよ。まちがえたところを直せば、次は必ず伸びるよ。|相手の気持ちを受け止めて、前向きな提案をする。
+朝の通学路で見た景色を、五感のうち二つ以上を使って書こう。|例：朝の通学路は、冷たい風が頬をなで、どこかからパンの焼けるにおいがただよっていた。|見る・聞く・かぐ・ふれる・味わう、のうち二つ以上。
+「最近がんばったこと」を、事実→気持ちの順で三文で書こう。|例：先週、数学の宿題を毎日続けた。最初はめんどうだった。でも、続けるうちに、解けるのが楽しくなった。|事実を先に、気持ちは後に書くと伝わりやすい。
+志望校に入ってがんばりたいことを、具体的に一文で書こう。|例：私は、部活動と勉強を両立させて、粘り強く取り組む力を身につけたい。|「がんばる」だけでなく、何をどうがんばるかを書く。
+入学したあとの自分の姿を、具体的な場面で一文で書こう。|例：放課後、図書室で友達と教え合いながら、明日の予習をしている。|場面が目に浮かぶように、時間・場所・行動を入れる。
+`;
 /* 数学のきほん（概念・定義・性質・公式の意味・まちがえやすい点）中1〜中2前半  書式：#見出し の下に  問い|正解|誤1|誤2|誤3|解説 */
 let RAW_MQ=`
 #正負の数・文字式
@@ -4438,6 +5264,1437 @@ BTB溶液は、アルカリ性の水溶液で何色になる？|青色|
 青色リトマス紙を酸性の水溶液につけると、何色に変わる？|赤色|
 赤色リトマス紙をアルカリ性の水溶液につけると、何色に変わる？|青色|
 `;
+/* 理科 一問一答（生物）  書式：#分野/単元/答えの種類 の下に  問い|答え|ひとこと解説 */
+RAW_SQ+=`
+#生物/植物/用語
+葉の細胞にあり、光合成を行う緑色の粒は？|葉緑体|
+葉の表皮にある、気体の出入り口になるすきまは？|気孔|おもに葉の裏側に多い
+気孔を囲んでいる、三日月形の2つの細胞は？|孔辺細胞|
+根から吸い上げた水が、気孔から水蒸気になって出ていく現象は？|蒸散|蒸散がさかんだと、水の吸い上げもさかんになる
+根から吸い上げた水や養分が通る管は？|道管|
+葉でつくられたデンプンなどの養分が通る管は？|師管|
+道管と師管が束になった部分は？|維管束|
+根の先にあり、水や養分を吸収する細い毛のようなものは？|根毛|表面積が広がり、吸収しやすい
+花粉がめしべの先につくことは？|受粉|
+めしべの根もとにあり、中に胚珠が入っているふくらんだ部分は？|子房|
+受粉後、子房が成長してできるものは？|果実|
+受粉後、胚珠が成長してできるものは？|種子|
+おしべの先にあって、花粉が入っている袋は？|やく|
+めしべの先端で、花粉がつく部分は？|柱頭|
+受粉のあと、柱頭から胚珠までのびていく管は？|花粉管|
+植物が光を受けて、デンプンなどの養分をつくるはたらきは？|光合成|
+植物が昼も夜も行う、酸素をとり入れて二酸化炭素を出すはたらきは？|呼吸|
+光合成の材料は、水と何？|二酸化炭素|
+光合成で、葉でつくられる養分は？|デンプン|
+光合成のときに、葉から出る気体は？|酸素|
+光合成に必要な、太陽から受けとるものは？|光|
+夜のように光が当たらないとき、植物が行わないはたらきは？|光合成|呼吸は光がなくても行う
+ふ入りの葉の緑色でない部分には、光合成を行う何がない？|葉緑体|
+#生物/植物/分類
+胚珠が子房の中にある植物のなかまは？|被子植物|
+胚珠がむき出しの植物のなかまは？|裸子植物|マツ・イチョウ・スギなど
+花をさかせ、種子でふえる植物の総称は？|種子植物|被子植物と裸子植物
+子葉が1枚の被子植物のなかまは？|単子葉類|ユリ・イネ・トウモロコシなど
+子葉が2枚の被子植物のなかまは？|双子葉類|アブラナ・サクラ・ヒマワリなど
+種子をつくらず、胞子でふえ、根・茎・葉の区別がある植物は？|シダ植物|イヌワラビ・ゼンマイなど
+種子をつくらず、胞子でふえ、根・茎・葉の区別がない植物は？|コケ植物|ゼニゴケ・スギゴケなど
+ゼニゴケは、シダ植物とコケ植物のどちらのなかま？|コケ植物|
+イヌワラビは、シダ植物とコケ植物のどちらのなかま？|シダ植物|
+#生物/植物/つくり
+双子葉類の葉脈は、どんな形？|網状脈|
+単子葉類の葉脈は、どんな形？|平行脈|
+双子葉類の根は、どんなつくり？|主根と側根|
+単子葉類の根は、どんなつくり？|ひげ根|
+双子葉類の茎で、維管束はどのように並ぶ？|輪のように並ぶ|
+単子葉類の茎で、維管束はどのように並ぶ？|全体に散らばる|
+茎の維管束で、道管があるのは内側と外側のどちら？|内側|師管は外側
+茎の維管束で、師管があるのは内側と外側のどちら？|外側|道管は内側
+#生物/植物/色
+ヨウ素液をデンプンにつけると、何色に変わる？|青紫色|
+BTB溶液は、二酸化炭素が溶けこむと何色になる？|黄色|酸性になる
+BTB溶液は、二酸化炭素が減ってアルカリ性になると何色になる？|青色|
+中性のBTB溶液の色は？|緑色|
+石灰水に二酸化炭素を通すと、どうなる？|白くにごる|
+ベネジクト液に糖を加えて加熱すると、何色の沈殿ができる？|赤褐色|
+#生物/植物/薬品
+光合成でデンプンができたかを調べる薬品は？|ヨウ素液|
+葉の緑色をぬくために、葉をあたためる液体は？|エタノール|湯せんであたためる（火に直接かけない）
+呼吸で二酸化炭素が出たかを調べるのに使う液体は？|石灰水|
+#生物/動物/消化
+だ液にふくまれる、デンプンを分解する消化酵素は？|アミラーゼ|
+胃液にふくまれる、タンパク質を分解する消化酵素は？|ペプシン|
+すい液にふくまれる、脂肪を分解する消化酵素は？|リパーゼ|
+デンプンが最終的に分解されてできるものは？|ブドウ糖|
+タンパク質が最終的に分解されてできるものは？|アミノ酸|
+脂肪が最終的に分解されてできるものは？|脂肪酸とモノグリセリド|
+脂肪の消化を助ける液で、肝臓でつくられるものは？|胆汁|胆汁には消化酵素はない
+#生物/動物/器官・部位
+胆汁をたくわえる器官は？|胆のう|
+栄養分の吸収が、おもに行われる器官は？|小腸|
+水分の吸収が、おもに行われる器官は？|大腸|
+食べ物が通る順で、食道の次に通る器官は？|胃|
+小腸の壁にある、たくさんの小さな突起は？|柔毛|表面積を大きくして、吸収しやすくしている
+柔毛で吸収された脂肪が入る管は？|リンパ管|
+柔毛で吸収されたブドウ糖とアミノ酸が入る管は？|毛細血管|
+肺にある、空気と血液の間で気体の交換が行われる小さな袋は？|肺胞|
+ヒトの血液を全身に送り出すポンプのはたらきをする器官は？|心臓|
+有害なアンモニアを、害の少ない尿素に変える器官は？|肝臓|
+血液から不要なものをこしとり、尿をつくる器官は？|じん臓|
+尿を一時的にためる器官は？|ぼうこう|
+目で、光を屈折させて網膜に像を結ばせる部分は？|水晶体|
+目で、光の刺激を受けとる細胞がある部分は？|網膜|
+耳で、音の振動を最初に受けとって震える膜は？|鼓膜|
+耳で、振動を刺激として受けとる器官は？|うずまき管|
+脳と脊髄をまとめて何神経という？|中枢神経|
+骨についていて、骨と筋肉をつなぐ丈夫な部分は？|けん|
+全身から戻ってきた血液が最初に入る、心臓の部屋は？|右心房|
+全身へ血液を送り出す、心臓の部屋は？|左心室|
+肺から戻ってきた血液が流れる血管は？|肺静脈|
+#生物/動物/物質・成分
+酸素を運ぶ、赤血球にふくまれる赤い色素は？|ヘモグロビン|
+血液の成分のうち、酸素を運ぶのは？|赤血球|
+血液の成分のうち、細菌などを分解して体を守るのは？|白血球|
+血液の成分のうち、出血したときに血を固めるのは？|血小板|
+血液の液体の成分は？|血しょう|養分や不要な物を運ぶ
+血液から出て、細胞のまわりを満たしている液体は？|組織液|
+タンパク質が分解されてできる、有害な物質は？|アンモニア|
+肝臓でアンモニアが変えられてできる、害の少ない物質は？|尿素|
+肺で、血液にとり込まれる気体は？|酸素|
+血液から肺に出される気体は？|二酸化炭素|
+#生物/動物/用語
+食べ物を、体にとり入れやすい小さな物質に分けるはたらきは？|消化|
+消化された養分が、血液やリンパ液にとり込まれることは？|吸収|
+心臓から出る血液が流れる血管は？|動脈|壁が厚く、血圧が高い
+心臓に戻る血液が流れる血管は？|静脈|ところどころに弁がある
+心臓から肺を通って心臓に戻る血液の流れは？|肺循環|
+心臓から全身を通って心臓に戻る血液の流れは？|体循環|
+酸素を多くふくむ血液を何という？|動脈血|
+二酸化炭素を多くふくむ血液を何という？|静脈血|
+体の中で、養分と酸素から、エネルギーをとり出すはたらきは？|細胞呼吸|
+目・耳・鼻などのように、刺激を受けとる器官は？|感覚器官|
+感覚器官で受けた刺激を、脳や脊髄に伝える神経は？|感覚神経|
+脳や脊髄からの命令を、筋肉に伝える神経は？|運動神経|
+脳や脊髄から枝分かれして、全身に広がる神経は？|末しょう神経|
+熱いものにふれて、思わず手を引っこめるような、意識とは関係なく起こる反応は？|反射|
+熱いものにふれて手を引っこめる反射で、命令が出される中枢は？|脊髄|
+関節をはさんで、2つの筋肉が対になってはたらくとき、うでを曲げるときに縮むのは？|上腕二頭筋|
+体温がまわりの温度によって変わる動物は？|変温動物|魚類・両生類・は虫類
+体温がほぼ一定に保たれる動物は？|恒温動物|鳥類・ホ乳類
+卵を産んで子をふやすふえ方は？|卵生|
+母親の体内である程度育ててから子を産むふえ方は？|胎生|ホ乳類
+背骨をもつ動物の総称は？|セキツイ動物|
+背骨をもたない動物の総称は？|無セキツイ動物|
+体の外側をおおう、かたい殻のようなつくりは？|外骨格|節足動物
+#生物/動物/分類
+一生を水中ですごし、えらで呼吸するセキツイ動物は？|魚類|
+子はえらと皮ふ、親は肺と皮ふで呼吸するセキツイ動物は？|両生類|カエル・イモリ・サンショウウオ
+体が乾いたうろこでおおわれ、陸上に殻のある卵を産むセキツイ動物は？|は虫類|
+体が羽毛でおおわれ、卵生で恒温のセキツイ動物は？|鳥類|
+体表が毛でおおわれ、胎生で乳で子を育てるセキツイ動物は？|ホ乳類|
+体が外骨格でおおわれ、体と足に節がある無セキツイ動物は？|節足動物|昆虫類・甲殻類など
+イカやアサリのように、外とう膜をもつ無セキツイ動物は？|軟体動物|
+節足動物のうち、体が頭・胸・腹に分かれ、胸に3対の足がある動物は？|昆虫類|
+節足動物のうち、エビやカニのなかまは？|甲殻類|
+#生物/細胞/用語
+細胞の中に1つあって、染色液で染まりやすい丸い部分は？|核|
+細胞を包んでいる、うすい膜は？|細胞膜|
+核のまわりの、細胞膜までの部分をまとめて何という？|細胞質|
+植物の細胞の外側にある、丈夫な仕切りは？|細胞壁|
+成長した植物の細胞に大きく見える、水分などをためる袋は？|液胞|
+光合成を行う、植物の細胞にある緑色の粒は？|葉緑体|
+1つの細胞だけでできている生物は？|単細胞生物|ゾウリムシ・アメーバ
+たくさんの細胞でできている生物は？|多細胞生物|
+形やはたらきが同じ細胞の集まりは？|組織|
+いくつかの組織が集まって、特定のはたらきをもつものは？|器官|
+いくつかの器官が集まってできた、1つの生物の体は？|個体|
+染色体が現れて、1つの細胞が2つに分かれるふえ方は？|体細胞分裂|
+細胞分裂のとき、核の中に見えるひも状のものは？|染色体|
+根や茎の先端近くにある、細胞分裂がさかんな部分は？|成長点|
+核や染色体を赤などに染める薬品は？|染色液|
+顕微鏡の倍率は、接眼レンズの倍率と何の倍率をかけたもの？|対物レンズ|
+顕微鏡で、プレパラートをのせる台は？|ステージ|
+顕微鏡で、ピントを合わせるときに回すものは？|調節ねじ|
+顕微鏡を使うとき、最初に使う倍率は？|低倍率|
+水中にすみ、たくさんのせん毛で動く単細胞生物は？|ゾウリムシ|
+光合成を行い、べん毛で動く単細胞生物は？|ミドリムシ|
+#生物/遺伝/用語
+親の体の一部が分かれて、新しい個体になるふえ方は？|無性生殖|分裂・出芽・栄養生殖など
+精子と卵のような生殖細胞が結びつく、ふえ方は？|有性生殖|
+動物で、精子の核と卵の核が合体することは？|受精|
+受精卵が分裂をくり返して、体の基本ができるまでの間の状態は？|胚|
+生殖細胞をつくるとき、染色体の数が半分になる細胞分裂は？|減数分裂|
+生物の形や性質などの特徴を何という？|形質|
+形質が親から子へ伝わることは？|遺伝|
+形質を決めるもとになるもので、染色体にあるものは？|遺伝子|
+遺伝子の本体である物質は？|DNA|
+何世代も同じ形質しか現れない個体は？|純系|
+対立形質をもつ純系どうしをかけ合わせたとき、子に現れる形質は？|顕性形質|
+対立形質をもつ純系どうしをかけ合わせたとき、子に現れない形質は？|潜性形質|
+対立する遺伝子が分かれて、別々の生殖細胞に入る法則は？|分離の法則|
+メンデルが遺伝の実験に使った植物は？|エンドウ|
+#生物/遺伝/形質
+丸い種子の純系としわのある種子の純系をかけ合わせたとき、子（F1）の種子はどうなる？|すべて丸い種子|丸が顕性形質
+対立形質の純系どうしをかけ合わせたとき、子に現れる形質は？|顕性形質|
+対立形質の純系どうしをかけ合わせたとき、子に現れない形質は？|潜性形質|
+遺伝子の組み合わせがAAのとき、現れる形質は？|顕性形質|AがAに対して顕性
+遺伝子の組み合わせがAaのとき、現れる形質は？|顕性形質|顕性の遺伝子があれば顕性形質が現れる
+遺伝子の組み合わせがaaのとき、現れる形質は？|潜性形質|
+#生物/遺伝/遺伝子の組み合わせ
+丸い種子の純系（丸が顕性、遺伝子A）の遺伝子の組み合わせは？|AA|
+しわのある種子の純系（遺伝子a）の遺伝子の組み合わせは？|aa|
+AAとaaをかけ合わせてできる子（F1）の遺伝子の組み合わせは？|Aa|
+AAがつくる生殖細胞の遺伝子は？|A|
+aaがつくる生殖細胞の遺伝子は？|a|
+Aaがつくる生殖細胞の遺伝子は？|Aとa（2種類）|Aをもつ細胞とaをもつ細胞が同じ数できる
+F1（Aa）どうしからできる孫（F2）の遺伝子の組み合わせで、いちばん多いのは？|Aa|AA：Aa：aa＝1：2：1
+#生物/遺伝/数値
+F2の、丸：しわの比は？|3：1|
+F2の遺伝子の組み合わせ AA：Aa：aa の比は？|1：2：1|
+AaとaaをかけてできるF2の、丸：しわの比は？|1：1|
+ヒトの体細胞の染色体の数は？|46本|
+ヒトの生殖細胞（精子・卵）の染色体の数は？|23本|
+ヒトの体細胞の染色体は、何対ある？|23対|
+#生物/遺伝/進化
+長い年月をかけて、生物の特徴が変化していくことは？|進化|
+鳥のつばさとヒトの腕のように、もとは同じ器官だったと考えられるものは？|相同器官|
+鳥類とは虫類の特徴をあわせもつ生物の化石は？|始祖鳥|
+セキツイ動物のうち、最初に現れたと考えられるのは？|魚類|
+生物の進化の証拠となる、昔の生物の体や足あとなどが残ったものは？|化石|
+#生物/自然界/用語
+ある地域のすべての生物と、それをとり巻く環境をまとめて何という？|生態系|
+生物どうしの「食べる・食べられる」の関係は？|食物連鎖|
+食物連鎖が複雑にからみ合った、網の目のような関係は？|食物網|
+光合成を行って、無機物から有機物をつくる生物は？|生産者|
+ほかの生物を食べて養分を得る生物は？|消費者|
+生物の死がいやふんを分解して、無機物にする生物は？|分解者|
+分解者のなかまで、キノコやカビなどは？|菌類|
+分解者のなかまで、納豆菌や乳酸菌などは？|細菌類|
+食物連鎖で、ふつう数量がいちばん多いのは？|生産者|
+土の中で落ち葉などを食べ、分解を助ける小動物の例は？|ミミズ|
+生物と大気の間を、炭素がめぐるときの気体は？|二酸化炭素|
+もとの生態系にいなかったのに、人間が持ちこんで、在来の生物をおびやかす生物は？|外来生物|
+二酸化硫黄や窒素酸化物がとけて、強い酸性になった雨は？|酸性雨|
+紫外線を吸収して生物を守るが、フロンで破壊される大気の層は？|オゾン層|
+`;
+/* 理科 一問一答（地学）  書式：#分野/単元/答えの種類 の下に  問い|答え|ひとこと解説 */
+RAW_SQ+=`
+#地学/大地/用語
+地下でとけた岩石（マグマ）が、地表にふき出す現象は？|噴火|
+マグマが地表に流れ出したものは？|溶岩|
+マグマが冷えて固まってできた岩石は？|火成岩|
+火成岩のうち、マグマが地表や地表近くで急に冷え固まった岩石は？|火山岩|
+火成岩のうち、マグマが地下深くでゆっくり冷え固まった岩石は？|深成岩|
+火山岩に見られる、大きな結晶（斑晶）と細かい粒（石基）からなるつくりは？|斑状組織|
+深成岩に見られる、同じくらいの大きさの鉱物が組み合わさったつくりは？|等粒状組織|
+火成岩にふくまれる、結晶になった粒を何という？|鉱物|
+地震が最初に発生した、地下の場所は？|震源|
+震源の真上にあたる、地表の地点は？|震央|
+地震による、ある場所のゆれの大きさを表す数値は？|震度|
+地震そのものの規模を表す数値は？|マグニチュード|
+地震のゆれのうち、はじめに小さくゆれる部分は？|初期微動|
+地震のゆれのうち、あとから来る大きなゆれは？|主要動|
+初期微動を起こす波は？|P波|
+主要動を起こす波は？|S波|
+初期微動が始まってから主要動が始まるまでの時間は？|初期微動継続時間|
+P波とS波で、伝わる速さが速いのは？|P波|
+海底でおこる地震などで発生する、大きな波は？|津波|
+地震のゆれで、砂地などの地面が液体のようになる現象は？|液状化|
+過去に活動した跡があり、今後も活動する可能性のある断層は？|活断層|
+地球の表面をおおう、厚さ数十〜100kmほどの、かたい岩盤は？|プレート|
+海洋プレートが大陸プレートの下にしずみこむ所にできる、深い溝は？|海溝|
+日本付近でしずみこむ海洋プレートは、太平洋プレートと何？|フィリピン海プレート|
+#地学/大地/岩石・鉱物
+無色鉱物で、無色や白色をしていて、不規則に割れる鉱物は？|石英|
+無色鉱物で、白色やうす桃色で、柱状や短冊状の鉱物は？|長石|
+火山岩のうち、黒っぽい岩石は？|玄武岩|
+火山岩のうち、白っぽい岩石は？|流紋岩|
+火山岩のうち、中間の色（灰色）の岩石は？|安山岩|
+深成岩のうち、白っぽい岩石は？|花こう岩|
+深成岩のうち、黒っぽい岩石は？|斑れい岩|
+有色鉱物で、黒色の磁石につく鉱物は？|磁鉄鉱|
+有色鉱物で、黒色の板のようにはがれやすい鉱物は？|黒雲母|
+有色鉱物で、緑色や黄緑色をした鉱物は？|カンラン石|
+#地学/大地/地層・化石
+れき・砂・泥などが積み重なって固まってできた岩石は？|堆積岩|
+粒の大きさが2mm以上のものは？|れき|
+粒の大きさが約0.06mm〜2mmのものは？|砂|
+粒の大きさが約0.06mm以下のものは？|泥|
+れきが固まってできた堆積岩は？|れき岩|
+砂が固まってできた堆積岩は？|砂岩|
+泥が固まってできた堆積岩は？|泥岩|
+うすい塩酸をかけると、二酸化炭素が出る堆積岩は？|石灰岩|サンゴなどの死がいが固まった
+とてもかたく、うすい塩酸をかけても気体が出ない堆積岩は？|チャート|海の小さな生物の殻が固まった
+火山灰などが固まってできた堆積岩は？|凝灰岩|粒が角ばっている
+流れる水が、土地をけずるはたらきは？|侵食|
+流れる水が、土や石を運ぶはたらきは？|運搬|
+流れる水が、運んできた土や石を積もらせるはたらきは？|堆積|
+川が山地から平地に出る所に、土砂が積もってできる扇形の地形は？|扇状地|
+川が海や湖に出る所に、土砂が積もってできる地形は？|三角州|
+川の上流で、はげしい侵食によってできる、V字形の谷は？|V字谷|
+地層が堆積した当時の環境を知る手がかりになる化石は？|示相化石|
+地層ができた年代を知る手がかりになる化石は？|示準化石|
+古生代の示準化石で、体が3つの部分に分かれた節足動物は？|三葉虫|
+中生代の示準化石で、渦まき状の殻をもつ生物は？|アンモナイト|
+地層を柱のように表した図は？|柱状図|
+火山灰の層のように、離れた地層を比べるときの目印になる層は？|鍵層|
+地層が横から押されて、波打つように曲がったものは？|しゅう曲|
+地層が、力を受けて切れてずれたものは？|断層|
+#地学/大地/性質
+マグマのねばりけが強い火山の、噴火のようすは？|激しい|
+マグマのねばりけが弱い火山の、噴火のようすは？|おだやか|
+ねばりけの強いマグマからできる火山岩の色は？|白っぽい|
+ねばりけの弱いマグマからできる火山岩の色は？|黒っぽい|
+ねばりけの強いマグマでできる火山の形は？|ドーム状に盛り上がる|
+ねばりけの弱いマグマでできる火山の形は？|傾斜がゆるやか|
+震源から遠くなるほど、初期微動継続時間はどうなる？|長くなる|
+ふつう、地層は下にあるものほど、どうなっている？|古い|
+粒の大きいものは、河口から近いところと遠いところ、どちらに積もる？|近いところ|
+サンゴの化石からわかる、堆積した当時の環境は？|あたたかくて浅い海|
+シジミの化石からわかる、堆積した当時の環境は？|河口や湖|
+#地学/天気/用語
+気圧を表す単位は？|ヘクトパスカル|hPaと書く
+まわりより気圧が高い所の中心は？|高気圧|
+まわりより気圧が低い所の中心は？|低気圧|
+気圧が同じ所を結んだ線は？|等圧線|
+空気1㎥がふくむことのできる、水蒸気の最大の質量は？|飽和水蒸気量|気温が高いほど大きい
+空気中の水蒸気が、水滴に変わり始める温度は？|露点|
+空気が上へ動く風は？|上昇気流|
+空気が下へ動く風は？|下降気流|
+暖かい空気と冷たい空気がぶつかるとき、その境目の面は？|前線面|
+前線面が地表と交わる線は？|前線|
+暖気が寒気の上にはい上がっていく前線は？|温暖前線|
+寒気が暖気の下にもぐりこんでいく前線は？|寒冷前線|
+寒冷前線が温暖前線に追いついてできる前線は？|閉そく前線|
+ほとんど動かない前線で、梅雨前線などは？|停滞前線|
+温暖前線のあとに広がる、弱い雨を長く降らせる雲は？|乱層雲|
+寒冷前線にともなってできる、強い雨を短時間降らせる雲は？|積乱雲|
+大陸や海洋上でつくられる、性質が一様な大きな空気のかたまりは？|気団|
+冬の日本に影響する、冷たくて乾燥した気団は？|シベリア気団|
+夏の日本に影響する、あたたかくて湿った気団は？|小笠原気団|
+冬の気圧配置の特徴を、東西の気圧で表すと？|西高東低|
+日本付近の上空を、西から東へふく強い風は？|偏西風|
+季節によって風向きが変わる、大規模な風は？|季節風|
+冬の日本でふく季節風の向きは？|北西|
+夏の日本でふく季節風の向きは？|南東|
+昼間、海岸付近で海から陸へふく風は？|海風|
+熱帯の海上で発生した低気圧のうち、最大風速がおよそ17m/s以上になったものは？|台風|
+台風の中心付近にできる、雲のうすい部分は？|台風の目|
+雲量が0〜1のときの天気は？|快晴|
+雲量が2〜8のときの天気は？|晴れ|
+雲量が9〜10のときの天気は？|くもり|
+#地学/天気/用語
+空気が上昇して冷えると、水蒸気が水滴や氷の粒になってできるものは？|雲|
+#地学/天気/変化
+高気圧の中心付近では、空気はどう動く？|下降する|天気は晴れになりやすい
+低気圧の中心付近では、空気はどう動く？|上昇する|雲ができて、雨や雪になりやすい
+北半球で、高気圧の中心付近の風は、どのようにふく？|時計まわりにふき出す|
+北半球で、低気圧の中心付近の風は、どのようにふく？|反時計まわりにふきこむ|
+等圧線の間隔がせまいところでは、風は強い？弱い？|強い|
+寒冷前線が通過したあとの、気温は？|急に下がる|
+温暖前線が通過したあとの、気温は？|上がる|
+寒冷前線が通過すると、風向きはどう変わる？|南寄りから北寄りに変わる|
+温暖前線にともなう雨は、どんな降り方？|広い範囲に、長い時間降る|弱い雨
+寒冷前線にともなう雨は、どんな降り方？|せまい範囲に、短い時間降る|強い雨
+空気を冷やしていくと、露点よりも気温が下がったとき、水蒸気はどうなる？|水滴になる|
+陸と海では、あたたまりやすいのはどちら？|陸|昼は陸の気温が高くなり、海風がふく
+海面付近の大気圧は、約何hPa？|約1013hPa|1気圧
+湿度を求めるとき、分母になるのは？|その気温の飽和水蒸気量|
+#地学/天体/用語
+地球が自転しているために起こる、天体の1日の見かけの動きは？|日周運動|
+地球が太陽のまわりを1年かけて回ることは？|公転|
+地球が自分の軸を中心に、1日1回転することは？|自転|
+地球の公転によって起こる、星座の位置の1年での見かけの動きは？|年周運動|
+太陽が真南にきて、高度が最も高くなることは？|南中|
+南中したときの天体の高度は？|南中高度|
+自分で光を出している天体は？|恒星|太陽や、夜空の星座の星
+恒星のまわりを回る、大きな天体は？|惑星|
+惑星のまわりを回る天体は？|衛星|月は地球の衛星
+太陽の表面にある、まわりより温度が低くて黒く見える部分は？|黒点|
+黒点が東から西へ動くことからわかる、太陽の運動は？|自転|
+太陽の外側に見える、高温のガスのうすい層は？|コロナ|
+太陽の表面から、炎のようにふき上がるガスは？|プロミネンス|
+太陽をふくむ、数千億個の恒星の集まりは？|銀河系|天の川は、銀河系を内側から見たもの
+光が1年間に進む距離を表す単位は？|光年|
+太陽・月・地球が一直線に並び、月が太陽をかくす現象は？|日食|新月のとき
+月が地球の影に入り、欠けて見える現象は？|月食|満月のとき
+月が太陽の光を反射して光り、見える形が変わる現象は？|月の満ち欠け|
+地球から見て、太陽の反対側に月があって、全体が光って見える月は？|満月|
+地球から見て、月が太陽と同じ向きにあって、見えない月は？|新月|
+金星が夕方の西の空に見えるとき、何という？|よいの明星|
+金星が明け方の東の空に見えるとき、何という？|明けの明星|
+太陽系の惑星のうち、小さくて岩石でできていて、密度が大きいなかまは？|地球型惑星|
+太陽系の惑星のうち、大きくて、おもにガスでできているなかまは？|木星型惑星|
+火星と木星の軌道の間に多く存在する、小さな天体は？|小惑星|
+#地学/天体/天体名
+太陽にいちばん近い惑星は？|水星|
+太陽系で最も大きい惑星は？|木星|
+太陽系の惑星で、美しい環（わ）が目立つのは？|土星|
+太陽系で、赤くて地球のすぐ外側を回る惑星は？|火星|
+太陽系で、地球のすぐ内側を回り、明るく光る惑星は？|金星|
+北の空で、ほとんど動かず、方位の目印になる星は？|北極星|
+冬の夜空に見られる、ベテルギウスをふくむ星座は？|オリオン座|
+夏の大三角をつくる星のうち、こと座の星は？|ベガ|
+夏の大三角をつくる星のうち、わし座の星は？|アルタイル|
+夏の大三角をつくる星のうち、はくちょう座の星は？|デネブ|
+冬の大三角をつくる星のうち、おおいぬ座の星は？|シリウス|
+冬の大三角をつくる星のうち、こいぬ座の星は？|プロキオン|
+#地学/天体/数値
+天体の日周運動は、1時間に約何度動いて見える？|約15度|
+地球の自転軸（地軸）は、公転面に垂直な線に対して約何度傾いている？|約23.4度|
+太陽の表面温度は、約何℃？|約6000℃|
+月の満ち欠けの周期は、約何日？|約29.5日|
+太陽系の惑星は、全部で何個？|8個|
+太陽の直径は、地球の直径の約何倍？|約109倍|
+太陽から出た光が地球に届くまでの時間は、約何分？|約8分|
+#地学/天体/動き
+地球の自転の向きは？|西から東|
+満月が南中するのは、いつごろ？|真夜中|
+北の空の星は、北極星を中心にどの向きに回って見える？|反時計まわり|
+夏至の日の南中高度は、冬至の日にくらべてどうなる？|高い|
+春分・秋分の日の、昼と夜の長さは？|ほぼ等しい|
+夏至の日の、昼の長さは？|1年で最も長い|
+冬至の日の、昼の長さは？|1年で最も短い|
+東の空からのぼった星は、南の空を通って、どの方位にしずむ？|西|
+`;
+/* 社会 一問一答（歴史 古代・中世）  書式：#分野/時代/答えの種類 の下に  問い|答え|ひとこと解説 */
+let RAW_OQ=`
+#歴史/古代/用語
+縄文時代に作られた、表面に縄目の模様がある土器は？|縄文土器|
+縄文時代の人々が、食べた貝の殻などを捨てた場所は？|貝塚|
+縄文時代に、まじないに使われたとされる、土でできた人形は？|土偶|
+縄文時代の人々がくらした、地面をほって屋根をかけた住居は？|竪穴住居|
+青森県にある、縄文時代の大きな集落の遺跡は？|三内丸山遺跡|
+弥生時代に、大陸から伝わった農業は？|稲作|
+弥生時代に使われた、うすくてかたい、赤褐色の土器は？|弥生土器|
+弥生時代に、稲の穂をつみ取るために使われた石器は？|石包丁|
+弥生時代に、収穫した稲などをたくわえた建物は？|高床倉庫|
+佐賀県にある、弥生時代の大きなまわりに堀をめぐらせた集落の遺跡は？|吉野ヶ里遺跡|
+静岡県にある、弥生時代の水田の跡が見つかった遺跡は？|登呂遺跡|
+弥生時代に、祭りの道具として使われた青銅器は？|銅鐸|
+57年、倭の奴国の王が中国の皇帝から授けられたとされる金印は？|漢委奴国王の金印|福岡県の志賀島で発見された
+中国の魏の歴史書で、邪馬台国のようすを記した書物は？|魏志倭人伝|
+卑弥呼が魏の皇帝から授けられた称号は？|親魏倭王|
+前方が四角く、後方が円い形をした古墳は？|前方後円墳|
+大阪府堺市にある、日本最大級の前方後円墳は？|大仙古墳|仁徳天皇陵とされる
+古墳の上や周りに置かれた、土でできた焼き物は？|埴輪|
+3世紀後半から、奈良盆地を中心に成立した、強い力をもつ政権は？|大和政権|ヤマト王権とも
+大和政権の王は、のちに何とよばれるようになった？|大王|
+5世紀ごろ、朝鮮半島から日本に渡り、技術や漢字を伝えた人々は？|渡来人|
+6世紀に、百済から日本に伝えられた宗教は？|仏教|
+推古天皇のもとで、役人の心得を示すために定められたものは？|十七条の憲法|
+家柄ではなく、能力で役人を取り立てるために定められた制度は？|冠位十二階|
+聖徳太子が、中国の隋に送った使節は？|遣隋使|
+奈良県にある、聖徳太子ゆかりの世界最古の木造建築の寺は？|法隆寺|
+法隆寺などで知られる、日本で最初の仏教文化は？|飛鳥文化|
+645年、中大兄皇子らが蘇我氏をたおして始めた政治改革は？|大化の改新|
+大化の改新で、土地と人民を国家のものとするとした方針は？|公地公民|
+663年、日本が唐・新羅の連合軍に大敗した戦いは？|白村江の戦い|
+672年、天智天皇の死後に起こった、皇位をめぐる争いは？|壬申の乱|
+694年に遷都された、日本で最初の本格的な都は？|藤原京|
+701年に完成した、律令にもとづく法律は？|大宝律令|
+唐の都長安をまねて、710年に造られた都は？|平城京|
+708年に発行された、日本で最初の貨幣は？|和同開珎|
+奈良時代、6歳以上の男女に、口分田を与える制度は？|班田収授法|
+収穫した稲の約3％を納める税は？|租|
+地方の特産物を納める税は？|調|
+労役のかわりに布を納める税は？|庸|
+九州北部の守りについた兵士は？|防人|
+743年に出された、新しく開墾した土地の永久の私有を認める法令は？|墾田永年私財法|
+仏教の力で国を守ろうと、国ごとに建てさせた寺は？|国分寺|
+聖武天皇が、都の奈良に建てさせた、大きな仏像で有名な寺は？|東大寺|
+聖武天皇の遺品などが納められている、東大寺の宝庫は？|正倉院|
+唐から日本に渡り、唐招提寺を開いた僧は？|鑑真|
+712年に完成した、天皇家のおこりや神話をまとめた書物は？|古事記|
+720年に完成した、漢文で書かれた歴史書は？|日本書紀|
+奈良時代に編集された、天皇から防人まで幅広い人々の和歌を集めた歌集は？|万葉集|
+奈良時代に、聖武天皇のころに栄えた、唐の影響の強い文化は？|天平文化|
+各地の自然や産物、伝説などをまとめた書物は？|風土記|
+794年に、桓武天皇が都を移した場所は？|平安京|
+東北地方の蝦夷を従えるために任じられた役職は？|征夷大将軍|
+唐で学び、比叡山に延暦寺を開き、天台宗を伝えた僧は？|最澄|
+唐で学び、高野山に金剛峯寺を開き、真言宗を伝えた僧は？|空海|
+894年に、菅原道真の提案で停止された使節は？|遣唐使|
+幼い天皇にかわって政治を行う役職は？|摂政|
+成人した天皇を補佐する役職は？|関白|
+藤原氏が、娘を天皇のきさきとし、摂政・関白の地位について行った政治は？|摂関政治|
+平安時代に栄えた、日本の風土に合った文化は？|国風文化|
+日本語を書き表すために生まれた文字は？|かな文字|ひらがなとカタカナ
+貴族の住宅の様式は？|寝殿造|
+阿弥陀仏にすがって、死後に極楽浄土へ生まれ変わることを願う信仰は？|浄土信仰|
+藤原頼通が京都の宇治に建てた、阿弥陀堂は？|平等院鳳凰堂|
+貴族や寺社が各地にもった私有地は？|荘園|
+939年に関東で反乱を起こした武士は？|平将門|
+上皇が天皇にかわって行った政治は？|院政|
+東北地方で、奥州藤原氏が栄えた中心地は？|平泉|
+平泉にある、奥州藤原氏が建てた金色のお堂は？|中尊寺金色堂|
+#歴史/古代/人物
+邪馬台国の女王は？|卑弥呼|
+遣隋使として隋に送られた人物は？|小野妹子|
+推古天皇の摂政として、天皇中心の国づくりを進めた人物は？|聖徳太子|厩戸皇子とも
+大化の改新を進めた、のちの天智天皇は？|中大兄皇子|
+中大兄皇子とともに、蘇我氏をたおす中心になった人物は？|中臣鎌足|のちに藤原姓を与えられた
+大化の改新でたおされた、蘇我氏の人物は？|蘇我入鹿|
+壬申の乱に勝って即位した天皇は？|天武天皇|
+仏教の力で国を治めようとし、大仏づくりを命じた天皇は？|聖武天皇|
+聖武天皇の大仏づくりに協力した、民衆に仏教を広めた僧は？|行基|
+唐から来日し、唐招提寺を開いた僧は？|鑑真|
+都を平安京に移した天皇は？|桓武天皇|
+蝦夷との戦いで活躍した征夷大将軍は？|坂上田村麻呂|
+天台宗を日本に伝えた僧は？|最澄|
+真言宗を日本に伝えた僧は？|空海|
+遣唐使の停止を提案した人物は？|菅原道真|
+「この世をばわが世とぞ思ふ望月の欠けたることもなしと思へば」の歌をよんだ人物は？|藤原道長|
+平等院鳳凰堂を建てた人物は？|藤原頼通|
+『源氏物語』を書いた人物は？|紫式部|
+『枕草子』を書いた人物は？|清少納言|
+『土佐日記』を書き、『古今和歌集』の編集にもかかわった人物は？|紀貫之|
+上皇として、はじめて院政を行った人物は？|白河上皇|
+#歴史/古代/年代
+大化の改新が始まった年は？|645年|
+白村江の戦いが起こった年は？|663年|
+壬申の乱が起こった年は？|672年|
+大宝律令が完成した年は？|701年|
+平城京に都が移された年は？|710年|
+墾田永年私財法が出された年は？|743年|
+平安京に都が移された年は？|794年|
+遣唐使が停止された年は？|894年|
+聖徳太子が摂政になった年は？|593年|
+冠位十二階が定められた年は？|603年|
+十七条の憲法が定められた年は？|604年|
+小野妹子が遣隋使として派遣された年は？|607年|
+卑弥呼が魏に使いを送った年は？|239年|
+東大寺の大仏が完成し、開眼供養が行われた年は？|752年|
+#歴史/中世/用語
+1156年に起こった、天皇家や貴族の争いに武士が加わった戦乱は？|保元の乱|
+1159年に起こった、平清盛が源義朝をやぶった戦乱は？|平治の乱|
+平清盛が、中国との貿易のために整備した、現在の神戸の港は？|大輪田泊|
+平清盛が、航海の安全を祈って信仰した、広島県の神社は？|厳島神社|
+平清盛が行った、中国の宋との貿易は？|日宋貿易|
+1185年に、源義経らが平氏をほろぼした戦いは？|壇ノ浦の戦い|
+源頼朝が、国ごとに置いた、軍事・警察を担当する役職は？|守護|
+源頼朝が、荘園や公領に置いた、年貢の取り立てや治安維持を行う役職は？|地頭|
+源頼朝が、1192年に朝廷から任じられた役職は？|征夷大将軍|
+鎌倉幕府で、将軍に従う武士を何という？|御家人|
+将軍が御家人に、領地を保障したり、手柄に応じて新しい領地を与えたりすることは？|御恩|
+御家人が将軍のために、戦いに出たり、警備をしたりすることは？|奉公|
+将軍と御家人の、土地を通じた主従関係を何という？|封建制度|
+鎌倉幕府で、将軍を助けて政治を行った役職は？|執権|
+鎌倉幕府で、執権を務めた一族は？|北条氏|
+1221年に、後鳥羽上皇が幕府をたおそうとして起こした戦乱は？|承久の乱|
+承久の乱のあと、京都に置かれた、朝廷の監視などを行う機関は？|六波羅探題|
+1232年に、北条泰時が定めた、武士の最初の法律は？|御成敗式目|貞永式目とも
+13世紀に、中国を支配して日本にも攻めてきた国は？|元|
+元のフビライ・ハンが、日本に服属を求めたときの、鎌倉幕府の執権は？|北条時宗|
+1274年と1281年の、元軍の2度の襲来をまとめて何という？|元寇|
+1274年の元軍の襲来を何という？|文永の役|
+1281年の元軍の襲来を何という？|弘安の役|
+元寇のあと、生活が苦しくなった御家人を救うために、1297年に出された法令は？|永仁の徳政令|
+鎌倉時代に、東大寺南大門の金剛力士像をつくった仏師は？|運慶|
+平氏の栄えと滅亡を描いた、琵琶法師が語った軍記物語は？|平家物語|
+鎌倉時代に、兼好法師が書いた随筆は？|徒然草|
+鎌倉時代に、鴨長明が書いた随筆は？|方丈記|
+鎌倉時代に、藤原定家らが編集した和歌集は？|新古今和歌集|
+「南無阿弥陀仏」と念仏をとなえれば救われると説いた、浄土宗の開祖は？|法然|
+法然の弟子で、浄土真宗を開いた人物は？|親鸞|
+踊念仏で教えを広め、時宗を開いた人物は？|一遍|
+「南無妙法蓮華経」と題目をとなえることを説いて、日蓮宗を開いた人物は？|日蓮|
+宋から臨済宗を伝え、茶の習慣も広めた僧は？|栄西|
+宋から曹洞宗を伝え、永平寺を開いた僧は？|道元|
+1333年に、鎌倉幕府をほろぼした天皇は？|後醍醐天皇|
+後醍醐天皇が、1334年から行った天皇中心の政治は？|建武の新政|
+後醍醐天皇が吉野に逃れて開いた朝廷は？|南朝|
+足利尊氏が京都に立てた朝廷は？|北朝|
+2つの朝廷が並び立った、約60年間の時代は？|南北朝時代|
+足利尊氏が開いた幕府は？|室町幕府|
+室町幕府で、将軍を補佐する役職は？|管領|
+南北朝を統一し、金閣を建てた室町幕府の3代将軍は？|足利義満|
+足利義満が始めた、明との貿易は？|日明貿易|
+日明貿易で、正式な貿易船と倭寇を区別するために使われた証明書は？|勘合|
+室町時代に、朝鮮半島や中国の沿岸をおそった海賊は？|倭寇|
+1392年に李成桂が建国した、朝鮮半島の国は？|朝鮮国|
+15世紀に、尚巴志が統一して建てた王国は？|琉球王国|
+琉球王国が栄えた、東アジアの国々を結ぶ貿易は？|中継貿易|
+室町時代の農村で、農民たちがつくった自治組織は？|惣|
+土倉や酒屋をおそい、借金の帳消しを求めた農民らの運動は？|土一揆|
+1428年に近畿地方で起こった、最初の大規模な土一揆は？|正長の土一揆|
+1485年に、山城国の武士や農民が守護大名を追い出して自治を行った出来事は？|山城国一揆|
+商工業者が、同業者でつくった、特権をもつ組合は？|座|
+同じ田畑で、1年に米と麦を続けてつくることを何という？|二毛作|
+15世紀後半、北海道南部で、アイヌ民族が和人に対して起こした戦いは？|コシャマインの戦い|
+観阿弥・世阿弥の親子が大成した、歌と舞の芸能は？|能|
+能の合間に演じられた、民衆の生活を題材にした喜劇は？|狂言|
+足利義満が建てた、京都北山の別荘は？|金閣|
+足利義政が建てた、京都東山の別荘は？|銀閣|
+銀閣などに見られる、たたみ・ふすま・床の間をそなえた住宅の様式は？|書院造|
+墨の濃淡で自然を表現する絵画は？|水墨画|
+石と砂で自然を表現した、寺院などの庭園は？|枯山水|
+義満のころの文化を何という？|北山文化|
+義政のころの文化を何という？|東山文化|
+1467年から約11年間続いた、将軍のあとつぎ問題などから起こった戦乱は？|応仁の乱|
+下の身分の者が、上の身分の者に実力でとってかわる風潮は？|下剋上|
+戦国大名が、自分の領国を支配するために独自に定めた法は？|分国法|
+1543年に、ポルトガル人が鉄砲を伝えた島は？|種子島|
+1549年に、鹿児島でキリスト教を伝えたイエズス会の宣教師は？|ザビエル|
+#歴史/中世/人物
+平安時代の末に、武士として初めて太政大臣になった人物は？|平清盛|
+鎌倉幕府を開いた人物は？|源頼朝|
+兄の頼朝にしたがって、平氏をほろぼすのに活躍した人物は？|源義経|
+頼朝の妻で、頼朝の死後に幕府の政治をささえた人物は？|北条政子|
+御成敗式目を定めた、鎌倉幕府の3代執権は？|北条泰時|
+元寇のときの鎌倉幕府の執権は？|北条時宗|
+承久の乱を起こした上皇は？|後鳥羽上皇|
+元軍との戦いのようすを『蒙古襲来絵詞』にえがかせた御家人は？|竹崎季長|
+鎌倉幕府をたおすことに協力し、のちに室町幕府を開いた人物は？|足利尊氏|
+室町幕府の3代将軍で、南北朝を統一した人物は？|足利義満|
+銀閣を建てた、室町幕府の8代将軍は？|足利義政|
+水墨画を大成した人物は？|雪舟|
+中国地方などで「下剋上」の時代に活躍し、小田原を本拠にした戦国大名は？|北条早雲|
+戦国時代、甲斐（山梨県）を治めた戦国大名は？|武田信玄|
+戦国時代、越後（新潟県）を治めた戦国大名は？|上杉謙信|
+元の皇帝で、日本に服属を求めたのは？|フビライ・ハン|
+#歴史/中世/年代
+平氏がほろんだ、壇ノ浦の戦いが起こった年は？|1185年|
+源頼朝が征夷大将軍に任じられた年は？|1192年|
+承久の乱が起こった年は？|1221年|
+御成敗式目が定められた年は？|1232年|
+文永の役が起こった年は？|1274年|
+弘安の役が起こった年は？|1281年|
+鎌倉幕府がほろんだ年は？|1333年|
+足利義満が南北朝を統一した年は？|1392年|
+足利義満が日明貿易（勘合貿易）を始めた年は？|1404年|
+正長の土一揆が起こった年は？|1428年|
+応仁の乱が始まった年は？|1467年|
+鉄砲がポルトガル人によって伝えられた年は？|1543年|
+キリスト教がザビエルによって伝えられた年は？|1549年|
+保元の乱が起こった年は？|1156年|
+平治の乱が起こった年は？|1159年|
+`;
+/* 社会 一問一答（歴史 近世・近代の前半）  書式：#分野/時代/答えの種類 の下に  問い|答え|ひとこと解説 */
+RAW_OQ+=`
+#歴史/近世/用語
+1560年、織田信長が今川義元をやぶった戦いは？|桶狭間の戦い|
+1573年、織田信長が将軍を追放してほろぼした幕府は？|室町幕府|
+1575年、織田信長が鉄砲を効果的に使い、武田氏をやぶった戦いは？|長篠の戦い|
+織田信長が、琵琶湖のほとりに築いた城は？|安土城|
+織田信長が、商工業をさかんにするため、市場の税や座の特権をなくした政策は？|楽市・楽座|
+1582年、織田信長が家臣におそわれて自害した事件は？|本能寺の変|
+豊臣秀吉が、全国統一の拠点として築いた城は？|大阪城|
+豊臣秀吉が、全国の田畑を調べ、土地の価値を米の量（石高）で表した政策は？|太閤検地|
+豊臣秀吉が、農民から刀や鉄砲などの武器を取りあげた政策は？|刀狩|
+検地と刀狩によって進んだ、武士と農民の身分を分ける社会のしくみは？|兵農分離|
+豊臣秀吉が、明の征服をめざして2度にわたって出兵した国は？|朝鮮|
+織田信長・豊臣秀吉の時代の、豪華で雄大な文化は？|桃山文化|
+桃山文化で、城の壁やふすまなどにえがかれた絵は？|障壁画|
+千利休が大成した、質素なおもむきの茶の湯は？|わび茶|
+出雲の阿国が始めた、新しい芸能は？|かぶき踊り|
+ポルトガル人やスペイン人（南蛮人）との貿易は？|南蛮貿易|
+1590年に豊臣秀吉がほろぼし、全国統一をなしとげるきっかけとなった、小田原の大名は？|北条氏|
+1600年、徳川家康が石田三成らをやぶった戦いは？|関ヶ原の戦い|
+徳川家康が江戸に開いた幕府は？|江戸幕府|
+将軍と藩（大名）が、土地と人民を支配する江戸幕府のしくみは？|幕藩体制|
+江戸幕府が、大名を取りしまるために定めた法は？|武家諸法度|
+3代将軍徳川家光のときに加えられた、大名が江戸と領地を1年おきに行き来する制度は？|参勤交代|
+徳川氏の一族の大名は？|親藩|
+関ヶ原の戦い以前から、徳川氏に従っていた大名は？|譜代大名|
+関ヶ原の戦いのころから、徳川氏に従った大名は？|外様大名|
+江戸幕府が、天皇や公家を統制するために定めた法は？|禁中並公家諸法度|
+江戸時代に、百姓に年貢や犯罪の連帯責任を負わせた組織は？|五人組|
+1637年に起こった、キリスト教信者や重い年貢に苦しむ農民らの一揆は？|島原・天草一揆|
+幕府が、キリスト教徒を見つけるために、聖母マリアなどの像を踏ませた調査は？|絵踏|
+住民を寺に登録させ、キリスト教徒でないことを証明させた制度は？|寺請制度|
+江戸時代に、オランダ商館が移された長崎の人工島は？|出島|
+江戸時代、幕府が貿易を許したヨーロッパの国は？|オランダ|
+朝鮮との国交や貿易を担当した藩は？|対馬藩|
+琉球王国を支配した藩は？|薩摩藩|
+蝦夷地（北海道）で、アイヌ民族との交易を独占した藩は？|松前藩|
+将軍の代がわりごとに、朝鮮から日本に送られた使節は？|朝鮮通信使|
+江戸を起点とする、東海道・中山道などの5つの主要な街道をまとめて何という？|五街道|
+街道ぞいに、大名や旅人が宿泊した町は？|宿場町|
+江戸時代、「天下の台所」とよばれた都市は？|大阪|
+年貢米や特産物を売るために、大阪などに藩が置いた倉庫は？|蔵屋敷|
+商人や職人が、幕府や藩に税を納めて、営業の独占を認められた同業者組合は？|株仲間|
+江戸時代に広まった、深く耕せる農具は？|備中ぐわ|
+江戸時代に広まった、脱穀に使う農具は？|千歯こき|
+肥料として使われた、いわしをほしたものは？|干鰯|
+5代将軍徳川綱吉が出した、動物の殺生を禁じた法令は？|生類憐みの令|
+8代将軍徳川吉宗が、庶民の意見を聞くために設けたものは？|目安箱|
+徳川吉宗が定めた、裁判や刑罰の基準となる法は？|公事方御定書|
+徳川吉宗が行った、幕府の財政を立て直す政治改革は？|享保の改革|
+老中の田沼意次が、奨励した商人の同業者組合は？|株仲間|
+1782年から数年続いた、東北地方を中心とする大きなききんは？|天明のききん|
+松平定信が行った、幕府の政治改革は？|寛政の改革|
+水野忠邦が行った、幕府の政治改革は？|天保の改革|
+水野忠邦が、物価を下げるために解散を命じたものは？|株仲間|
+1837年に、大阪で元役人が起こした反乱は？|大塩平八郎の乱|
+都市で、米を買いしめた商人などを、人々がおそった行動は？|打ちこわし|
+農村で、年貢の軽減などを求めて、百姓たちが起こした運動は？|百姓一揆|
+元禄文化が栄えた中心地は？|上方|京都・大阪
+化政文化が栄えた中心地は？|江戸|
+日本の古典を研究して、日本古来の考え方を明らかにしようとする学問は？|国学|
+ヨーロッパの学問を、オランダ語を通して学ぶ学問は？|蘭学|
+庶民の子どもが、読み・書き・そろばんを学んだ施設は？|寺子屋|
+各藩が、武士の子どもの教育のために設けた学校は？|藩校|
+#歴史/近世/人物
+尾張（愛知県）出身で、天下統一をめざして安土城を築いた人物は？|織田信長|
+信長のあとをうけて、天下を統一した人物は？|豊臣秀吉|
+関ヶ原の戦いに勝ち、江戸幕府を開いた人物は？|徳川家康|
+関ヶ原の戦いで、徳川家康にやぶれた豊臣方の武将は？|石田三成|
+本能寺の変で、織田信長をおそった家臣は？|明智光秀|
+桶狭間の戦いで、織田信長にやぶれた駿河（静岡県）の戦国大名は？|今川義元|
+わび茶を大成し、豊臣秀吉に仕えた人物は？|千利休|
+安土城や大阪城の障壁画をえがいた、桃山文化の画家は？|狩野永徳|
+島原・天草一揆の指導者となった少年は？|天草四郎|
+参勤交代を制度として定めた、3代将軍は？|徳川家光|
+儒学（朱子学）を重んじ、生類憐みの令を出した5代将軍は？|徳川綱吉|
+享保の改革を行った、8代将軍は？|徳川吉宗|
+老中として、株仲間を奨励し、商業を重んじた人物は？|田沼意次|
+寛政の改革を行った老中は？|松平定信|
+天保の改革を行った老中は？|水野忠邦|
+ききんに苦しむ人々を救おうと、大阪で反乱を起こした元役人は？|大塩平八郎|
+1669年に、松前藩と戦ったアイヌの指導者は？|シャクシャイン|
+『奥の細道』を書いた俳諧の人物は？|松尾芭蕉|
+『曽根崎心中』などの人形浄瑠璃の脚本を書いた人物は？|近松門左衛門|
+『日本永代蔵』などの浮世草子を書いた人物は？|井原西鶴|
+浮世絵の祖とされ、『見返り美人図』をえがいた人物は？|菱川師宣|
+『富嶽三十六景』をえがいた浮世絵師は？|葛飾北斎|
+『東海道五十三次』をえがいた浮世絵師は？|歌川広重|
+『古事記伝』を書き、国学を大成した人物は？|本居宣長|
+『解体新書』を前野良沢らとともに翻訳した人物は？|杉田玄白|
+全国を測量して、正確な日本地図をつくった人物は？|伊能忠敬|
+『東海道中膝栗毛』を書いた人物は？|十返舎一九|
+『南総里見八犬伝』を書いた人物は？|曲亭馬琴|
+#歴史/近世/年代
+桶狭間の戦いが起こった年は？|1560年|
+室町幕府がほろんだ年は？|1573年|
+長篠の戦いが起こった年は？|1575年|
+本能寺の変が起こった年は？|1582年|
+豊臣秀吉が全国を統一した年は？|1590年|
+関ヶ原の戦いが起こった年は？|1600年|
+徳川家康が征夷大将軍に任じられ、江戸幕府を開いた年は？|1603年|
+大阪夏の陣で、豊臣氏がほろんだ年は？|1615年|
+島原・天草一揆が起こった年は？|1637年|
+オランダ商館が出島に移された年は？|1641年|
+享保の改革が始まった年は？|1716年|
+『解体新書』が出版された年は？|1774年|
+寛政の改革が始まった年は？|1787年|
+大塩平八郎の乱が起こった年は？|1837年|
+天保の改革が始まった年は？|1841年|
+#歴史/近代/用語
+1854年に結ばれた、下田と函館を開港した条約は？|日米和親条約|
+1858年に結ばれた、貿易を認めた条約は？|日米修好通商条約|
+外国人が、日本の法律で裁かれず、本国の領事に裁かれる権利は？|領事裁判権|治外法権ともいう
+輸入品にかける関税を、自国で自由に決める権利は？|関税自主権|日米修好通商条約で、日本にはこの権利がなかった
+日米修好通商条約のように、一方の国に不利な内容をもつ条約を何という？|不平等条約|
+井伊直弼が、幕府に反対する人々を処罰した弾圧は？|安政の大獄|
+1860年に、井伊直弼が暗殺された事件は？|桜田門外の変|
+開国後に、日本から大量に輸出された品は？|生糸|
+外国人を日本から追いはらおうとする考え方は？|攘夷|
+1866年に、薩摩藩と長州藩が結んだ同盟は？|薩長同盟|
+1867年、15代将軍が政権を朝廷に返したことは？|大政奉還|
+1867年に、天皇中心の新しい政府の成立を宣言したことは？|王政復古の大号令|
+1868年から1869年まで続いた、新政府軍と旧幕府軍の内戦は？|戊辰戦争|
+1868年に出された、新政府の基本方針を示したものは？|五箇条の御誓文|
+1869年に、藩主が土地と人民を天皇に返したことは？|版籍奉還|
+1871年に、藩を廃止して府・県を置いた改革は？|廃藩置県|
+1872年に出された、6歳以上のすべての男女に教育を受けさせるとした法令は？|学制|
+1873年に出された、満20歳になった男子に兵役を義務づけた法令は？|徴兵令|
+1873年に始まった、地価の3％を現金で納めさせた税制の改革は？|地租改正|
+政府が、近代的な産業をおこすために進めた政策は？|殖産興業|
+群馬県に建てられた、政府の官営模範工場は？|富岡製糸場|
+明治初期に、西洋の文化が取り入れられて、生活が変化したことは？|文明開化|
+1871年に、欧米に派遣された政府の使節団は？|岩倉使節団|
+北海道の開拓と防衛にあたった人々は？|屯田兵|
+1879年に、琉球藩を廃止して沖縄県を置いたことは？|琉球処分|
+1875年に、樺太をロシア領、千島列島を日本領とした条約は？|樺太・千島交換条約|
+1876年に、朝鮮と結んだ不平等条約は？|日朝修好条規|
+明治の新しい身分で、もとの武士は何とよばれた？|士族|
+1874年に、板垣退助らが政府に出した、国会の開設を求める意見書は？|民撰議院設立建白書|
+国会の開設を求めて、1870年代から広がった運動は？|自由民権運動|
+1877年に、西郷隆盛を中心に起こった、士族の最大の反乱は？|西南戦争|
+板垣退助が結成した政党は？|自由党|
+大隈重信が結成した政党は？|立憲改進党|
+1885年に創設された、内閣総理大臣を中心とする制度は？|内閣制度|
+1889年に発布された、アジアで最初の近代的な憲法は？|大日本帝国憲法|
+大日本帝国憲法で、主権をもっていたのは？|天皇|
+1890年に開かれた、日本で最初の国会は？|帝国議会|
+1890年に出された、教育の基本方針を示したものは？|教育勅語|
+第1回衆議院議員総選挙で、選挙権があったのは、直接国税15円以上を納める何歳以上の男子？|満25歳以上|
+1894年に始まった、朝鮮をめぐる日本と清の戦争は？|日清戦争|
+日清戦争の講和条約は？|下関条約|
+下関条約で、日本が清から割譲された島は？|台湾|
+遼東半島を清に返すよう、ロシア・ドイツ・フランスが日本に勧告した出来事は？|三国干渉|
+1902年に、ロシアに対抗するため、日本がイギリスと結んだ同盟は？|日英同盟|
+1904年に始まった、満州と朝鮮をめぐる日本とロシアの戦争は？|日露戦争|
+日露戦争の講和条約は？|ポーツマス条約|
+ポーツマス条約で、日本が得た、北緯50度以南の島は？|樺太|
+賠償金が得られず、不満をもった国民が起こした暴動は？|日比谷焼き打ち事件|
+1910年に、日本が朝鮮を植民地にしたことは？|韓国併合|
+1901年に操業を始めた、官営の製鉄所は？|八幡製鉄所|
+日本の産業革命で、最初に発達した産業は？|軽工業|紡績・製糸
+三井・三菱などのような、日本の経済を支配した大資本家は？|財閥|
+足尾銅山の鉱毒事件の被害を、天皇に直訴しようとした人物は？|田中正造|
+1911年に、孫文らが清をたおした中国の革命は？|辛亥革命|
+辛亥革命のあと、1912年に成立した、アジア初の共和国は？|中華民国|
+#歴史/近代/人物
+1853年に浦賀に来航した、アメリカの使節は？|ペリー|
+日米修好通商条約を結び、安政の大獄を行った大老は？|井伊直弼|
+薩長同盟の仲立ちをした、土佐藩出身の人物は？|坂本龍馬|
+大政奉還を行った、江戸幕府最後の将軍は？|徳川慶喜|
+江戸城の無血開城で、新政府軍を代表して交渉した人物は？|西郷隆盛|
+江戸城の無血開城で、旧幕府側を代表して交渉した人物は？|勝海舟|
+西南戦争を起こした、薩摩藩出身の人物は？|西郷隆盛|
+『学問のすゝめ』を書いた人物は？|福沢諭吉|
+日本で最初の内閣総理大臣は？|伊藤博文|
+民撰議院設立建白書を出し、自由党をつくった人物は？|板垣退助|
+立憲改進党をつくった人物は？|大隈重信|
+1894年に、領事裁判権の撤廃に成功した外務大臣は？|陸奥宗光|
+1911年に、関税自主権の回復に成功した外務大臣は？|小村寿太郎|
+ポーツマス条約の、日本側の全権は？|小村寿太郎|
+辛亥革命を指導した人物は？|孫文|
+『坊っちゃん』『吾輩は猫である』を書いた小説家は？|夏目漱石|
+『舞姫』を書いた小説家は？|森鷗外|
+『たけくらべ』を書いた女性作家は？|樋口一葉|
+日露戦争のとき、「君死にたまふことなかれ」とよんだ歌人は？|与謝野晶子|
+黄熱病の研究をした医学者は？|野口英世|
+破傷風の血清療法を開発した細菌学者は？|北里柴三郎|
+#歴史/近代/年代
+ペリーが浦賀に来航した年は？|1853年|
+日米和親条約が結ばれた年は？|1854年|
+日米修好通商条約が結ばれた年は？|1858年|
+大政奉還が行われた年は？|1867年|
+五箇条の御誓文が出された年は？|1868年|
+廃藩置県が行われた年は？|1871年|
+学制が公布された年は？|1872年|
+地租改正が行われた年は？|1873年|
+西南戦争が起こった年は？|1877年|
+内閣制度ができた年は？|1885年|
+大日本帝国憲法が発布された年は？|1889年|
+第1回帝国議会が開かれた年は？|1890年|
+日清戦争が始まった年は？|1894年|
+下関条約が結ばれた年は？|1895年|
+日英同盟が結ばれた年は？|1902年|
+日露戦争が始まった年は？|1904年|
+ポーツマス条約が結ばれた年は？|1905年|
+韓国併合が行われた年は？|1910年|
+辛亥革命が起こった年は？|1911年|
+`;
+/* 社会 一問一答（歴史 近代の後半・現代）  書式：#分野/時代/答えの種類 の下に  問い|答え|ひとこと解説 */
+RAW_OQ+=`
+#歴史/近代/用語
+1914年に、ヨーロッパで始まった大戦は？|第一次世界大戦|
+第一次世界大戦のきっかけとなった、オーストリア皇太子夫妻が暗殺された事件は？|サラエボ事件|
+第一次世界大戦で、日本が参戦したときに理由とした同盟は？|日英同盟|
+1915年に、日本が中国に出した、山東省のドイツの権益の引きつぎなどを求めた要求は？|二十一か条の要求|
+1917年に、ロシアで起こり、世界で最初の社会主義の政府ができた革命は？|ロシア革命|
+1922年に、ロシア革命のあとに成立した国は？|ソビエト連邦|
+1918年に、米の値上がりに怒った民衆が起こした、全国的な暴動は？|米騒動|
+1919年に結ばれた、第一次世界大戦の講和条約は？|ベルサイユ条約|
+1920年に、世界の平和を守るためにつくられた国際組織は？|国際連盟|
+1921〜22年に開かれ、海軍の軍備を制限することを決めた国際会議は？|ワシントン会議|
+1919年に、朝鮮で起こった、日本からの独立を求める運動は？|三・一独立運動|
+1919年に、中国で起こった、日本の要求などに反対する運動は？|五・四運動|
+民衆の意向を政治に反映させるべきだという、吉野作造が唱えた考え方は？|民本主義|
+大正時代に、民主主義の考え方が広がり、政党政治が行われた風潮は？|大正デモクラシー|
+1918年に、本格的な政党内閣をつくった首相は？|原敬|
+1925年に成立した、満25歳以上のすべての男子に選挙権を認めた法律は？|普通選挙法|
+1925年に、共産主義や社会運動を取りしまるために制定された法律は？|治安維持法|
+1923年9月1日に、関東地方で起こった大災害は？|関東大震災|
+1922年に、差別からの解放をめざして結成された組織は？|全国水平社|
+1920年に、平塚らいてうらが女性の地位向上のために結成した団体は？|新婦人協会|
+1925年に、放送が始まった新しいメディアは？|ラジオ|
+1929年に、アメリカのニューヨークでの株価の大暴落から始まった、世界的な不景気は？|世界恐慌|
+アメリカのローズベルト大統領が行った、公共事業をおこして景気を回復させる政策は？|ニューディール政策|
+イギリスやフランスが、植民地との貿易を拡大し、他国の商品をしめ出した経済政策は？|ブロック経済|
+1931年に、中国東北部で、日本軍が南満州鉄道の線路を爆破して始まった軍事行動は？|満州事変|
+満州事変のあと、1932年に、日本が中国東北部につくった国は？|満州国|
+満州国を認めない国際連盟の決議に反対して、日本が1933年に行ったことは？|国際連盟からの脱退|
+1932年に、海軍の青年将校らが犬養毅首相を暗殺した事件は？|五・一五事件|
+1936年に、陸軍の青年将校らが、政府の要人をおそったクーデタ事件は？|二・二六事件|
+1937年に、北京郊外での日中両軍の衝突から始まった戦争は？|日中戦争|
+日中戦争のきっかけとなった、1937年の北京郊外での衝突事件は？|盧溝橋事件|
+1938年に出された、戦争のために、国民や物資を議会の承認なしで動員できるようにした法律は？|国家総動員法|
+1940年に、政党が解散して合流してできた組織は？|大政翼賛会|
+1940年に、日本がドイツ・イタリアと結んだ同盟は？|日独伊三国同盟|
+1939年に、ドイツがポーランドに侵攻して始まった戦争は？|第二次世界大戦|
+1941年に、日本が中立を守るために結んだ、ソ連との条約は？|日ソ中立条約|
+1941年12月に、日本がハワイの真珠湾などを攻撃して始まった戦争は？|太平洋戦争|
+戦時中、都市の小学生が農村などに移された措置は？|学童疎開|
+戦争末期に、文科系の大学生などが徴兵されて戦場に送られたことは？|学徒出陣|
+1945年3月に、アメリカ軍が上陸し、住民をまきこんだ激しい戦いがあった場所は？|沖縄|
+1945年7月に、日本に降伏をすすめた、アメリカ・イギリス・中国の宣言は？|ポツダム宣言|
+1945年8月6日に、原子爆弾が投下された都市は？|広島|
+1945年8月9日に、原子爆弾が投下された都市は？|長崎|
+1945年8月8日に、日本に宣戦布告した国は？|ソ連|
+1945年8月15日に、ポツダム宣言の受け入れが国民に知らされた放送は？|玉音放送|
+#歴史/近代/人物
+国際連盟の設立を提唱した、アメリカの大統領は？|ウィルソン|
+ニューディール政策を行った、アメリカの大統領は？|ローズベルト|
+ロシア革命を指導した人物は？|レーニン|
+1933年に、ドイツで政権をにぎったナチスの指導者は？|ヒトラー|
+イタリアで、ファシスト党をひきいて独裁政治を行った人物は？|ムッソリーニ|
+民本主義を唱えて、大正デモクラシーを理論の面でささえた人物は？|吉野作造|
+初の本格的な政党内閣をつくった首相は？|原敬|
+女性の地位向上のために、新婦人協会をつくった人物は？|平塚らいてう|
+国際連盟の事務局次長を務めた人物は？|新渡戸稲造|
+五・一五事件で暗殺された首相は？|犬養毅|
+#歴史/近代/年代
+ロシア革命が起こった年は？|1917年|
+米騒動が起こった年は？|1918年|
+ベルサイユ条約が結ばれた年は？|1919年|
+国際連盟が発足した年は？|1920年|
+関東大震災が起こった年は？|1923年|
+普通選挙法が成立した年は？|1925年|
+世界恐慌が起こった年は？|1929年|
+満州事変が起こった年は？|1931年|
+五・一五事件が起こった年は？|1932年|
+日本が国際連盟を脱退した年は？|1933年|
+二・二六事件が起こった年は？|1936年|
+日中戦争が始まった年は？|1937年|
+国家総動員法が出された年は？|1938年|
+第二次世界大戦が始まった年は？|1939年|
+日独伊三国同盟が結ばれた年は？|1940年|
+太平洋戦争が始まった年は？|1941年|
+日本がポツダム宣言を受け入れ、戦争が終わった年は？|1945年|
+第一次世界大戦が始まった年は？|1914年|
+#歴史/現代/用語
+敗戦後の日本を占領した、連合国軍の最高司令官は？|マッカーサー|
+日本を占領統治した、連合国軍総司令部の略称は？|GHQ|
+GHQが、日本政府を通じて行った統治のしかたは？|間接統治|
+戦前の日本の経済を支配していた企業グループを解体した政策は？|財閥解体|
+地主の土地を政府が買い上げ、小作人に安く売った改革は？|農地改革|
+農地改革によって増えた、自分の土地をもつ農家は？|自作農|
+1945年に選挙法が改正され、選挙権が与えられた人は、満何歳以上の男女？|満20歳以上|
+1946年11月3日に公布された憲法は？|日本国憲法|
+1947年に制定された、教育の目的や機会均等などを定めた法律は？|教育基本法|
+戦争犯罪人を裁いた、1946年から始まった裁判は？|極東国際軍事裁判|
+1945年に発足した、世界の平和と安全の維持を目的とする国際機関は？|国際連合|
+戦後、アメリカを中心とする資本主義の国々と、ソ連を中心とする社会主義の国々が対立した状態は？|冷戦|
+1949年に、アメリカと西ヨーロッパの国々が結成した軍事同盟は？|北大西洋条約機構|
+1949年に成立した、毛沢東が指導する国は？|中華人民共和国|
+1950年に、北朝鮮と韓国の間で始まった戦争は？|朝鮮戦争|
+朝鮮戦争のとき、アメリカ軍の物資の注文などで、日本の経済が好景気になったことは？|特需景気|
+朝鮮戦争の勃発の際に、GHQの指令でつくられた、自衛隊の前身は？|警察予備隊|
+1951年に、日本が連合国と結んだ、主権の回復を認めた条約は？|サンフランシスコ平和条約|
+サンフランシスコ平和条約と同時に結ばれた、アメリカ軍の日本駐留を認める条約は？|日米安全保障条約|
+1954年に発足した、日本の防衛のための組織は？|自衛隊|
+1955年に自由民主党が結成され、長く政権を担当した体制は？|55年体制|
+1956年に、日本とソ連が国交を回復した宣言は？|日ソ共同宣言|
+1955年から1973年まで続いた、経済が急速に成長した時期は？|高度経済成長|
+1960年に、池田勇人内閣が発表した、10年で国民所得を2倍にする計画は？|所得倍増計画|
+1964年に、東京で開かれた国際的なスポーツ大会は？|東京オリンピック|
+1964年に開通した、東京と大阪を結ぶ高速鉄道は？|東海道新幹線|
+1970年に、大阪で開かれた国際博覧会は？|大阪万博|
+高度経済成長期に深刻になった、工場の排水や排気ガスなどによる環境破壊は？|公害|
+1971年に、公害対策のために設置された、国の機関は？|環境庁|
+1965年に、日本が韓国と結び、国交を正常化した条約は？|日韓基本条約|
+1972年に、日本と中国の国交を正常化した共同声明は？|日中共同声明|
+1978年に日本と中国の間で結ばれた条約は？|日中平和友好条約|
+1972年に、アメリカから日本に返還された地域は？|沖縄|
+核兵器を「持たず、つくらず、持ちこませず」とする、日本の方針は？|非核三原則|
+1973年に、第四次中東戦争をきっかけに起こった、原油価格の急上昇による混乱は？|石油危機|
+1980年代後半に、株価や地価が異常に高騰した好景気は？|バブル経済|
+1989年に導入された、商品やサービスの購入にかかる税は？|消費税|
+1989年に、冷戦の象徴だった壁がとりこわされたドイツの都市は？|ベルリン|
+1990年に、ドイツで実現したことは？|東西ドイツの統一|
+1991年に解体した、社会主義の大国は？|ソビエト連邦|
+1991年に、イラクのクウェート侵攻をきっかけに起こった戦争は？|湾岸戦争|
+1992年に成立した、自衛隊の海外派遣を可能にした法律は？|PKO協力法|
+1995年に、兵庫県を中心に大きな被害が出た地震災害は？|阪神・淡路大震災|
+2001年に、アメリカで起こった、ニューヨークの高層ビルなどへの攻撃事件は？|同時多発テロ|
+2011年3月11日に、東北地方の太平洋沿岸を中心に起こった災害は？|東日本大震災|
+2011年の災害で、事故を起こした福島県の発電所は？|福島第一原子力発電所|
+2016年から、選挙権が与えられる年齢は、満何歳以上？|満18歳以上|
+2015年に国連で採択された、2030年までの持続可能な開発目標は？|SDGs|
+#歴史/現代/人物
+サンフランシスコ平和条約に調印した、日本の首相は？|吉田茂|
+所得倍増計画を打ち出した首相は？|池田勇人|
+沖縄返還を実現した首相は？|佐藤栄作|
+日中共同声明に調印した首相は？|田中角栄|
+1949年に、中華人民共和国の成立を宣言した人物は？|毛沢東|
+#歴史/現代/年代
+日本国憲法が公布された年は？|1946年|
+日本国憲法が施行された年は？|1947年|
+朝鮮戦争が始まった年は？|1950年|
+サンフランシスコ平和条約が結ばれた年は？|1951年|
+自衛隊が発足した年は？|1954年|
+日ソ共同宣言が出され、日本が国際連合に加盟した年は？|1956年|
+東京オリンピックが開かれた年は？|1964年|
+日韓基本条約が結ばれた年は？|1965年|
+沖縄が日本に返還された年は？|1972年|
+石油危機が起こった年は？|1973年|
+日中平和友好条約が結ばれた年は？|1978年|
+消費税が導入された年は？|1989年|
+湾岸戦争が起こった年は？|1991年|
+阪神・淡路大震災が起こった年は？|1995年|
+アメリカで同時多発テロが起こった年は？|2001年|
+東日本大震災が起こった年は？|2011年|
+`;
+/* 社会 一問一答（地理）  書式：#分野/単元/答えの種類 の下に  問い|答え|ひとこと解説 */
+RAW_OQ+=`
+#地理/世界/地球
+世界で最も面積が大きい大陸は？|ユーラシア大陸|
+世界で最も面積が大きい海洋は？|太平洋|
+三大洋は、太平洋・大西洋と何？|インド洋|
+六大陸は、ユーラシア・アフリカ・北アメリカ・南アメリカ・オーストラリアと何？|南極大陸|
+赤道を0度として、南北をそれぞれ90度に分けた位置の表し方は？|緯度|
+本初子午線を0度として、東西をそれぞれ180度に分けた位置の表し方は？|経度|
+緯度0度の線は？|赤道|
+経度0度の線で、イギリスの旧グリニッジ天文台を通る線は？|本初子午線|
+日本の標準時のもとになる経線は、東経何度？|東経135度|兵庫県の明石市を通る
+地球の全周は、約何kmか？|約4万km|赤道で1周が約4万km
+世界を6つに分けたときの、オーストラリアやニュージーランドをふくむ州は？|オセアニア州|
+地球の表面で、陸地と海洋の面積の比は、およそ何対何？|3：7|陸が約3割、海が約7割
+ロンドンが正午のとき、日本は何時か？|午後9時|経度15度で1時間の時差（日本のほうが9時間進む）
+#地理/世界/気候
+一年中、気温が高く、雨が多い気候帯は？|熱帯|
+雨がとても少なく、砂漠やステップが広がる気候帯は？|乾燥帯|
+四季の変化がはっきりした、人口が多い気候帯は？|温帯|
+冬の寒さがきびしく、針葉樹林が広がる気候帯は？|冷帯（亜寒帯）|
+一年中寒く、最も暖かい月でも10℃未満の気候帯は？|寒帯|
+熱帯で、一年中雨が多く、熱帯雨林が広がる気候は？|熱帯雨林気候|
+熱帯で、雨季と乾季があり、草原が広がる気候は？|サバナ気候|
+乾燥帯で、ほとんど雨が降らず、砂漠が広がる気候は？|砂漠気候|
+乾燥帯で、短い雨季があり、草原が広がる気候は？|ステップ気候|
+温帯で、夏は高温多雨、冬は寒く、日本の大部分に見られる気候は？|温暖湿潤気候|
+温帯で、夏は乾燥し、冬に雨が降る、地中海沿岸の気候は？|地中海性気候|
+温帯で、偏西風と暖流の影響で、夏も冬もおだやかな、西ヨーロッパの気候は？|西岸海洋性気候|
+寒帯で、短い夏にこけ類などが育つ気候は？|ツンドラ気候|
+寒帯で、一年中、氷や雪におおわれている気候は？|氷雪気候|
+標高が高く、同じ緯度の低地より気温が低い気候は？|高山気候|
+熱帯で、ときどき降る、突然の激しい雨は？|スコール|
+砂漠の中で、水がわき出て、人が暮らしている場所は？|オアシス|
+熱帯や亜熱帯の河口や海岸にしげる、塩分に強い森林は？|マングローブ|
+冷帯に広がる、針葉樹の大森林は？|タイガ|
+北極や南極に近い地方で、夏に夜になっても空が明るい現象は？|白夜|
+#地理/世界/地形
+南アメリカ大陸の西側を南北に走る、長い山脈は？|アンデス山脈|
+北アメリカ大陸の西部を南北に走る山脈は？|ロッキー山脈|
+ヨーロッパ中部にある山脈は？|アルプス山脈|
+世界最高峰のエベレスト山がある山脈は？|ヒマラヤ山脈|
+世界最高峰は？|エベレスト山|チョモランマともいう
+アフリカ大陸の北部に広がる、世界最大の砂漠は？|サハラ砂漠|
+アフリカ大陸を北に流れる大河は？|ナイル川|
+南アメリカ大陸を流れる、流域面積が世界最大の川は？|アマゾン川|
+中国の中部を流れる、アジア最長の川は？|長江|
+中国の北部を流れ、黄土を運ぶ川は？|黄河|
+インドを流れる、ヒンドゥー教徒が聖なる川とする川は？|ガンジス川|
+北アメリカ大陸の中央部を流れる大河は？|ミシシッピ川|
+アメリカ合衆国とカナダの国境にある、5つの大きな湖は？|五大湖|
+ノルウェーの海岸に見られる、氷河がけずった深い入り江の地形は？|フィヨルド|
+日本列島やアンデス山脈などをふくむ、造山帯は？|環太平洋造山帯|
+アルプス山脈やヒマラヤ山脈をふくむ、造山帯は？|アルプス・ヒマラヤ造山帯|
+#地理/世界/国名
+世界で最も面積が大きい国は？|ロシア|
+面積がロシアに次いで大きい、北アメリカの国は？|カナダ|
+ヒンドゥー教徒が多く、ICT産業が発達している南アジアの国は？|インド|
+ハングルを使い、首都がソウルの国は？|韓国|
+首都がピョンヤンの国は？|北朝鮮|
+首都が北京の国は？|中国|
+東南アジアで、島が多く、世界最大のイスラム教徒の人口をもつ国は？|インドネシア|
+東南アジアで、首都がバンコクで、仏教徒が多い国は？|タイ|
+東南アジアで、首都がハノイの国は？|ベトナム|
+東南アジアで、首都がマニラの国は？|フィリピン|
+マレー半島南端にある、都市国家は？|シンガポール|
+東南アジアで、パーム油や天然ゴムの生産がさかんな、首都がクアラルンプールの国は？|マレーシア|
+西アジアで、イスラム教の聖地メッカがある国は？|サウジアラビア|
+アフリカ大陸の南端にあり、金やダイヤモンドを産出する国は？|南アフリカ共和国|
+アフリカ大陸の北東部にあり、ナイル川が流れ、ピラミッドがある国は？|エジプト|
+ギニア湾岸にあり、首都がアクラで、カカオの生産が多い国は？|ガーナ|
+南アメリカ最大の面積をもち、ポルトガル語が公用語の国は？|ブラジル|
+南アメリカで、パンパが広がり、牧畜がさかんな国は？|アルゼンチン|
+北アメリカで、スペイン語を話す人が多く、アメリカ合衆国の南に接する国は？|メキシコ|
+ヨーロッパで、フィヨルドが見られる北欧の国は？|ノルウェー|
+ヨーロッパで、EUの中心的な国で、ルール工業地域がある国は？|ドイツ|
+ヨーロッパで、首都がパリの国は？|フランス|
+ヨーロッパで、首都がロンドンの国は？|イギリス|
+ヨーロッパで、首都がローマの国は？|イタリア|
+ヨーロッパで、風車やチューリップで知られる国は？|オランダ|
+オセアニアで、大陸全体が1つの国で、石炭や鉄鉱石を産出する国は？|オーストラリア|
+オセアニアで、先住民のマオリが暮らし、羊の飼育がさかんな国は？|ニュージーランド|
+#地理/世界/首都
+アメリカ合衆国の首都は？|ワシントンD.C.|
+カナダの首都は？|オタワ|
+メキシコの首都は？|メキシコシティ|
+ブラジルの首都は？|ブラジリア|
+アルゼンチンの首都は？|ブエノスアイレス|
+フランスの首都は？|パリ|
+イギリスの首都は？|ロンドン|
+ドイツの首都は？|ベルリン|
+イタリアの首都は？|ローマ|
+スペインの首都は？|マドリード|
+ロシアの首都は？|モスクワ|
+中国の首都は？|北京|
+韓国の首都は？|ソウル|
+インドの首都は？|ニューデリー|
+インドネシアの首都は？|ジャカルタ|
+タイの首都は？|バンコク|
+ベトナムの首都は？|ハノイ|
+フィリピンの首都は？|マニラ|
+サウジアラビアの首都は？|リヤド|
+エジプトの首都は？|カイロ|
+オーストラリアの首都は？|キャンベラ|
+ニュージーランドの首都は？|ウェリントン|
+#地理/世界/産業・社会
+東南アジアの10か国が加盟する、地域協力組織は？|ASEAN|
+熱帯の地域で、大規模な農園をつくり、特定の作物を栽培する農業は？|プランテーション農業|
+夏と冬で、ふく向きがほぼ逆になる風は？|季節風|モンスーンともいう
+同じ耕地で、1年に2回、同じ作物をつくることは？|二期作|
+同じ耕地で、1年に2種類の作物をつくることは？|二毛作|
+中国で、外国企業を受け入れるために開放された沿海部の地区は？|経済特区|
+中国の人口の約9割をしめる民族は？|漢族|
+インドで発展している、情報通信技術の産業の略称は？|ICT産業|
+インドの人口の約8割が信仰している宗教は？|ヒンドゥー教|
+西アジアなどに多い、ムハンマドが開いた宗教は？|イスラム教|
+イスラム教の聖典は？|コーラン|
+イスラム教徒が礼拝するときに向かう、サウジアラビアにある聖地は？|メッカ|
+西アジアなどの石油産出国が結成した組織は？|OPEC|石油輸出国機構
+ペルシア湾岸で多くとれる、重要なエネルギー資源は？|石油|
+ヨーロッパの国々が加盟する、政治・経済の統合組織は？|EU|
+EUの多くの国で使われている、共通の通貨は？|ユーロ|
+ヨーロッパで、小麦などの穀物の栽培と家畜の飼育を組み合わせた農業は？|混合農業|
+地中海沿岸で、夏にオリーブやぶどうなどをつくる農業は？|地中海式農業|
+航空機の部品を、EU各国が分担して生産する方式は？|国際分業|
+特定の農産物や鉱産資源の輸出にたよる経済は？|モノカルチャー経済|
+ギニア湾岸で栽培がさかんな、チョコレートの原料は？|カカオ|
+南アフリカ共和国で、かつて行われていた、人種を差別して隔離した政策は？|アパルトヘイト|
+アフリカの国々が加盟する、地域統合組織は？|AU|
+スマートフォンなどに使われる、埋蔵量が少ない金属は？|レアメタル|
+アメリカ合衆国で、近年増えている、スペイン語を話す移民の人々は？|ヒスパニック|
+アメリカ合衆国で、北緯37度以南の、先端技術産業が発達した地域は？|サンベルト|
+サンフランシスコ郊外の、ICT産業が集中する地域は？|シリコンバレー|
+地域の気候や土壌に合った作物を栽培する農業は？|適地適作|
+世界の穀物の流通を支配する、アメリカなどの多国籍企業は？|穀物メジャー|
+アマゾン川流域に広がる、世界最大級の熱帯雨林は？|セルバ|
+ブラジルで、さとうきびなどからつくられる燃料は？|バイオエタノール|
+森林を切り開き、焼いた灰を肥料にして行う農業は？|焼畑農業|
+アルゼンチンに広がる、牧畜や小麦栽培がさかんな草原は？|パンパ|
+オーストラリアの先住民は？|アボリジニ|
+ニュージーランドの先住民は？|マオリ|
+人種や民族のちがいを認め合う社会をめざす考え方は？|多文化主義|
+先進国と発展途上国の、経済格差から生じる問題は？|南北問題|
+発展途上国の産品を、適正な価格で買い取る貿易は？|フェアトレード|
+発展途上国に対して、先進国の政府が行う資金や技術の協力は？|ODA|
+#地理/日本/地形・気候
+日本の国土の約4分の3をしめる地形は？|山地|
+本州の中央部を南北にはしる、大きな溝状の地形は？|フォッサマグナ|
+飛騨山脈・木曽山脈・赤石山脈をまとめて何という？|日本アルプス|
+日本最大の平野は？|関東平野|
+日本最大の湖は？|琵琶湖|
+流域面積が日本最大の川は？|利根川|
+日本で最も長い川は？|信濃川|
+日本で最も高い山は？|富士山|
+日本海側を北上する暖流は？|対馬海流|
+日本列島の太平洋側を北上する暖流は？|日本海流|黒潮ともいう
+日本列島の太平洋側を南下する寒流は？|千島海流|親潮ともいう
+暖流と寒流がぶつかる、好漁場となる場所は？|潮目|潮境ともいう
+水深が約200mまでの、なだらかな海底は？|大陸棚|
+山地が海にしずんでできた、複雑な海岸線の地形は？|リアス海岸|
+山地から平野に出た川が、土砂を積もらせてつくる扇形の地形は？|扇状地|
+川が河口付近に土砂を積もらせてできた、平らな地形は？|三角州|
+冬に北西の季節風の影響で、雪が多く降る気候区は？|日本海側の気候|
+夏に南東の季節風の影響で、雨が多く降る気候区は？|太平洋側の気候|
+年間降水量が少なく、温暖な、瀬戸内海沿岸の気候は？|瀬戸内の気候|
+夏と冬、昼と夜の気温差が大きい、中央高地の気候は？|内陸の気候|
+北海道の気候は？|冷帯（亜寒帯）|
+日本で、6月ごろから約1か月続く、雨が多い時期は？|梅雨|
+自然災害の被害を予測し、避難場所などを示した地図は？|ハザードマップ|
+#地理/日本/地域
+九州南部に広がる、火山灰が積もってできた台地は？|シラス台地|
+宮崎平野などで盛んな、野菜の出荷時期を早める栽培方法は？|促成栽培|
+九州北部の、かつて鉄鋼業が発達した工業地帯は？|北九州工業地帯|
+瀬戸内海沿岸にある、石油化学工業がさかんな工業地域は？|瀬戸内工業地域|
+本州と四国を結ぶ橋は、全部で何ルートか？|3ルート|
+大阪湾の臨海部に広がる工業地帯は？|阪神工業地帯|
+愛知県を中心に、自動車工業がさかんな工業地帯は？|中京工業地帯|
+静岡県の太平洋岸に広がる、楽器・オートバイ・製紙工業がさかんな工業地域は？|東海工業地域|
+夏でもすずしい気候を利用して、野菜の出荷時期をおくらせる栽培方法は？|抑制栽培|
+北陸地方で、冬の間の農家の副業として発達した産業は？|伝統産業|
+東京・神奈川の臨海部に広がる工業地帯は？|京浜工業地帯|
+千葉県の東京湾岸に広がる、石油化学工業がさかんな工業地域は？|京葉工業地域|
+大都市の近くで、新鮮な野菜などをつくる農業は？|近郊農業|
+人口や産業が東京に集中することを何という？|一極集中|
+東北地方の太平洋側で、夏にふく冷たい北東風は？|やませ|
+青森県で生産がさかんな果物は？|りんご|
+山形県で生産がさかんな果物は？|さくらんぼ|
+北海道で、酪農がさかんな台地は？|根釧台地|
+北海道で、畑作がさかんな平野は？|十勝平野|
+北海道で、米づくりがさかんな平野は？|石狩平野|
+土地をよくするために、ほかの土地から土を運び入れることは？|客土|
+択捉島・国後島・色丹島・歯舞群島をまとめて何という？|北方領土|
+同じ畑で、年ごとに異なる作物をつくる農業は？|輪作|
+沖縄県で盛んな、砂糖の原料になる作物は？|さとうきび|
+暖かい海で、サンゴが集まってできた地形は？|サンゴ礁|
+#地理/日本/産業・人口
+原料を輸入して、製品に加工して輸出する、日本の貿易は？|加工貿易|
+関東から九州北部にかけて、工業地帯・地域が帯状に連なる地域は？|太平洋ベルト|
+日本で製造品出荷額が最も大きい工業地帯は？|中京工業地帯|
+日本の発電の中心となっている発電方法は？|火力発電|
+太陽光や風力など、くり返し利用できるエネルギーは？|再生可能エネルギー|
+出生率が低下し、高齢者の割合が高まる現象は？|少子高齢化|
+人口が減って、地域の社会生活が維持しにくくなることは？|過疎|
+人口が集中しすぎて、住宅や交通などに問題が起こることは？|過密|
+人口が特に集中している、東京・大阪・名古屋の周辺をまとめて何という？|三大都市圏|
+軽くて高価な製品の輸送に適した、輸送機関は？|航空機|
+大量の貨物を安く運ぶのに適した、輸送機関は？|船|
+政令で指定された、人口50万人以上などの基準を満たす大きな市は？|政令指定都市|
+#地理/日本/地形図
+地形図の地図記号「文」が表すのは？|小・中学校|
+地形図の地図記号「卍」が表すのは？|寺院|
+地形図の地図記号「〒」が表すのは？|郵便局|
+地形図の地図記号「♨」が表すのは？|温泉|
+地形図の地図記号「Y」が表すのは？|消防署|
+地形図の地図記号「×」が表すのは？|交番|
+#地理/日本/地図の読み取り
+2万5千分の1の地形図で、等高線（主曲線）は何mごとに引かれている？|10m|
+5万分の1の地形図で、等高線（主曲線）は何mごとに引かれている？|20m|
+2万5千分の1の地形図上で、2cmの長さは、実際の距離で何m？|500m|
+地形図で、等高線の間隔がせまい所は、傾斜がどうなっている？|急|
+2万5千分の1の地形図で、実際の1kmは地図上で何cm？|4cm|
+5万分の1の地形図上で、2cmの長さは、実際の距離で何km？|1km|
+`;
+/* 社会 一問一答（公民）  書式：#分野/単元/答えの種類 の下に  問い|答え|ひとこと解説 */
+RAW_OQ+=`
+#公民/政治/憲法
+日本国憲法の三つの基本原則は、国民主権、基本的人権の尊重と何？|平和主義|
+国の政治のあり方を最終的に決める力が、国民にあるという原則は？|国民主権|
+日本国憲法で、天皇は日本国と日本国民統合の何とされている？|象徴|
+天皇が、内閣の助言と承認によって行う、憲法に定められた行為は？|国事行為|
+憲法が、国の法の中で最も強い力をもつことを、何という？|最高法規|憲法に反する法律などは効力をもたない
+憲法第9条で、保持しないとされているものは？|戦力|
+憲法にもとづいて政治を行うという考え方は？|立憲主義|
+憲法改正の発議のあと、国民が行う投票は？|国民投票|有効投票の過半数の賛成で承認
+人権を制限できる唯一の理由とされる、社会全体の利益は？|公共の福祉|
+すべての人が生まれながらにもつ、侵されることのない権利は？|基本的人権|
+子どもに普通教育を受けさせる義務、勤労の義務と、もうひとつの国民の義務は？|納税の義務|
+#公民/政治/人権
+憲法第14条が定める、すべての国民が法の下で差別されないという権利は？|平等権|
+思想・良心の自由や、信教の自由などは、何の自由？|精神の自由|
+不当に逮捕されたり、拷問されたりしない自由は？|身体の自由|
+職業選択の自由や財産権は、何の自由？|経済活動の自由|
+「健康で文化的な最低限度の生活を営む権利」は？|生存権|憲法第25条
+人間らしい生活を保障するように、国に求める権利の総称は？|社会権|
+選挙で投票したり、立候補したりして、政治に参加する権利は？|参政権|
+裁判を受ける権利など、人権を守るために国に求める権利は？|請求権|
+労働者が、労働組合をつくる権利は？|団結権|
+労働者が、使用者と労働条件について交渉する権利は？|団体交渉権|
+労働者が、ストライキなどを行う権利は？|団体行動権|争議権ともいう
+良好な環境の中で、生活する権利は？|環境権|
+個人の私生活を、みだりに公開されない権利は？|プライバシーの権利|
+国や地方公共団体がもつ情報を、知る権利は？|知る権利|
+自分の生き方などを、自分で決める権利は？|自己決定権|
+#公民/政治/国会・内閣・裁判所
+国会は、国権の最高機関であり、国の唯一の何機関？|立法機関|
+国会が行う、内閣総理大臣を選ぶ手続きは？|指名|
+衆議院と参議院の議決が異なるとき、衆議院の議決が優先されることは？|衆議院の優越|
+国会が、国の政治について調査する権限は？|国政調査権|
+国会が、裁判官をやめさせるかどうかを決める裁判は？|弾劾裁判|
+毎年1月に召集され、おもに予算を審議する国会は？|常会|通常国会ともいう
+衆議院の総選挙のあとに召集され、内閣総理大臣を指名する国会は？|特別会|
+内閣の必要に応じて召集される国会は？|臨時会|
+内閣は、国の仕事を実際に行う、何権をもっている？|行政権|
+内閣は、内閣総理大臣と何で組織される？|国務大臣|
+内閣総理大臣を任命するのは？|天皇|
+国会の信任にもとづいて内閣が成立し、国会に対して連帯して責任を負うしくみは？|議院内閣制|
+内閣が、政治の方針を決める会議は？|閣議|
+衆議院で内閣不信任案が可決されたとき、内閣がとる道は、総辞職か何？|衆議院の解散|
+国の予算案を作成して、国会に提出する機関は？|内閣|
+国の仕事を行う役所で働く人々は、全体の奉仕者とされる。この人々を何という？|公務員|
+法律などが憲法に違反していないかを、判断する権限は？|違憲立法審査権|
+違憲立法審査権について、最終的な判断を行う裁判所は？|最高裁判所|
+最高裁判所は、何とよばれる？|憲法の番人|
+1つの事件について、3回まで裁判を受けられる制度は？|三審制|
+第一審の判決に不服で、第二審を求めることは？|控訴|
+第二審の判決に不服で、第三審を求めることは？|上告|
+裁判官が、国会や内閣から干渉されずに裁判を行うことは？|司法権の独立|
+国民が裁判に参加する制度で、重大な刑事裁判の第一審で判決に加わる人は？|裁判員|
+刑事裁判で、被疑者を裁判所に訴える人は？|検察官|
+刑事裁判で、被告人を守る人は？|弁護人|
+個人どうしの争いを裁く裁判は？|民事裁判|
+犯罪について、有罪か無罪か、刑罰を決める裁判は？|刑事裁判|
+民事裁判で、裁判所に訴え出た人は？|原告|
+権力を立法・行政・司法に分け、たがいに抑制させるしくみは？|三権分立|
+三権分立を唱えた、フランスの思想家は？|モンテスキュー|
+『社会契約論』で人民主権を唱えた、フランスの思想家は？|ルソー|
+抵抗権を唱えた、イギリスの思想家は？|ロック|
+#公民/政治/数値
+衆議院議員の任期は？|4年|解散があるため、任期の途中で終わることが多い
+参議院議員の任期は？|6年|3年ごとに半数を改選する
+衆議院議員の被選挙権は、満何歳以上？|満25歳以上|
+参議院議員の被選挙権は、満何歳以上？|満30歳以上|
+憲法改正を国会が発議するには、各議院の総議員の何分の何以上の賛成が必要？|3分の2以上|
+選挙権は、満何歳以上の国民に認められている？|満18歳以上|
+都道府県知事の被選挙権は、満何歳以上？|満30歳以上|
+市町村長の被選挙権は、満何歳以上？|満25歳以上|
+地方議会議員と首長の任期は？|4年|
+条例の制定を求める直接請求に必要な署名は、有権者の何分の1以上？|50分の1以上|
+首長の解職を求める直接請求に必要な署名は、有権者の何分の1以上（40万人以下の場合）？|3分の1以上|
+#公民/政治/選挙
+18歳以上のすべての国民が、選挙権をもつ原則は？|普通選挙|
+だれに投票したかが、他人にわからない原則は？|秘密選挙|
+1人1票で、票の価値が平等である原則は？|平等選挙|
+有権者が、直接候補者に投票する原則は？|直接選挙|
+衆議院議員選挙で採用されている、小選挙区制と比例代表制を組み合わせた制度は？|小選挙区比例代表並立制|
+得票に応じて、政党に議席を配分する制度は？|比例代表制|
+選挙区によって、議員1人あたりの有権者数が異なる問題は？|一票の格差|
+政権を担当している政党は？|与党|
+政権を担当していない政党は？|野党|
+政策を実現するために、同じ考えをもつ人々が集まってつくる団体は？|政党|
+テレビや新聞など、情報を大衆に伝える媒体は？|マスメディア|
+#公民/政治/地方自治
+地方公共団体が、法律の範囲内で独自に定める決まりは？|条例|
+地方公共団体間の財政格差をなくすために、国から配分される、使い道が自由な資金は？|地方交付税交付金|
+国が使い道を指定して、地方公共団体に出す補助金は？|国庫支出金|
+地方公共団体の借金は？|地方債|
+国から地方へ、権限や財源を移すことは？|地方分権|
+住民が、条例の制定や議会の解散などを求める権利は？|直接請求権|
+都道府県の知事や、市町村長をまとめて何という？|首長|
+#公民/経済/用語
+家計の収入のうち、働いて得る収入は？|賃金|給与ともいう
+家計の支出のうち、食費や住居費など、生活のための支出は？|消費支出|
+家計の支出のうち、税金や社会保険料などは？|非消費支出|
+収入から支出を引いた残りで、将来のためにためるお金は？|貯蓄|
+市場で、需要量と供給量がつり合ったときの価格は？|均衡価格|
+1つの企業だけが商品を供給して、価格を決められる状態は？|独占|
+企業間の公正な競争をうながすための法律は？|独占禁止法|
+独占禁止法を運用する機関は？|公正取引委員会|
+株式会社が、利益の一部を株主に分配するものは？|配当|
+株式会社の最高決定機関は？|株主総会|
+商品の欠陥で消費者が被害を受けたとき、企業の責任を定めた法律は？|製造物責任法|PL法ともいう
+訪問販売などで契約した商品を、一定期間内なら無条件で解約できる制度は？|クーリング・オフ|
+電気・ガス・水道・鉄道運賃など、国や自治体が決定・認可する料金は？|公共料金|
+労働条件の最低基準を定めた法律は？|労働基準法|
+労働者が、労働条件の改善を求めて組織する団体は？|労働組合|
+パートやアルバイトなど、正社員以外の雇用を何という？|非正規雇用|
+仕事と生活の調和をはかる考え方は？|ワーク・ライフ・バランス|
+日本の中央銀行は？|日本銀行|
+日本銀行が、国債などの売買を通じて景気を調整することは？|金融政策|
+日本銀行が、「発券銀行」「政府の銀行」とともに、そう呼ばれる役割は？|銀行の銀行|
+政府が、税金だけで足りない収入をおぎなうために発行する借金の証書は？|国債|
+納税者と、税の負担者が同じ税は？|直接税|
+納税者と、税の負担者が異なる税は？|間接税|
+所得が高い人ほど、税率が高くなるしくみは？|累進課税|
+国の支出で、最も大きな割合をしめるのは？|社会保障関係費|
+社会保障の4つの柱は、社会保険、公的扶助、公衆衛生と何？|社会福祉|
+生活に困っている人に、生活費などを支給する制度は？|生活保護|
+病気・失業・老齢などに備えて、人々が保険料を出し合う制度は？|社会保険|
+40歳以上が加入する、高齢者の介護を支える保険は？|介護保険|
+感染症の予防や、上下水道の整備などを行うしくみは？|公衆衛生|
+#公民/経済/変化
+需要量が供給量より多いとき、価格はどうなる？|上がる|
+供給量が需要量より多いとき、価格はどうなる？|下がる|
+1ドル＝100円から1ドル＝80円になることは？|円高|
+1ドル＝100円から1ドル＝120円になることは？|円安|
+円高のとき、有利になるのは、輸出と輸入のどちら？|輸入|
+円安のとき、有利になるのは、輸出と輸入のどちら？|輸出|
+物価が、上がり続ける現象は？|インフレーション|
+物価が、下がり続ける現象は？|デフレーション|
+景気が悪いとき、政府が行う財政政策は、公共投資を増やすことと何？|減税|
+景気が過熱したとき、政府が行う財政政策は、公共投資を減らすことと何？|増税|
+景気が悪いとき、日本銀行は国債を買って、市場に出回るお金を増やす？減らす？|増やす|
+#公民/国際/用語
+国際連合の本部がある都市は？|ニューヨーク|
+国連で、世界の平和と安全の維持に責任をもつ機関は？|安全保障理事会|
+安全保障理事会の常任理事国がもつ、1国でも反対すると決議できない権利は？|拒否権|
+国連の専門機関で、教育・科学・文化を通じて平和をめざす機関は？|ユネスコ|
+国連の専門機関で、世界の人々の健康の向上をめざす機関は？|WHO|
+国連が、紛争地域の平和を守るために行う活動は？|PKO|
+子どもの権利を守り、支援する国連の機関は？|ユニセフ|
+国と国との争いを、国際法にもとづいて裁く国連の機関は？|国際司法裁判所|
+国家の主権がおよぶ領域は、領土・領海と何？|領空|
+領海は、海岸線から何海里までか？|12海里|
+排他的経済水域は、海岸線から何海里までか？|200海里|
+日本の最北端の島は？|択捉島|
+日本の最南端の島は？|沖ノ鳥島|
+日本の最東端の島は？|南鳥島|
+日本の最西端の島は？|与那国島|
+島根県に属し、韓国が不法に占拠している島は？|竹島|
+北方領土は、択捉島、国後島、色丹島と何？|歯舞群島|
+沖縄県に属し、日本が実効支配しており、領土問題は存在しない島々は？|尖閣諸島|
+自衛隊の最高指揮権をもつのは？|内閣総理大臣|
+軍隊の最高指揮権は、軍人でなく国民が選んだ政治家がもつべきという原則は？|文民統制|
+核兵器が広がらないように、1968年に採択された条約は？|核拡散防止条約|
+国際社会で活動する、民間の非営利組織は？|NGO|
+#公民/国際/環境・社会
+熊本県と鹿児島県の不知火海沿岸で発生した、有機水銀による公害病は？|水俣病|
+富山県の神通川流域で発生した、カドミウムによる公害病は？|イタイイタイ病|
+三重県の四日市市で発生した、大気汚染による公害病は？|四日市ぜんそく|
+新潟県の阿賀野川流域で発生した、有機水銀による公害病は？|新潟水俣病|
+廃棄物を減らし、くり返し使い、再資源化する取り組みをまとめて何という？|3R|
+1997年に、温室効果ガスの削減目標を定めた議定書は？|京都議定書|
+2015年に採択された、地球温暖化対策の国際的な枠組みは？|パリ協定|
+地球温暖化の原因となる、二酸化炭素やメタンなどをまとめて何という？|温室効果ガス|
+資源をむだにせず、くり返し利用する社会は？|循環型社会|
+環境に大きな影響をおよぼす事業を行う前に、影響を調べて評価することは？|環境アセスメント|
+情報を正しく受け取り、活用する力は？|情報リテラシー|
+情報を発信したり受け取ったりするときに、守るべきルールやマナーは？|情報モラル|
+他人がつくった作品などについて、つくった人がもつ権利は？|著作権|
+国境をこえて、人・物・お金・情報が行き交い、世界の結びつきが強まることは？|グローバル化|
+夫婦と未婚の子ども、または夫婦のみ、ひとり親と子どもなどでつくる家族は？|核家族|
+人間のように考えたり判断したりする、コンピュータの技術は？|人工知能|
+`;
+/* 社会 年代ならべかえ  書式：古い順に < でつないだ出来事|ひとこと（年代）  見出しは時代 */
+let RAW_OT=`
+#古代
+縄文土器が作られる<稲作が伝わる<卑弥呼が魏に使いを送る<前方後円墳が造られる|縄文→弥生→239年→古墳時代
+聖徳太子が摂政になる<小野妹子が隋に渡る<大化の改新が始まる<白村江の戦いが起こる|593年→607年→645年→663年
+十七条の憲法ができる<大化の改新が始まる<大宝律令ができる<古事記が完成する|604年→645年→701年→712年
+壬申の乱が起こる<大宝律令ができる<平城京に都を移す<墾田永年私財法が出される|672年→701年→710年→743年
+平城京に都を移す<古事記が完成する<墾田永年私財法が出される<東大寺の大仏ができる|710年→712年→743年→752年
+東大寺の大仏ができる<平安京に都を移す<遣唐使が停止される<藤原道長が摂政になる|752年→794年→894年→1016年
+平安京に都を移す<最澄が天台宗を伝える<空海が真言宗を伝える<遣唐使が停止される|794年→805年→806年→894年
+白河上皇が院政を始める<保元の乱が起こる<平治の乱が起こる<平清盛が太政大臣になる|1086年→1156年→1159年→1167年
+#中世
+保元の乱が起こる<平治の乱が起こる<壇ノ浦の戦いが起こる<源頼朝が征夷大将軍になる|1156年→1159年→1185年→1192年
+壇ノ浦の戦いが起こる<源頼朝が征夷大将軍になる<承久の乱が起こる<御成敗式目ができる|1185年→1192年→1221年→1232年
+御成敗式目ができる<文永の役が起こる<弘安の役が起こる<永仁の徳政令が出される|1232年→1274年→1281年→1297年
+鎌倉幕府がほろぶ<建武の新政が始まる<南朝と北朝が分かれる<足利尊氏が征夷大将軍になる|1333年→1334年→1336年→1338年
+南北朝が統一される<日明貿易が始まる<正長の土一揆が起こる<応仁の乱が始まる|1392年→1404年→1428年→1467年
+応仁の乱が始まる<山城国一揆が起こる<鉄砲が伝わる<キリスト教が伝わる|1467年→1485年→1543年→1549年
+承久の乱が起こる<御成敗式目ができる<文永の役が起こる<鎌倉幕府がほろぶ|1221年→1232年→1274年→1333年
+#近世
+楽市・楽座が行われる<太閤検地が始まる<刀狩令が出される<朝鮮出兵が始まる|1567年→1582年→1588年→1592年
+桶狭間の戦いが起こる<室町幕府がほろぶ<長篠の戦いが起こる<本能寺の変が起こる|1560年→1573年→1575年→1582年
+本能寺の変が起こる<豊臣秀吉が全国を統一する<朝鮮出兵が始まる<関ヶ原の戦いが起こる|1582年→1590年→1592年→1600年
+関ヶ原の戦いが起こる<江戸幕府が開かれる<大阪夏の陣が起こる<島原・天草一揆が起こる|1600年→1603年→1615年→1637年
+島原・天草一揆が起こる<オランダ商館が出島に移る<享保の改革が始まる<寛政の改革が始まる|1637年→1641年→1716年→1787年
+享保の改革が始まる<解体新書が出版される<寛政の改革が始まる<大塩平八郎の乱が起こる|1716年→1774年→1787年→1837年
+#近代
+大塩平八郎の乱が起こる<天保の改革が始まる<ペリーが来航する<日米修好通商条約が結ばれる|1837年→1841年→1853年→1858年
+ペリーが来航する<日米和親条約が結ばれる<日米修好通商条約が結ばれる<桜田門外の変が起こる|1853年→1854年→1858年→1860年
+薩長同盟が結ばれる<大政奉還が行われる<五箇条の御誓文が出される<版籍奉還が行われる|1866年→1867年→1868年→1869年
+版籍奉還が行われる<廃藩置県が行われる<学制が公布される<地租改正が行われる|1869年→1871年→1872年→1873年
+徴兵令が出される<民撰議院設立建白書が出される<西南戦争が起こる<内閣制度ができる|1873年→1874年→1877年→1885年
+内閣制度ができる<大日本帝国憲法が発布される<第1回帝国議会が開かれる<日清戦争が始まる|1885年→1889年→1890年→1894年
+日清戦争が始まる<下関条約が結ばれる<日英同盟が結ばれる<日露戦争が始まる|1894年→1895年→1902年→1904年
+日露戦争が始まる<ポーツマス条約が結ばれる<韓国併合が行われる<辛亥革命が起こる|1904年→1905年→1910年→1911年
+日露戦争が始まる<韓国併合が行われる<第一次世界大戦が始まる<二十一か条の要求を出す|1904年→1910年→1914年→1915年
+ロシア革命が起こる<米騒動が起こる<ベルサイユ条約が結ばれる<国際連盟が発足する|1917年→1918年→1919年→1920年
+国際連盟が発足する<関東大震災が起こる<普通選挙法が成立する<世界恐慌が起こる|1920年→1923年→1925年→1929年
+原敬内閣ができる<ラジオ放送が始まる<世界恐慌が起こる<満州事変が起こる|1918年→1925年→1929年→1931年
+世界恐慌が起こる<満州事変が起こる<五・一五事件が起こる<国際連盟を脱退する|1929年→1931年→1932年→1933年
+二・二六事件が起こる<日中戦争が始まる<国家総動員法が出される<第二次世界大戦が始まる|1936年→1937年→1938年→1939年
+日独伊三国同盟が結ばれる<太平洋戦争が始まる<ミッドウェー海戦が起こる<ポツダム宣言を受け入れる|1940年→1941年→1942年→1945年
+太平洋戦争が始まる<沖縄戦が起こる<広島に原爆が投下される<玉音放送が行われる|1941年→1945年3月→1945年8月6日→1945年8月15日
+#現代
+日本国憲法が公布される<日本国憲法が施行される<朝鮮戦争が始まる<サンフランシスコ平和条約が結ばれる|1946年→1947年→1950年→1951年
+警察予備隊ができる<サンフランシスコ平和条約が結ばれる<自衛隊が発足する<国際連合に加盟する|1950年→1951年→1954年→1956年
+サンフランシスコ平和条約が結ばれる<自衛隊が発足する<日ソ共同宣言が出される<東京オリンピックが開かれる|1951年→1954年→1956年→1964年
+所得倍増計画が発表される<東京オリンピックが開かれる<大阪万博が開かれる<石油危機が起こる|1960年→1964年→1970年→1973年
+東京オリンピックが開かれる<日韓基本条約が結ばれる<大阪万博が開かれる<沖縄が返還される|1964年→1965年→1970年→1972年
+沖縄が返還される<石油危機が起こる<日中平和友好条約が結ばれる<消費税が導入される|1972年→1973年→1978年→1989年
+ベルリンの壁が崩壊する<東西ドイツが統一される<ソ連が解体する<阪神・淡路大震災が起こる|1989年→1990年→1991年→1995年
+阪神・淡路大震災が起こる<アメリカで同時多発テロが起こる<東日本大震災が起こる<選挙権が満18歳以上になる|1995年→2001年→2011年→2016年
+#世界史
+隋が中国を統一する<唐が成立する<第1回の遣唐使が送られる<唐がほろびる|589年→618年→630年→907年
+モンゴル帝国が成立する<元が成立する<文永の役が起こる<明が成立する|1206年→1271年→1274年→1368年
+十字軍の遠征が始まる<ルネサンスが起こる<コロンブスが新大陸に到達する<宗教改革が始まる|1096年→14世紀→1492年→1517年
+名誉革命が起こる<アメリカ独立宣言が出される<フランス革命が起こる<ナポレオンが皇帝になる|1688年→1776年→1789年→1804年
+産業革命がイギリスで始まる<アメリカ独立宣言が出される<フランス革命が起こる<アヘン戦争が起こる|18世紀後半→1776年→1789年→1840年
+アヘン戦争が起こる<ペリーが来航する<南北戦争が始まる<日清戦争が始まる|1840年→1853年→1861年→1894年
+第一次世界大戦が始まる<ロシア革命が起こる<世界恐慌が起こる<第二次世界大戦が始まる|1914年→1917年→1929年→1939年
+第二次世界大戦が終わる<国際連合が発足する<NATOが結成される<朝鮮戦争が始まる|1945年→1945年→1949年→1950年
+朝鮮戦争が始まる<ベルリンの壁が建設される<ベルリンの壁が崩壊する<ソ連が解体する|1950年→1961年→1989年→1991年
+`;
 const COMMON=`あなたは、大阪府の中学2年生の男の子（呼び名は本人に聞く）が、2028年3月に大阪府立桜塚高校（普通科）へ合格するのを助けるAI先生です。学校支給のiPadで使われます。保護者が見守っています。
 
 【入試の前提（令和10年度・2026年10月時点の公開情報）】
@@ -4452,13 +6709,12 @@ const COMMON=`あなたは、大阪府の中学2年生の男の子（呼び名�
 ・ほめるときは、結果より「やったこと・工夫・前回より伸びたところ」を具体的にほめる。間違いは「伸びしろ」と呼ぶ。
 ・説教や、不安をあおる言い方はしない。やる気が出ない日は、まず「今日は何分ならできそう？」と聞く。
 
-【この子の特徴（先生が必ず守ること。本人には「性格」として言わない）】
-・ふだんあまり勉強せず、集中が続かない。人には厳しく、自分には甘い傾向がある。責めない。事実で、やさしく言う。
-・はじめは「3分だけ」。1回の出題は3問まで。1問ごとに小さくほめ、長い説明や長文を続けない。
-・自己申告（「できた」「やった」）だけを信じない。「じゃあ1問だけ見せて」と実際に解いてもらう。結果は事実で伝える（例：「3問中1問だったね。ここが伸びしろ」）。
+【この子との進め方（先生が必ず守ること）】
+・勉強の習慣づくりの途中。はじめは「3分だけ」。1回の出題は3問まで。1問ごとに小さくほめ、長い説明や長文を続けない。
+・「できた」「やった」という言葉だけで済ませず、「じゃあ1問だけ見せて」と実際に解いてもらう。結果は事実でやさしく伝える（例：「3問中1問だったね。ここが伸びしろ」）。
 ・「だいたいわかった」「あとでやる」が出たら、「何時から、どこで、最初の1つは？」と具体的な約束に変える。
-・人や先生への文句が出たら、まず「そう感じたんだね」と受けとめる。そのあと「その見る目を、自分の答案にも向けてみよう」と誘う。人と比べない。
-・ミスを見つけるのが得意な力を活かす。先生がわざとまちがえた解答を出して、まちがい探しをしてもらう。自分の答案も「採点する人の目」で見なおす（検算）。
+・人や先生への不満が出たら、まず「そう感じたんだね」と受けとめる。そのあと「まちがいを見つける目を、自分の答案にも向けてみよう」と誘う。人と比べない。
+・まちがい探しが得意な力を活かす。先生がわざとまちがえた解答を出して、まちがい探しをしてもらう。自分の答案も「採点する人の目」で見なおす（検算）。
 ・やる気が出ない日は「今日は何分ならできそう？」と聞き、3分でもOKにする。
 
 【教え方のルール】
@@ -4669,6 +6925,8 @@ const POOL={};
 ['SQ','OQ','JI','JS'].forEach(b=>BK[b].items.forEach(it=>tagKeys(it).forEach(k=>(POOL[k]||(POOL[k]=[])).push(it))));
 const EWPOS={};BK.EW.items.forEach(it=>(EWPOS[it.pos]||(EWPOS[it.pos]=[])).push(it));
 const lenOK=(a,b)=>{const x=String(a).length,y=String(b).length;return x<=y*2+2&&y<=x*2+2};
+/* 片方がもう片方をふくむ（例：「土一揆」と「正長の土一揆」）ものは、まぎらわしいので、まちがいの選択肢に使わない */
+const nested=(a,b)=>{a=String(a);b=String(b);const s=a.length<=b.length?a:b,l=s===a?b:a;return s.length>=2&&l.includes(s)};
 function distractQA(it,f,n=3){
  const ans=it[f],seen=new Set([ans]),out=[],keys=tagKeys(it);
  for(const pass of [0,1]){
@@ -4677,7 +6935,7 @@ function distractQA(it,f,n=3){
    if(pool.length<n+2&&k!==keys[keys.length-1])continue;
    for(const c of shuffle(pool)){
     if(out.length>=n)break;
-    if(c.id===it.id||seen.has(c[f]))continue;
+    if(c.id===it.id||seen.has(c[f])||nested(c[f],ans))continue;
     if(f==='w'&&c.m===it.m)continue;
     if(pass===0&&!lenOK(c[f],ans))continue;
     seen.add(c[f]);out.push(c[f]);
@@ -5261,7 +7519,7 @@ const estMin=items=>Math.max(1,Math.ceil(sum(items.map(it=>(SEC[it.k]||12)+(it.k
    その日の「曜日」「月のカリキュラム(CUR)」「これまでの成績(SRS)」「いまの段階(ならし/ふつう/しっかり)」から、
    暗記 → 数学 → 今日の教科 → ミス退治 → 宿題チェック → ふりかえり を、実際の問題つきで組み立てる。
    組み立てた結果は日付ごとに保存し、1日のあいだ中身が変わらないようにする。
-   【対象の子】ふだんあまり勉強せず、集中が続かず、自分に甘い。だから最初は「3分」から。量は段階的に増やす。*/
+   【考え方】勉強の習慣づくりの途中の子向け。最初は「3分」から。量は段階的に増やす。*/
 const curOf=date=>{const k=date.slice(0,7);let c=CUR[0];for(const x of CUR)if(x.from<=k)c=x;return c};
 const MEMB=['EW','EV','JK','JI','JS','SQ','OQ'];
 const ewOpen=it=>+it.grp<=2||(+it.grp===3&&today()>='2027-03-01')||(+it.grp===4&&today()>='2027-05-01');
@@ -5355,9 +7613,9 @@ function bMath(date,tier,cur,ex){
  const k=TIERS[tier].k*throttle(date),r=(n,m)=>Math.max(m,Math.round(n*k));
  const pool=tier===1?EASY_M:cur.m,main=pool[dn(date)%pool.length],nMain=r(12,4),nWarm=r(5,2),nApp=tier>=3?3:0;
  const items=[...genMix(tier===1?EASY_M:cur.rv,nWarm,date,'warm'),...genOne(main,nMain,date,'main'),...(nApp?genMix(cur.w,nApp,date,'app'):[])];
- const mq=tier>=2?newItems('MQ',tier>=3?2:1,{ex}):[];
+ const mq=tier>=2?newItems('MQ',tier>=3?2:1,{ex}):[],ms=tier>=3?newItems('MS',1,{ex:exSet(ex,mq)}):[];
  const mis=tier>=3?dueItems(it=>it.subj==='数'&&!ex.has(it.id),3):[];
- return{t:'数学ドリル',subj:'数',items:[...items,...mq,...mis],desc:jn(['テーマ「'+GEN[main].name+'」'+nMain+'問（Lv.'+genLv(main)+'）','ウォームアップ'+nWarm+'問',nApp&&'応用'+nApp+'問',(mq.length+mis.length)&&'考え方・再戦'+(mq.length+mis.length)+'問'])};
+ return{t:'数学ドリル',subj:'数',items:[...items,...mq,...ms,...mis],desc:jn(['テーマ「'+GEN[main].name+'」'+nMain+'問（Lv.'+genLv(main)+'）','ウォームアップ'+nWarm+'問',nApp&&'応用'+nApp+'問',(mq.length+ms.length+mis.length)&&'考え方・再戦'+(mq.length+ms.length+mis.length)+'問'])};
 }
 function bMis(date,tier,ex){
  const n=Math.max(4,Math.round(12*TIERS[tier].k));
@@ -5383,9 +7641,10 @@ function bSub(date,wd,cur,ex,tier){
   const eo=[...dueItems(it=>it.bank==='EO'&&!sx.has(it.id),3),...newItems('EO',4,{ex:sx})].slice(0,4),er=nextPassage('ER',sx,date);
   items=[...dg,...g,...ev,...eo,...er];p=[(dg.length+g.length)&&'文法'+(dg.length+g.length)+'問',ev.length&&'不規則動詞'+ev.length,eo.length&&'並べかえ'+eo.length,er.length&&'長文1題']}
  else if(wd===2){
-  const w=newItems('JW',6,{ex}),sx=exSet(ex,w),dw=dueItems(it=>['JW','JG','JI','JS'].includes(it.bank)&&!sx.has(it.id),8);
+  const w=newItems('JW',6,{ex}),sx=exSet(ex,w),dw=dueItems(it=>['JW','JG','JI','JS','JC'].includes(it.bank)&&!sx.has(it.id),8);
   const gg=newItems('JG',6,{ex:sx}),ji=newItems('JI',5,{ex:exSet(sx,gg)}),js=newItems('JS',4,{ex:exSet(sx,[...gg,...ji])}),jr=nextPassage('JR',sx,date);
-  items=[...dw,...w,...gg,...ji,...js,...jr];p=[(dw.length+w.length)&&'漢字・語句'+(dw.length+w.length)+'問',gg.length&&'文法・古文'+gg.length,(ji.length+js.length)&&'慣用句・類義対義'+(ji.length+js.length),jr.length&&'読解1題']}
+  const jc=tier>=3?newItems('JC',1,{ex:exSet(sx,[...gg,...ji,...js])}):[];
+  items=[...dw,...w,...gg,...ji,...js,...jr,...jc];p=[(dw.length+w.length)&&'漢字・語句'+(dw.length+w.length)+'問',gg.length&&'文法・古文'+gg.length,(ji.length+js.length)&&'慣用句・類義対義'+(ji.length+js.length),jr.length&&'読解1題',jc.length&&'作文1']}
  else if(wd===3){
   const q=newItems('SQ',14,{prefs:cur.sc,ex}),sx=exSet(ex,q),dq=dueItems(it=>it.bank==='SQ'&&!sx.has(it.id),10),calc=genMix(cur.s,5,date,'sci');
   items=[...dq,...q,...calc];p=[(dq.length+q.length)&&'一問一答'+(dq.length+q.length)+'問','計算5問']}
@@ -5596,8 +7855,8 @@ function dayScore(date=today()){
 /* 自己採点（self）とデータ採点（data）のちがいから、ひとことを返す */
 function calibNote(self,data){
  const d=self-data;
- if(d>=2)return{k:'amai',t:'ちょっと甘めかも。データだと'+data+'点。まちがえた問題を1つ見なおしてみよう。'};
- if(d<=-2)return{k:'kibishii',t:'厳しすぎるかも。データだと'+data+'点。できたところも、ちゃんと数えよう。'};
+ if(d>=2)return{k:'amai',t:'ちょっと高めにつけたかも。データだと'+data+'点。まちがえた問題を1つ見なおしてみよう。'};
+ if(d<=-2)return{k:'kibishii',t:'ちょっと低めにつけたかも。データだと'+data+'点。できたところも、ちゃんと数えよう。'};
  return{k:'ok',t:'いい目をしてる！データの'+data+'点とほぼ同じ。自分をちゃんと見られているよ。'};
 }
 
@@ -5645,21 +7904,27 @@ const SJIC={国:'jp',数:'math',英:'eng',理:'sci',社:'soc',総:'all'};
 const sjTag=s=>`<span class="sj" data-s="${s}">${SJN[s]||s}</span>`;
 const f1=x=>Math.round(x*10)/10;
 
-/* ----- インクの飛沫（SVG）：シードで形が決まる ----- */
-function splatPath(seed,N=14,R=100){
- const r=mulberry(seed),pts=[];
- for(let i=0;i<N;i++){const a=i/N*Math.PI*2,k=i%2?0.52+r()*.26:0.86+r()*.36;pts.push([Math.cos(a)*R*k,Math.sin(a)*R*k])}
+/* ----- インクの飛沫（SVG）：シードで形が決まる。とげ12本＋しずく（ぬりつぶし・不透明） ----- */
+function splatPath(seed,N=12,R=100){
+ const r=mulberry(seed),pts=[],n=N*2;
+ for(let i=0;i<n;i++){
+  const a=i/n*Math.PI*2+(r()-.5)*.16,spike=i%2===0;
+  const k=spike?(r()<.45?1.42+r()*.36:.98+r()*.26):.68+r()*.14;
+  pts.push([Math.cos(a)*R*k,Math.sin(a)*R*k]);
+ }
  const mid=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2];
- let d='M'+mid(pts[N-1],pts[0]).map(f1).join(',');
- for(let i=0;i<N;i++){const p=pts[i],m=mid(p,pts[(i+1)%N]);d+=`Q${f1(p[0])},${f1(p[1])} ${f1(m[0])},${f1(m[1])}`}
+ let d='M'+mid(pts[n-1],pts[0]).map(f1).join(',');
+ for(let i=0;i<n;i++){const p=pts[i],m=mid(p,pts[(i+1)%n]);d+=`Q${f1(p[0])},${f1(p[1])} ${f1(m[0])},${f1(m[1])}`}
  return d+'Z';
 }
 function splatSVG(seed,col,o={}){
  const r=mulberry(seed+7),R=100;let dr='';
- const K=o.drops==null?8:o.drops;
- for(let i=0;i<K;i++){const a=r()*Math.PI*2,dist=R*(1.2+r()*.62),rad=R*(.05+r()*.12)*(1.5-dist/R*.45);dr+=`<circle cx="${f1(Math.cos(a)*dist)}" cy="${f1(Math.sin(a)*dist)}" r="${f1(rad)}"/>`}
- for(let i=0;i<3;i++){const a=r()*Math.PI*2,x1=Math.cos(a)*R*.9,y1=Math.sin(a)*R*.9,x2=Math.cos(a)*R*(1.3+r()*.3),y2=Math.sin(a)*R*(1.3+r()*.3),w=7+r()*6;
-  dr+=`<path d="M${f1(x1-Math.sin(a)*w)},${f1(y1+Math.cos(a)*w)}L${f1(x2)},${f1(y2)}L${f1(x1+Math.sin(a)*w)},${f1(y1-Math.cos(a)*w)}Z"/>`}
+ const K=Math.min(o.drops==null?6:o.drops,7);
+ for(let i=0;i<K;i++){
+  const a=r()*Math.PI*2,dist=R*(1.4+r()*.5),rad=Math.max(7,R*(.09+r()*.1)*(1.35-dist/R*.3));
+  dr+=`<circle cx="${f1(Math.cos(a)*dist)}" cy="${f1(Math.sin(a)*dist)}" r="${f1(rad)}"/>`;
+  if(r()<.55)dr+=`<circle cx="${f1(Math.cos(a)*dist*.8)}" cy="${f1(Math.sin(a)*dist*.8)}" r="${f1(Math.max(5,rad*.5))}"/>`;
+ }
  return `<svg viewBox="-200 -200 400 400" aria-hidden="true"${o.cls?` class="${o.cls}"`:''}><g fill="${col}"${o.stroke?` stroke="${o.stroke}" stroke-width="${o.sw||6}" stroke-linejoin="round"`:''}><path d="${splatPath(seed)}"/>${dr}</g></svg>`;
 }
 const sakura=(r=1)=>`<g transform="scale(${r})"><g fill="#fff" stroke="#16001f" stroke-width="5" stroke-linejoin="round">${[0,1,2,3,4].map(k=>`<ellipse cx="0" cy="-30" rx="19" ry="27" transform="rotate(${k*72})"/>`).join('')}</g><circle r="10" fill="#ffd400" stroke="#16001f" stroke-width="4"/></g>`;
@@ -5669,7 +7934,7 @@ function avatarSVG(){
 const lvHex=(lv,w=54)=>`<svg class="lvh" style="width:${w}px;height:${Math.round(w*1.1)}px" viewBox="0 0 60 66" aria-label="レベル${lv}"><polygon points="30,3 57,17 57,49 30,63 3,49 3,17" fill="#ffe81a" stroke="#000" stroke-width="4" stroke-linejoin="round"/><polygon points="30,9 52,20 52,46 30,57 8,46 8,20" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><text x="30" y="26" text-anchor="middle" font-size="11" font-weight="900" fill="#16001f" font-family="var(--f-d)">Lv</text><text x="30" y="49" text-anchor="middle" font-size="${lv>=10?22:26}" fill="#16001f" font-family="var(--f-d)">${lv}</text></svg>`;
 function paintBg(){
  const b=$('#bg');if(!b)return;
- b.innerHTML=[[3,'var(--team)',.20,'right:-120px;top:70px;width:420px'],[8,'#1ee6ff',.12,'left:-150px;top:46%;width:380px'],[21,'#b8ff00',.10,'right:-80px;bottom:-60px;width:340px']].map(s=>`<div style="position:absolute;opacity:${s[2]};${s[3]}">${splatSVG(s[0],s[1],{drops:10})}</div>`).join('');
+ b.innerHTML=[[3,'var(--team)',.30,'right:-130px;top:60px;width:440px'],[8,'#1ee6ff',.22,'left:-160px;top:46%;width:400px'],[21,'#b8ff00',.20,'right:-90px;bottom:-70px;width:360px'],[30,'#ffe81a',.16,'left:-100px;top:-90px;width:300px']].map(s=>`<div style="position:absolute;opacity:${s[2]};${s[3]}">${splatSVG(s[0],s[1],{drops:10,stroke:'#000',sw:5})}</div>`).join('');
 }
 
 /* ----- 音（効果音）と英語の読み上げ ----- */
@@ -5694,7 +7959,8 @@ const Tts={
 
 /* ----- 演出：インクのしぶき ----- */
 const FX=(()=>{
- let P=[],run=false,cv,cx;
+ let P=[],run=false,cv,cx,SPL=[];
+ try{SPL=[3,11,19,27,35,43].map(i=>new Path2D(splatPath(i,9,100)))}catch(e){SPL=[]}
  const init=()=>{cv=cv||$('#fx');if(cv&&!cx){cx=cv.getContext('2d')}return !!cx};
  const reduce=()=>window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
  function loop(){
@@ -5705,6 +7971,7 @@ const FX=(()=>{
    const a=Math.min(1,p.life/18);cx.save();cx.globalAlpha=a;cx.translate(p.x,p.y);cx.rotate(p.rot);
    cx.fillStyle=p.c;cx.strokeStyle='#000';cx.lineWidth=2.5;
    if(p.sq){cx.fillRect(-p.r,-p.r*.55,p.r*2,p.r*1.1);cx.strokeRect(-p.r,-p.r*.55,p.r*2,p.r*1.1)}
+   else if(SPL[p.pi]){const k=p.r/60;cx.scale(k,k);cx.lineWidth=2.5/k;cx.fill(SPL[p.pi]);cx.stroke(SPL[p.pi])}
    else{cx.beginPath();cx.ellipse(0,0,p.r,p.r*(p.el||1),0,0,7);cx.fill();cx.stroke()}
    cx.restore()});
   if(P.length)requestAnimationFrame(loop);else{run=false;cx.clearRect(0,0,W,H)}
@@ -5715,7 +7982,7 @@ const FX=(()=>{
   burst(x,y,n,spread){
    if(reduce()||!init())return;const C=cols();
    for(let i=0;i<(n||26);i++){const a=Math.random()*Math.PI*2,s=(spread||9)*(.35+Math.random());
-    P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-3,g:.38,r:5+Math.random()*9,el:.55+Math.random()*.45,rot:Math.random()*6,vr:(Math.random()-.5)*.3,c:C[Math.random()*C.length|0],life:44+Math.random()*30})}
+    P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-3,g:.38,r:9+Math.random()*16,pi:Math.random()*6|0,el:.55+Math.random()*.45,rot:Math.random()*6,vr:(Math.random()-.5)*.3,c:C[Math.random()*C.length|0],life:44+Math.random()*30})}
    go();
   },
   confetti(n){
@@ -5752,7 +8019,7 @@ function renderHud(){
  $('#hud').innerHTML=`<div class="pl cd"><small>入試まで</small><b>${Math.max(0,d)}</b><i>日</i></div><div class="pl fl"><small>れんぞく</small><b>${curStreak()}</b><i>日</i></div><div class="pl"><small>コイン</small><b>${S.coin}</b></div>`;
 }
 /* ===== ホーム：「いま やること」が1つだけ大きく出る画面 =====
-   対象の子：ふだんあまり勉強せず、集中が続かず、自分に甘い。
+   習慣づくりの途中の子向け。
    → 迷わせない（次の1つだけを大きく）／短く区切る／すぐ勝てる／自己申告にたよらない */
 const STAGE_SHORT={hw:'宿題',mem:'暗記',math:'数学',mis:'ミス退治',ref:'ふりかえり'};
 const stageShort=(s,wd)=>s.id==='sub'?WDP[wd].short:STAGE_SHORT[s.id];
@@ -5801,23 +8068,24 @@ function tierNote(date,tier){
  return T.note;
 }
 const nowHM=()=>{const d=new Date();return pad(d.getHours())+':'+pad(d.getMinutes())};
-function vowRow(okDay){
- const at=S.at||'',late=at&&nowHM()>at&&!okDay;
- return `<div class="vow${late?' late':''}"><span>${late?'やくそくの時間をすぎたよ。3分だけ、やってみよう！':'やる時間を決めよう：'}</span><input id="vowIn" type="time" value="${esc(at)}" aria-label="やくそくの時間"></div>`;
+function vowChip(okDay){
+ if(okDay)return'';
+ const at=S.at||'',late=at&&nowHM()>at;
+ return `<button class="vowb${late?' late':''}" data-act="vow">${ico('timer')}${late?'やくそくの時間をすぎたよ。3分だけ！':at?'やくそく '+at+' にスタート':'やくそくの時間を決める'}</button>`;
 }
 function nowCard(next,tier,okDay,rec){
  const T=TIERS[tier],isS=next.kind==='session';
  const need=tier===1?(okDay?0:1):Math.max(0,2-stageKeys(rec).length);
  const goal=okDay?`<span class="chp ok">✓ きょうの合格ライン達成！</span> れんぞく ${curStreak()}日`:`<span class="chp w">合格ライン</span> ${tier===1?'どれか1つクリアでOK！':'あと'+Math.max(1,need)+'つクリアでOK！'}`;
- return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'rgba(var(--team-rgb),.55)',{drops:7})}</div>
+ return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'#ffe81a',{drops:7,stroke:'#000',sw:5})}</div>
   <span class="lb">いま やること</span>
   <div class="nrow"><div class="nico">${ico(stageIcon(next))}</div><div class="ntx"><h2>${esc(next.t)}</h2><p>${esc(next.desc)}</p></div></div>
   <div class="chips">${isS?`<span class="chp">約${Math.max(1,next.min)}分</span><span class="chp">${next.items.length}問</span>`:''}<span class="chp xp">+${next.xp}XP</span></div>
   <button class="bt pri xl w100" data-act="stageGo" data-a="${next.id}">${goBtn(next)}</button>
-  <p class="goal">${goal}</p>${okDay?'':vowRow(okDay)}</div>`;
+  <p class="goal">${goal}</p>${vowChip(okDay)}</div>`;
 }
 function clearedCard(){
- return `<div class="nowc cleared"><div class="sp1">${splatSVG(14,'rgba(255,232,26,.5)',{drops:9})}</div><span class="lb y">ぜんぶクリア！</span>
+ return `<div class="nowc cleared"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'#000',sw:5})}</div><span class="lb y">ぜんぶクリア！</span>
   <h2 style="margin:12px 0 4px;font-size:30px">きょうは、もうバッチリ！</h2>
   <p>まだ元気なら「おかわり」。好きな教材を、好きなだけ。（1日60XPまで）</p>
   <div class="row"><button class="bt pri xl" data-tab="drill">おかわりドリル</button><button class="bt cy xl" data-act="tsukkomi">ツッコミバトル</button></div></div>`;
@@ -5833,16 +8101,14 @@ function renderHome(){
  const diagTip=(!SJL.every(s=>S.diag[s]&&S.diag[s].done)&&S.tot.n<40)?`<div class="tomorrow"><span class="lb sm c">おすすめ</span><span>ミニ診断（約10分）で、いまの実力を知ろう。</span><button class="bt sm sp" data-page="diag">診断へ</button></div>`:'';
  const L=`
  <div class="hero cmp" data-s="${W.subj}">
-  <div class="sp1">${splatSVG(5,'rgba(var(--team-rgb),.4)')}</div>
+  <div class="sp1">${splatSVG(5,'var(--team)',{stroke:'#000',sw:4})}</div>
   <div class="t1"><span class="lb sm">きょうのミッション</span><span class="date">${dateJa(date)}</span><span class="chp t">${T.name}モード</span></div>
-  <h1>${esc(real.some(s=>s.id==='sub')?W.t:'きょうの'+T.name+'ミッション')}</h1>
   <div class="gp"><div class="tank"><i style="--w:${Math.round(done.length/real.length*100)}%"></i></div><b>${done.length}/${real.length}</b></div>
-  <p class="flow">${flow}</p>
-  <p class="tn">${esc(tierNote(date,tier))}${appMin?'　きょうの ドリルは ぜんぶで 約'+appMin+'分':''}</p>
+  <p class="tn">${esc(tierNote(date,tier))}</p>
  </div>
  ${next?nowCard(next,tier,okDay,rec):clearedCard()}
  <div class="route" aria-label="きょうの流れ">${route.map(s=>`<button class="nd ${s.auto?'auto':s.done?'done':s===next?'now':''}" data-act="stageGo" data-a="${s.id}"><span class="dot">${s.done&&!s.auto?ico('check'):ico(stageIcon(s))}</span>${esc(stageShort(s,wd))}</button>`).join('')}</div>
- ${todo.length?`<div class="sec"><h2>このあと</h2></div><div class="stages">${todo.map(stageCard).join('')}</div>`:''}
+ ${todo.length?`<details class="fold later"><summary><span class="lb sm y">このあと</span><span class="lt">${todo.length}つ：${esc(todo.map(s=>stageShort(s,wd)).join(' → '))}</span></summary><div class="stages">${todo.map(stageCard).join('')}</div></details>`:''}
  ${done.length?`<details class="fold cleared-list"><summary>クリアしたステージ（${done.length}）</summary><div class="stages">${done.map(stageCard).join('')}</div></details>`:''}
 ${intro}${diagTip}
  <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。3分のドリルだけでOK）</span></div>`;
@@ -5877,7 +8143,7 @@ let refSelf=0;
 function calibStats(){
  const v=Object.values(S.refl).filter(x=>x&&x.s&&x.d);if(v.length<3)return'';
  const a=v.filter(x=>x.s-x.d>=2).length,k=v.filter(x=>x.s-x.d<=-2).length,o=v.length-a-k;
- return `<p class="mini">いままでの ${v.length}回：ちょうどいい ${o}回／甘め ${a}回／厳しめ ${k}回</p>`;
+ return `<p class="mini">いままでの ${v.length}回：ちょうどいい ${o}回／高め ${a}回／低め ${k}回</p>`;
 }
 function refSheet(){
  refSelf=0;
@@ -5953,21 +8219,24 @@ function nextQ(){
 }
 function choiceCols(V){const m=Math.max(...V.choices.map(c=>String(c.t).length));return m<=14?'c2':'c1'}
 function renderQ(){
+ plRoot().classList.remove('fbon');
  const {V,cur:e}=PL,it=e.it,isNew=!e.rep&&!S.srs[it.id]&&it.k!=='gen'&&it.k!=='mist';
- const ql=String(V.q).length,long=ql>70?' long':ql<=14&&V.kind!=='num'?' short':'';
+ const ql=String(V.q).length,long=ql>70?' long':(ql<=8&&(V.kind==='mc'||V.kind==='tf'||V.kind==='self')||ql<=12&&V.kind==='tf')?' short':'';
  let ans='';
  if(V.kind==='mc'){
   ans=`<div class="chs ${choiceCols(V)}">${V.choices.map((c,i)=>`<button class="ch" data-act="plPick" data-a="${i}"><span class="ab">${'ABCD'[i]}</span><span class="ct">${esc(c.t)}</span></button>`).join('')}</div>`;
  }else if(V.kind==='tf'){
   ans=`<div class="rival"><i>ライバルの答え</i><p>「${esc(V.claim)}」</p></div><div class="tfb"><button class="tfy" data-act="plTF" data-a="1"><b>○</b>合ってる</button><button class="tfn" data-act="plTF" data-a="0"><b>×</b>ちがう！</button></div>`;
  }else if(V.kind==='num'){
-  const alpha=V.accept.some(a=>/[xy=π±()]/.test(a)),k=(c,cls)=>`<button class="key ${cls||''}" data-act="plKey" data-a="${c}">${c}</button>`;
+  const A=V.accept.join(''),alpha=/[xy=π±()]/.test(A);
+  const keys=['7','8','9','⌫','4','5','6','C','1','2','3'];
+  const ex=[];if(/\./.test(A))ex.push('.');if(/\//.test(A))ex.push('/');if(/,/.test(A))ex.push(',');
+  if(alpha)['x','y','=','π','(',')','±','²'].forEach(c=>{if(c==='x'||c==='y'||c==='='||c==='('||c===')'||(c==='π'&&/π|pi/i.test(A))||(c==='±'&&/±/.test(A))||(c==='²'&&/²/.test(A)))ex.push(c)});
+  const k=(c,cls)=>`<button class="key${/[0-9]/.test(c)?'':' fn'}${cls?' '+cls:''}" data-act="plKey" data-a="${c}"${c==='⌫'?' aria-label="1文字消す"':c==='C'?' aria-label="ぜんぶ消す"':''}>${c}</button>`;
   ans=`<div class="lcd"><span id="lcdV" class="v"></span><span class="u">${V.unit&&V.unit.length<=3?esc(V.unit):''}</span></div>${V.unit&&V.unit.length>3?`<div class="hint">${esc(V.unit)}</div>`:''}
-  <div class="kp">${['7','8','9'].map(k).join('')}<button class="key fn" data-act="plKey" data-a="⌫" aria-label="1文字消す">⌫</button>
-  ${['4','5','6'].map(k).join('')}<button class="key fn" data-act="plKey" data-a="C" aria-label="ぜんぶ消す">C</button>
-  ${['1','2','3'].map(k).join('')}${k(',','fn')}${k('−','fn')}${k('0')}${k('.','fn')}${k('/','fn')}
-  ${alpha?['x','y','=','π'].map(c=>k(c,'fn')).join('')+['(',')','±','²'].map(c=>k(c,'fn')).join(''):''}</div>
-  <div class="row act"><button class="bt sm gh" data-act="plSkip">わからない</button><button class="bt pri xl" data-act="plNum">こたえる</button></div>`;
+  ${ex.length?`<div class="kx">${ex.map(c=>k(c)).join('')}</div>`:''}
+  <div class="kp">${keys.map(c=>k(c)).join('')}<button class="key go" data-act="plNum">こたえる</button>${k('0','w2')}${k('−')}</div>
+  <div class="row act"><button class="bt sm gh" data-act="plSkip">わからない</button></div>`;
  }else if(V.kind==='typ'){
   ans=`<div class="tyw"><input id="tyIn" type="text" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="${esc(V.ph||'')}" aria-label="こたえ"><button class="bt pri xl" data-act="plTyp">こたえる</button></div>
   <div class="hint">${V.len?'<button class="bt sm gh" data-act="plHint">ヒント</button> ':''}<span id="hintT"></span></div>
@@ -5981,8 +8250,8 @@ function renderQ(){
  const pass=V.passage?`<details class="pass" open><summary>${ico('book')}長文を読む：${esc(V.passage.title)}</summary><div class="ptx">${esc(V.passage.text)}</div></details>`:'';
  const aud=V.audio?`<button class="bt sm cy sayb" data-act="plSay" aria-label="もう一度きく">${ico('vol')}もう一度きく</button>`:'';
  plRoot().innerHTML=`${topBar()}<div class="plb"><div class="qa ${V.kind}">
-  <div class="qcard" data-s="${it.subj}"><div class="qm"><span class="cat">${esc(itemCat(it))}</span>${e.rep?'<span class="chp w">リトライ</span>':''}${isNew?'<span class="chp t">新しい問題</span>':''}</div>
-  ${V.sub&&V.sub!==itemCat(it)?`<div class="qs">${esc(V.sub)}</div>`:''}${pass}<div class="qt${long}">${esc(V.q)}</div>${aud}</div>
+  <div class="qcard" data-s="${it.subj}"><div class="qsp">${splatSVG(hashStr(it.id)%97,'#fff',{drops:5})}</div><div class="qm"><span class="cat">${esc(itemCat(it))}</span>${e.rep?'<span class="chp w">リトライ</span>':''}${isNew?'<span class="chp t">新しい問題</span>':''}</div>
+  <div class="qbody">${V.sub&&V.sub!==itemCat(it)?`<div class="qs">${esc(V.sub)}</div>`:''}${pass}<div class="qt${long}">${esc(V.q)}</div>${aud}</div></div>
   <div class="ans">${ans}</div></div></div><div class="fb" id="fb"></div><div class="cmb" id="cmb" hidden></div>`;
  if(V.kind==='order')drawOrder();
  if(V.kind==='typ')setTimeout(()=>{const i=$('#tyIn');if(i)i.focus()},120);
@@ -6054,13 +8323,15 @@ function showFb(ok,V,resp,lvTxt){
   fb.className='fb ng on';
   fb.innerHTML=`<div class="fbh"><b>${V.kind==='tf'?pick(['だまされた！','ツッコミそこね！','おしい！']):pick(MISS)}</b>${re}${lvMsg}</div>${V.kind==='self'?'':`<div class="fbc"><small>せいかいは</small> <b>${esc(ct)}</b></div>${exp?`<div class="fbx">${esc(exp).replace(/\n/g,'<br>')}</div>`:''}`}${rev}<button class="bt pri xl w100" data-act="plNext">わかった！つぎへ ▶</button>`;
  }
- const nb=fb.querySelector('[data-act="plNext"]');
- if(nb)setTimeout(()=>{try{nb.scrollIntoView({block:'nearest'})}catch(e){}},50);
+ /* 下から出るパネルが答えのボタンをかくさないよう、パネルの高さぶんだけ問題エリアをちぢめる */
+ root.classList.add('fbon');
+ requestAnimationFrame(()=>{root.style.setProperty('--fbh',fb.offsetHeight+'px');const g=$('.ch.ok',root)||$('.tfb button.ok',root);if(g)try{g.scrollIntoView({block:'nearest'})}catch(e){}});
 }
 function plNext(){
  if(!PL||PL.phase!=='fb')return;
  clearTimeout(PL.timer);
  const fb=$('#fb');if(fb)fb.className='fb';
+ plRoot().classList.remove('fbon');
  nextQ();
 }
 
@@ -6093,7 +8364,7 @@ function renderResult(R){
  const rank=rankOfAcc(acc);
  const head=o.boss?(win?'BOSS DOWN!':'おしい！'):acc>=.5||n===0?'CLEAR!':'おつかれ！';
  plRoot().innerHTML=`<div class="plb mid"><div class="rs2" data-rank="${rank}">
-  <div class="splw">${splatSVG(hashStr(o.title)%97,'rgba(var(--team-rgb),.85)',{drops:9,stroke:'#000',sw:5})}</div>
+  <div class="splw">${splatSVG(hashStr(o.title)%97,'var(--team)',{drops:7,stroke:'#000',sw:5})}</div>
   <div class="clear">${head}</div>
   <div class="rk"><i>${rank}</i><span>ランク</span></div>
   <p class="rt">${esc(o.title)}${o.boss?(win?'　ボスをたおした！':'　あと'+(8-ok)+'問でたおせた…'):''}</p>
@@ -6164,7 +8435,7 @@ function renderDrill(){
  ['数','英','国','理','社'].forEach(s=>{
   const banks=(SUBJ_BANKS[s]||[]).filter(b=>BK[b].items.length);
   const gens=GEN_SUBJ(s);
-  html+=`<div class="sec" data-s="${s}">${sjTag(s)}<h2>${SJN[s]}</h2></div><div class="dgrid">${banks.map(b=>bankCard(b,due)).join('')}${gens.map(genCard).join('')}</div>`;
+  html+=`<div class="sec" data-s="${s}"><h2>${SJN[s]}</h2></div><div class="dgrid">${banks.map(b=>bankCard(b,due)).join('')}${gens.map(genCard).join('')}</div>`;
  });
  $('#v-drill').innerHTML=html;
 }
@@ -6245,13 +8516,14 @@ function turfHTML(){
   <div class="lg" style="margin-top:12px"><span><i style="background:var(--team);box-shadow:0 0 6px var(--team)"></i>ぜんぶクリア</span><span><i style="background:rgba(var(--team-rgb),.78)"></i>合格ライン</span><span><i style="background:rgba(var(--team-rgb),.38)"></i>ちょっとやった</span><span><i style="background:#2b2166"></i>おやすみ</span><span><i style="background:var(--yellow)"></i>入試</span></div>`;
 }
 function renderMap(){
- const T=totals(),t=today(),el=Math.max(1,diff(START_DAY,t)+1),total=diff(START_DAY,S.exam)+1,rate=Math.round(T.ok/el*100);
+ const T=totals(),t=today(),base=S.start&&S.start>START_DAY?S.start:START_DAY,el=Math.max(1,diff(base,t)+1),total=diff(START_DAY,S.exam)+1;
+ const okSince=Object.keys(S.days).filter(d=>d>=base&&S.days[d].ok).length,rate=Math.min(100,Math.round(okSince/el*100));
  if(!mapInit){openM.add(curMonth());mapInit=true}
  $('#v-map').innerHTML=`<div class="card"><span class="lb">ナワバリマップ</span>
   <h2 style="margin-top:10px">500日を、ぜんぶ ぬりつぶせ！</h2>
   <p class="mini">1マス＝1日。合格ライン（2ステージ以上）をこえた日が、あなたの色にぬられていく。入試の日（黄色）まで、${Math.max(0,diff(t,S.exam))}日。</p>
-  <div class="res"><div><b>${T.ok}<small style="font-size:14px">/${total}</small></b><span>ぬった日</span></div><div><b>${rate}%</b><span>ナワバリ率（これまで）</span></div><div><b>${T.full}</b><span>ぜんぶクリアの日</span></div><div><b>${S.streak}</b><span>れんぞく（最高${S.best}）</span></div></div>
-  <div class="res"><div><b>${T.n}</b><span>答えた問題</span></div><div><b>${T.n?Math.round(T.acc*100):0}%</b><span>せいかい率</span></div><div><b>${T.mastered}</b><span>おぼえた問題</span></div><div><b>${T.hours.toFixed(1)}</b><span>勉強した時間</span></div></div>
+  <div class="res"><div><b>${T.ok}<small>/${total}日</small></b><span>ぬった日</span></div><div><b>${rate}<small>%</small></b><span>ぬった率</span></div><div><b>${T.full}<small>日</small></b><span>ぜんぶクリア</span></div><div><b>${S.streak}<small>日</small></b><span>れんぞく（最高${S.best}）</span></div></div>
+  <div class="res"><div><b>${T.n}<small>問</small></b><span>答えた問題</span></div><div><b>${T.n?Math.round(T.acc*100):0}<small>%</small></b><span>せいかい率</span></div><div><b>${T.mastered}<small>問</small></b><span>おぼえた問題</span></div><div><b>${T.hours.toFixed(1)}<small>時間</small></b><span>勉強した時間</span></div></div>
   ${turfHTML()}</div>
   <div class="sec"><h2>4つの章</h2></div><div class="grid" id="phases">${PH.map(p=>`<div class="card" style="margin:0"><span class="lb sm c">第${p.n}章</span><h3 style="margin-top:8px">${p.name}</h3><p class="mini">${p.span}</p><p>${p.aim}</p><p class="mini">学習時間の目安：${p.time}</p></div>`).join('')}</div>
   <div class="sec"><h2>月ごとのマイルストーン</h2></div>
@@ -6266,32 +8538,32 @@ function tileInfo(ds){
  return dateJa(ds)+'：'+stageKeys(r).length+'ステージ・'+(r.n||0)+'問'+(r.n?'・正解'+Math.round((r.c||0)/r.n*100)+'%':'')+(mins?'・'+fmtMin(mins):'')+(r.full?'　全クリ！':'');
 }
 /* ===== ごほうび：ランク・コイン・交換・ガチャ・宝箱・バッジ（買い物はしない。時間・権利・体験・ことば） ===== */
-let editK='',gcBusy=false,gcLast='';
+let editK='',gcBusy=false,gcLast='',rwEdit=false;
 function renderReward(){
  const L=lvInfo(S.xp),nr=RANKS.find(r=>r[0]>L.lv),rl=(S.rlog||[]).slice(-6).reverse();
- $('#v-reward').innerHTML=`
+ $('#v-reward').innerHTML=`<div class="${rwEdit?'editing':''}"><div class="rwe"><button class="bt sm gh" data-act="rwEdit">${rwEdit?'編集をおわる':'編集する（保護者用）'}</button></div>
  <div class="card lvcard"><div class="lvrow">${lvHex(L.lv,96)}<div style="min-width:0"><span class="lb">いまのランク</span><h2 style="margin-top:10px;font-size:28px">${esc(L.name)}</h2><p class="mini" style="margin:2px 0 0">${nr?'Lv.'+nr[0]+' で「'+nr[1]+'」':'最高ランク！'}</p></div></div>
   <div class="tank" style="margin-top:12px"><i style="--w:${Math.round(L.pct*100)}%"></i></div>
   <p class="mini">${L.hi?`つぎのレベルまで あと ${L.hi-S.xp} XP（いま ${S.xp} XP）`:`いま ${S.xp} XP　最高レベル！`}</p>
   <div class="res"><div><b>${S.coin}</b><span>コイン</span></div><div><b>${S.xp}</b><span>XP（ずっと残る）</span></div><div><b>${S.freeze}</b><span>お休みトークン</span></div></div>
   <p class="mini">XPは消えない経験値。コインはXPと同時にたまり、下の「ごほうび」と交換できる。1日クリアで およそ100コイン。</p></div>
  <div class="grid">
-  <div class="card"><h2>ごほうびリスト</h2><p class="mini">コインで交換。中身は「時間・権利・いっしょの体験・ことば」。買い物はしない。</p><div id="shop">${S.shop.map((s,i)=>`<div class="shop"><span>${esc(s.n)}</span><b class="px" style="color:var(--yellow)">${s.c}</b><button class="bt sm" data-act="shBuy" data-a="${i}" ${S.coin<s.c?'disabled':''}>こうかん</button><button class="bt sm gh" data-act="shDel" data-a="${i}" aria-label="削除">×</button></div>`).join('')}</div>
-   <div class="row" style="margin-top:10px"><input id="shN" type="text" placeholder="ごほうびの名前" style="flex:1;min-width:150px"><input id="shC" type="number" min="10" step="10" value="100" style="width:96px"><button class="bt sm" data-act="shAdd">追加</button></div>
+  <div class="card"><h2>ごほうびリスト</h2><p class="mini">コインで交換。中身は「時間・権利・いっしょの体験・ことば」。買い物はしない。</p><div id="shop">${S.shop.map((s,i)=>`<div class="shop"><span>${esc(s.n)}</span><b class="px" style="color:var(--yellow)">${s.c}</b><button class="bt sm" data-act="shBuy" data-a="${i}" ${S.coin<s.c?'disabled':''}>こうかん</button><button class="bt sm gh del editonly" data-act="shDel" data-a="${i}" aria-label="削除">×</button></div>`).join('')}</div>
+   <div class="row editonly" style="margin-top:10px"><input id="shN" type="text" placeholder="ごほうびの名前" style="flex:1;min-width:150px"><input id="shC" type="number" min="10" step="10" value="100" style="width:96px"><button class="bt sm" data-act="shAdd">追加</button></div>
    <p class="mini">中身は親子で決める。ゲームや動画の時間は「事前に決めた長さ」だけ。</p>
    ${rl.length?`<h4>こうかんの記録</h4>${rl.map(x=>`<div class="mini">${dateJa(x.d)}　${esc(x.n)}</div>`).join('')}`:''}</div>
   <div class="card"><h2>ごほうびガチャ（150コイン）</h2><div class="gacha" id="gcOut">${gcLast?esc('『'+gcLast+'』！'):'？'}</div>
    <div class="row" style="justify-content:center"><button class="bt pri xl" data-act="gacha" ${S.coin<150?'disabled':''}>まわす！</button></div>
-   <h4>景品リスト</h4><div id="gcList" class="gcl">${S.gacha.map((g,i)=>`<span class="chp">${esc(g)} <a href="#" data-act="gcDel" data-a="${i}" aria-label="削除" style="text-decoration:none;padding:6px">×</a></span>`).join(' ')}</div>
-   <div class="row" style="margin-top:8px"><input id="gcN" type="text" placeholder="景品を追加" style="flex:1;min-width:150px"><button class="bt sm" data-act="gcAdd">追加</button></div></div>
+   <h4>景品リスト</h4><div id="gcList" class="gcl">${S.gacha.map((g,i)=>`<span class="chp">${esc(g)} <a href="#" class="editonly" data-act="gcDel" data-a="${i}" aria-label="削除" style="text-decoration:none;padding:10px;font-size:18px">×</a></span>`).join(' ')}</div>
+   <div class="row editonly" style="margin-top:8px"><input id="gcN" type="text" placeholder="景品を追加" style="flex:1;min-width:150px"><button class="bt sm" data-act="gcAdd">追加</button></div></div>
  </div>
  <div class="card"><h2>宝箱（月・章のごほうび）</h2><p class="mini">月のマイルストーンを80%こえると開く。保護者と相談して書きかえてOK。【】は章のクリア報酬。</p><div id="chests">${ROADMAP.map(m=>{const st=mStat(m),open=!!S.mc[m.k],got=!!S.got[m.k];
   const body=editK===m.k?`<span style="flex:1;min-width:200px"><b>${m.label}</b><br><input id="chIn" type="text" value="${esc(rwText(m))}" style="width:100%"></span><button class="bt sm pri" data-act="chSave" data-a="${m.k}">保存</button>`
-   :`<span style="flex:1;min-width:200px"><b>${m.label}</b>　${esc(rwText(m))}<br><span class="mini">${open?'宝箱が開いた！':'マイルストーン '+st.d+'/'+st.n+'（80%で開く）'}</span></span>${open?`<button class="bt sm ${got?'':'pri'}" data-act="chGot" data-a="${m.k}">${got?'受けとり済み':'受けとった'}</button>`:`<span class="chp">${ico('lock')}ロック中</span>`}<button class="bt sm gh" data-act="chEdit" data-a="${m.k}">書きかえ</button>`;
+   :`<span style="flex:1;min-width:200px"><b>${m.label}</b>　${esc(rwText(m))}<br><span class="mini">${open?'宝箱が開いた！':'マイルストーン '+st.d+'/'+st.n+'（80%で開く）'}</span></span>${open?`<button class="bt sm ${got?'':'pri'}" data-act="chGot" data-a="${m.k}">${got?'受けとり済み':'受けとった'}</button>`:`<span class="chp">${ico('lock')}ロック中</span>`}<button class="bt sm gh editonly" data-act="chEdit" data-a="${m.k}">書きかえ</button>`;
   return `<div class="shop">${body}</div>`}).join('')}</div></div>
  <div class="card"><h2>バッジ　<span class="mini">${Object.keys(S.badges).length}/${BADGES.length}</span></h2><div class="badges">${BADGES.map(b=>`<div class="bd ${S.badges[b[0]]?'on':''}"><i>${S.badges[b[0]]?'★':'🔒'}</i><b>${b[1]}</b><span>${b[2]}</span></div>`).join('')}</div></div>
  <div class="card"><h2>ごほうびの5つのルール</h2><ol>
-  <li>前もって決めて、紙かこのページに書く。後から変えない。</li><li>結果（点数）だけでなく、やったこと（行動）にも出す。</li><li>決めたごほうびは、24時間以内に渡す。</li><li>点数が悪くても、もらったごほうびは取りあげない。</li><li>買い物はごほうびにしない。使うのは「時間・権利・いっしょの体験・ことば」だけ。</li></ol></div>`;
+  <li>前もって決めて、紙かこのページに書く。後から変えない。</li><li>結果（点数）だけでなく、やったこと（行動）にも出す。</li><li>決めたごほうびは、24時間以内に渡す。</li><li>点数が悪くても、もらったごほうびは取りあげない。</li><li>買い物はごほうびにしない。使うのは「時間・権利・いっしょの体験・ことば」だけ。</li></ol></div></div>`;
 }
 function logReward(n,c){S.rlog=S.rlog||[];S.rlog.push({d:today(),n,c});if(S.rlog.length>60)S.rlog.shift()}
 /* ===== メニューとサブページ（桜塚高校・診断・教科ガイド・AI先生・ミス図鑑・おうちの人） ===== */
@@ -6341,7 +8613,7 @@ function naiOut(){
  $('#naiT3v').textContent=c+'/45（平均'+(c/9).toFixed(1)+'）';$('#naiGkv').textContent=g+'/450（'+Math.round(g/4.5)+'%）';
  const nn=a*2+b*2+c*6,tot=g*1.4+nn*.6,tk=g*.6+nn*1.4,line=640,safe=700;
  const msg=tot>=safe?'安全圏の目安（約700点）をこえています。この目標を落とさないことが大事。':tot>=line?`合格圏の目安（約640点）に届いています。あと${Math.ceil(safe-tot)}点で安全圏。`:`合格圏の目安（約640点）まで、あと${Math.ceil(line-tot)}点。学力検査をあと${Math.ceil((line-tot)/1.4)}点、または中3の評定合計をあと${Math.ceil((line-tot)/3.6)}点のばす計算。`;
- $('#naiOut').innerHTML=`<div class="res"><div><b>${nn.toFixed(0)}</b><span>内申点（450点満点）</span></div><div><b>${tot.toFixed(0)}</b><span>総合点・通常枠（900点満点／タイプⅠ）</span></div><div><b>${tk.toFixed(0)}</b><span>参考：特色枠の点（900点満点）</span></div></div><p>${msg}</p><p class="mini">${na<9||nb<9?`入力した評定は中1が${na}/9教科、中2が${nb}/9教科。未入力ぶんは、入力した教科の平均（ゼロのときは3.0）で補って計算しています。`:''}通常枠＝学力検査×1.4＋内申点×0.6。特色枠は上位10%だけが先に合格するので、点数は参考です。</p>`;
+ $('#naiOut').innerHTML=`<div class="res"><div><b>${nn.toFixed(0)}</b><span>内申点<i>450点満点</i></span></div><div><b>${tot.toFixed(0)}</b><span>総合点（通常枠）<i>900点満点・タイプⅠ</i></span></div><div><b>${tk.toFixed(0)}</b><span>特色枠の点（参考）<i>900点満点</i></span></div></div><p>${msg}</p><p class="mini">${na<9||nb<9?`入力した評定は中1が${na}/9教科、中2が${nb}/9教科。未入力ぶんは、入力した教科の平均（ゼロのときは3.0）で補って計算しています。`:''}通常枠＝学力検査×1.4＋内申点×0.6。特色枠は上位10%だけが先に合格するので、点数は参考です。</p>`;
 }
 let dgFb=false;
 function renderDg(){
@@ -6449,7 +8721,7 @@ const ACT={
   if(id==='hw'){hwSheet();return}
   if(id==='ref'){refSheet();return}
   if(s.auto){toast('いまは再戦するミスがありません。ミスが出ると、ここに集まります');return}
-  startSession({title:s.t,subj:s.subj,items:s.items,stageId:s.done?null:s.id,boss:s.boss,desc:s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,brk:s.brk,min:s.min,xp:s.done?0:s.xp});
+  startSession({title:s.t,subj:s.subj,items:s.items,skipBrief:!s.boss,stageId:s.done?null:s.id,boss:s.boss,desc:s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,brk:s.brk,min:s.min,xp:s.done?0:s.xp});
  },
  hwLen(m){hwLenM=+m;$$('#hwLen button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a===hwLenM)));hwTick(true)},
  hwGo(){
@@ -6486,6 +8758,11 @@ const ACT={
   startSession({title:'ツッコミバトル',subj:'総',items,tf:true,desc:'ライバルが答えた。合ってる？ まちがってる？　見ぬけたら勝ち！',brk:[{name:'ライバルの答えチェック',n:items.length,nw:0}],min:Math.ceil(items.length*.3),xp:0});
  },
  plTF(v){answerQ(v==='1')},
+ vow(){
+  const at=S.at||'';
+  openSheet(`<h2>やる時間を決めよう</h2><p class="mini">「何時に始めるか」を先に決めておくと、始めやすい。時間がきても通知は出ないので、ホームを開いたときに思い出せるよ。</p><div class="seg">${['16:00','17:00','18:00','19:00','20:00','21:00'].map(t=>`<button data-act="vowSet" data-a="${t}" aria-pressed="${at===t}">${t}</button>`).join('')}<button data-act="vowSet" data-a="none" aria-pressed="${!at}">きめない</button></div>`);
+ },
+ vowSet(t){S.at=t==='none'?'':t;save();closeSheet();renderHome();toast(S.at?'やくそく：'+S.at+' にスタート！':'やくそくを消した')},
  light(){const d=today();if(S.light[d])delete S.light[d];else S.light[d]=1;save();refresh();toast(S.light[d]?'いそがしい日モード：量をへらしたよ':'ふつうのルートにもどしたよ')},
  nickSet(){const v=($('#nickIn').value||'').trim().slice(0,12);if(!v){toast('なまえを入れてね');return}S.nick=v;save();toast(v+'、よろしく！');FX.confetti(50);refresh()},
  /* ---- プレイヤー ---- */
@@ -6527,6 +8804,7 @@ const ACT={
  },
  tile(ds){toast(tileInfo(ds))},
  /* ---- ごほうび ---- */
+ rwEdit(){rwEdit=!rwEdit;renderReward()},
  shBuy(i){const s=S.shop[+i];if(!s||S.coin<s.c)return;S.coin-=s.c;logReward(s.n,s.c);save();toast('こうかんした：'+s.n+'（保護者に見せよう）');FX.confetti(60);Snd.clear();refresh()},
  shDel(i){S.shop.splice(+i,1);save();renderReward()},
  shAdd(){const n=$('#shN').value.trim(),c=Math.max(10,+$('#shC').value||100);if(!n)return;S.shop.push({n,c});save();renderReward()},

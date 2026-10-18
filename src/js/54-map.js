@@ -23,13 +23,14 @@ function turfHTML(){
   <div class="lg" style="margin-top:12px"><span><i style="background:var(--team);box-shadow:0 0 6px var(--team)"></i>ぜんぶクリア</span><span><i style="background:rgba(var(--team-rgb),.78)"></i>合格ライン</span><span><i style="background:rgba(var(--team-rgb),.38)"></i>ちょっとやった</span><span><i style="background:#2b2166"></i>おやすみ</span><span><i style="background:var(--yellow)"></i>入試</span></div>`;
 }
 function renderMap(){
- const T=totals(),t=today(),el=Math.max(1,diff(START_DAY,t)+1),total=diff(START_DAY,S.exam)+1,rate=Math.round(T.ok/el*100);
+ const T=totals(),t=today(),base=S.start&&S.start>START_DAY?S.start:START_DAY,el=Math.max(1,diff(base,t)+1),total=diff(START_DAY,S.exam)+1;
+ const okSince=Object.keys(S.days).filter(d=>d>=base&&S.days[d].ok).length,rate=Math.min(100,Math.round(okSince/el*100));
  if(!mapInit){openM.add(curMonth());mapInit=true}
  $('#v-map').innerHTML=`<div class="card"><span class="lb">ナワバリマップ</span>
   <h2 style="margin-top:10px">500日を、ぜんぶ ぬりつぶせ！</h2>
   <p class="mini">1マス＝1日。合格ライン（2ステージ以上）をこえた日が、あなたの色にぬられていく。入試の日（黄色）まで、${Math.max(0,diff(t,S.exam))}日。</p>
-  <div class="res"><div><b>${T.ok}<small style="font-size:14px">/${total}</small></b><span>ぬった日</span></div><div><b>${rate}%</b><span>ナワバリ率（これまで）</span></div><div><b>${T.full}</b><span>ぜんぶクリアの日</span></div><div><b>${S.streak}</b><span>れんぞく（最高${S.best}）</span></div></div>
-  <div class="res"><div><b>${T.n}</b><span>答えた問題</span></div><div><b>${T.n?Math.round(T.acc*100):0}%</b><span>せいかい率</span></div><div><b>${T.mastered}</b><span>おぼえた問題</span></div><div><b>${T.hours.toFixed(1)}</b><span>勉強した時間</span></div></div>
+  <div class="res"><div><b>${T.ok}<small>/${total}日</small></b><span>ぬった日</span></div><div><b>${rate}<small>%</small></b><span>ぬった率</span></div><div><b>${T.full}<small>日</small></b><span>ぜんぶクリア</span></div><div><b>${S.streak}<small>日</small></b><span>れんぞく（最高${S.best}）</span></div></div>
+  <div class="res"><div><b>${T.n}<small>問</small></b><span>答えた問題</span></div><div><b>${T.n?Math.round(T.acc*100):0}<small>%</small></b><span>せいかい率</span></div><div><b>${T.mastered}<small>問</small></b><span>おぼえた問題</span></div><div><b>${T.hours.toFixed(1)}<small>時間</small></b><span>勉強した時間</span></div></div>
   ${turfHTML()}</div>
   <div class="sec"><h2>4つの章</h2></div><div class="grid" id="phases">${PH.map(p=>`<div class="card" style="margin:0"><span class="lb sm c">第${p.n}章</span><h3 style="margin-top:8px">${p.name}</h3><p class="mini">${p.span}</p><p>${p.aim}</p><p class="mini">学習時間の目安：${p.time}</p></div>`).join('')}</div>
   <div class="sec"><h2>月ごとのマイルストーン</h2></div>

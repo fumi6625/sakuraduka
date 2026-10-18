@@ -2,7 +2,7 @@
    その日の「曜日」「月のカリキュラム(CUR)」「これまでの成績(SRS)」「いまの段階(ならし/ふつう/しっかり)」から、
    暗記 → 数学 → 今日の教科 → ミス退治 → 宿題チェック → ふりかえり を、実際の問題つきで組み立てる。
    組み立てた結果は日付ごとに保存し、1日のあいだ中身が変わらないようにする。
-   【対象の子】ふだんあまり勉強せず、集中が続かず、自分に甘い。だから最初は「3分」から。量は段階的に増やす。*/
+   【考え方】勉強の習慣づくりの途中の子向け。最初は「3分」から。量は段階的に増やす。*/
 const curOf=date=>{const k=date.slice(0,7);let c=CUR[0];for(const x of CUR)if(x.from<=k)c=x;return c};
 const MEMB=['EW','EV','JK','JI','JS','SQ','OQ'];
 const ewOpen=it=>+it.grp<=2||(+it.grp===3&&today()>='2027-03-01')||(+it.grp===4&&today()>='2027-05-01');
@@ -96,9 +96,9 @@ function bMath(date,tier,cur,ex){
  const k=TIERS[tier].k*throttle(date),r=(n,m)=>Math.max(m,Math.round(n*k));
  const pool=tier===1?EASY_M:cur.m,main=pool[dn(date)%pool.length],nMain=r(12,4),nWarm=r(5,2),nApp=tier>=3?3:0;
  const items=[...genMix(tier===1?EASY_M:cur.rv,nWarm,date,'warm'),...genOne(main,nMain,date,'main'),...(nApp?genMix(cur.w,nApp,date,'app'):[])];
- const mq=tier>=2?newItems('MQ',tier>=3?2:1,{ex}):[];
+ const mq=tier>=2?newItems('MQ',tier>=3?2:1,{ex}):[],ms=tier>=3?newItems('MS',1,{ex:exSet(ex,mq)}):[];
  const mis=tier>=3?dueItems(it=>it.subj==='数'&&!ex.has(it.id),3):[];
- return{t:'数学ドリル',subj:'数',items:[...items,...mq,...mis],desc:jn(['テーマ「'+GEN[main].name+'」'+nMain+'問（Lv.'+genLv(main)+'）','ウォームアップ'+nWarm+'問',nApp&&'応用'+nApp+'問',(mq.length+mis.length)&&'考え方・再戦'+(mq.length+mis.length)+'問'])};
+ return{t:'数学ドリル',subj:'数',items:[...items,...mq,...ms,...mis],desc:jn(['テーマ「'+GEN[main].name+'」'+nMain+'問（Lv.'+genLv(main)+'）','ウォームアップ'+nWarm+'問',nApp&&'応用'+nApp+'問',(mq.length+ms.length+mis.length)&&'考え方・再戦'+(mq.length+ms.length+mis.length)+'問'])};
 }
 function bMis(date,tier,ex){
  const n=Math.max(4,Math.round(12*TIERS[tier].k));
@@ -124,9 +124,10 @@ function bSub(date,wd,cur,ex,tier){
   const eo=[...dueItems(it=>it.bank==='EO'&&!sx.has(it.id),3),...newItems('EO',4,{ex:sx})].slice(0,4),er=nextPassage('ER',sx,date);
   items=[...dg,...g,...ev,...eo,...er];p=[(dg.length+g.length)&&'文法'+(dg.length+g.length)+'問',ev.length&&'不規則動詞'+ev.length,eo.length&&'並べかえ'+eo.length,er.length&&'長文1題']}
  else if(wd===2){
-  const w=newItems('JW',6,{ex}),sx=exSet(ex,w),dw=dueItems(it=>['JW','JG','JI','JS'].includes(it.bank)&&!sx.has(it.id),8);
+  const w=newItems('JW',6,{ex}),sx=exSet(ex,w),dw=dueItems(it=>['JW','JG','JI','JS','JC'].includes(it.bank)&&!sx.has(it.id),8);
   const gg=newItems('JG',6,{ex:sx}),ji=newItems('JI',5,{ex:exSet(sx,gg)}),js=newItems('JS',4,{ex:exSet(sx,[...gg,...ji])}),jr=nextPassage('JR',sx,date);
-  items=[...dw,...w,...gg,...ji,...js,...jr];p=[(dw.length+w.length)&&'漢字・語句'+(dw.length+w.length)+'問',gg.length&&'文法・古文'+gg.length,(ji.length+js.length)&&'慣用句・類義対義'+(ji.length+js.length),jr.length&&'読解1題']}
+  const jc=tier>=3?newItems('JC',1,{ex:exSet(sx,[...gg,...ji,...js])}):[];
+  items=[...dw,...w,...gg,...ji,...js,...jr,...jc];p=[(dw.length+w.length)&&'漢字・語句'+(dw.length+w.length)+'問',gg.length&&'文法・古文'+gg.length,(ji.length+js.length)&&'慣用句・類義対義'+(ji.length+js.length),jr.length&&'読解1題',jc.length&&'作文1']}
  else if(wd===3){
   const q=newItems('SQ',14,{prefs:cur.sc,ex}),sx=exSet(ex,q),dq=dueItems(it=>it.bank==='SQ'&&!sx.has(it.id),10),calc=genMix(cur.s,5,date,'sci');
   items=[...dq,...q,...calc];p=[(dq.length+q.length)&&'一問一答'+(dq.length+q.length)+'問','計算5問']}

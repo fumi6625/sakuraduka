@@ -1,5 +1,5 @@
 /* ===== ホーム：「いま やること」が1つだけ大きく出る画面 =====
-   対象の子：ふだんあまり勉強せず、集中が続かず、自分に甘い。
+   習慣づくりの途中の子向け。
    → 迷わせない（次の1つだけを大きく）／短く区切る／すぐ勝てる／自己申告にたよらない */
 const STAGE_SHORT={hw:'宿題',mem:'暗記',math:'数学',mis:'ミス退治',ref:'ふりかえり'};
 const stageShort=(s,wd)=>s.id==='sub'?WDP[wd].short:STAGE_SHORT[s.id];
@@ -48,23 +48,24 @@ function tierNote(date,tier){
  return T.note;
 }
 const nowHM=()=>{const d=new Date();return pad(d.getHours())+':'+pad(d.getMinutes())};
-function vowRow(okDay){
- const at=S.at||'',late=at&&nowHM()>at&&!okDay;
- return `<div class="vow${late?' late':''}"><span>${late?'やくそくの時間をすぎたよ。3分だけ、やってみよう！':'やる時間を決めよう：'}</span><input id="vowIn" type="time" value="${esc(at)}" aria-label="やくそくの時間"></div>`;
+function vowChip(okDay){
+ if(okDay)return'';
+ const at=S.at||'',late=at&&nowHM()>at;
+ return `<button class="vowb${late?' late':''}" data-act="vow">${ico('timer')}${late?'やくそくの時間をすぎたよ。3分だけ！':at?'やくそく '+at+' にスタート':'やくそくの時間を決める'}</button>`;
 }
 function nowCard(next,tier,okDay,rec){
  const T=TIERS[tier],isS=next.kind==='session';
  const need=tier===1?(okDay?0:1):Math.max(0,2-stageKeys(rec).length);
  const goal=okDay?`<span class="chp ok">✓ きょうの合格ライン達成！</span> れんぞく ${curStreak()}日`:`<span class="chp w">合格ライン</span> ${tier===1?'どれか1つクリアでOK！':'あと'+Math.max(1,need)+'つクリアでOK！'}`;
- return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'rgba(var(--team-rgb),.55)',{drops:7})}</div>
+ return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'#ffe81a',{drops:7,stroke:'#000',sw:5})}</div>
   <span class="lb">いま やること</span>
   <div class="nrow"><div class="nico">${ico(stageIcon(next))}</div><div class="ntx"><h2>${esc(next.t)}</h2><p>${esc(next.desc)}</p></div></div>
   <div class="chips">${isS?`<span class="chp">約${Math.max(1,next.min)}分</span><span class="chp">${next.items.length}問</span>`:''}<span class="chp xp">+${next.xp}XP</span></div>
   <button class="bt pri xl w100" data-act="stageGo" data-a="${next.id}">${goBtn(next)}</button>
-  <p class="goal">${goal}</p>${okDay?'':vowRow(okDay)}</div>`;
+  <p class="goal">${goal}</p>${vowChip(okDay)}</div>`;
 }
 function clearedCard(){
- return `<div class="nowc cleared"><div class="sp1">${splatSVG(14,'rgba(255,232,26,.5)',{drops:9})}</div><span class="lb y">ぜんぶクリア！</span>
+ return `<div class="nowc cleared"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'#000',sw:5})}</div><span class="lb y">ぜんぶクリア！</span>
   <h2 style="margin:12px 0 4px;font-size:30px">きょうは、もうバッチリ！</h2>
   <p>まだ元気なら「おかわり」。好きな教材を、好きなだけ。（1日60XPまで）</p>
   <div class="row"><button class="bt pri xl" data-tab="drill">おかわりドリル</button><button class="bt cy xl" data-act="tsukkomi">ツッコミバトル</button></div></div>`;
@@ -80,16 +81,14 @@ function renderHome(){
  const diagTip=(!SJL.every(s=>S.diag[s]&&S.diag[s].done)&&S.tot.n<40)?`<div class="tomorrow"><span class="lb sm c">おすすめ</span><span>ミニ診断（約10分）で、いまの実力を知ろう。</span><button class="bt sm sp" data-page="diag">診断へ</button></div>`:'';
  const L=`
  <div class="hero cmp" data-s="${W.subj}">
-  <div class="sp1">${splatSVG(5,'rgba(var(--team-rgb),.4)')}</div>
+  <div class="sp1">${splatSVG(5,'var(--team)',{stroke:'#000',sw:4})}</div>
   <div class="t1"><span class="lb sm">きょうのミッション</span><span class="date">${dateJa(date)}</span><span class="chp t">${T.name}モード</span></div>
-  <h1>${esc(real.some(s=>s.id==='sub')?W.t:'きょうの'+T.name+'ミッション')}</h1>
   <div class="gp"><div class="tank"><i style="--w:${Math.round(done.length/real.length*100)}%"></i></div><b>${done.length}/${real.length}</b></div>
-  <p class="flow">${flow}</p>
-  <p class="tn">${esc(tierNote(date,tier))}${appMin?'　きょうの ドリルは ぜんぶで 約'+appMin+'分':''}</p>
+  <p class="tn">${esc(tierNote(date,tier))}</p>
  </div>
  ${next?nowCard(next,tier,okDay,rec):clearedCard()}
  <div class="route" aria-label="きょうの流れ">${route.map(s=>`<button class="nd ${s.auto?'auto':s.done?'done':s===next?'now':''}" data-act="stageGo" data-a="${s.id}"><span class="dot">${s.done&&!s.auto?ico('check'):ico(stageIcon(s))}</span>${esc(stageShort(s,wd))}</button>`).join('')}</div>
- ${todo.length?`<div class="sec"><h2>このあと</h2></div><div class="stages">${todo.map(stageCard).join('')}</div>`:''}
+ ${todo.length?`<details class="fold later"><summary><span class="lb sm y">このあと</span><span class="lt">${todo.length}つ：${esc(todo.map(s=>stageShort(s,wd)).join(' → '))}</span></summary><div class="stages">${todo.map(stageCard).join('')}</div></details>`:''}
  ${done.length?`<details class="fold cleared-list"><summary>クリアしたステージ（${done.length}）</summary><div class="stages">${done.map(stageCard).join('')}</div></details>`:''}
 ${intro}${diagTip}
  <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。3分のドリルだけでOK）</span></div>`;
@@ -124,7 +123,7 @@ let refSelf=0;
 function calibStats(){
  const v=Object.values(S.refl).filter(x=>x&&x.s&&x.d);if(v.length<3)return'';
  const a=v.filter(x=>x.s-x.d>=2).length,k=v.filter(x=>x.s-x.d<=-2).length,o=v.length-a-k;
- return `<p class="mini">いままでの ${v.length}回：ちょうどいい ${o}回／甘め ${a}回／厳しめ ${k}回</p>`;
+ return `<p class="mini">いままでの ${v.length}回：ちょうどいい ${o}回／高め ${a}回／低め ${k}回</p>`;
 }
 function refSheet(){
  refSelf=0;

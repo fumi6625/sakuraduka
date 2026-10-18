@@ -29,7 +29,7 @@ function renderDrill(){
  ['数','英','国','理','社'].forEach(s=>{
   const banks=(SUBJ_BANKS[s]||[]).filter(b=>BK[b].items.length);
   const gens=GEN_SUBJ(s);
-  html+=`<div class="sec" data-s="${s}">${sjTag(s)}<h2>${SJN[s]}</h2></div><div class="dgrid">${banks.map(b=>bankCard(b,due)).join('')}${gens.map(genCard).join('')}</div>`;
+  html+=`<div class="sec" data-s="${s}"><h2>${SJN[s]}</h2></div><div class="dgrid">${banks.map(b=>bankCard(b,due)).join('')}${gens.map(genCard).join('')}</div>`;
  });
  $('#v-drill').innerHTML=html;
 }

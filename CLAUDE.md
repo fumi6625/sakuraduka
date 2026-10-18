@@ -9,7 +9,7 @@
 - `src/js/*.js`：画面の動き。番号順に連結して1つの `<script>` になる。**01〜39は画面に触れないコア**（状態・教材・間隔反復・自動生成・毎日のルート・進み具合）、50〜は画面（ui/home/player/drill/map/reward/pages/main）。
 - `.claude/agents/*.md`：AI先生9人（`node scripts/build-agents.mjs` で `src/data/90-agents.js` から生成。直すのは90-agents.jsだけ）と、評価係 `ui-judge`（見た目）・`flow-judge`（学習の流れ）。
 - `scripts/`：`build.mjs`（組み立て）、`build-agents.mjs`、`validate-data.mjs`（教材の形式・重複・選択肢のチェック）、`simulate.mjs`（毎日のルートを何日分もシミュレーション）、`screens.mjs`（スクリーンショット一式）、`headless.mjs`（ブラウザなしでコアを読み込む）。
-- `tests/`：`node --test tests/` で、自動生成の問題（38種）と、ルート・段階・合格ライン・ツッコミバトルをテストする。
+- `tests/`：`node --test tests/*.test.mjs` で、自動生成の問題（38種）、ルート・段階・合格ライン・ツッコミバトル、教材の選択肢の質（正解をふくむ言葉を選択肢に使わない）をテストする。
 
 ## 対象の子（設計の前提。ここを変えるときは保護者に確認）
 - ふだんあまり勉強せず、集中が続かない。人には厳しく、自分には甘い。
@@ -30,7 +30,7 @@
 - 子どもの実際の点数・評定（診断タブに入れる、または相談されたら計画を個別化する）。
 
 ## 作業ルール
-- 変更したら、コミットの前に `node scripts/build.mjs && node scripts/validate-data.mjs && node --test tests/` を通す。見た目を変えたら `node scripts/screens.mjs <フォルダ>` で撮って確かめる（評価係に見せる）。
+- 変更したら、コミットの前に `node scripts/build.mjs && node scripts/validate-data.mjs && node --test tests/*.test.mjs` を通す。見た目を変えたら `node scripts/screens.mjs <フォルダ>` で撮って確かめる（評価係に見せる）。
 - ごほうびで物を買わない（保護者の方針）。ショップ・ガチャ・宝箱・ルール文は「時間・権利・家族とのお金をかけない体験・ことば」だけで作る。外食・ゲームソフト・文房具・おやつ購入・旅行などの出費を伴うものは入れない。
 - 返答は日本語で短く。トークンを節約する。
 - 子どもは学校支給のiPadで使う。Safariだけで動くこと、タップしやすいこと（44px以上）を保つ。

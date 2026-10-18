@@ -45,7 +45,7 @@ function naiOut(){
  $('#naiT3v').textContent=c+'/45（平均'+(c/9).toFixed(1)+'）';$('#naiGkv').textContent=g+'/450（'+Math.round(g/4.5)+'%）';
  const nn=a*2+b*2+c*6,tot=g*1.4+nn*.6,tk=g*.6+nn*1.4,line=640,safe=700;
  const msg=tot>=safe?'安全圏の目安（約700点）をこえています。この目標を落とさないことが大事。':tot>=line?`合格圏の目安（約640点）に届いています。あと${Math.ceil(safe-tot)}点で安全圏。`:`合格圏の目安（約640点）まで、あと${Math.ceil(line-tot)}点。学力検査をあと${Math.ceil((line-tot)/1.4)}点、または中3の評定合計をあと${Math.ceil((line-tot)/3.6)}点のばす計算。`;
- $('#naiOut').innerHTML=`<div class="res"><div><b>${nn.toFixed(0)}</b><span>内申点（450点満点）</span></div><div><b>${tot.toFixed(0)}</b><span>総合点・通常枠（900点満点／タイプⅠ）</span></div><div><b>${tk.toFixed(0)}</b><span>参考：特色枠の点（900点満点）</span></div></div><p>${msg}</p><p class="mini">${na<9||nb<9?`入力した評定は中1が${na}/9教科、中2が${nb}/9教科。未入力ぶんは、入力した教科の平均（ゼロのときは3.0）で補って計算しています。`:''}通常枠＝学力検査×1.4＋内申点×0.6。特色枠は上位10%だけが先に合格するので、点数は参考です。</p>`;
+ $('#naiOut').innerHTML=`<div class="res"><div><b>${nn.toFixed(0)}</b><span>内申点<i>450点満点</i></span></div><div><b>${tot.toFixed(0)}</b><span>総合点（通常枠）<i>900点満点・タイプⅠ</i></span></div><div><b>${tk.toFixed(0)}</b><span>特色枠の点（参考）<i>900点満点</i></span></div></div><p>${msg}</p><p class="mini">${na<9||nb<9?`入力した評定は中1が${na}/9教科、中2が${nb}/9教科。未入力ぶんは、入力した教科の平均（ゼロのときは3.0）で補って計算しています。`:''}通常枠＝学力検査×1.4＋内申点×0.6。特色枠は上位10%だけが先に合格するので、点数は参考です。</p>`;
 }
 let dgFb=false;
 function renderDg(){
