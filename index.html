@@ -1,0 +1,1091 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>さくらクエスト</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="さくらクエスト">
+<meta name="theme-color" content="#c8325f">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap">
+<style>
+/* 夜桜の学習帳。iPad横長は2カラム、縦長と小さい画面は1カラム。下のタブバーで8画面を切りかえる */
+:root{
+ --bg:#f3f5fa;--panel:#ffffff;--ink:#18223d;--ink2:#4a5778;--line:#dde2ee;--soft:#eef1f8;--wood:#6b4a3a;
+ --sakura:#c8325f;--sakura-ink:#ffffff;--sakura-wash:#fde9ef;--petal:#f4a7bd;
+ --navy:#27358a;--navy-wash:#e6e9fa;
+ --gold:#9a6500;--gold-wash:#fff3d1;
+ --ok:#16805a;--ok-wash:#dff5ec;--warn:#b45f06;--warn-wash:#fdecd6;--bad:#b3261e;
+ --f-head:"Zen Kaku Gothic New","Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;
+ --f-body:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",system-ui,sans-serif;
+ --f-px:"DotGothic16","Hiragino Sans",monospace;
+ --nav:64px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --bg:#0d1325;--panel:#161e36;--ink:#edf0fa;--ink2:#a3aecb;--line:#27304f;--soft:#1d2644;--wood:#b08a74;
+ --sakura:#ff7da3;--sakura-ink:#2a0d19;--sakura-wash:#3a1d2d;--petal:#f4a7bd;
+ --navy:#9db0ff;--navy-wash:#1f2850;--gold:#f5c15a;--gold-wash:#3a2f12;
+ --ok:#4cd3a0;--ok-wash:#123a2e;--warn:#f0a35a;--warn-wash:#3a2812;--bad:#ff8a80;color-scheme:dark}}
+:root[data-theme="dark"]{
+ --bg:#0d1325;--panel:#161e36;--ink:#edf0fa;--ink2:#a3aecb;--line:#27304f;--soft:#1d2644;--wood:#b08a74;
+ --sakura:#ff7da3;--sakura-ink:#2a0d19;--sakura-wash:#3a1d2d;--petal:#f4a7bd;
+ --navy:#9db0ff;--navy-wash:#1f2850;--gold:#f5c15a;--gold-wash:#3a2f12;
+ --ok:#4cd3a0;--ok-wash:#123a2e;--warn:#f0a35a;--warn-wash:#3a2812;--bad:#ff8a80;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 var(--f-body);-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--panel)}
+h1,h2,h3,h4{font-family:var(--f-head);line-height:1.4;margin:0;text-wrap:balance}
+h1{font-size:clamp(25px,4.6vw,36px);font-weight:900}
+h2{font-size:19px;font-weight:900;margin-bottom:6px}
+h3{font-size:16px;font-weight:700}
+h4{font-size:14px;font-weight:700;margin:14px 0 4px;color:var(--ink2)}
+p{margin:.5em 0}
+ul,ol{margin:.4em 0;padding-left:1.3em}
+li{margin:.2em 0}
+a{color:var(--navy);font-weight:700}
+.mini{font-size:13px;color:var(--ink2)}
+.px{font-family:var(--f-px);letter-spacing:.04em}
+.eyebrow{font-size:12px;letter-spacing:.16em;color:var(--sakura);margin:0 0 4px}
+.sp{margin-left:auto}
+.rowh{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+/* レイアウト */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--panel);border-bottom:1px solid var(--line)}
+.top .in{max-width:1040px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:8px;font:900 18px/1 var(--f-head)}
+.brand small{font:12px/1 var(--f-px);color:var(--ink2)}
+.pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font-size:13px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--sakura-wash);color:var(--sakura);white-space:nowrap}
+.wrap{max-width:1040px;margin:0 auto;padding-block:16px calc(var(--nav) + 36px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 14px;min-width:0}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.grid>.card{margin:0}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:4px;overflow-x:auto;background:var(--panel);border-top:1px solid var(--line);padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.nav button{flex:1 0 58px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px;min-height:50px;border:0;border-radius:10px;background:none;color:var(--ink2);font:700 11px/1.2 var(--f-body);cursor:pointer;touch-action:manipulation}
+.nav button[aria-selected=true]{background:var(--sakura-wash);color:var(--sakura)}
+.nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* 部品 */
+.btn{appearance:none;border:1.5px solid var(--line);background:var(--panel);color:var(--ink);font:700 15px/1 var(--f-body);min-height:44px;padding:0 16px;border-radius:10px;cursor:pointer;touch-action:manipulation}
+.btn.pri{background:var(--sakura);border-color:var(--sakura);color:var(--sakura-ink)}
+.btn.sm{min-height:36px;padding:0 12px;font-size:13px}
+.btn[disabled]{opacity:.45}
+.btn:focus-visible,.nav button:focus-visible,.q:focus-visible,.opt:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--panel);border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;min-height:44px;max-width:100%}
+textarea{width:100%;min-height:96px;line-height:1.6}
+label{font-size:13px;color:var(--ink2);display:block}
+input[type=range]{accent-color:var(--sakura);padding:0;min-height:32px;border:0;background:none}
+.nw{white-space:nowrap}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:1px 9px;border-radius:99px;background:var(--navy-wash);color:var(--navy);margin-right:4px;white-space:nowrap;line-height:1.7}
+.chip.s{background:var(--sakura-wash);color:var(--sakura)}
+.chip.g{background:var(--gold-wash);color:var(--gold)}
+.chip.ok{background:var(--ok-wash);color:var(--ok)}
+.chip.w{background:var(--warn-wash);color:var(--warn)}
+.bar{height:12px;border-radius:99px;background:var(--soft);overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;background:var(--sakura);transition:width .5s}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-weight:700;color:var(--ink2);white-space:nowrap}
+.tw table.k th{width:7.5em}
+/* ホーム */
+.hero{display:grid;gap:16px;grid-template-columns:minmax(0,1fr);align-items:center}
+@media(min-width:760px){.hero{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
+.tree svg{width:100%;height:auto;display:block}
+.big{font-size:1.5em;color:var(--sakura);margin:0 .15em}
+.lvname{font:900 18px/1.4 var(--f-head);margin:8px 0 6px}
+.stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px}
+.stats div{display:flex;flex-direction:column}
+.stats b{font:400 26px/1.1 var(--f-px)}
+.stats span{font-size:12px;color:var(--ink2)}
+.q{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:var(--soft);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 8px;color:var(--ink);font:inherit;line-height:1.5;cursor:pointer;min-height:56px;touch-action:manipulation}
+.q .box{flex:none;width:28px;height:28px;border-radius:8px;border:2px solid var(--ink2);display:grid;place-items:center;margin-top:1px;font-weight:900}
+.q[aria-pressed=true]{background:var(--ok-wash);border-color:var(--ok)}
+.q[aria-pressed=true] .box{background:var(--ok);border-color:var(--ok);color:#fff}
+.q b{display:block}
+.q small{color:var(--ink2);font-size:13px}
+.q .xp{margin-left:auto;font:13px/1.6 var(--f-px);color:var(--gold);white-space:nowrap}
+.timer{font:400 44px/1.2 var(--f-px);text-align:center;margin:6px 0}
+/* 診断・クイズ */
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;min-height:48px;cursor:pointer;touch-action:manipulation}
+.opt.ok{border-color:var(--ok);background:var(--ok-wash)}
+.opt.ng{border-color:var(--bad)}
+.exp{background:var(--soft);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:8px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.tabs .btn[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:var(--panel)}
+.nai{display:grid;grid-template-columns:1fr 84px 84px;gap:6px 8px;align-items:center;font-size:14px}
+.nai select{min-height:38px;padding:4px 6px}
+.nai b{font-size:12px;color:var(--ink2)}
+.res{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));margin:10px 0}
+.res div{background:var(--soft);border-radius:12px;padding:10px 12px}
+.res b{display:block;font:400 24px/1.2 var(--f-px)}
+.res span{font-size:12px;color:var(--ink2)}
+.radar{width:100%;max-width:380px;display:block;margin:0 auto}
+/* 計画 */
+details.m{border:1px solid var(--line);border-radius:14px;background:var(--panel);margin:0 0 10px}
+details.m>summary{list-style:none;cursor:pointer;padding:12px 16px;display:flex;align-items:center;gap:12px;min-height:60px}
+details.m>summary::-webkit-details-marker{display:none}
+details.m[data-now="1"]{border-color:var(--sakura)}
+.mb{padding:0 16px 16px}
+.ring{flex:none;width:44px;height:44px}
+details.fold{border-top:1px solid var(--line);padding:8px 0}
+details.fold>summary{cursor:pointer;font-weight:700;min-height:40px;display:flex;align-items:center}
+/* AI先生・教科 */
+.ag{display:grid;gap:8px}
+.ag .hd{display:flex;gap:12px;align-items:center}
+.disk{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:900 20px/1 var(--f-head);color:#fff;background:var(--c,#27358a)}
+pre.code{white-space:pre-wrap;word-break:break-word;background:var(--soft);border-radius:10px;padding:12px;font:13px/1.7 var(--f-body);max-height:300px;overflow:auto;margin:8px 0 0}
+.say{background:var(--soft);border-radius:10px;padding:8px 12px;font-size:14px;margin:6px 0}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.bd{border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;background:var(--soft);opacity:.55}
+.bd.on{opacity:1;background:var(--gold-wash);border-color:var(--gold)}
+.bd i{font:normal 22px/1.3 var(--f-px);display:block;color:var(--gold)}
+.bd b{display:block;font-size:13px;line-height:1.4}
+.bd span{font-size:11px;color:var(--ink2);line-height:1.4;display:block}
+.shop{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.shop span:first-child{flex:1;min-width:0}
+.toast{position:fixed;left:50%;bottom:calc(var(--nav) + 18px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:60;width:max-content;max-width:calc(100% - 32px);text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="top"><div class="in">
+ <div class="brand"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><g fill="#f4a7bd" stroke="#c8325f" stroke-width="1.2"><circle cx="13" cy="6" r="4.4"/><circle cx="20" cy="11" r="4.4"/><circle cx="17.4" cy="19" r="4.4"/><circle cx="8.6" cy="19" r="4.4"/><circle cx="6" cy="11" r="4.4"/></g><circle cx="13" cy="13" r="2.6" fill="#c8325f"/></svg>さくらクエスト <small>桜塚高校 合格への道</small></div>
+ <div class="pills"><span class="pill" id="pDays"></span><span class="pill px" id="pLv"></span></div>
+</div></div>
+
+<main class="wrap">
+
+<!-- ホーム -->
+<section class="tab" id="t-home" role="tabpanel">
+ <div class="card hero">
+  <div class="tree" id="tree" aria-label="成長する桜の木"></div>
+  <div>
+   <p class="eyebrow px" id="greet"></p>
+   <h1><span class="nw">入試まで</span> <span class="nw">あと<span class="big px" id="days">---</span>日</span></h1>
+   <p class="mini" id="examLbl"></p>
+   <p class="lvname" id="lvName"></p>
+   <div class="bar" role="progressbar" aria-label="次のレベルまで"><i id="xpBar"></i></div>
+   <p class="mini" id="xpTxt"></p>
+   <div class="stats">
+    <div><b id="stStreak">0</b><span>日連続</span></div>
+    <div><b id="stCoin">0</b><span>コイン</span></div>
+    <div><b id="stHours">0</b><span>累計(時間)</span></div>
+   </div>
+   <div id="cta" style="margin-top:12px"></div>
+  </div>
+ </div>
+ <details class="card" id="howto"><summary><b>はじめての人へ：このページの使い方</b></summary>
+  <ol>
+   <li>毎日の「クエスト」4つをやってタップ。2つで連続記録がつながり、4つで全クリボーナス。</li>
+   <li>点数は XP（経験値）になり、桜の木に花が増えていく。コインは「ごほうび」と交換できる。</li>
+   <li>日曜は「週ボス」（10問）に挑戦して、週報を家の人に見せる。</li>
+   <li>月ごとの「マイルストーン」を80%こえると宝箱が開く。</li>
+   <li>iPadは Safari の共有ボタン → 「ホーム画面に追加」で、アプリのように開ける。</li>
+  </ol>
+ </details>
+ <div class="card"><div class="rowh"><h2>今日のクエスト</h2><span class="chip" id="dayLbl"></span></div>
+  <div id="quests"></div>
+  <p class="mini">忙しい日は2つだけでOK。休んでも、お休みトークン（7日連続ごとに1枚）が連続記録を守ってくれる。</p></div>
+ <div class="card"><div class="rowh"><h2>今月のマイルストーン</h2><span class="chip s" id="mLbl"></span></div>
+  <div id="homeGoals"></div>
+  <button class="btn sm" data-go="plan">全部の月を見る</button></div>
+ <div class="grid">
+  <div class="card"><h2>集中タイマー</h2>
+   <div class="timer" id="tmr">25:00</div>
+   <div class="row"><div><label for="tmSub">教科</label><select id="tmSub"></select></div><div><label for="tmLen">長さ</label><select id="tmLen"><option value="15">15分</option><option value="25" selected>25分</option><option value="40">40分</option></select></div>
+    <button class="btn pri" data-act="tmGo" id="tmBtn">スタート</button></div>
+   <p class="mini">終わったら +15 XP。タイマーなしで勉強したときは、下で時間だけ記録できる。</p>
+   <div class="row"><div><label for="mlSub">教科</label><select id="mlSub"></select></div><div><label for="mlMin">分</label><input id="mlMin" type="number" min="1" max="600" value="30" style="width:84px"></div><button class="btn sm" data-act="mlAdd">記録する</button></div></div>
+  <div class="card"><h2>ミス図鑑</h2>
+   <p class="mini">まちがえた問題は「モンスター」。1日後・3日後・1週間後・3週間後にもう一度たたかって、4連勝でたおせる。</p>
+   <div id="mistDue"></div>
+   <div class="row"><div><label for="msSub">教科</label><select id="msSub"></select></div><div><label for="msKind">原因</label><select id="msKind"><option>知識不足</option><option>理解不足</option><option>ケアレス</option><option>時間不足</option></select></div></div>
+   <div class="row" style="margin-top:6px"><input id="msMemo" type="text" placeholder="どんな問題？（例：連立の符号ミス）" style="flex:1;min-width:180px"><button class="btn sm pri" data-act="msAdd">登録 +5</button></div>
+   <p class="mini" id="mistStat"></p></div>
+ </div>
+ <div class="card"><h2>週ボス</h2>
+  <p class="mini">日曜に5教科から10問（国2・数2・英2・理2・社2）。8問以上でクリア。問題はAIゲームマスターか、ミス図鑑から作る。</p>
+  <div class="row"><div><label for="wkSc">今週の結果（10問中）</label><select id="wkSc"></select></div><button class="btn pri" data-act="wkSave">記録する</button></div>
+  <p class="mini" id="wkNote"></p></div>
+</section>
+
+<!-- 桜塚高校 -->
+<section class="tab" id="t-school" role="tabpanel" hidden>
+ <div class="card"><p class="eyebrow px">SCHOOL INFO</p><h1>桜塚高校ってどんな学校？</h1>
+  <p class="mini">確認日：2026年10月18日。この資料は非公式のまとめです。数字や日程は変わることがあるので、必ず公式サイトでも確認してください。</p></div>
+ <div class="card"><h2>学校プロフィール</h2><div class="tw"><table class="k">
+  <tr><th>学校</th><td>大阪府立桜塚高等学校（全日制・普通科。定時制もある）</td></tr>
+  <tr><th>場所</th><td>大阪府豊中市中桜塚4-1-1／阪急宝塚本線「岡町」駅</td></tr>
+  <tr><th>コース</th><td>普通科。2年生から「理系アドバンス」「文系アドバンス」「スポーツ探究」「総合」の4コース <span class="chip">府教委 令和9年度AP</span></td></tr>
+  <tr><th>求める生徒像</th><td><ol><li>入学後の具体的な目標があり、日々努力を続けられる</li><li>英語の資格取得や国際交流など、グローバルに活躍する意欲が強い</li><li>規則正しい生活で学習を中心に、行事・地域交流・部活動にも参加し、中学時代に成果をあげた経験がある</li><li>文理を問わず強い興味があり、探究活動に意欲的</li></ol></td></tr>
+  <tr><th>偏差値の目安</th><td>普通科 61（大阪府公立179校中30位）<span class="chip w">民間サイト2026年度版の推定</span></td></tr>
+  <tr><th>進路</th><td>大学進学が中心。近畿大212・龍谷大142・関西大112・関西学院大70・甲南大32（2025年度）。国公立大へ進む人も毎年いる <span class="chip w">民間サイトの集計。卒業生より多い数字なので、延べの合格者数とみられる</span></td></tr>
+  <tr><th>部活・行事</th><td>野球・サッカー・合気道・筝曲など。文化祭などの行事がさかん（口コミ）</td></tr>
+  <tr><th>募集人員・倍率</th><td>この資料では未確認。府教委の「募集人員」「志願状況」で確認する</td></tr>
+ </table></div></div>
+ <div class="card"><h2>入試のしくみ（令和10年度＝2028年3月。いまの中2が受ける年）</h2><div class="tw"><table class="k">
+  <tr><th>日程</th><td>特別選抜と一般選抜が「一般選抜」に一本化。学力検査の基準日は<b>3月1日</b>（2028年は水曜）。合格発表は約6平日後。正式な日程は2027年10月ごろの実施要項で決まる。</td></tr>
+  <tr><th>学力検査</th><td>国・社・数・理・英の5教科、各90点＝<b>450点</b>。国数英は A基礎／B標準／C発展 から学校が選ぶ。<b>桜塚は令和9年度でB／B／B</b>（標準問題を確実に取る力が中心）。</td></tr>
+  <tr><th>内申（調査書）</th><td><b>中1・中2・中3の評定</b>を使う。9教科（実技4教科も）同じ重み。点数は 中1×2＋中2×2＋中3×6＝450点。<b>中3が6割</b>、中1と中2が2割ずつ。活動の記録や自己申告書はなくなる。</td></tr>
+  <tr><th>総合点（900点）</th><td>学力検査と内申に、学校ごとの倍率（タイプⅠ〜Ⅴ）をかけて合計。<b>桜塚は令和9年度でタイプⅠ</b>＝学力検査×1.4（630点）＋内申×0.6（270点）。つまり<b>学力検査7：内申3</b>。令和10年度の選択は2027年夏ごろ公表。</td></tr>
+  <tr><th>学校特色枠</th><td>桜塚は普通科の<b>10%</b>。区分は「学校生活への意欲と取り組み」。<b>面接などの追加検査はなし</b>。特色枠に応募した人を、学力検査（270点満点）と内申（630点満点・1年:2年:3年＝2.8:2.8:8.4）の合計900点が高い順に並べ、募集人員の10%まで先に合格にする。内申を重く見る方式で、特定の教科にかたよらず取り組んできた人向け。応募は1つだけで、出願時に申告。残りは通常の総合点で決まる。<span class="chip">府教委 令和8年9月30日版</span></td></tr>
+  <tr><th>英語資格</th><td>英検2級＝読替え率<b>70%</b>（英語63点相当）、準1級以上＝90%（81点相当）。実際の点と比べて高い方を使う。<b>準2級は対象外</b>。</td></tr>
+  <tr><th>第2志望校</th><td>全日制は公立の第2志望校も出願できる。第1志望の志願者が定員に満たない学校だけで合格が決まる。</td></tr>
+ </table></div>
+ <p class="mini">出典：大阪府教育委員会「令和10年度以降の入学者選抜制度」「学校特色枠（令和8年9月30日版）」「令和9年度 アドミッションポリシー・出題タイプ」。</p></div>
+ <div class="card"><h2>点数の「効き方」（タイプⅠの場合の目安）</h2><div class="tw"><table>
+  <tr><th>行動</th><th>総合点（900点中）</th></tr>
+  <tr><td>学力検査 +1点</td><td>+1.4点</td></tr>
+  <tr><td>中3の評定 1教科が +1段階</td><td>+3.6点（学力検査 約2.6点ぶん）</td></tr>
+  <tr><td>中3の実技4教科が各 +1段階</td><td>+14.4点（学力検査 約10点ぶん）</td></tr>
+  <tr><td>中2の評定 1教科が +1段階</td><td>+1.2点（いまの2学期・3学期で決まる）</td></tr>
+  <tr><td>中1の評定</td><td>もう変えられない。中2・中3で取り返す</td></tr>
+  <tr><td>英検2級に合格</td><td>英語が63点未満のときの保険</td></tr>
+ </table></div>
+ <p><b>作戦は3本柱。</b>①学力検査（7割）は標準問題の完成度で勝つ　②中3の評定（内申の6割）は提出物・実技まで全教科で落とさない　③英検で英語に保険をかける。</p></div>
+ <div class="card"><h2>仮の目標ライン</h2>
+  <p>偏差値61から逆算した<b>推定</b>で、公式の合格ラインではありません。2027年の模試の判定を見て、毎回直します。</p>
+  <ul><li>内申：9教科の評定が平均4.0（合計36/45）以上。できれば4.3（合計39）</li><li>学力検査：450点中300点（67%）が最初の関所、330点（73%）で安全圏</li><li>総合点にすると、約640〜700点／900点</li></ul>
+  <p class="mini">「診断」タブの内申シミュレーターで、自分の数字を入れて確かめられます。</p></div>
+ <div class="card"><h2>桜塚を「自分の学校」にする</h2>
+  <p class="mini">自分の言葉で書くほど、勉強が続く。志望理由にもつながる（代わりに書かせない）。</p>
+  <label for="why0">桜塚で やってみたいこと</label><input id="why0" type="text" style="width:100%" data-memo="0">
+  <label for="why1" style="margin-top:8px">桜塚の好きになれそうなところ</label><input id="why1" type="text" style="width:100%" data-memo="1">
+  <label for="why2" style="margin-top:8px">そのために、いまの自分がやること</label><input id="why2" type="text" style="width:100%" data-memo="2">
+  <h4>学校を知る予定</h4>
+  <ul><li>2027年夏〜秋：学校説明会・体験入学・文化祭の見学（申込は学校サイト「中学生の皆様へ」で。2026年は10月上旬に申込が始まった）</li><li>岡町駅から学校まで歩いてみる</li><li>中3の秋：三者面談で第1志望を伝える</li></ul></div>
+ <div class="card"><h2>公式リンク（新しいタブで開きます）</h2><ul>
+  <li><a href="https://sakurazuka.ed.jp/" target="_blank" rel="noopener">桜塚高校 公式サイト（全日制）</a></li>
+  <li><a href="https://www.pref.osaka.lg.jp/o180040/kotogakko/gakuji-g3/r10_senbatsu_leaflet.html" target="_blank" rel="noopener">大阪府 令和10年度入学者選抜 リーフレット</a></li>
+  <li><a href="https://www.pref.osaka.lg.jp/o180040/kotogakko/gakuji-g3/senbatsukaizen.html" target="_blank" rel="noopener">大阪府 令和10年度 学校特色枠・制度の詳細</a></li>
+  <li><a href="https://www.pref.osaka.lg.jp/documents/129117/r09_admission_koukou.pdf" target="_blank" rel="noopener">令和9年度 各校のアドミッションポリシー・出題タイプ（PDF）</a></li>
+  <li><a href="https://www.minkou.jp/hischool/school/801/" target="_blank" rel="noopener">みんなの高校情報（民間）</a></li></ul>
+  <p class="mini">過去問は「大阪府教育庁 公立高等学校入学者選抜 過去の学力検査問題」で無料で手に入ります。</p></div>
+</section>
+
+<!-- 診断 -->
+<section class="tab" id="t-diag" role="tabpanel" hidden>
+ <div class="card"><p class="eyebrow px">DIAGNOSIS</p><h1>いまの学力を知ろう</h1>
+  <p>点数が低くても大丈夫。ここが「スタート地点」で、あとは上がるだけです。4つのステップで、現在地と目標のズレを見える化します。</p></div>
+ <div class="card"><h2>STEP1　通知表の評定を入れる（内申シミュレーター）</h2>
+  <p class="mini">中1は学年末、中2は最新の評定を選ぶ。中3は目標の合計を決める。</p>
+  <div class="nai" id="naiBox"></div>
+  <div class="row" style="margin-top:12px"><div style="flex:1;min-width:220px"><label for="naiT3">中3の評定・目標の合計（45点満点）：<b id="naiT3v"></b></label><input id="naiT3" type="range" min="27" max="45" step="1" style="width:100%"></div>
+   <div style="flex:1;min-width:220px"><label for="naiGk">学力検査・目標の得点（450点満点）：<b id="naiGkv"></b></label><input id="naiGk" type="range" min="150" max="450" step="5" style="width:100%"></div></div>
+  <div id="naiOut"></div></div>
+ <div class="card"><h2>STEP2　ミニ診断テスト（5教科×6問）</h2>
+  <p class="mini">中1〜中2前半の範囲。基礎2問・標準3問・応用1問。わからなければ飛ばさず、いちばん近いものを選ぼう。</p>
+  <div class="tabs" id="dgTabs"></div><div id="quizBox"></div></div>
+ <div class="card"><h2>STEP3　結果を見る</h2><div id="diagOut"></div></div>
+ <div class="card"><h2>STEP4　もっとくわしく：AIシンダン先生</h2>
+  <p>ミニ診断は「ふるい」です。本格的な診断は「AI先生」タブの<b>シンダン先生</b>に頼みます。直近の定期テストの点数と評定を伝えると、弱点トップ3と、次の2週間の課題を作ってくれます。月1回の再診断で「前回より伸びた」を確かめましょう。</p>
+  <p class="mini">校外の模試（学校で案内されるものでOK）を、2027年3月・8月・11月に受けると、桜塚の合否判定が分かります。</p>
+  <button class="btn" data-go="ai">AI先生を見る</button></div>
+</section>
+
+<!-- 計画 -->
+<section class="tab" id="t-plan" role="tabpanel" hidden>
+ <div class="card"><p class="eyebrow px">ROADMAP</p><h1>500日のロードマップ</h1>
+  <p>2026年10月から2028年3月まで、4つの章と18か月。月ごとに「目標」「教科のフォーカス」「関所（テスト）」「宝箱（ごほうび）」があります。学校のテストの時期は学校ごとにちがうので、月の目標は学校の年間予定にあわせてスライドしてOKです。</p></div>
+ <div class="grid" id="phases"></div>
+ <div style="height:14px"></div>
+ <div id="months"></div>
+</section>
+
+<!-- 教科 -->
+<section class="tab" id="t-subj" role="tabpanel" hidden>
+ <div class="card"><p class="eyebrow px">DRILL &amp; GUIDE</p><h1>教科別ドリル＆解説</h1>
+  <p>各教科の「やり方の型」と、お手本ドリル（解説つき）です。ドリルは、解くより<b>直す</b>ほうが大事。答えは見る前に自分で書いてから、タップして確認します。</p>
+  <div class="tabs" id="sjTabs"></div></div>
+ <div id="sjBody"></div>
+ <div class="card"><h2>1週間のリズム</h2><div class="tw"><table id="wkTable"></table></div>
+  <p class="mini">毎日の共通メニュー：暗記10分／数学20分／今日の教科／ふりかえり＋ミス退治。</p></div>
+</section>
+
+<!-- AI先生 -->
+<section class="tab" id="t-ai" role="tabpanel" hidden>
+ <div class="card"><p class="eyebrow px">AI TEACHERS</p><h1>AI先生チーム</h1>
+  <p>勉強の「相談・練習・採点・作戦会議」を手伝う9人のAIです。<b>学校の先生や教科書の代わりではなく、練習相手</b>。答えを教えるより、ヒントを出して本人に考えさせるように設定してあります。</p>
+  <h4>つかいかた（3ステップ）</h4>
+  <ol><li>保護者のアカウントで Claude（アプリ、または claude.ai）を開く。</li><li>先生ごとに「プロジェクト」をつくり、名前を先生の名前にして、下の「コピー」の文章を「指示（カスタム指示）」に貼る。プロジェクトを使わないときは、チャットの最初の1通として貼ってもよい。</li><li>先生の「最初の一言」の例を送って、会話をはじめる。終わりに出る「今日の記録」を見て、このページのクエストをタップする。</li></ol>
+  <p class="mini">ClaudeのアカウントはAnthropic社の規約で18歳以上が対象です。子ども本人のアカウントはつくらず、<b>保護者のアカウントで、保護者が見守れる場所で</b>使ってください。同じ文章は他のチャットAIでも使えます。学校のiPadで開けないときは、家の端末を使います。AI先生がなくても、このページの診断・ドリル・ミス図鑑だけで学習は回ります。</p>
+  <p class="mini">Claude Codeを使う保護者へ：同じ内容を <code>.claude/agents/</code> にも入れてあります。</p></div>
+ <div class="grid" id="agents"></div>
+ <div class="card" style="margin-top:14px"><h2>会話のイメージ</h2>
+  <div class="say"><b>あなた</b>　数学の先生、連立方程式を5問出して。ヒントは聞いたときだけね。</div>
+  <div class="say"><b>数学の先生</b>　OK！まず1問目。x + y = 7、2x − y = 2。何を求める問題か、自分の言葉で言えるかな？</div>
+  <div class="say"><b>あなた</b>　xとyの値。たし算で消せそう。</div>
+  <div class="say"><b>数学の先生</b>　いい気づき！そのやり方で進めてみよう。詰まったら「ヒント」と送ってね。</div></div>
+</section>
+
+<!-- ごほうび -->
+<section class="tab" id="t-reward" role="tabpanel" hidden>
+ <div class="card"><p class="eyebrow px">REWARDS</p><h1>ごほうびの仕組み</h1>
+  <p>3つの層でできています。<b>①XP</b>は消えない経験値で、桜の木が育つ。<b>②コイン</b>はXPと同時にたまり、ショップやガチャで使える。<b>③宝箱</b>は月・章のマイルストーンで開く「約束のごほうび」です。</p>
+  <div class="res"><div><b id="rwCoin">0</b><span>コイン</span></div><div><b id="rwXp">0</b><span>XP（累計）</span></div><div><b id="rwFz">0</b><span>お休みトークン</span></div></div></div>
+ <div class="grid">
+  <div class="card"><h2>ショップ</h2><div id="shop"></div>
+   <div class="row" style="margin-top:10px"><input id="shN" type="text" placeholder="ごほうびの名前" style="flex:1;min-width:150px"><input id="shC" type="number" min="10" step="10" value="100" style="width:90px"><button class="btn sm" data-act="shAdd">追加</button></div>
+   <p class="mini">中身は親子で決める。ゲームや動画の時間は「事前に決めた長さ」だけ。</p></div>
+  <div class="card"><h2>ガチャ（150コイン）</h2><div class="timer" id="gcOut" style="font-size:22px;line-height:1.5;min-height:66px">？</div>
+   <button class="btn pri" data-act="gacha">まわす</button>
+   <h4>景品リスト</h4><div id="gcList" class="mini"></div>
+   <div class="row" style="margin-top:8px"><input id="gcN" type="text" placeholder="景品を追加" style="flex:1;min-width:150px"><button class="btn sm" data-act="gcAdd">追加</button></div></div>
+ </div>
+ <div class="card" style="margin-top:14px"><h2>宝箱（約束のごほうび）</h2>
+  <p class="mini">月のマイルストーンを80%こえると開く。中身は保護者と相談して書きかえてOK。おすすめは「物」より「いっしょの体験」。【】は章のクリア報酬。</p><div id="chests"></div></div>
+ <div class="card"><h2>バッジ</h2><div class="badges" id="badges"></div></div>
+ <div class="card"><h2>ごほうびの5つのルール</h2><ol>
+  <li>前もって決めて、紙かこのページに書く。後から変えない。</li>
+  <li>結果（点数）だけでなく、やったこと（行動）にも出す。</li>
+  <li>決めたごほうびは、24時間以内に渡す。</li>
+  <li>点数が悪くても、もらったごほうびは取りあげない。</li>
+  <li>金額は家庭で決める。大きなごほうびほど「体験」にして、思い出に残す。</li></ol></div>
+</section>
+
+<!-- おうち -->
+<section class="tab" id="t-family" role="tabpanel" hidden>
+ <div class="card"><p class="eyebrow px">FOR PARENTS</p><h1>保護者ガイド・設定</h1>
+  <p>保護者の仕事は、教えることではなく、<b>環境づくり・見守り・約束を守ること</b>の3つです。</p></div>
+ <div class="grid">
+  <div class="card"><h2>週1回、日曜の10分</h2><ol><li>週報（下のボタンでコピー）を見る</li><li>ほめるポイントを<b>2つ</b>、行動で伝える（例：「毎日続けたね」「ミスを直したね」）</li><li>質問を<b>1つ</b>だけ（「いま、いちばん困っていることは？」）</li><li>来週のごほうびの約束を確認</li></ol>
+   <button class="btn pri" data-act="report">週報をコピー</button><textarea id="rpt" readonly style="margin-top:8px" placeholder="ここに週報が出ます" aria-label="週報"></textarea></div>
+  <div class="card"><h2>声かけ</h2><p><span class="chip ok">いい</span>「今日はどこまでできた？」「前より伸びたところは？」「手伝えることある？」</p><p><span class="chip w">さける</span>「何点だったの」「あの子はできてるのに」「やる気あるの？」「またゲーム？」</p><p class="mini">比べる相手は、昨日の本人だけ。</p></div>
+  <div class="card"><h2>見直しのサイン</h2><ul><li>2か月続けて、月の目標の達成が6割未満</li><li>睡眠が6時間未満の日が続く</li><li>2週間「やる気が出ない」が続く</li></ul><p>→ まず量を減らして「続く形」に直す。学校の先生に相談する。必要なら塾・家庭教師・オンライン学習の体験を検討する。見直しの節目は<b>2027年3月（学年末）</b>と<b>2027年8月（夏の終わり）</b>。</p></div>
+  <div class="card"><h2>iPadの準備</h2><ul><li>Safariで開き、共有ボタン →「ホーム画面に追加」。アプリのように全画面で使え、記録も消えにくい。</li><li>勉強中は「集中モード」で通知をオフ。</li><li>Apple Pencilやノートアプリがあれば、手書きで途中式を書く。Safariと過去問PDFは「Split View」で並べられる。</li><li>学校の制限でサイトが開けないときは、学校に確認するか、家の端末を使う。</li><li>ここに保存した記録は、このiPadのブラウザの中だけにあります。月1回、下の「バックアップ」をコピーして、メモアプリなどに残してください。</li></ul></div>
+ </div>
+ <div class="card" style="margin-top:14px"><h2>設定</h2>
+  <div class="row"><div><label for="setNick">呼び名（本名は入れない）</label><input id="setNick" type="text" maxlength="12" style="width:200px"></div>
+   <div><label for="setExam">入試の日（基準日）</label><input id="setExam" type="date"></div>
+   <div><label for="setTheme">画面の色</label><select id="setTheme"><option value="auto">自動</option><option value="light">ライト</option><option value="dark">ダーク</option></select></div></div>
+  <h4>バックアップ</h4>
+  <textarea id="bk" aria-label="バックアップ" placeholder="「バックアップを作る」を押すと、ここに文字列が出ます。復元するときはここに貼って「復元」。"></textarea>
+  <div class="row" style="margin-top:8px"><button class="btn sm" data-act="bkMake">バックアップを作る</button><button class="btn sm" data-act="bkCopy">コピー</button><button class="btn sm" data-act="bkLoad">復元</button><button class="btn sm" data-act="reset" id="rstBtn">すべてリセット</button></div></div>
+ <div class="card"><h2>この資料について</h2>
+  <p class="mini">非公式の学習資料です。大阪府教育委員会・桜塚高校とは関係ありません。入試の制度・日程・倍率タイプ・学校特色枠は変更されることがあります。令和10年度の実施要項（2027年10月ごろ公表予定）が出たら、必ず公式の資料で確認してください。偏差値・進路実績・目標ラインは推定や民間サイトの情報で、合格を保証するものではありません。</p></div>
+</section>
+
+</main>
+
+<nav class="nav" id="nav" aria-label="メニュー">
+ <button data-tab="home" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>ホーム</button>
+ <button data-tab="school" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6M10 11h4"/></svg>桜塚高校</button>
+ <button data-tab="diag" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M9 4h6v3H9zM7 5H5v16h14V5h-2M8.5 14l2.5 2.5 4.5-5"/></svg>診断</button>
+ <button data-tab="plan" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h7a3 3 0 000-6H9a3 3 0 010-6h7"/></svg>計画</button>
+ <button data-tab="subj" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2zM4 19V5M8 7h7"/></svg>教科</button>
+ <button data-tab="ai" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4zM8 9h8M8 12h5"/></svg>AI先生</button>
+ <button data-tab="reward" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 10h16v10H4zM3 7h18v3H3zM12 7v13M12 7C10 3 6 4 7.5 7M12 7c2-4 6-3 4.5 0"/></svg>ごほうび</button>
+ <button data-tab="family" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/></svg>おうち</button>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<script id="data">
+const SJL=['国','数','英','理','社'];
+const SJN={国:'国語',数:'数学',英:'英語',理:'理科',社:'社会'};
+const NAI_SUBJ=['国語','社会','数学','理科','英語','音楽','美術','保健体育','技術・家庭'];
+const WK=[
+ ['日','週ボス＋週報＋来週の作戦','週ボス（10問）を解いて、週報を保護者に見せる'],
+ ['月','英語：文法1テーマ＋長文1題','文法を1つ→例文を音読→長文は設問先読み'],
+ ['火','国語：読解1題','根拠に線を引く。記述は「〜から。」で終える'],
+ ['水','理科：1単元＋計算3問','図を描く→公式→「〜だから〜」の文'],
+ ['木','社会：年表＋資料1題','矢印でつなぐ年表。資料は単位と軸に印'],
+ ['金','英語：リスニング15分＋英作文3文','聞く→音読→書く。英作文は型に当てはめる'],
+ ['土','弱点日：診断で見つけた弱点を60分','ミス図鑑の古いものから。終わったら好きなことを']
+];
+const SHOP0=[['ゲーム30分',120],['動画30分',90],['おやつを選ぶ',70],['夕食のメニューを選ぶ',300],['朝のんびりチケット（休日だけ）',250],['家族で映画・ゲーム大会',600]];
+const GACHA0=['ゲーム30分','おやつ1つ','お手伝い免除1回','夕食のデザート','好きな音楽を流せる権','動画45分','当たり！好きな外食を1回リクエスト'];
+
+const PH=[
+ {n:1,name:'土台づくり',span:'2026年10月〜2027年3月（中2の後半）',aim:'習慣をつくり、中1〜中2のぬけを埋め、中2の評定を確定させる。',time:'平日60〜90分／休日120分'},
+ {n:2,name:'内申と基礎の完成',span:'2027年4月〜8月（中3の前半）',aim:'評定6倍の中3を好スタート。英検準2級。夏に中1〜2を総復習。',time:'平日90〜120分／休日180分／夏休みは1日4時間'},
+ {n:3,name:'実戦力',span:'2027年9月〜12月',aim:'入試範囲を終え、過去問へ。英検2級に挑戦。志望校を正式に決める。',time:'平日120〜150分／休日240分'},
+ {n:4,name:'最終章',span:'2028年1月〜3月',aim:'過去問の仕上げと体調管理。出願→入試→合格発表。',time:'平日150〜180分／休日300分（睡眠7時間は守る）'}
+];
+
+const ROADMAP=[
+ {k:'2026-10',ph:1,label:'2026年10月（後半）',th:'旅の準備',intro:'今日がスタート。まず「現在地」を知り、ごほうびと約束を決めよう。',
+  g:[['この資料をiPadのホーム画面に追加し、呼び名を決めた',20],['ミニ診断（5教科）を受けた',50],['内申シミュレーターで、中3の評定の目標を決めた',30],['ごほうび（宝箱とショップ）を親子で決めた',30],['7日連続でクエストをクリアした',100]],
+  s:['毎日：漢字5個＋語句3個','計算5問（正負・文字式・方程式）','基本単語を毎日10語','一問一答5問（中2の範囲）','白地図・年表の下書き'],
+  boss:'はじめの関所：ミニ診断（現在地チェック）',rw:'キックオフ外食（好きなお店を選べる）'},
+ {k:'2026-11',ph:1,label:'2026年11月',th:'習慣のレール',intro:'毎日同じ時間に机に向かう。量より「続くこと」を優先する。',
+  g:[['平日60分以上の学習を15日以上した',100],['英単語リスト（中1〜2の基本400語）を8割覚えた',60],['数学の計算ドリル（方程式・連立）で、正答率90%を3回出した',60],['ミス図鑑に10体登録し、5体たおした',50],['2学期期末テストの計画表を、2週間前までにつくった',50]],
+  s:['読解を週2題（根拠に線）','連立方程式・一次関数の型','中2文法（不定詞・動名詞・比較・受け身）','化学変化・電流の計算を毎日2問','歴史（中世〜近世）・日本の諸地域'],
+  boss:'関所：2学期期末テスト（学校）。目標は各教科で、前回の中間より+5点',rw:'好きな映画かゲームを家族と楽しむ'},
+ {k:'2026-12',ph:1,label:'2026年12月',th:'2学期のしめくくり',intro:'期末テストと通知表。中2の評定は内申の2割。取りこぼさない。',
+  g:[['期末テスト：5教科の平均が前回より上がった',150],['提出物を全教科（実技4教科も）期限までに出した',60],['2学期の通知表：9教科の評定合計が1学期以上だった',100],['冬休みの計画表を立てた',30],['週ボスを4回中3回クリアした（8問以上）',80]],
+  s:['古文の基本（歴史的仮名遣い）','一次関数の応用・図形の証明の型','長文を週2題（返り読みしない）','天気・電流の総復習','江戸〜明治の流れを年表で'],
+  boss:'関所：期末テストの結果と通知表',rw:'好きな本かゲーム（3,000円くらいまで）'},
+ {k:'2027-01',ph:1,label:'2027年1月',th:'中1のぬけを埋める',intro:'冬休みは中1の総復習のチャンス。英検の現在地もここで確認する。',
+  g:[['冬休みに、中1の数学・英語を総復習（1周）した',100],['英検の公式過去問を1回分解き、受ける級を決めた',40],['一次関数の章末問題で、正答率85%を出した',60],['週ボスを4回中3回クリアした',80],['学年末テストの目標点を、教科ごとに決めた',30]],
+  s:['漢字（中1〜2）を総チェック','中1の計算・方程式・比例反比例','中1文法の総復習＋リスニング毎日10分','生物（消化・呼吸・血液）','地理（世界のすがた）'],
+  boss:'関所：冬休み明けの実力チェック（シンダン先生が作る5教科ミニテスト）。診断時より+10%',rw:'友だちと遊ぶ「自由な1日」'},
+ {k:'2027-02',ph:1,label:'2027年2月',th:'学年末へ',intro:'3週間前から逆算して、少しずつ。中2の評定が確定する大事な時期。',
+  g:[['学年末テストの勉強を、3週間前から始めた',60],['学年末テスト：5教科の平均が2学期期末以上だった',150],['理科・社会の一問一答（800問）で、正答率80%を出した',80],['ミス図鑑で、たおした数が累計30体になった',60],['桜塚高校の公式サイトを見て、好きなところを3つ書いた',30]],
+  s:['説明文と文学を交互に1題ずつ','図形（平行・合同・証明）','長文を週2題＋英作文3文','化学変化・電流・磁界の計算','歴史（近代）・日本の諸地域'],
+  boss:'関所：学年末テスト',rw:'好きなメニューで外食（焼肉・寿司など）'},
+ {k:'2027-03',ph:1,label:'2027年3月',th:'中2クリア',intro:'中2の評定が確定する。春休みで中3の先取りと、校外模試で現在地を知る。',
+  g:[['3学期の通知表：9教科の評定合計が36以上（平均4.0）だった',200],['中2の全範囲の総復習チェックリストを8割終えた',100],['春休みに中3の先取り（英語・数学）をした',80],['校外の模試を1回受け、偏差値と判定を知った',80]],
+  s:['中2の漢字・文法の総チェック','展開・因数分解の先取り','現在完了の先取り','中2の4分野を図で総復習','歴史（近代）の総まとめ'],
+  boss:'ボス：校外模試（第1回）。判定よりも「弱点が見つかった」ことを成果にする',rw:'【第1章クリア】日帰りのお出かけ（USJ・海遊館・万博公園など）'},
+ {k:'2027-04',ph:2,label:'2027年4月',th:'中3スタート',intro:'中3の評定は内申の6割。今日から全教科が「入試の点数」になる。',
+  g:[['9教科の目標評定を決めて、家族で共有した',30],['提出物の期限をiPadのカレンダーに入れた',40],['1学期中間テストの勉強を、3週間前から始めた',60],['英検準2級の対策を始めた（単語1,500語リスト）',50],['桜塚高校の学校説明会の予定を調べて、カレンダーに入れた',30]],
+  s:['古文の基本＋漢字','展開・因数分解の計算を毎日','現在完了・関係代名詞を予習','中3範囲を学校の進度に合わせて予習','歴史（近現代）'],
+  boss:'関所：4月の実力テスト（学校）',rw:'好きな文房具・iPadアクセサリー（2,000円くらいまで）'},
+ {k:'2027-05',ph:2,label:'2027年5月',th:'内申のスタートダッシュ',intro:'1学期中間。提出物・授業態度・小テストも評定に入る。',
+  g:[['1学期中間テスト：目標点を超えた教科が3つ以上あった',150],['実技4教科の提出物・実技テストを全部出した',80],['平日90分以上の学習を15日以上した',100],['ミス図鑑で、たおした数が累計60体になった',60],['週ボスを4回中3回クリアした',80]],
+  s:['読解の記述を週1題書く','平方根・二次方程式','英検準2級の長文を週2題','運動とエネルギー','公民（憲法・政治）'],
+  boss:'関所：1学期中間テスト',rw:'家族で外食＋好きなデザート'},
+ {k:'2027-06',ph:2,label:'2027年6月',th:'英検準2級',intro:'英語の第一のボス。合格すると、英語への自信が一気につく。',
+  g:[['英検準2級に合格した（第1回、またはCBTの日）',300],['英検の前日までに、公式過去問で合格点を1回出した',60],['期末テストの勉強を、3週間前から始めた',60],['部活の大会や行事の週は「2クエストの日」で連続記録を守った',30]],
+  s:['古文・漢文の基本','関数 y=ax² の入門','英検準2級の長文・面接練習','化学（イオン）','公民（経済）'],
+  boss:'ボス：英検準2級',rw:'【合格祝い】好きなもの（3,000円くらいまで）'},
+ {k:'2027-07',ph:2,label:'2027年7月',th:'1学期のしめくくり',intro:'期末テストと通知表。夏休みの計画を、いまのうちに立てる。',
+  g:[['期末テスト：5教科合計が中間テスト以上だった',150],['1学期の通知表：9教科の評定合計が38以上（平均4.2）だった',150],['夏休みの計画（週ごとの予定表）を立てた',40],['中1〜2の総復習計画（教科×週）をつくった',40]],
+  s:['説明文の要旨・記述','二次方程式の文章題','関係代名詞・分詞','電気・化学の総まとめ','公民の総まとめ'],
+  boss:'関所：1学期期末テストと通知表',rw:'夏の前祝い（映画やボウリングなど）'},
+ {k:'2027-08',ph:2,label:'2027年8月',th:'勝負の夏',intro:'部活が終わった人は特に大チャンス。総復習の1周目を終わらせる。',
+  g:[['夏休みの学習時間が合計100時間を超えた',300],['中1〜2の総復習（5教科）を1周終えた',200],['桜塚高校の学校説明会（または体験入学）に参加した',100],['校外の模試を受け、判定を見た',100],['夏の総復習テスト（シンダン先生）で8割とった',100]],
+  s:['長文読解20題・古文の暗唱','中1〜2の計算・関数・図形をやり直す','単語3,000語・長文30題','4分野の一問一答を1周','地理・歴史を年表と白地図で1周'],
+  boss:'ボス：夏の総復習テスト＋校外模試（第2回）',rw:'【第2章クリア】家族の小旅行や好きなイベント'},
+ {k:'2027-09',ph:3,label:'2027年9月',th:'入試範囲を終わらせる',intro:'2学期の評定が、中3の内申のいちばん大きな部分になる。',
+  g:[['2学期の目標評定を決め、先生に「評価のポイント」を聞いた',40],['理科・社会を11月までに一通り終える計画をつくった',50],['英検2級の対策を始めた（単語・長文）',60],['大阪府教育庁の公式サイトから過去問（B問題）をiPadに保存した',30],['週ボスを4回中3回クリアした',80]],
+  s:['B問題の形式で読解を週2題','三平方の定理・円・相似','英検2級の長文・英作文','3年範囲（イオン・遺伝）を進める','公民＋時事'],
+  boss:'関所：9月の実力テスト',rw:'好きなゲームを1時間×3回（時間は事前に決める）'},
+ {k:'2027-10',ph:3,label:'2027年10月',th:'過去問デビュー',intro:'令和10年度の実施要項が出る時期。日程と出願を家族で確認する。',
+  g:[['令和10年度の実施要項（10月ごろ公表）で、日程・出願方法を確認した',50],['英検2級を受験した（合格なら英語63点の保険になる）',100],['数学B問題の過去問を1年分、時間を測って解き直した',80],['2学期中間テスト：目標点を超えた教科が3つ以上あった',150],['桜塚高校の文化祭などの行事に行ってみた（見学できる場合）',100]],
+  s:['国語B問題の過去問1年分','数学B問題を大問ごとに','英検2級本番＋英語B問題','理科の過去問は大問ごとに','社会の資料問題を毎日1題'],
+  boss:'ボス：英検2級（第2回）と2学期中間テスト',rw:'行事のあと、食べ歩きを楽しむ'},
+ {k:'2027-11',ph:3,label:'2027年11月',th:'志望校を決める',intro:'三者面談で第1志望を伝える。内申型の学校特色枠に応募するかも考える。',
+  g:[['三者面談で桜塚高校を第1志望と伝え、併願（私立）の相談をした',100],['英検2級の結果が出た（合格、または次の回の作戦を立てた）',200],['2学期期末テスト：目標点を超えた教科が3つ以上あった',150],['過去問を5教科1年分ずつ（B問題）解いた',150],['学校特色枠に応募するかを、内申の見込みを見て家族で話した',50]],
+  s:['過去問＋作文の型を仕上げる','過去問の弱点大問をつぶす','過去問＋英作文の添削','過去問＋弱点分野','過去問＋記述の型'],
+  boss:'ボス：校外模試（第3回）。桜塚の合否判定を確認',rw:'好きな夕食のリクエスト＋家族ゲーム大会'},
+ {k:'2027-12',ph:3,label:'2027年12月',th:'内申がほぼ確定',intro:'2学期の通知表が出る。ここまでの努力が数字になる。',
+  g:[['2学期の通知表：9教科の評定合計が目標以上だった（目安38〜40）',200],['冬休みに、過去問を2〜3年分、時間を測って解いた',150],['私立（併願）の出願・受験の流れを確認した',50],['弱点トップ5を2周した',100]],
+  s:['過去問と記述の見直し','ミスの原因別に再練習','リスニングを毎日15分','計算問題を毎日3問','一問一答を2周'],
+  boss:'関所：2学期の通知表と冬休みの過去問ラッシュ',rw:'【第3章クリア】冬のお出かけ（10,000円くらいまで）'},
+ {k:'2028-01',ph:4,label:'2028年1月',th:'直前期のはじまり',intro:'新しいことは増やさない。過去問で時間配分を体に覚えさせる。',
+  g:[['過去問（B問題）5年分を、5教科とも1周終えた',200],['教科ごとの時間配分メモをつくった',50],['入試の開始時刻に合わせて起きる練習を2週間した',60],['私立入試の準備（持ち物・会場）を確認した',50]],
+  s:['作文を15分で書く練習','見直し5分を残す練習','リスニングと英作文の型','苦手分野の最終確認','資料問題・記述の最終確認'],
+  boss:'ボス：最終確認の模試または実力テスト',rw:'合格祈願（大阪天満宮など）＋好きなランチ'},
+ {k:'2028-02',ph:4,label:'2028年2月',th:'出願と仕上げ',intro:'出願は家族で確認しながら。睡眠をけずらない。',
+  g:[['公立高校の出願を、家族で確認しながら終えた',100],['私立高校の入試（受ける場合）を受けきった',100],['ミス図鑑の「まだたおしていない」を0体にした',100],['受験票・持ち物・会場までの道（阪急 岡町駅ほか）を確認した',50],['7時間以上の睡眠を14日続けた',100]],
+  s:['漢字と語句の最終確認','計算ミスの総点検','単語と文法の最終確認','用語と計算の最終確認','年表と地図の最終確認'],
+  boss:'ボス：私立入試（受ける場合）',rw:'好きなお菓子の詰め合わせ'},
+ {k:'2028-03',ph:4,label:'2028年3月',th:'最終ボス：入試当日',intro:'正式な日程は実施要項で確認。ここまでやった自分を信じる。',
+  g:[['前日：持ち物チェックを終え、早く寝た',30],['学力検査（基準日：3月1日ごろ）を最後まで受けきった',500],['桜塚高校に合格した！（結果は家族そろって確認）',2000],['お世話になった人に「ありがとう」を伝えた',100]],
+  s:['いつもの順番で、いつもの型で','見直しを5分残す','リスニングの前に深呼吸','分かる問題から確実に','資料問題を落ち着いて'],
+  boss:'最終ボス：学力検査（合格発表は約6平日後）',rw:'【最終ごほうび】親子で約束した特別なもの'}
+];
+
+const SJ=[
+ {id:'数',c:'#27358a',goal:'大阪府B問題で7割（63点）以上。安全圏は8割。',
+  rhythm:['毎日：計算5問（5分）','月・水・金：教科書の例題→類題→章末（各20〜30分）','土：ミス図鑑の再戦と、弱点の単元','日：週ボス（数学2問）'],
+  kata:['① まず自力で解く（時間を測る）','② ○つけして、まちがいだけ「自分の言葉」で直す','③ 翌日・3日後・1週間後に、同じ問題をもう一度','※解説を読んだだけは「やった」に入れない'],
+  traps:[['計算ミス（符号・分配）','=を縦にそろえて1行ずつ書く。かっこは先にはずす。'],['文章題が式にならない','「何をxとおくか」を最初に書き、図か表にする。'],['証明が書けない','仮定→結論を先に書き、使えそうな条件を3つ並べてから選ぶ。']],
+  ph:['計算の型（正負・文字式・連立・一次関数）を正答率90%に','中3の展開・因数分解・平方根・二次方程式・y=ax²を授業と同じ速さで予習','B問題の過去問。小問集合→関数→図形（証明）の順に得点源にする','過去問5年分と時間配分（見直し5分を残す）'],
+  ex:[
+   {t:'連立方程式（加減法）',q:'2x + 3y = 12 …①　3x − y = 7 …②',s:['②を3倍して y の係数をそろえる：9x − 3y = 21 …③','①＋③：11x = 33 より x = 3','①に代入：6 + 3y = 12 より y = 2'],a:'x = 3, y = 2（検算：②に入れて 9 − 2 = 7 ✓）',pq:'x + 2y = 7、3x − 2y = 5 を解こう',pa:'たすと 4x = 12 で x = 3、y = 2'},
+   {t:'一次関数の式',q:'2点 (1, 3)、(3, 7) を通る直線の式は？',s:['傾き＝(7 − 3) ÷ (3 − 1) = 2','y = 2x + b に (1, 3) を入れる：3 = 2 + b より b = 1'],a:'y = 2x + 1',pq:'2点 (2, 1)、(4, 7) を通る直線の式は？',pa:'傾き3、y = 3x − 5'},
+   {t:'確率（表にする）',q:'大小2つのさいころを投げて、目の和が4になる確率は？',s:['表にして全部で 6 × 6 = 36通り','和が4になるのは (1,3)(2,2)(3,1) の3通り','3 ÷ 36 = 1/12'],a:'1/12',pq:'目の和が9になる確率は？',pa:'(3,6)(4,5)(5,4)(6,3) の4通りで 4/36 = 1/9'},
+   {t:'因数分解（中3の先取り）',q:'x² − 5x + 6 を因数分解しよう',s:['かけて 6、たして −5 になる2数を探す','−2 と −3（(−2)×(−3)=6、−2+(−3)=−5）'],a:'(x − 2)(x − 3)',pq:'x² + 7x + 12 を因数分解しよう',pa:'(x + 3)(x + 4)'}],
+  ask:['連立方程式を5問、だんだん難しくして出して。ヒントは聞いたときだけ','この問題のヒントだけちょうだい（答えはまだ言わないで）'],
+  ipad:'ノートアプリ（Apple Pencil）で途中式を書く。図形は指でなぞって補助線を引く。'},
+ {id:'英',c:'#0b7a75',goal:'大阪府B問題で7割（63点）以上。英検2級を取れば63点の保険に。',
+  rhythm:['毎日：単語10分（音→つづり→例文）','月：文法1テーマ＋長文1題','水：文法の続き＋英作文3文','金：リスニング15分＋英作文','日：週ボス（英語2問）'],
+  kata:['① 音読3回（声に出す）','② 書き取り（見ないで書けるか）','③ 自分の文を1つ作る（例文を少しかえる）','単語は、1日後・3日後・1週間後・2週間後にテスト'],
+  traps:[['単語が覚えられない','文で覚える。声に出す。間隔をあけて再テスト。'],['長文が遅い','設問を先に読む。意味のかたまりでスラッシュ。返り読みをしない。'],['英作文が書けない','中学範囲の「型」10個（I think that… / because… / If… / When… など）を暗唱して、中身だけ入れかえる。']],
+  ph:['中1〜2文法の総点検＋基本単語1,200語','中3文法（現在完了・関係代名詞・分詞）＋英検準2級','英検2級＋B問題の過去問','過去問＋リスニング毎日15分'],
+  ex:[
+   {t:'比較',q:'（　）に入る形は？　Tom is （　） than Ken.（tall）',s:['than があるので比較級','tall は短い語なので -er をつける'],a:'taller',pq:'This bag is （　） than that one.（expensive）',pa:'more expensive（長い語は more をつける）'},
+   {t:'受け身への書きかえ',q:'受け身に書きかえよう：Ken cleans this room every day.',s:['目的語 this room を主語にする','動詞を〈be ＋ 過去分詞〉にする：is cleaned','もとの主語は by Ken にする'],a:'This room is cleaned by Ken every day.',pq:'Ms. Sato teaches English. を受け身に',pa:'English is taught by Ms. Sato.'},
+   {t:'条件つき英作文',q:'「あなたは放課後、何をするのが好きですか。理由も書きなさい」に3文以内で答えよう',s:['型：I like 〜ing. / I like it because 〜.','I like playing soccer after school.','I like it because it is fun to play with my friends.'],a:'I like playing soccer after school. I like it because it is fun to play with my friends.',pq:'「休日にしたいこと」を、同じ型で2文で',pa:'例：I want to read books on holidays. I like stories about animals.'},
+   {t:'現在完了（先取り）',q:'（　）に入る語は？　I have （　） in Toyonaka for ten years.（live）',s:['for ten years＝10年間、ずっと続いている','have ＋ 過去分詞'],a:'lived',pq:'Do you know the girl （　） is standing there?（who / which）',pa:'who（人には who を使う関係代名詞）'}],
+  ask:['現在完了を、短い例文と問題3問で教えて','英作文を3文で書いたから、文法・語順・内容で直して'],
+  ipad:'設定の「読み上げコンテンツ」で例文を聞く。英検の公式過去問はPDFで保存して、Split Viewで見ながら解く。'},
+ {id:'国',c:'#b4472f',goal:'大阪府B問題で7割（63点）以上。漢字・語句・古文で取りこぼさない。',
+  rhythm:['毎日：漢字5個＋語句3個（5分）','火・木：読解1題（説明文と文学を交互に20〜30分）','土：古文か作文','日：週ボス（国語2問）'],
+  kata:['読解は「根拠探し」：設問→本文に線→言いかえの言葉を探す','選択肢は、×の理由を1つずつ言って消す','記述は「結論＋理由」で、本文の言葉を使い「〜から。」で終える','作文は「主張→理由→例→まとめ」の4文型'],
+  traps:[['選択肢で迷う','各選択肢に「×の根拠」を1つずつ書く。'],['記述が書けない','キーワードを3つメモ→つなぐ。字数を決めて練習。'],['古文が読めない','歴史的仮名遣い・助詞・主語の補いの3点セットから。基本単語30語。']],
+  ph:['漢字（中1〜2）・語句・文法、読解の型','古文入門・漢文・作文の型','B問題の過去問＋時間配分（作文は15分）','過去問の見直しと仕上げ'],
+  ex:[
+   {t:'接続語',q:'（　）に入る語は？「雨が降っていた。（　）、試合は予定どおり行われた。」',s:['前と後ろの内容が、期待とは反対になっている','反対の内容をつなぐ（逆接）の接続語を選ぶ'],a:'しかし（だが・けれども でもよい）',pq:'「寒かった。（　）、上着を着た。」',pa:'だから（順接）'},
+   {t:'敬語',q:'「先生が昼食を（　）。」を尊敬語にすると？',s:['先生の動作を高める＝尊敬語','「食べる」の尊敬語は「召し上がる」（謙譲語は「いただく」）'],a:'召し上がる',pq:'「私が先生に資料を（見せる）」を謙譲語に',pa:'お見せする'},
+   {t:'古文',q:'枕草子「春は、あけぼの。やうやう白くなりゆく山ぎは」の「やうやう」を現代かなづかいにして、意味も答えよう',s:['歴史的仮名遣いの「やう」は、現代では「よう」','意味は「だんだん」'],a:'ようよう（だんだん）',pq:'「いと をかし」の意味は？',pa:'とても趣がある（「をかし」＝趣がある）'},
+   {t:'読解の型（筆者の主張）',q:'説明文で「筆者の主張」を探すには？',s:['「しかし」「つまり」「大切なのは」のあとを探す','最後の段落とはじめの段落で、同じ内容が言いかえられていないか見る'],a:'接続語のあと＋最初と最後を見る',pq:'「いっけん便利だが、実は…」と続く文で、筆者が言いたいのは前半・後半のどちら？',pa:'後半（「実は」のあと）'}],
+  ask:['読解を1題出して。根拠探しの型で解きたい','作文の書き直しをしたい。まず足りないところだけ教えて'],
+  ipad:'文章をスクリーンショットして、マークアップで線を引く。漢字は指で空書きして覚える。'},
+ {id:'理',c:'#2f7d32',goal:'70%（63点）以上。計算と実験の考察を落とさない。',
+  rhythm:['毎日：一問一答5分','水・木：1単元（教科書→図を描く→計算3問）','土：実験の考察（グラフ・表）','日：週ボス（理科2問）'],
+  kata:['「図→式→言葉」の順に答える','① 図を描く　② 公式を単位つきで書く　③ 「〜だから〜」の文にする','実験は「条件／結果／考察」の3つに分けて整理する','用語は図とセットで覚える'],
+  traps:[['計算（オームの法則・密度・圧力）','公式の暗記より、単位から考える（W×秒＝J）。'],['実験の考察','「何を変えて（条件）、何が変わった（結果）」を対応づける。'],['用語が混ざる','図とセットにして、一問一答で間隔をあけて再テスト。']],
+  ph:['中1〜2の生物・化学・物理・地学のぬけを埋める','中3範囲（運動とエネルギー・イオン・遺伝・天体）を授業に合わせて予習','全分野1周＋過去問','弱点分野の最終確認'],
+  ex:[
+   {t:'オームの法則',q:'抵抗15Ωの電熱線に3Vの電圧を加えた。流れる電流は？',s:['公式：I ＝ V ÷ R（単位は V・Ω・A）','3 ÷ 15 ＝ 0.2'],a:'0.2A',pq:'同じ電熱線に6Vを加えると電流は？',pa:'6 ÷ 15 = 0.4A（電圧が2倍なら電流も2倍）'},
+   {t:'電力量',q:'500Wの電気ストーブを2時間使った。電力量は何kWh？',s:['500W ＝ 0.5kW','電力量 ＝ 電力 × 時間 ＝ 0.5 × 2'],a:'1kWh',pq:'1200Wのドライヤーを30分使うと何Wh？',pa:'1200 × 0.5 = 600Wh'},
+   {t:'化学変化（還元）',q:'酸化銅と炭素の粉末を混ぜて加熱すると、何が起こる？',s:['酸化銅は酸素をうばわれる（還元）','炭素は酸素と結びつく（酸化）→ 二酸化炭素'],a:'銅と二酸化炭素ができる（石灰水が白くにごる）',pq:'このとき酸化された物質は？',pa:'炭素'},
+   {t:'天気（前線）',q:'寒冷前線のそばで起こりやすい天気は？',s:['寒気が暖気の下にもぐりこみ、暖気が急に持ち上がる','積乱雲ができる'],a:'せまい範囲の強い雨（短時間・にわか雨や雷）',pq:'温暖前線では？',pa:'広い範囲に弱い雨が長く降る（乱層雲）'}],
+  ask:['電流の計算を5問出して。図を描くところから','この実験のまとめ方を、条件・結果・考察で整理したい'],
+  ipad:'図を手書きして写真に残す。NHK for School の動画で、実験を見直す。'},
+ {id:'社',c:'#8a5a00',goal:'70%（63点）以上。資料の読み取りと短い記述で差がつく。',
+  rhythm:['毎日：一問一答5分','火・木：地理か歴史を1単元（年表・白地図）','土：資料の読み取り・記述','日：週ボス（社会2問）'],
+  kata:['歴史は「なぜ？」を矢印でつないだ年表にする','地理は白地図に産業・気候・都市を書きこむ','公民は身近な例（学校・買い物・選挙）にたとえる','記述は指定語句を使って「原因→結果」で書く'],
+  traps:[['年号・人物が混ざる','時代ごとに「人物3・出来事3」に絞る。'],['資料（グラフ・表）が読めない','単位・軸・最大と最小に印をつけてから読む。'],['記述が書けない','「Aにより、B」の型。指定語句に線を引く。']],
+  ph:['地理（日本の諸地域）＋歴史（中世〜近世）','歴史（近現代）＋公民（憲法・政治・経済）','全分野の一問一答を2周＋過去問','時事と弱点の最終確認'],
+  ex:[
+   {t:'歴史（江戸の改革）',q:'享保の改革で、意見を投書できる仕組みとして設けられたものは？',s:['8代将軍・徳川吉宗の改革','庶民の意見を取り入れる箱＝目安箱'],a:'目安箱（ほかに公事方御定書・上げ米）',pq:'田沼意次が重んじた経済政策は？',pa:'株仲間を認めて税を取る・商業を重視'},
+   {t:'地理（農業）',q:'宮崎平野や高知平野で、ピーマンなどを冬から春に出荷できるのはなぜ？',s:['冬でも暖かい気候（黒潮の影響）','ビニールハウスなどで生長を早める＝促成栽培'],a:'温暖な気候を生かし、出荷時期を早める促成栽培をしているから',pq:'長野県などで、夏でもすずしい気候を生かして出荷時期をおそくする栽培は？',pa:'抑制栽培（高原野菜）'},
+   {t:'公民（記述）',q:'「三権分立の目的」を、「権力」「自由」の語を使って書こう',s:['型：〜を防ぎ、〜を守るため','何を防ぐ？→権力の集中','何を守る？→国民の自由と権利'],a:'権力が一つの機関に集中するのを防ぎ、国民の自由と権利を守るため。',pq:'「地方分権」の目的を「住民」の語を使って',pa:'例：住民の意見を地域の政治に反映させやすくするため。'},
+   {t:'年表',q:'日米修好通商条約（1858年）で開かれた港を3つ',s:['函館・神奈川・長崎・新潟・兵庫（神戸）の5港','「函館・神奈川・長崎」を先に覚える'],a:'神奈川（横浜）・長崎・新潟・兵庫（神戸）・函館から3つ',pq:'この条約の不平等な点を2つ',pa:'領事裁判権を認めた／日本に関税自主権がなかった'}],
+  ask:['江戸時代の流れを、矢印の年表で作りたい','資料の読み取りを3問出して'],
+  ipad:'白地図を保存して、Pencilで書きこむ。年表はノートアプリで矢印をつなぐ。'}
+];
+
+const DIAG={
+ 国:[
+  {l:'基礎',q:'「推移」の読みがなはどれ？',o:['すいい','ついい','すいし','ついし'],a:0,e:'「推」は「すい」と読み、「推移」は時間とともに移り変わること。'},
+  {l:'基礎',q:'「音楽を（カンショウ）する」の漢字として正しいのは？',o:['干渉','鑑賞','観賞','感傷'],a:1,e:'音楽や絵画など芸術作品を味わうのは「鑑賞」。「観賞」は花や魚などに使う。'},
+  {l:'標準',q:'「美しい花が咲く」の「美しい」の品詞は？',o:['形容動詞','名詞','形容詞','副詞'],a:2,e:'終止形が「〜い」で、ものごとの性質を表すので形容詞。形容動詞は「静かだ」のように「〜だ」で終わる。'},
+  {l:'標準',q:'古文の「いふ」を現代かなづかいに直すと？',o:['いふ','いう','ゆう','いぶ'],a:1,e:'語頭以外の「ふ」は「う」に直す。「いふ」→「いう」。'},
+  {l:'標準',q:'「情けは人のためならず」の意味として正しいのは？',o:['人に情けをかけると、その人のためにならない','情けは人のためだけにするべきだ','人に親切にすれば、めぐりめぐって自分にもよいことが返ってくる','人の情けに頼ってはならない'],a:2,e:'「人のためではなく、結局は自分のため」という意味。'},
+  {l:'応用',q:'次の文章の筆者の主張に最も近いのは？\n「便利な道具は生活を豊かにする。しかし、道具に頼りすぎると、自分で考える力が弱くなるおそれがある。大切なのは、道具を使いこなす側であり続けることだ。」',o:['道具は生活を豊かにするので、できるだけ使うべきだ','道具は自分で考える力を完全にうばう','道具を使わない生活がもっとも豊かだ','道具に頼りすぎず、使いこなす側であり続けることが大切だ'],a:3,e:'「しかし」のあとに筆者の言いたいことがくる。最後の一文が主張。'}],
+ 数:[
+  {l:'基礎',q:'方程式 3x − 5 = 2x + 4 の解は？',o:['x = −1','x = 1','x = 9','x = 5'],a:2,e:'xの項を左、数を右に集めると 3x − 2x = 4 + 5 より x = 9。'},
+  {l:'基礎',q:'(−3)² − 2 × (−4) の値は？',o:['1','17','−1','−17'],a:1,e:'(−3)² = 9。−2 × (−4) = +8 なので 9 + 8 = 17。'},
+  {l:'標準',q:'2(3x − 1) − (x − 4) を計算すると？',o:['5x − 6','7x + 2','5x + 2','5x − 2'],a:2,e:'6x − 2 − x + 4。かっこの前がマイナスのときは、中の符号が全部かわる。答えは 5x + 2。'},
+  {l:'標準',q:'連立方程式 x + y = 7、2x − y = 2 の x の値は？',o:['x = 2','x = 4','x = 5','x = 3'],a:3,e:'2式をたすと y が消えて 3x = 9 より x = 3（y = 4）。'},
+  {l:'標準',q:'傾きが2で、点 (1, 5) を通る直線の式は？',o:['y = 2x + 3','y = 2x + 5','y = 2x − 3','y = 5x + 2'],a:0,e:'y = 2x + b に x = 1、y = 5 を入れると 5 = 2 + b より b = 3。'},
+  {l:'応用',q:'鉛筆3本とノート2冊で480円、鉛筆5本とノート1冊で450円。ノート1冊の値段は？',o:['120円','180円','200円','150円'],a:3,e:'鉛筆をx円、ノートをy円とすると 3x + 2y = 480、5x + y = 450。y = 450 − 5x を代入して x = 60、y = 150。'}],
+ 英:[
+  {l:'基礎',q:'She ( ) to school by bus every day.',o:['go','goes','going','went'],a:1,e:'主語が she（3人称単数）で、現在の習慣なので goes。'},
+  {l:'基礎',q:'We ( ) a lot of fish in the river last summer.',o:['see','seen','saw','seeing'],a:2,e:'last summer があるので過去形。see の過去形は saw。'},
+  {l:'標準',q:'I enjoyed ( ) with my friends.',o:['talk','to talk','talked','talking'],a:3,e:'enjoy のあとは動名詞（-ing）。to不定詞は使えない。'},
+  {l:'標準',q:'This book is ( ) than that one.',o:['more interesting','most interesting','interestinger','very interesting'],a:0,e:'長めの形容詞の比較級は more ＋ 原級。than があるので比較級。'},
+  {l:'標準',q:'English ( ) in many countries.',o:['speaks','is spoken','is speaking','spoke'],a:1,e:'「話されている」という受け身は〈be動詞 ＋ 過去分詞〉。'},
+  {l:'応用',q:'If it ( ) tomorrow, we will stay home.',o:['will rain','rained','rains','raining'],a:2,e:'if（もし〜なら）の中は、未来のことでも現在形を使う。'}],
+ 理:[
+  {l:'基礎',q:'光合成でつくられる物質の組み合わせは？',o:['二酸化炭素と水','デンプンと酸素','デンプンと二酸化炭素','酸素と水'],a:1,e:'光合成では、二酸化炭素と水から、光のエネルギーでデンプンなどの養分と酸素をつくる。'},
+  {l:'基礎',q:'酸素を発生させるのに適した組み合わせは？',o:['石灰石とうすい塩酸','亜鉛とうすい塩酸','二酸化マンガンとうすい過酸化水素水','塩化アンモニウムと水酸化カルシウム'],a:2,e:'二酸化マンガン（触媒）にうすい過酸化水素水（オキシドール）を加えると酸素が出る。'},
+  {l:'標準',q:'水の電気分解で、陰極側に発生する気体は？',o:['酸素','塩素','二酸化炭素','水素'],a:3,e:'陰極に水素、陽極に酸素。体積は 水素：酸素 ＝ 2：1。'},
+  {l:'標準',q:'6Vの電圧を加えると0.3Aの電流が流れる抵抗の大きさは？',o:['20Ω','1.8Ω','0.05Ω','2Ω'],a:0,e:'オームの法則 R ＝ V ÷ I ＝ 6 ÷ 0.3 ＝ 20Ω。'},
+  {l:'標準',q:'寒冷前線が通過したあとの天気の変化として正しいのは？',o:['気温が上がり、風向きが北寄りになる','気温が下がり、風向きが南寄りになる','気温が下がり、風向きが北寄りになる','気温が上がり、風向きが南寄りになる'],a:2,e:'寒冷前線の通過後は寒気に入れかわるので、気温が下がり、風向きは南寄りから北寄りに変わる。'},
+  {l:'応用',q:'100V−800Wの電熱器を5分間使ったときに発生する熱量は？',o:['4000J','24000J','2400000J','240000J'],a:3,e:'熱量(J) ＝ 電力(W) × 時間(秒) ＝ 800 × 300 ＝ 240000J。'}],
+ 社:[
+  {l:'基礎',q:'日本の標準時の基準となる東経135度の経線が通る都市は？',o:['東京都小平市','兵庫県明石市','京都府京都市','愛知県名古屋市'],a:1,e:'東経135度の経線は兵庫県明石市を通る。'},
+  {l:'基礎',q:'鎌倉幕府を開いたのは誰？',o:['平清盛','足利尊氏','織田信長','源頼朝'],a:3,e:'源頼朝が守護・地頭を置き（1185年）、征夷大将軍に任じられた（1192年）。'},
+  {l:'標準',q:'東北地方の太平洋側で、夏に冷害の原因となる冷たい北東風は？',o:['からっ風','フェーン現象','やませ','六甲おろし'],a:2,e:'「やませ」は夏に吹く冷たく湿った北東風で、稲が育ちにくくなる冷害をもたらす。'},
+  {l:'標準',q:'享保の改革を行った江戸幕府の将軍は？',o:['徳川吉宗','徳川家光','徳川綱吉','徳川慶喜'],a:0,e:'徳川吉宗は目安箱の設置や公事方御定書の制定などを行った。'},
+  {l:'標準',q:'冬でも温暖な気候を生かし、ピーマンなどの出荷時期を早める栽培方法は？',o:['抑制栽培','二毛作','輪作','促成栽培'],a:3,e:'宮崎平野や高知平野で行われる促成栽培。出荷時期をずらして、高い値段で売れる。'},
+  {l:'応用',q:'次の出来事を古い順に並べたものはどれ？\nア 大政奉還　イ 桜田門外の変　ウ 日米和親条約　エ 薩長同盟',o:['ウ→イ→エ→ア','ウ→エ→イ→ア','イ→ウ→エ→ア','ウ→イ→ア→エ'],a:0,e:'日米和親条約(1854)→桜田門外の変(1860)→薩長同盟(1866)→大政奉還(1867)。'}]
+};
+
+const COMMON=`あなたは、大阪府の中学2年生の男の子（呼び名は本人に聞く）が、2028年3月に大阪府立桜塚高校（普通科）へ合格するのを助けるAI先生です。学校支給のiPadで使われます。保護者が見守っています。
+
+【入試の前提（令和10年度・2026年10月時点の公開情報）】
+・学力検査は国語・社会・数学・理科・英語の5教科、各90点。国語・数学・英語はA基礎／B標準／C発展から学校が選ぶ。桜塚は令和9年度でB問題。標準問題を確実に取る練習が中心で、C問題レベルの難問は後回し。
+・内申は中1・中2・中3の評定（9教科、実技も同じ重み）。配点は中1:中2:中3＝1:1:3。部活や資格の記録は点数にならない。
+・総合点は学力検査と内申に学校ごとの倍率をかける。桜塚は令和9年度で学力検査7：内申3のタイプ。令和10年度の最新は公式発表で確認するよう伝える。
+・英検2級は、英語の学力検査の得点に70%（63点）として読み替えられる。
+・制度や日程の細かい数字を聞かれたら、断定せず「公式サイトで確認しよう」と添える。
+
+【話し方】
+・やさしい言葉で、短く。1回の返事は300字くらいまで。改行を多めに。むずかしい言葉は言いかえる。
+・ほめるときは、結果より「やったこと・工夫・前回より伸びたところ」を具体的にほめる。間違いは「伸びしろ」と呼ぶ。
+・説教や、不安をあおる言い方はしない。やる気が出ない日は、まず「今日は何分ならできそう？」と聞く。
+
+【教え方のルール】
+・答えをすぐ言わない。ヒント1→ヒント2→答えと解説の順。本人が「自分で解けた」を感じられるようにする。
+・出す問題は1回に最大5問。1問ずつ出して、答えを待つ。
+・間違えたら、原因を「知識不足／理解不足／ケアレス／時間不足」から一緒に選び、直し方を1つだけ決める。
+・解説のあとに、同じ型の問題を1問出して、できたか確かめる。
+・宿題の丸投げ（答えだけほしい）には応じず、一緒に考える。
+・学校の先生や教科書の説明を優先し、食い違ったら「学校の先生にも聞いてみよう」と伝える。
+
+【安全】
+・本名・学校名・住所・電話番号は聞かない。書かれていても使わない。
+・強い不安、睡眠不足、いじめ、体調不良などを感じたら、やさしく「おうちの人にも話してみよう」と伝える。
+・勉強以外で危険を感じる内容は、必ず保護者や学校に相談するよう促す。
+
+【終わり方】
+最後に「今日の記録」を3行で出す（やったこと／できたこと／次にやること）。本人が「さくらクエスト」のページに記録できるよう、クエスト名もそえる。`;
+
+const AGENTS=[
+ {id:'sakura-coach',mark:'導',c:'#c8325f',name:'コーチ長 サクラ',role:'週の作戦会議・月の目標・立て直しの担当',
+  when:'毎週日曜の作戦会議／やる気が落ちたとき／計画を見直したいとき',
+  starter:['先週の週報を貼るので、今週の作戦会議をしてください','今日は疲れて何もしたくない。どうしたらいい？'],
+  body:`【役割】学習計画のコーチ長。週の作戦会議（10分）、月のマイルストーンの確認、計画の見直し、やる気が落ちたときの立て直しを担当する。
+
+【進め方】
+1. 週の作戦会議：①先週の記録（「さくらクエスト」の週報を貼ってもらう）を見て、ほめる点を2つ ②うまくいかなかった点を1つだけ選ぶ ③来週の「やること」を3つ決める（時間つき） ④ごほうびの約束を確認する。
+2. 月初：ロードマップの今月の目標を一緒に読み、「今月いちばん大事な目標」を1つ選ぶ。
+3. 見直しのサイン（2か月続けて目標達成が6割未満／睡眠6時間未満／やる気が2週間出ない）があれば、量を減らして続けられる形に直し、保護者にも相談するよう伝える。
+4. 他の先生（国語／数学／英語／理科／社会／診断／ゲームマスター／入試ナビ）に回すべきときは、どの先生を呼べばよいか教える。
+
+【出力形式】「今週の作戦」は箇条書き。最後に「今日の記録」。`},
+ {id:'shindan',mark:'診',c:'#0b6e8a',name:'シンダン先生',role:'学力診断・弱点分析の担当',
+  when:'学期の初め／模試のあと／月1回の再診断',
+  starter:['数学の診断をお願いします。範囲は中2の連立方程式までです','定期テストの点数を伝えるので、弱点を教えてください'],
+  body:`【役割】学力診断の先生。現在地を測り、弱点を見つけ、次の2週間の課題に落とす。
+
+【進め方】
+1. 教科と範囲を聞く（中1〜中2が基本）。
+2. 基礎・標準・応用を混ぜた問題を、1問ずつ出して採点する（6〜10問）。大阪府B問題（標準）の形式に寄せる。
+3. 結果を「得点／弱点トップ3／ミスの原因の内訳」でまとめ、次の2週間でやること（教材名ではなく、単元名と回数）を示す。
+4. 月1回の「再診断」では、前回と違う問題を作り、前回比でほめる。
+5. 本人が定期テストの点数や評定を見せてくれたら、桜塚の目安（評定の平均4.0〜4.3、学力検査300〜330点／450点）とのズレを説明する。目安は推定で、公式の合格ラインではないと必ず添える。
+
+【出力形式】診断結果は短い表（教科／得点／レベル C・B・A）と、次の課題の箇条書き。`},
+ {id:'kokugo',mark:'国',c:'#b4472f',name:'国語の先生',role:'漢字・語句・文法・読解・古文・作文',
+  when:'読解のコツを知りたい／作文を直したい／古文が苦手',
+  starter:['読解を1題出して。根拠探しの型で解きたい','作文を書いたので、足りないところだけ教えて'],
+  body:`【役割】国語の先生。漢字・語句・文法・読解（説明文／文学）・古文・作文を教える。目標は大阪府B問題で7割以上。
+
+【進め方】
+・読解は「根拠探し」：設問→本文に線→言いかえの言葉を探す→選択肢は×の理由を1つずつ言う。
+・記述は「結論＋理由」で、本文の言葉を使い「〜から。」で終える。字数を指定して練習する。
+・作文は「主張→理由→例→まとめ」の4文型。本人が書いた文を、内容／根拠／表現の3点で短く添削する（書き直しは本人にさせる）。
+・古文は、歴史的仮名遣い・助詞・主語の補いの3点セットから。
+・漢字・語句は5個ずつ出題し、間隔をあけて再テストする。`},
+ {id:'sugaku',mark:'数',c:'#27358a',name:'数学の先生',role:'計算・方程式・関数・図形・確率',
+  when:'わからない問題がある／ドリルを出してほしい／途中式を見てほしい',
+  starter:['連立方程式を5問、だんだん難しくして出して','この問題のヒントだけちょうだい（答えはまだ言わないで）'],
+  body:`【役割】数学の先生。計算、方程式、関数、図形、確率とデータを教える。目標は大阪府B問題で7割以上（安全圏は8割）。
+
+【進め方】
+・まず「何を求める問題か」「何がわかっているか」を本人に言ってもらう。式は1つずつ、=を縦にそろえて書かせる。
+・文章題は「何をxとおくか」を最初に決める。図や表にかかせる。
+・図形の証明は「仮定→結論」を先に書き、使えそうな条件を3つ並べてから選ばせる。
+・間違いは、計算ミス（符号／分配／約分）・式が立たない・公式を忘れた、のどれかに分類する。
+・類題は、数字だけ変えた問題→少しひねった問題の順に出す。
+・iPadの手書き（ノートアプリ）で解いた写真や文字起こしを貼ってもらい、途中式を見て指摘する。`},
+ {id:'eigo',mark:'英',c:'#0b7a75',name:'英語の先生',role:'単語・文法・長文・英作文・リスニング・英検',
+  when:'単語が覚えられない／英作文を直したい／英検の対策をしたい',
+  starter:['現在完了を、短い例文と問題3問で教えて','英検準2級の単語テストを10問お願いします'],
+  body:`【役割】英語の先生。単語、文法、長文、英作文、リスニング、英検（準2級→2級）を教える。目標は大阪府B問題で7割以上。英検2級は英語63点の保険になる。
+
+【進め方】
+・単語は「音→つづり→例文」で、1日10語まで。1日後・3日後・1週間後に再テストする。
+・文法は1回に1テーマ。短い例文を声に出して読ませてから、空所補充→並べかえ→英作文の順に。
+・長文は①設問を先に読む ②意味のかたまりでスラッシュを入れる ③根拠の1文に印をつける。返り読みをしない練習をする。
+・英作文は3文以内。本人が書いた文を「文法／語順／内容」の3点で短く直す。まず本人に直させる。
+・英語で話しかけられたら、簡単な英語で返し、わからない語は日本語で補う。
+・リスニング用の文章は、読み上げ用に自然な会話にする。`},
+ {id:'rika',mark:'理',c:'#2f7d32',name:'理科の先生',role:'物理・化学・生物・地学',
+  when:'計算問題が苦手／実験のまとめ方を知りたい／用語を整理したい',
+  starter:['電流の計算を5問出して。図を描くところから','この実験のまとめ方を、条件・結果・考察で整理したい'],
+  body:`【役割】理科の先生。物理・化学・生物・地学を教える。目標は70%以上。計算問題と実験の考察を落とさない。
+
+【進め方】
+・「図→式→言葉」の順に答えさせる（図を描く→公式を単位つきで書く→結果を「〜だから〜」の文にする）。
+・実験は「何を変えたか（条件）／何が変わったか（結果）／そこから言えること（考察）」の3つに分けて整理させる。
+・用語は図とセットで一問一答にする。
+・計算は、公式の暗記より単位から考えさせる（例：電力[W]×時間[秒]＝熱量[J]）。
+・身近な例にたとえて説明する。`},
+ {id:'shakai',mark:'社',c:'#8a5a00',name:'社会の先生',role:'地理・歴史・公民',
+  when:'年号や人物がごちゃごちゃ／資料問題が苦手／記述が書けない',
+  starter:['江戸時代の流れを、矢印の年表で作りたい','資料の読み取りを3問出して'],
+  body:`【役割】社会の先生。地理・歴史・公民を教える。目標は70%以上。資料の読み取りと短い記述で差がつく。
+
+【進め方】
+・歴史は「なぜ？」を矢印でつないだ年表にする。人物と出来事は時代ごとに3つずつに絞る。
+・地理は白地図に産業・気候・都市を書きこむ想像をさせ、資料（グラフ・表）は単位と軸、最大・最小に印をつけて読ませる。
+・公民は身近な例（学校・買い物・選挙）にたとえる。
+・記述は指定語句を使い、「原因→結果」の形で書かせる。まず本人に書かせて、足りない点を1つだけ伝える。
+・一問一答は5問ずつ、間隔をあけて再テストする。`},
+ {id:'game-master',mark:'遊',c:'#8e3a8a',name:'ゲームマスター ミコト',role:'週ボス・ミス図鑑・ごほうびの演出',
+  when:'日曜の週ボス／まちがいをモンスターにして復習したいとき',
+  starter:['今週の週ボスをお願いします。範囲は直近2週間でお願いします','今日のミスをモンスターにして図鑑に登録したい'],
+  body:`【役割】「さくらクエスト」のゲームマスター。やる気を保つための演出と、週ボス問題・ミス図鑑の運営を担当する。
+
+【進め方】
+・週ボス：日曜に5教科から合計10問（国2・数2・英2・理2・社2）を出し、採点してXPの目安を伝える。8問以上でクリア。難しすぎず「あと少しで届く」難度にする。
+・ミス図鑑：間違えた問題を「モンスター」として名前をつけ（例：「符号まちがいゴブリン」）、1日後・3日後・1週間後・3週間後に再戦問題を出す。
+・ガチャや報酬の演出は短く楽しく。ゲームや動画の時間を増やす方向にあおらない。
+・結果が悪い日も、行動（机に向かった／直しをした）をたたえて、連続記録を守る方法（2クエストの日）を提案する。
+・点数やランキングで他の人と比べない。比べるのは「昨日の自分」だけ。
+
+【出力形式】短い物語調＋結果。最後に「今日の記録」。`},
+ {id:'nyushi-navi',mark:'試',c:'#4a5568',name:'入試ナビ',role:'大阪府の入試・桜塚高校の情報係',
+  when:'内申の計算／志望理由づくり／出願・日程の確認',
+  starter:['中1と中2の評定を伝えるので、中3でどこまで上げればいいか計算して','学校特色枠に応募するか迷っています'],
+  body:`【役割】大阪府の入試と桜塚高校の情報係。内申のシミュレーション、志望理由づくり、出願・日程の確認を手伝う。
+
+【進め方】
+・内申：中1・中2の評定を聞き、「中1×2＋中2×2＋中3×6」の考え方で、中3でどこまで上げれば目標に届くかを一緒に計算する。実技4教科も同じ重みだと伝える。
+・志望理由：桜塚が求める生徒像（目標をもって努力を続ける／英語資格・国際交流／探究活動／学校行事や部活動）に沿って、本人の言葉で3つの「好きなところ・やりたいこと」を引き出す（代わりに書かない）。
+・学校特色枠（桜塚は普通科の10%・「学校生活への意欲と取り組み」）は、内申を重く見る方式で、面接などの追加検査はないことを説明し、応募するかは中3の秋に家族で決めるよう促す。
+・日程や倍率タイプなど変わりうる情報は、必ず公式サイト（大阪府教育庁・桜塚高校）で確認するよう添え、確認した日を聞く。
+・私立併願や第2志望校出願の考え方を、メリットとデメリットの両方で説明する。最終判断は本人と保護者と学校の先生。`}
+];
+</script>
+<script>
+(()=>{
+'use strict';
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const KEY='sakuraQuest.v1';
+let memStore=null;
+const ls={get(){try{return localStorage.getItem(KEY)}catch(e){return memStore}},set(v){memStore=v;try{localStorage.setItem(KEY,v)}catch(e){}}};
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const today=()=>ymd(new Date());
+const dt=s=>new Date(s+'T00:00:00');
+const addDays=(s,n)=>{const d=dt(s);d.setDate(d.getDate()+n);return ymd(d)};
+const diff=(a,b)=>Math.round((dt(b)-dt(a))/864e5);
+const monday=s=>{const d=dt(s);d.setDate(d.getDate()-((d.getDay()+6)%7));return ymd(d)};
+
+/* ---------- 状態 ---------- */
+const DEF={nick:'',theme:'auto',exam:'2028-03-01',xp:0,coin:0,streak:0,best:0,last:'',freeze:1,days:{},ms:{},mc:{},got:{},mrw:{},nai:{a:{},b:{},t3:39,gk:315,set:0},diag:{},mist:[],badges:{},shop:null,gacha:null,wk:{},memo:['','',''],tab:'home',sj:'数',dg:'国'};
+const fresh=()=>{const o=JSON.parse(JSON.stringify(DEF));o.shop=SHOP0.map(x=>({n:x[0],c:x[1]}));o.gacha=GACHA0.slice();return o};
+const norm=o=>{const b=fresh();const r=Object.assign(b,o);r.nai=Object.assign({},b.nai,o.nai);if(!r.shop)r.shop=b.shop;if(!r.gacha)r.gacha=b.gacha;return r};
+let S;
+try{S=norm(JSON.parse(ls.get()||'{}'))}catch(e){S=fresh()}
+const save=()=>ls.set(JSON.stringify(S));
+const applyTheme=()=>{const r=document.documentElement;S.theme==='auto'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',S.theme)};
+
+const LV=[[0,'たね'],[300,'め'],[800,'わかぎ'],[1600,'つぼみ'],[2800,'ほころび'],[4400,'三分咲き'],[6400,'五分咲き'],[9000,'七分咲き'],[12500,'八分咲き'],[17000,'満開']];
+const lvOf=x=>{let i=0;LV.forEach((l,j)=>{if(x>=l[0])i=j});return i};
+const MSG=['今日の一歩が、500日後の合格につながる。','続けている人が、いちばん強い。','昨日の自分より、1ミリ前へ。','まちがいは伸びしろ。','2クエストでも、立派な前進。','ノートを開いた時点で、もう勝ってる。','焦らなくていい。止まらなければいい。','わからないを見つけた日は、大成長の日。','小さな「できた」を集めよう。','桜は、冬のあいだに力をためて咲く。','未来の自分が、今日の自分を見ている。','やるのは、目の前の1問だけ。'];
+const ADV={A:{s:'桜塚レベルの入口',t:'標準問題を確実に。B問題の過去問や応用問題に早めに挑戦しよう。'},B:{s:'標準の力',t:'教科書レベルを完璧にして、ミスの原因をつぶすのが近道。'},C:{s:'基礎からやり直し',t:'中1の内容から、短く毎日。基礎のぬけを埋めるチャンス。'}};
+const lvl=(sc,n)=>sc>=n-1?'A':sc>=Math.ceil(n/2)?'B':'C';
+
+/* ---------- 演出 ---------- */
+let tt;
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('on'),2600)}
+function boom(){
+ if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+ const c=$('#fx'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+ const cols=['#f4a7bd','#ff7da3','#fde9ef','#f5c15a'];
+ const P=[...Array(70)].map(()=>({x:innerWidth/2,y:innerHeight*.62,vx:(Math.random()-.5)*11,vy:-Math.random()*12-3,r:4+Math.random()*5,a:Math.random()*6,va:(Math.random()-.5)*.3,c:cols[Math.random()*4|0]}));
+ let f=0;(function t(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.28;p.a+=p.va;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.beginPath();x.ellipse(0,0,p.r,p.r*.6,0,0,7);x.fill();x.restore()});if(++f<110)requestAnimationFrame(t);else x.clearRect(0,0,c.width,c.height)})();
+}
+
+/* ---------- XP・バッジ ---------- */
+const hours=()=>Object.values(S.days).reduce((t,d)=>t+Object.values(d.min||{}).reduce((a,b)=>a+b,0),0)/60;
+const wkWins=()=>Object.values(S.wk).filter(w=>w.sc>=8).length;
+const gid=(k,i)=>k+'|'+i;
+const phDone=n=>ROADMAP.filter(m=>m.ph===n).every(m=>S.mc[m.k]);
+const BADGES=[
+ ['first','はじめの一歩','初めてクエストをクリア',()=>Object.values(S.days).some(d=>d.q.some(Boolean))],
+ ['s3','3日連続','3日続けた',()=>S.best>=3],['s7','7日連続','1週間続けた',()=>S.best>=7],['s14','14日連続','2週間続けた',()=>S.best>=14],
+ ['s30','30日連続','1か月続けた',()=>S.best>=30],['s100','100日連続','100日続けた',()=>S.best>=100],
+ ['diag','現在地を知った','ミニ診断を5教科おわらせた',()=>SJL.every(s=>S.diag[s]&&S.diag[s].done)],
+ ['nai','内申の作戦','内申の目標を決めた',()=>!!S.nai.set],
+ ['mist10','ミスハンター','ミスを10体たおした',()=>S.mist.filter(m=>m.dead).length>=10],
+ ['mist50','ミスマスター','ミスを50体たおした',()=>S.mist.filter(m=>m.dead).length>=50],
+ ['boss3','週ボス3勝','週ボスを3回クリア',()=>wkWins()>=3],['boss10','週ボス10勝','週ボスを10回クリア',()=>wkWins()>=10],
+ ['h50','50時間','学習が合計50時間',()=>hours()>=50],['h100','100時間','学習が合計100時間',()=>hours()>=100],
+ ['h300','300時間','学習が合計300時間',()=>hours()>=300],['h500','500時間','学習が合計500時間',()=>hours()>=500],
+ ['m1','最初の宝箱','月のマイルストーンを初クリア',()=>Object.keys(S.mc).length>=1],
+ ['p1','第1章クリア','土台づくりを完了',()=>phDone(1)],['p2','第2章クリア','内申と基礎の完成',()=>phDone(2)],
+ ['p3','第3章クリア','実戦力を完了',()=>phDone(3)],['p4','最終章クリア','ゴールに到達',()=>phDone(4)],
+ ['eiken','英検に挑戦','英検の目標をクリア',()=>!!(S.ms[gid('2027-06',0)]||S.ms[gid('2027-10',1)])],
+ ['lv5','ほころび','レベル5に到達',()=>lvOf(S.xp)>=4],['lv10','満開','レベル10に到達',()=>lvOf(S.xp)>=9]
+];
+function checkBadges(){BADGES.forEach(b=>{if(!S.badges[b[0]]&&b[3]()){S.badges[b[0]]=today();setTimeout(()=>{toast('バッジ獲得：'+b[1]);boom()},1000)}})}
+function addXP(n,why,quiet){
+ const b=lvOf(S.xp);S.xp=Math.max(0,S.xp+n);S.coin=Math.max(0,S.coin+n);
+ if(n>0&&!quiet)toast('+'+n+' XP'+(why?'　'+why:''));
+ const a=lvOf(S.xp);if(a>b)setTimeout(()=>{toast('レベルアップ！ Lv.'+(a+1)+'「'+LV[a][1]+'」');boom()},800);
+ checkBadges();save();
+}
+
+/* ---------- 桜の木 ---------- */
+const TREE=(()=>{let s=7;const r=()=>(s=(s*16807)%2147483647)/2147483647;const a=[];for(let i=0;i<120;i++){const t=r()*6.283,u=Math.sqrt(r());a.push([200+Math.cos(t)*u*168,118+Math.sin(t)*u*92,5+r()*4.5])}return a})();
+function treeSVG(n){
+ const trunk='M200 336 C200 280 196 230 200 186';
+ const br='M200 250 C170 230 140 215 110 190 M200 230 C230 210 262 196 292 168 M200 205 C190 170 176 150 168 112 M200 200 C214 168 232 146 240 108 M150 205 C130 190 118 170 96 160 M250 190 C268 176 284 160 300 128';
+ const dots=TREE.map((p,i)=>i<n?`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${p[2].toFixed(1)}" fill="var(--petal)" stroke="var(--sakura)" stroke-opacity=".45"/>`:`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2" fill="var(--line)"/>`).join('');
+ const fall=[...Array(Math.min(24,Math.floor(n/4)))].map((_,i)=>`<ellipse cx="${60+((i*47)%280)}" cy="${338+((i*13)%9)}" rx="4" ry="2.4" fill="var(--petal)"/>`).join('');
+ return `<svg viewBox="0 0 400 356" role="img" aria-label="桜の木。花は${n}個"><ellipse cx="200" cy="344" rx="170" ry="9" fill="var(--soft)"/><path d="${trunk}" fill="none" stroke="var(--wood)" stroke-width="13" stroke-linecap="round"/><path d="${br}" fill="none" stroke="var(--wood)" stroke-width="5" stroke-linecap="round"/>${dots}${fall}</svg>`;
+}
+
+/* ---------- クエスト ---------- */
+const rec=(d=today())=>S.days[d]||(S.days[d]={q:[0,0,0,0],min:{},ok:0,full:0});
+const peek=(d=today())=>S.days[d]||{q:[0,0,0,0],min:{},ok:0,full:0};
+const DQ=()=>{const w=WK[new Date().getDay()];return[
+ {t:'暗記 10分',d:'英単語・漢字・理科社会の用語。声に出して、書く。'},
+ {t:'数学ドリル 20分',d:'計算5問＋今日の1テーマ。時間を測る。'},
+ {t:w[1],d:w[2]},
+ {t:'ふりかえり＋ミス退治',d:'今日の授業をノートで見直す10分。再戦のミスがあれば倒す。'}]};
+const curStreak=()=>{const t=today();if(S.last===t||S.last===addDays(t,-1))return S.streak;if(S.last===addDays(t,-2)&&S.freeze>0)return S.streak;return 0};
+function streakUp(){
+ const t=today();if(S.last===t)return;
+ if(S.last===addDays(t,-1))S.streak++;
+ else if(S.last===addDays(t,-2)&&S.freeze>0){S.freeze--;S.streak++;toast('お休みトークンで連続記録を守った！')}
+ else S.streak=1;
+ S.last=t;S.best=Math.max(S.best,S.streak);
+ if(S.streak%7===0&&S.freeze<2)S.freeze++;
+ const B={3:30,7:70,14:150,30:300,60:500,100:1000}[S.streak];
+ if(B)setTimeout(()=>{addXP(B,S.streak+'日連続ボーナス');boom();refresh()},600);
+}
+function toggleQ(i){
+ const r=rec();
+ if(r.q[i]){r.q[i]=0;addXP(-10,'',true)}else{r.q[i]=1;addXP(10,DQ()[i].t)}
+ const n=r.q.filter(Boolean).length;
+ if(n>=2&&!r.ok){r.ok=1;streakUp()}
+ if(n===4&&!r.full){r.full=1;addXP(20,'全クリボーナス');boom()}
+ save();refresh();
+}
+
+/* ---------- 月のマイルストーン ---------- */
+const mStat=m=>{const n=m.g.length,d=m.g.filter((_,i)=>S.ms[gid(m.k,i)]).length;return{n,d,p:n?d/n:0,clear:d>=Math.ceil(n*.8)}};
+const curMonth=()=>{const mk=today().slice(0,7);if(mk<=ROADMAP[0].k)return ROADMAP[0].k;const L=ROADMAP[ROADMAP.length-1].k;return mk>=L?L:mk};
+const rwText=m=>S.mrw[m.k]||m.rw;
+const goalsHTML=m=>m.g.map((g,i)=>{const on=!!S.ms[gid(m.k,i)];return `<button class="q" data-g="${m.k}|${i}" aria-pressed="${on}"><span class="box">${on?'✓':''}</span><span><b>${esc(g[0])}</b></span><span class="xp">+${g[1]}</span></button>`}).join('');
+function toggleGoal(k,i){
+ const m=ROADMAP.find(x=>x.k===k),id=gid(k,i),xp=m.g[i][1];
+ if(S.ms[id]){delete S.ms[id];addXP(-xp,'',true)}else{S.ms[id]=1;addXP(xp,'マイルストーン達成');if(xp>=100)boom()}
+ if(mStat(m).clear&&!S.mc[k]){S.mc[k]=1;setTimeout(()=>{addXP(100,m.label+'クリア！宝箱が開いた');boom();refresh()},900)}
+ save();refresh();
+}
+const ring=p=>`<svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="var(--line)" stroke-width="5"/><circle cx="22" cy="22" r="18" fill="none" stroke="var(--sakura)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(113.1*p).toFixed(1)} 113.1" transform="rotate(-90 22 22)"/><text x="22" y="26" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--ink)">${Math.round(p*100)}</text></svg>`;
+
+/* ---------- 描画：ホーム ---------- */
+function renderTop(){
+ const d=diff(today(),S.exam);
+ $('#pDays').textContent=d>0?'入試まで'+d+'日':d===0?'今日が本番！':'おつかれさま';
+ const L=lvOf(S.xp);$('#pLv').textContent='Lv.'+(L+1)+' '+LV[L][1];
+}
+function renderHome(){
+ const L=lvOf(S.xp),nx=LV[L+1],lo=LV[L][0],d=diff(today(),S.exam),r=peek();
+ $('#greet').textContent=(S.nick?S.nick+'、':'')+MSG[new Date().getDate()%MSG.length];
+ $('#days').textContent=Math.max(0,d);
+ $('#examLbl').textContent='基準日：'+S.exam.replace(/-/g,'/')+'（正式な日程は実施要項で確認）';
+ $('#lvName').textContent='Lv.'+(L+1)+'「'+LV[L][1]+'」'+(L>=LV.length-1?'　満開！':'');
+ $('#xpBar').style.width=Math.round((nx?(S.xp-lo)/(nx[0]-lo):1)*100)+'%';
+ $('#xpTxt').textContent=nx?'次の「'+nx[1]+'」まであと'+(nx[0]-S.xp)+' XP（いま'+S.xp+' XP）':'いま'+S.xp+' XP　最高レベル';
+ $('#stStreak').textContent=curStreak();$('#stCoin').textContent=S.coin;$('#stHours').textContent=hours().toFixed(1);
+ $('#tree').innerHTML=treeSVG(Math.min(120,Math.round(120*S.xp/17000)));
+ $('#cta').innerHTML=SJL.every(s=>S.diag[s]&&S.diag[s].done)?'':'<button class="btn pri" data-go="diag">まずミニ診断で現在地を知る</button>';
+ $('#dayLbl').textContent=today().replace(/-/g,'/')+'（'+'日月火水木金土'[new Date().getDay()]+'）';
+ $('#quests').innerHTML=DQ().map((q,i)=>`<button class="q" data-q="${i}" aria-pressed="${!!r.q[i]}"><span class="box">${r.q[i]?'✓':''}</span><span><b>${esc(q.t)}</b><small>${esc(q.d)}</small></span><span class="xp">+10</span></button>`).join('');
+ const m=ROADMAP.find(x=>x.k===curMonth()),st=mStat(m);
+ $('#mLbl').textContent=m.label+'　'+st.d+'/'+st.n;
+ $('#homeGoals').innerHTML=goalsHTML(m);
+ renderMist();renderWk();
+}
+/* タイマー */
+let tm=null,tmI=0,AC;
+function beep(){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.frequency.value=880;g.gain.value=.15;o.start();setTimeout(()=>o.stop(),600)}catch(e){}}
+function logMin(sub,m){const r=rec();r.min[sub]=(r.min[sub]||0)+m;save()}
+function tmRender(){
+ const el=$('#tmr');
+ if(!tm){el.textContent=pad(+$('#tmLen').value)+':00';$('#tmBtn').textContent='スタート';return}
+ const left=Math.max(0,tm.end-Date.now()),s=Math.ceil(left/1000);
+ el.textContent=pad(Math.floor(s/60))+':'+pad(s%60);$('#tmBtn').textContent='やめる';
+ if(left<=0)tmDone();
+}
+function tmDone(){
+ clearInterval(tmI);const t=tm;tm=null;try{t.wl&&t.wl.release()}catch(e){}
+ beep();logMin(t.sub,t.len);addXP(15,'集中'+t.len+'分');boom();tmRender();refresh();
+}
+/* ミス図鑑 */
+const INTV=[1,3,7,21];
+function renderMist(){
+ const due=S.mist.filter(m=>!m.dead&&m.nx<=today());
+ $('#mistDue').innerHTML=due.length?`<h4>今日の再戦：${due.length}体</h4>`+due.map(m=>`<div class="say"><b>${esc(SJN[m.s])}</b>／${esc(m.k)}／${esc(m.m||'（メモなし）')}<div class="row" style="margin-top:6px;align-items:center"><span class="mini">${m.st+1}/${INTV.length}戦目</span><button class="btn sm pri" data-act="mWin" data-a="${m.id}">解き直して正解</button><button class="btn sm" data-act="mLose" data-a="${m.id}">まだ不安</button></div></div>`).join(''):'<p class="mini">今日の再戦はなし。</p>';
+ $('#mistStat').textContent='図鑑：'+S.mist.length+'体登録／'+S.mist.filter(m=>m.dead).length+'体たおした';
+}
+/* 週ボス */
+function renderWk(){
+ const w=S.wk[monday(today())];
+ $('#wkSc').innerHTML=[...Array(11).keys()].map(i=>`<option value="${i}" ${w&&w.sc===i?'selected':''}>${i}問</option>`).join('');
+ $('#wkNote').textContent=w?'今週の記録：'+w.sc+'問'+(w.sc>=8?'　クリア！':'　あと少し。ミスを図鑑に登録しよう'):'まだ記録がありません（月曜〜日曜で1週間）。';
+}
+
+/* ---------- 描画：計画 ---------- */
+const openM=new Set();let planInit=false;
+function renderPlan(){
+ $('#phases').innerHTML=PH.map(p=>`<div class="card"><span class="chip s">第${p.n}章</span><h3>${p.name}</h3><p class="mini">${p.span}</p><p>${p.aim}</p><p class="mini">学習時間の目安：${p.time}</p></div>`).join('');
+ const cur=curMonth();if(!planInit){openM.add(cur);planInit=true}
+ $('#months').innerHTML=ROADMAP.map(m=>{const st=mStat(m);
+  return `<details class="m" data-k="${m.k}" data-now="${m.k===cur?1:0}" ${openM.has(m.k)?'open':''}><summary>${ring(st.p)}<span style="min-width:0"><b>${m.label}</b> <span class="chip">第${m.ph}章</span>${S.mc[m.k]?'<span class="chip ok">クリア</span>':''}<br><span class="mini">${esc(m.th)}</span></span><span class="mini sp">${st.d}/${st.n}</span></summary><div class="mb"><p>${esc(m.intro)}</p>${goalsHTML(m)}<h4>教科のフォーカス</h4><div class="tw"><table class="k">${SJL.map((s,i)=>`<tr><th>${SJN[s]}</th><td>${esc(m.s[i])}</td></tr>`).join('')}</table></div><p style="margin-top:10px"><span class="chip w">関所・ボス</span>${esc(m.boss)}</p><p><span class="chip g">宝箱</span>${esc(rwText(m))}</p></div></details>`}).join('');
+}
+
+/* ---------- 描画：教科 ---------- */
+function renderSubj(){
+ if(!SJ.some(x=>x.id===S.sj))S.sj='数';
+ $('#sjTabs').innerHTML=SJL.map(s=>`<button class="btn" data-sj="${s}" aria-pressed="${S.sj===s}">${SJN[s]}</button>`).join('');
+ const a=SJ.find(x=>x.id===S.sj),dg=S.diag[a.id],L=dg&&dg.done?lvl(dg.sc,DIAG[a.id].length):null;
+ const li=arr=>arr.map(x=>`<li>${x}</li>`).join('');
+ $('#sjBody').innerHTML=`<div class="card"><div class="rowh"><h2 style="margin:0">${SJN[a.id]}の作戦</h2>${L?`<span class="chip ${L==='A'?'ok':L==='B'?'':'w'}">診断：${L}（${ADV[L].s}）</span>`:'<span class="chip">診断：未受験</span>'}</div>
+ <p><b>目標：</b>${a.goal}</p>
+ <div class="grid"><div><h4>1週間のリズム</h4><ul>${li(a.rhythm)}</ul></div><div><h4>ドリルの型</h4><ul>${li(a.kata)}</ul></div></div>
+ <h4>つまずきTOP3と直し方</h4><div class="tw"><table class="k">${a.traps.map(t=>`<tr><th>${t[0]}</th><td>${t[1]}</td></tr>`).join('')}</table></div>
+ <h4>章ごとの課題</h4><div class="tw"><table class="k">${a.ph.map((x,i)=>`<tr><th>第${i+1}章</th><td>${x}</td></tr>`).join('')}</table></div>
+ <h4>iPadの使い方</h4><p>${a.ipad}</p>
+ <h4>AI先生へのたのみ方</h4>${a.ask.map(x=>`<div class="say">${x}</div>`).join('')}</div>
+ <div class="card"><h2>お手本ドリル（解説つき）</h2><p class="mini">まず自分で解いて、「解説を見る」をタップ。練習問題も同じ型で。</p>
+ ${a.ex.map((e,i)=>`<details class="fold"><summary>${i+1}．${e.t}</summary><div class="say"><b>問題</b>　${e.q}</div><details class="fold"><summary>解説を見る</summary><ol>${li(e.s)}</ol><div class="say"><b>答え</b>　${e.a}</div><p><b>練習</b>　${e.pq}</p><details class="fold"><summary>練習の答え</summary><div class="say">${e.pa}</div></details></details></details>`).join('')}</div>`;
+}
+
+/* ---------- 描画：AI先生 ---------- */
+function renderAgents(){
+ $('#agents').innerHTML=AGENTS.map((a,i)=>`<div class="card ag"><div class="hd"><span class="disk" style="--c:${a.c}">${a.mark}</span><div style="min-width:0"><h3>${a.name}</h3><div class="mini">${a.role}</div></div></div>
+ <p class="mini"><b>呼ぶとき：</b>${a.when}</p>
+ <div><b class="mini">最初の一言の例</b>${a.starter.map(x=>`<div class="say">${esc(x)}</div>`).join('')}</div>
+ <div class="row" style="align-items:center"><button class="btn pri sm" data-act="cpAg" data-a="${i}">設定をコピー</button><span class="mini" id="cpm${i}"></span></div>
+ <details><summary class="mini" style="cursor:pointer;min-height:36px;display:flex;align-items:center">設定の中身を見る</summary><pre class="code">${esc(COMMON+'\n\n'+a.body)}</pre></details></div>`).join('');
+}
+async function copyText(t){
+ try{await navigator.clipboard.writeText(t);return true}catch(e){}
+ try{const ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;left:0;top:0;opacity:0;font-size:16px';document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,t.length);const ok=document.execCommand('copy');ta.remove();return ok}catch(e){return false}
+}
+
+/* ---------- 描画：ごほうび ---------- */
+let editK='',gcBusy=false;
+function renderRewards(){
+ $('#rwCoin').textContent=S.coin;$('#rwXp').textContent=S.xp;$('#rwFz').textContent=S.freeze;
+ $('#shop').innerHTML=S.shop.map((s,i)=>`<div class="shop"><span>${esc(s.n)}</span><span class="px" style="color:var(--gold)">${s.c}</span><button class="btn sm" data-act="shBuy" data-a="${i}" ${S.coin<s.c?'disabled':''}>交換</button><button class="btn sm" data-act="shDel" data-a="${i}" aria-label="削除">×</button></div>`).join('');
+ $('#gcList').innerHTML=S.gacha.map((g,i)=>`<span class="chip">${esc(g)} <a href="#" data-act="gcDel" data-a="${i}" style="text-decoration:none" aria-label="削除">×</a></span>`).join(' ');
+ $('#chests').innerHTML=ROADMAP.map(m=>{const st=mStat(m),open=!!S.mc[m.k],got=!!S.got[m.k];
+  const body=editK===m.k?`<span><b>${m.label}</b><br><input id="chIn" type="text" value="${esc(rwText(m))}" style="width:100%"></span><button class="btn sm pri" data-act="chSave" data-a="${m.k}">保存</button>`
+   :`<span><b>${m.label}</b>　${esc(rwText(m))}<br><span class="mini">${open?'宝箱が開いた！':'マイルストーン '+st.d+'/'+st.n+'（80%で開く）'}</span></span>${open?`<button class="btn sm ${got?'':'pri'}" data-act="chGot" data-a="${m.k}">${got?'受けとり済み':'受けとった'}</button>`:'<span class="chip">ロック中</span>'}<button class="btn sm" data-act="chEdit" data-a="${m.k}">書きかえ</button>`;
+  return `<div class="shop">${body}</div>`}).join('');
+ $('#badges').innerHTML=BADGES.map(b=>`<div class="bd ${S.badges[b[0]]?'on':''}"><i>${S.badges[b[0]]?'★':'－'}</i><b>${b[1]}</b><span>${b[2]}</span></div>`).join('');
+}
+
+/* ---------- 描画：診断 ---------- */
+function renderNai(){
+ const sel=(g,s)=>`<select data-nai="${g}|${s}" aria-label="${s}の${g==='a'?'中1':'中2'}の評定"><option value="">－</option>${[5,4,3,2,1].map(v=>`<option value="${v}" ${+S.nai[g][s]===v?'selected':''}>${v}</option>`).join('')}</select>`;
+ $('#naiBox').innerHTML='<b></b><b>中1（確定）</b><b>中2（最新）</b>'+NAI_SUBJ.map(s=>`<span>${s}</span>${sel('a',s)}${sel('b',s)}`).join('');
+ $('#naiT3').value=S.nai.t3;$('#naiGk').value=S.nai.gk;naiOut();
+}
+function naiOut(){
+ const est=o=>{const v=NAI_SUBJ.map(s=>+o[s]).filter(Boolean);return v.length?v.reduce((x,y)=>x+y,0)/v.length*9:0};
+ let a=est(S.nai.a),b=est(S.nai.b);const c=+S.nai.t3,g=+S.nai.gk;
+ const na=NAI_SUBJ.filter(s=>+S.nai.a[s]).length,nb=NAI_SUBJ.filter(s=>+S.nai.b[s]).length;
+ if(!a)a=27;if(!b)b=27;
+ $('#naiT3v').textContent=c+'/45（平均'+(c/9).toFixed(1)+'）';$('#naiGkv').textContent=g+'/450（'+Math.round(g/4.5)+'%）';
+ const nn=a*2+b*2+c*6,tot=g*1.4+nn*.6,tk=g*.6+nn*1.4,line=640,safe=700;
+ const msg=tot>=safe?'安全圏の目安（約700点）をこえています。この目標を落とさないことが大事。':tot>=line?`合格圏の目安（約640点）に届いています。あと${Math.ceil(safe-tot)}点で安全圏。`:`合格圏の目安（約640点）まで、あと${Math.ceil(line-tot)}点。学力検査をあと${Math.ceil((line-tot)/1.4)}点、または中3の評定合計をあと${Math.ceil((line-tot)/3.6)}点のばす計算。`;
+ $('#naiOut').innerHTML=`<div class="res"><div><b>${nn.toFixed(0)}</b><span>内申点（450点満点）</span></div><div><b>${tot.toFixed(0)}</b><span>総合点・通常枠（900点満点／タイプⅠ）</span></div><div><b>${tk.toFixed(0)}</b><span>参考：特色枠の点（900点満点）</span></div></div><p>${msg}</p><p class="mini">${na<9||nb<9?`入力した評定は中1が${na}/9教科、中2が${nb}/9教科。未入力ぶんは、入力した教科の平均（ゼロのときは3.0）で補って計算しています。`:''}通常枠＝学力検査×1.4＋内申点×0.6。特色枠は上位10%だけが先に合格するので、点数は参考です。</p>`;
+}
+let fb=false;
+function renderDg(){
+ $('#dgTabs').innerHTML=SJL.map(s=>`<button class="btn sm" data-dg="${s}" aria-pressed="${S.dg===s}">${SJN[s]}${S.diag[s]&&S.diag[s].done?' ✓':''}</button>`).join('');
+ const s=S.dg,list=DIAG[s],n=list.length,r=S.diag[s]||(S.diag[s]={ans:[],sc:0});
+ if(r.done&&!fb){const L=lvl(r.sc,n);$('#quizBox').innerHTML=`<div class="res"><div><b>${r.sc}/${n}</b><span>${SJN[s]}の得点</span></div><div><b>${L}</b><span>${ADV[L].s}</span></div></div><p>${ADV[L].t}</p><button class="btn" data-act="dgAgain">もう一度やる</button>`;return}
+ const qi=fb?r.ans.length-1:r.ans.length,q=list[qi],ch=fb?r.ans[qi]:-1;
+ $('#quizBox').innerHTML=`<p class="mini">${SJN[s]}　${qi+1}/${n}　<span class="chip">${q.l}</span></p><p style="white-space:pre-wrap"><b>${esc(q.q)}</b></p>`+q.o.map((o,j)=>`<button class="opt${fb&&j===q.a?' ok':fb&&j===ch?' ng':''}" data-pick="${j}" ${fb?'disabled':''}>${'ABCD'[j]}．${esc(o)}</button>`).join('')+(fb?`<div class="exp"><b>${ch===q.a?'正解！':'おしい！'}</b>　${esc(q.e)}</div><p><button class="btn pri" data-act="dgNext">${r.ans.length>=n?'結果を見る':'つぎへ'}</button></p>`:'');
+}
+function radar(v){
+ const cx=150,cy=140,R=100,pt=(i,k)=>{const a=-Math.PI/2+i*2*Math.PI/5;return[cx+Math.cos(a)*R*k,cy+Math.sin(a)*R*k]};
+ const poly=k=>SJL.map((_,i)=>pt(i,k).map(x=>x.toFixed(1)).join(',')).join(' ');
+ const me=SJL.map((_,i)=>pt(i,Math.max(v[i],.04)).map(x=>x.toFixed(1)).join(',')).join(' ');
+ return `<svg class="radar" viewBox="0 0 300 290" role="img" aria-label="5教科の診断レーダー">${[.33,.66,1].map(k=>`<polygon points="${poly(k)}" fill="none" stroke="var(--line)"/>`).join('')}${SJL.map((_,i)=>{const p=pt(i,1);return `<line x1="${cx}" y1="${cy}" x2="${p[0].toFixed(1)}" y2="${p[1].toFixed(1)}" stroke="var(--line)"/>`}).join('')}<polygon points="${poly(5/6)}" fill="none" stroke="var(--gold)" stroke-dasharray="5 4" stroke-width="2"/><polygon points="${me}" fill="var(--sakura)" fill-opacity=".25" stroke="var(--sakura)" stroke-width="2.5"/>${SJL.map((s,i)=>{const p=pt(i,1.2);return `<text x="${p[0].toFixed(1)}" y="${(p[1]+5).toFixed(1)}" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--ink)">${SJN[s]}</text>`}).join('')}<text x="150" y="284" text-anchor="middle" font-size="11" style="fill:var(--ink2)">点線＝桜塚レベルの入口（6問中5問）</text></svg>`;
+}
+function renderDiagOut(){
+ if(!SJL.some(s=>S.diag[s]&&S.diag[s].done)){$('#diagOut').innerHTML='<p class="mini">ミニ診断を受けると、ここにレーダーチャートと「最初にやること」が出ます。</p>';return}
+ const v=SJL.map(s=>S.diag[s]&&S.diag[s].done?S.diag[s].sc/DIAG[s].length:0);
+ $('#diagOut').innerHTML=radar(v)+`<div class="tw"><table><tr><th>教科</th><th>得点</th><th>レベル</th><th>最初にやること</th></tr>${SJL.map(s=>{const r=S.diag[s];if(!r||!r.done)return `<tr><th>${SJN[s]}</th><td colspan="3" class="mini">未受験</td></tr>`;const L=lvl(r.sc,DIAG[s].length);return `<tr><th>${SJN[s]}</th><td>${r.sc}/${DIAG[s].length}</td><td><span class="chip ${L==='A'?'ok':L==='B'?'':'w'}">${L}</span>${ADV[L].s}</td><td>${ADV[L].t}</td></tr>`}).join('')}</table></div><p class="mini">A＝桜塚レベルの入口／B＝標準の力／C＝基礎からやり直し。6問のミニ診断なので、目安として使ってください。</p>`;
+}
+
+/* ---------- 週報・バックアップ ---------- */
+function reportText(){
+ const mon=monday(today()),days=[...Array(7)].map((_,i)=>addDays(mon,i));let q=0,ok=0;const min={};
+ days.forEach(d=>{const r=S.days[d];if(r){q+=r.q.filter(Boolean).length;ok+=r.ok?1:0;for(const k in r.min)min[k]=(min[k]||0)+r.min[k]}});
+ const tot=Object.values(min).reduce((a,b)=>a+b,0),dead=S.mist.filter(m=>m.dead&&m.dd&&m.dd>=mon).length,w=S.wk[mon],m=ROADMAP.find(x=>x.k===curMonth()),st=mStat(m),L=lvOf(S.xp);
+ return `【さくらクエスト 週報】${S.nick||'（呼び名なし）'}\n期間：${mon}〜${days[6]}\nクエスト：${q}/28（2つ以上クリアした日：${ok}/7日）\n連続記録：${curStreak()}日\n学習時間：${tot}分（${Object.keys(min).map(k=>SJN[k]+min[k]+'分').join('、')||'記録なし'}）\n週ボス：${w?w.sc+'/10問':'まだ'}\nミス退治：${dead}体\n今月のマイルストーン：${st.d}/${st.n}\nレベル：Lv.${L+1}「${LV[L][1]}」（${S.xp}XP）\nひとこと：`;
+}
+function initInputs(){
+ $('#setNick').value=S.nick;$('#setExam').value=S.exam;$('#setTheme').value=S.theme;
+ $$('[data-memo]').forEach(i=>i.value=S.memo[i.dataset.memo]||'');
+}
+
+/* ---------- 画面の切りかえ ---------- */
+function refresh(){renderTop();renderHome();renderPlan();renderRewards()}
+function show(id){
+ if(!$('#t-'+id))id='home';
+ S.tab=id;$$('.tab').forEach(s=>s.hidden=s.id!=='t-'+id);
+ $$('#nav button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===id)));
+ if(id==='subj')renderSubj();
+ refresh();scrollTo(0,0);save();
+}
+
+/* ---------- アクション ---------- */
+const ACT={
+ tmGo(){
+  if(tm){tm=null;clearInterval(tmI);tmRender();return}
+  const len=+$('#tmLen').value;tm={end:Date.now()+len*60000,len,sub:$('#tmSub').value};
+  try{AC=AC||new(window.AudioContext||window.webkitAudioContext)()}catch(e){}
+  try{navigator.wakeLock&&navigator.wakeLock.request('screen').then(w=>{if(tm)tm.wl=w;else w.release()}).catch(()=>{})}catch(e){}
+  clearInterval(tmI);tmI=setInterval(tmRender,500);tmRender();
+ },
+ mlAdd(){const m=Math.max(1,Math.min(600,+$('#mlMin').value||0));logMin($('#mlSub').value,m);toast(SJN[$('#mlSub').value]+' '+m+'分を記録した');refresh()},
+ msAdd(){S.mist.push({id:Date.now(),s:$('#msSub').value,k:$('#msKind').value,m:$('#msMemo').value.trim(),d:today(),st:0,nx:addDays(today(),1)});$('#msMemo').value='';addXP(5,'ミスを登録');refresh()},
+ mWin(id){const m=S.mist.find(x=>String(x.id)===id);if(!m)return;m.st++;if(m.st>=INTV.length){m.dead=1;m.dd=today();addXP(15,'ミスをたおした！');boom()}else{m.nx=addDays(today(),INTV[m.st]);addXP(5,'再戦に勝利')}save();refresh()},
+ mLose(id){const m=S.mist.find(x=>String(x.id)===id);if(!m)return;m.st=0;m.nx=addDays(today(),1);toast('だいじょうぶ。明日もう一度。');save();refresh()},
+ wkSave(){const k=monday(today()),sc=+$('#wkSc').value,aw=sc>=8?80:30,prev=S.wk[k]?S.wk[k].x:0;S.wk[k]={sc,x:Math.max(prev,aw)};if(aw>prev){addXP(aw-prev,sc>=8?'週ボスクリア！':'週ボスに挑戦');if(sc>=8)boom()}else toast('記録を更新した');save();renderWk()},
+ async cpAg(i){const a=AGENTS[+i],ok=await copyText(COMMON+'\n\n'+a.body);$('#cpm'+i).textContent=ok?'コピーした！ Claudeのプロジェクトの指示に貼ろう':'コピーできなかった。「設定の中身を見る」から長押しでコピーしてね'},
+ shBuy(i){const s=S.shop[+i];if(!s||S.coin<s.c)return;S.coin-=s.c;save();toast('交換した：'+s.n+'（保護者に見せよう）');refresh()},
+ shDel(i){S.shop.splice(+i,1);save();renderRewards()},
+ shAdd(){const n=$('#shN').value.trim(),c=Math.max(10,+$('#shC').value||100);if(!n)return;S.shop.push({n,c});$('#shN').value='';save();renderRewards()},
+ gcDel(i){S.gacha.splice(+i,1);save();renderRewards()},
+ gcAdd(){const n=$('#gcN').value.trim();if(!n)return;S.gacha.push(n);$('#gcN').value='';save();renderRewards()},
+ gacha(){
+  if(gcBusy)return;if(S.coin<150){toast('コインが足りない（150コイン）');return}if(!S.gacha.length){toast('景品を追加してね');return}
+  gcBusy=true;S.coin-=150;const g=S.gacha[Math.random()*S.gacha.length|0],el=$('#gcOut');let n=0;
+  const iv=setInterval(()=>{el.textContent=S.gacha[Math.random()*S.gacha.length|0];if(++n>=10){clearInterval(iv);el.textContent='『'+g+'』！';boom();gcBusy=false;save();refresh()}},90);
+ },
+ chGot(k){S.got[k]=!S.got[k];save();renderRewards()},
+ chEdit(k){editK=k;renderRewards();const i=$('#chIn');if(i)i.focus()},
+ chSave(k){const v=$('#chIn').value.trim();if(v)S.mrw[k]=v;else delete S.mrw[k];editK='';save();refresh()},
+ dgNext(){fb=false;renderDg()},
+ dgAgain(){S.diag[S.dg]={ans:[],sc:0,paid:1};fb=false;save();renderDg();renderDiagOut()},
+ async report(){const t=reportText();$('#rpt').value=t;const ok=await copyText(t);toast(ok?'週報をコピーした':'下の文を長押しでコピーしてね')},
+ bkMake(){$('#bk').value=btoa(unescape(encodeURIComponent(JSON.stringify(S))))},
+ async bkCopy(){if(!$('#bk').value)ACT.bkMake();const ok=await copyText($('#bk').value);toast(ok?'バックアップをコピーした。メモアプリなどに保存してね':'長押しでコピーしてね')},
+ bkLoad(){try{const o=JSON.parse(decodeURIComponent(escape(atob($('#bk').value.trim()))));if(!o||typeof o.xp!=='number')throw 0;S=norm(o);save();applyTheme();initInputs();renderNai();renderDg();renderDiagOut();show(S.tab);toast('復元した')}catch(e){toast('復元できなかった。文字列をもう一度たしかめてね')}},
+ reset(){
+  const b=$('#rstBtn');
+  if(b.dataset.armed){S=fresh();save();applyTheme();initInputs();renderNai();renderDg();renderDiagOut();show('home');b.textContent='すべてリセット';delete b.dataset.armed;toast('リセットした');return}
+  b.dataset.armed='1';b.textContent='本当に消す？ もう一度タップ';setTimeout(()=>{delete b.dataset.armed;b.textContent='すべてリセット'},4000);
+ }
+};
+document.addEventListener('click',e=>{
+ const t=e.target.closest('[data-tab],[data-go],[data-q],[data-g],[data-sj],[data-dg],[data-pick],[data-act]');if(!t)return;
+ const d=t.dataset;
+ if(d.act){e.preventDefault();ACT[d.act]&&ACT[d.act](d.a,t)}
+ else if(d.tab||d.go)show(d.tab||d.go);
+ else if(d.q!=null)toggleQ(+d.q);
+ else if(d.g){const p=d.g.split('|');toggleGoal(p[0],+p[1])}
+ else if(d.sj){S.sj=d.sj;save();renderSubj()}
+ else if(d.dg){S.dg=d.dg;fb=false;save();renderDg()}
+ else if(d.pick!=null){const r=S.diag[S.dg],list=DIAG[S.dg];if(fb||r.done)return;const qi=r.ans.length;r.ans.push(+d.pick);if(+d.pick===list[qi].a)r.sc++;fb=true;
+  if(r.ans.length>=list.length){r.done=1;r.at=today();if(!r.paid){r.paid=1;addXP(10,SJN[S.dg]+'の診断')}}
+  checkBadges();save();renderDg();renderDiagOut()}
+});
+document.addEventListener('change',e=>{
+ const el=e.target;
+ if(el.dataset.nai){const p=el.dataset.nai.split('|');if(el.value)S.nai[p[0]][p[1]]=+el.value;else delete S.nai[p[0]][p[1]];S.nai.set=1;checkBadges();save();naiOut()}
+ else if(el.id==='setExam'&&el.value){S.exam=el.value;save();refresh()}
+ else if(el.id==='setTheme'){S.theme=el.value;applyTheme();save()}
+ else if(el.id==='tmLen')tmRender();
+});
+document.addEventListener('input',e=>{
+ const el=e.target;
+ if(el.id==='naiT3'){S.nai.t3=+el.value;S.nai.set=1;save();naiOut()}
+ else if(el.id==='naiGk'){S.nai.gk=+el.value;S.nai.set=1;save();naiOut()}
+ else if(el.id==='setNick'){S.nick=el.value.slice(0,12);save();renderHome()}
+ else if(el.dataset.memo!=null){S.memo[+el.dataset.memo]=el.value;save()}
+});
+$('#months').addEventListener('toggle',e=>{const k=e.target.dataset&&e.target.dataset.k;if(k)e.target.open?openM.add(k):openM.delete(k)},true);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){if(tm)tmRender();refresh()}});
+
+/* ---------- 初期化 ---------- */
+(function init(){
+ applyTheme();
+ const opts=SJL.map(s=>`<option value="${s}">${SJN[s]}</option>`).join('');
+ ['#tmSub','#mlSub','#msSub'].forEach(id=>$(id).innerHTML=opts);
+ $('#wkTable').innerHTML='<tr><th>曜日</th><th>今日の教科</th><th>やり方</th></tr>'+WK.slice(1).concat([WK[0]]).map(w=>`<tr><th>${w[0]}</th><td>${w[1]}</td><td>${w[2]}</td></tr>`).join('');
+ renderAgents();renderNai();renderDg();renderDiagOut();initInputs();tmRender();
+ if(!S.xp&&!Object.keys(S.days).length)$('#howto').open=true;
+ show(S.tab||'home');
+ try{const c=document.createElement('canvas');c.width=c.height=180;const x=c.getContext('2d');x.fillStyle='#c8325f';x.fillRect(0,0,180,180);x.fillStyle='#fde9ef';[[90,46],[134,78],[117,130],[63,130],[46,78]].forEach(p=>{x.beginPath();x.arc(p[0],p[1],28,0,7);x.fill()});x.fillStyle='#c8325f';x.beginPath();x.arc(90,90,15,0,7);x.fill();const l=document.createElement('link');l.rel='apple-touch-icon';l.href=c.toDataURL('image/png');document.head.appendChild(l)}catch(e){}
+})();
+})();
+</script>
