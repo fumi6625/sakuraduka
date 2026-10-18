@@ -885,7 +885,7 @@ details.later .st:first-child{margin-top:6px}
   <div class="tabs" id="sjTabs"></div></div>
  <div id="sjBody"></div>
  <div class="card"><h2>1週間のリズム</h2><div class="tw"><table id="wkTable"></table></div>
-  <p class="mini">毎日の共通メニュー：暗記10分／数学20分／今日の教科／ふりかえり＋ミス退治。</p></div>
+  <p class="mini">毎日の共通メニュー：暗記バトル（ふくしゅう中心。しっかり期で約5〜8分）／数学ドリル（1日おきにしっかり）／今日の教科／ミス退治／ふりかえり。1日の目安は、しっかり期で約25〜33分（ホームに「のこり約○分」が出ます）。</p></div>
 </div></section>
 
 <section class="pg" id="pg-ai" hidden><div class="in"><div class="bar"><button class="bt sm" data-act="back">← もどる</button><h1>AI先生チーム</h1></div>
@@ -929,10 +929,10 @@ details.later .st:first-child{margin-top:6px}
    <div><label>チームカラー</label><div class="seg" id="setTeam"></div></div>
    <div><label for="setSound">効果音・読み上げ</label><button class="sw" id="setSound" data-act="sound" aria-pressed="true" aria-label="効果音と読み上げ"></button></div></div>
   <h4>勉強の量（段階）</h4>
-  <p class="mini">「おまかせ」は、はじめの2週間は短く（約3〜10分）、そのあと少しずつ増えます。おやすみが多い週は自動で1つ戻ります。</p>
+  <p class="mini">「おまかせ」は、はじめの2週間は短く（約3〜13分）、そのあと少しずつ増えます。おやすみが多い週は自動で1つ戻り、7日以上あいたあとは短いところから、1日ごとに戻していきます。</p>
   <div class="seg" id="setTier"></div>
   <h4>保護者OK（宿題のチェック）</h4>
-  <p class="mini">オンにすると、ホームの「宿題・提出物」を終えるときに、4けたの暗証番号が必要になります（自己申告でごまかせないように）。暗証番号は子どもに教えない。</p>
+  <p class="mini">オンにすると、ホームの「宿題・提出物」を終えるとき、月の目標をつけるとき、「ミニの日」にするとき、段階を変えるとき、リセット・復元・保護者OKをオフにするときに、4けたの暗証番号が必要になります（自己申告でごまかせないように）。暗証番号は子どもに教えない。</p>
   <div class="row"><div><label for="setPin">暗証番号（4けた）</label><input id="setPin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" style="width:130px"></div><div><label for="setPinOn">保護者OK</label><button class="sw" id="setPinOn" data-act="pinToggle" aria-pressed="false" aria-label="保護者OK"></button></div></div>
   <h4>バックアップ</h4>
   <textarea id="bk" aria-label="バックアップ" placeholder="「バックアップを作る」を押すと、ここに文字列が出ます。復元するときはここに貼って「復元」。"></textarea>
