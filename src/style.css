@@ -768,3 +768,5 @@ details.later .st:first-child{margin-top:6px}
 
 /* ラウンドクリアの札は body 直下に出すので、画面に固定する（しぶきより手前） */
 .rbn{position:fixed;z-index:120}
+/* ホームの上の「のこり約○分」（進み具合の横に、ひかえめに） */
+.hero .gp .left-min{white-space:nowrap;font-weight:800;color:#fff;opacity:.9;text-shadow:1px 1px 0 #000}

@@ -242,7 +242,7 @@ function buildRoute(date,tier){
  const add=(id,b)=>{b.items=uniq(b.items);b.items.forEach(i=>ex.add(i.id));out.push(Object.assign({id,kind:'session',min:estMin(b.items),brk:breakdown(b.items)},b))};
  add('mem',bMem(date,tier,cur,ex));
  add('math',bMath(date,tier,cur,ex));
- if(tier>=2||wd===0)add('sub',bSub(date,wd,cur,ex,tier));
+ if(tier>=2)add('sub',bSub(date,wd,cur,ex,tier));   // 今日の教科（週ボスをふくむ）は、ならし期が終わってから
  if(tier>=2)add('mis',bMis(date,tier,ex));
  const dg=tier<=2?diagNext(date):null;
  if(dg)out.push({id:'diag',t:'ミニ診断：'+SJN[dg],kind:'check',subj:dg,min:3,items:[],desc:'いまの実力を知る。6問・約3分。点数が低くても大丈夫。（+10XP）'});

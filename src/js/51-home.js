@@ -85,7 +85,7 @@ function renderHome(){
  <div class="hero cmp" data-s="${W.subj}">
   <div class="sp1">${splatSVG(5,'var(--team)',{stroke:'#000',sw:4})}</div>
   <div class="t1"><span class="lb sm">きょうのミッション</span><span class="date">${dateJa(date)}</span><span class="chp t">${T.name}モード</span></div>
-  <div class="gp"><div class="tank"><i style="--w:${Math.round(done.length/real.length*100)}%"></i></div><b>${done.length}/${real.length}</b></div>
+  <div class="gp"><div class="tank"><i style="--w:${Math.round(done.length/real.length*100)}%"></i></div><b>${done.length}/${real.length}</b>${appMin?`<span class="mini left-min">のこり約${appMin}分</span>`:''}</div>
  </div>
  ${next?nowCard(next,tier,okDay,rec):clearedCard()}
  <div class="route" aria-label="きょうの流れ">${route.map(s=>`<button class="nd ${s.auto?'auto':s.done?'done':s===next?'now':''}" data-act="stageGo" data-a="${s.id}"><span class="dot">${s.done&&!s.auto?ico('check'):ico(stageIcon(s))}</span>${esc(stageShort(s,wd))}</button>`).join('')}</div>

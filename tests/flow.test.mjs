@@ -113,10 +113,10 @@ test('英単語のつづり：同じ意味・同じ品詞のことばは、ど�
   }
 });
 
-test('長文：国語・英語とも30題あり、どの問いも4択で、正解が選択肢に1つだけ入る', () => {
+test('長文：国語・英語とも40題あり、どの問いも4択で、正解が選択肢に1つだけ入る', () => {
   const C = loadCore(NAMES);
-  assert.ok(C.PASS.J.length >= 30, `国語の長文 ${C.PASS.J.length}`);
-  assert.ok(C.PASS.E.length >= 30, `英語の長文 ${C.PASS.E.length}`);
+  assert.ok(C.PASS.J.length >= 40, `国語の長文 ${C.PASS.J.length}`);
+  assert.ok(C.PASS.E.length >= 40, `英語の長文 ${C.PASS.E.length}`);
   for (const arr of [C.PASS.J, C.PASS.E]) {
     assert.equal(new Set(arr.map((p) => p.id)).size, arr.length, '長文のIDが重ならない');
     for (const p of arr) {
