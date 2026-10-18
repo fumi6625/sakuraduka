@@ -9,7 +9,7 @@
 - `src/js/*.js`：画面の動き。番号順に連結して1つの `<script>` になる。**01〜39は画面に触れないコア**（状態・教材・間隔反復・自動生成・毎日のルート・進み具合）、50〜は画面（ui/home/player/drill/map/reward/pages/main）。
 - `.claude/agents/*.md`：AI先生9人（`node scripts/build-agents.mjs` で `src/data/90-agents.js` から生成。直すのは90-agents.jsだけ）と、評価係 `ui-judge`（見た目）・`flow-judge`（学習の流れ）。
 - `scripts/`：`build.mjs`（組み立て）、`build-agents.mjs`、`validate-data.mjs`（教材の形式・重複・選択肢のチェック）、`simulate.mjs`（毎日のルートを何日分もシミュレーション）、`screens.mjs`（スクリーンショット一式）、`headless.mjs`（ブラウザなしでコアを読み込む）。
-- `tests/`：`node --test tests/*.test.mjs` で、自動生成の問題（38種）、ルート・段階・合格ライン・ツッコミバトル、教材の選択肢の質（正解をふくむ言葉を選択肢に使わない）をテストする。
+- `tests/`：`node --test tests/*.test.mjs` で、自動生成の問題（38種）、ルート・段階・合格ライン・ツッコミバトル、教材の選択肢の質（正解をふくむ言葉を選択肢に使わない）、毎日の流れ（同じ日に同じ問題が出ない／まちがえた問題が翌日に戻る／ミニ診断／つづりの同義語／長文30題ずつ／自動で付く目標）をテストする。
 
 ## 対象の子（設計の前提。ここを変えるときは保護者に確認）
 - ふだんあまり勉強せず、集中が続かない。人には厳しく、自分には甘い。
