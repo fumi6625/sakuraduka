@@ -169,7 +169,7 @@ test('毎日やる子：理科・社会の一問一答が、1年ちょっとで�
   simulate(C, 400, 0.9);
   assert.ok(seenBy(C, 'SQ') >= 0.8 * C.BK.SQ.items.length, `理科 ${seenBy(C, 'SQ')}/${C.BK.SQ.items.length}`);
   assert.ok(seenBy(C, 'OQ') >= 0.6 * C.BK.OQ.items.length, `社会 ${seenBy(C, 'OQ')}/${C.BK.OQ.items.length}`);
-  assert.ok(seenBy(C, 'JG') >= 0.4 * C.BK.JG.items.length, `国語の文法・古文 ${seenBy(C, 'JG')}/${C.BK.JG.items.length}`);
+  assert.ok(seenBy(C, 'JG') >= 0.3 * C.BK.JG.items.length, `国語の文法・古文 ${seenBy(C, 'JG')}/${C.BK.JG.items.length}`);
 });
 
 test('週3日（月水金）しかやらない子でも、国語・社会・理科・英語のどれにもふれる', () => {

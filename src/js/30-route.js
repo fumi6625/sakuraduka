@@ -138,7 +138,7 @@ function bMem(date,tier,cur,ex){
  const young=dueItems(it=>REVB(it)&&!ex.has(it.id)&&!old.includes(it),slots-old.length);
  const due=[...young,...old];
  const newN=Math.max(minNew,Math.round((total-due.length)*th));
- const PAT=tier>=2?['EW','SQ','EW','OQ','EW','SQ','EW','OQ','JK','EW']:['EW','JK','EW','EW','JK'];   // 新しい問題の配分（英単語5：理科2：社会2：漢字1）。日ごとに先頭をずらして、まんべんなく回す
+ const PAT=tier>=2?['EW','SQ','EW','OQ','JK','SQ','EW','OQ','JK','EW']:['EW','JK','EW','EW','JK'];   // 新しい問題の配分（英単語4：理科2：社会2：漢字2）。日ごとに先頭をずらして、まんべんなく回す
  const cnt={EW:0,JK:0,SQ:0,OQ:0};for(let j=0;j<newN;j++)cnt[PAT[(dn(date)*3+j)%PAT.length]]++;
  const sx=exSet(ex,due);
  const ews=newItems('EW',cnt.EW,{pred:ewOpen,ex:sx}),jks=newItems('JK',cnt.JK,{prefs:cur.jk,ex:sx});
@@ -161,8 +161,8 @@ function bMath(date,tier,cur,ex){
  const want=nWarm+nMain+nApp;
  if(items.length<want)items.push(...genMix(tier===1?EASY_M:[...cur.rv,...cur.m],want-items.length,date,'fill',ex));   // ひとつのテーマで、ちがう問題を作りきれないときは、ほかのテーマで補う
  const mq=full&&tier>=2?newItems('MQ',1,{ex}):[],ms=full&&tier>=3?newItems('MS',1,{ex:exSet(ex,mq)}):[];
- const core=items.slice(0,nWarm+nMain),tail=items.slice(nWarm+nMain);
- return{t:'数学ドリル',subj:'数',items:[...core,...mq,...ms,...tail,...mis],desc:jn(['テーマ「'+GEN[main].name+'」'+nMain+'問（Lv.'+genLv(main)+'）','ウォームアップ'+nWarm+'問',nApp&&'応用'+nApp+'問',(mq.length+ms.length+mis.length)&&'考え方・再戦'+(mq.length+ms.length+mis.length)+'問'])};
+ const warm=items.slice(0,nWarm),core=items.slice(nWarm,nWarm+nMain),tail=items.slice(nWarm+nMain);
+ return{t:'数学ドリル',subj:'数',items:[...warm,...mq,...ms,...core,...tail,...mis],desc:jn(['テーマ「'+GEN[main].name+'」'+nMain+'問（Lv.'+genLv(main)+'）','ウォームアップ'+nWarm+'問',nApp&&'応用'+nApp+'問',(mq.length+ms.length+mis.length)&&'考え方・再戦'+(mq.length+ms.length+mis.length)+'問'])};
 }
 function bMis(date,tier,ex){
  const n=Math.max(4,Math.round(8*kOf(date,tier)));
@@ -197,7 +197,7 @@ function bSub(date,wd0,cur,ex,tier){
   const w=newItems('JW',nn('JW',5,3),{ex}),sx=exSet(ex,w),dw=dueItems(it=>['JW','JG','JI','JS','JC'].includes(it.bank)&&!sx.has(it.id),6);
   const gg=newItems('JG',nn('JG',7,4),{ex:sx}),ji=newItems('JI',nn('JI',4,2),{ex:exSet(sx,gg)}),js=newItems('JS',nn('JS',3),{ex:exSet(sx,[...gg,...ji])}),jr=nextPassage('JR',sx,date);
   const jc=tier>=3?newItems('JC',1,{ex:exSet(sx,[...gg,...ji,...js])}):[],jk=newItems('JK',nn('JK',3,2),{prefs:cur.jk,ex:exSet(sx,[...gg,...ji,...js])});
-  items=[...dw,...w,...jk,...gg,...ji,...js,...jr,...jc];p=[(dw.length+w.length+jk.length)&&'漢字・語句'+(dw.length+w.length+jk.length)+'問',gg.length&&'文法・古文'+gg.length,(ji.length+js.length)&&'慣用句・類義対義'+(ji.length+js.length),jr.length&&'読解1題',jc.length&&'作文1']}
+  items=[...dw,...gg,...ji,...js,...w,...jk,...jr,...jc];p=[(dw.length+w.length+jk.length)&&'漢字・語句'+(dw.length+w.length+jk.length)+'問',gg.length&&'文法・古文'+gg.length,(ji.length+js.length)&&'慣用句・類義対義'+(ji.length+js.length),jr.length&&'読解1題',jc.length&&'作文1']}
  else if(wd===3){
   const q=newItems('SQ',nn('SQ',8,5),{prefs:cur.sc,ex}),sx=exSet(ex,q),dq=dueItems(it=>it.bank==='SQ'&&!sx.has(it.id),6),calc=genMix(cur.s,4,date,'sci',ex);
   items=[...dq,...q,...calc];p=[(dq.length+q.length)&&'一問一答'+(dq.length+q.length)+'問',calc.length&&'計算'+calc.length+'問']}
@@ -219,8 +219,8 @@ const XPST={hw:10,mem:20,math:30,sub:30,mis:15,ref:5,diag:0};
 const STAGE_IC={hw:'book',mem:'brain',math:'calc',sub:'star',mis:'splat',ref:'pen',diag:'chart'};
 /* ミニ診断：3日目から、受けていない教科を1日1教科ずつ（6問・約3分）。いまの実力を知るため */
 const diagNext=date=>doneDays(date)>=2?SJL.find(s=>!(S.diag[s]&&S.diag[s].done)):null;
-/* 1日の上限（見積りの分）。ならし10／ふつう24／しっかり36。超えた日は、暗記バトルは残して、数学→今日の教科→ミス退治の後ろの問題から外す（長文は外さない） */
-const CAPMIN={1:10,2:24,3:36};
+/* 1日の上限（見積りの分）。ならし10／ふつう22／しっかり33。超えた日は、暗記バトルは残して、数学→今日の教科→ミス退治の後ろの問題から外す（長文は外さない） */
+const CAPMIN={1:10,2:22,3:33};
 function capDay(out,tier){
  const cap=CAPMIN[tier]||36,sess=out.filter(s=>s.kind==='session'),fixed=out.filter(s=>s.kind!=='session').reduce((t,s)=>t+(s.min||0),0);
  const total=()=>sess.reduce((t,s)=>t+s.min,0)+fixed;
