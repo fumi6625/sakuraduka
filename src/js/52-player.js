@@ -62,7 +62,7 @@ function choiceCols(V){const m=Math.max(...V.choices.map(c=>String(c.t).length))
 function renderQ(){
  plRoot().classList.remove('fbon');
  const {V,cur:e}=PL,it=e.it,isNew=!e.rep&&!S.srs[it.id]&&it.k!=='gen'&&it.k!=='mist';
- const ql=String(V.q).length,long=ql>70?' long':(ql<=8&&(V.kind==='mc'||V.kind==='tf'||V.kind==='self')||ql<=12&&V.kind==='tf')?' short':'';
+ const ql=String(V.q).length,long=ql>70?' long':(ql<=8&&(V.kind==='mc'||V.kind==='tf'||V.kind==='self'||V.kind==='typ')||ql<=12&&V.kind==='tf')?' short':'';
  let ans='';
  const useKb=V.kind==='typ'&&!V.hira&&V.len>0&&V.accept.every(a=>/^[A-Za-z]+$/.test(a));
  if(V.kind==='mc'){
@@ -91,7 +91,7 @@ function renderQ(){
   <div class="hint">${V.len?'<button class="bt sm gh" data-act="plHint">ヒント</button> ':''}<span id="hintT"></span></div>
   <div class="row act"><button class="bt sm gh" data-act="plSkip">わからない</button></div>`;
  }else if(V.kind==='order'){
-  ans=`<div class="slots" id="slots"></div><div class="bank" id="bank"></div>
+  ans=`<div class="slots" id="slots" style="--rows:${Math.max(2,Math.ceil(V.tokens.length/3))}"></div><div class="bank" id="bank"></div>
   <div class="row act"><button class="bt sm gh" data-act="plReset">やりなおし</button><button class="bt sm gh" data-act="plSkip">わからない</button><button class="bt pri xl" id="ordGo" data-act="plOrder" disabled>こたえる</button></div>`;
  }else{
   ans=`<div class="selfans" id="selfAns" hidden></div><div class="row act" id="selfRow"><button class="bt cy xl" data-act="plShow">こたえを見る</button></div>`;
@@ -188,7 +188,7 @@ function plNext(){
 function roundBanner(){
  const r=plRoot(),n=PL.rn||1,left=PL.total-PL.segs.filter(x=>x).length;
  const b=document.createElement('div');b.className='rbn';b.innerHTML=`<span>ROUND ${n}</span><b>CLEAR!</b><small>あと${left}問</small>`;
- r.appendChild(b);Snd.combo(6);FX.burst(innerWidth/2,innerHeight*.35,18,9);
+ document.body.appendChild(b);Snd.combo(6);FX.burst(innerWidth*.2,innerHeight*.3,6,8);FX.burst(innerWidth*.8,innerHeight*.3,6,8);
  setTimeout(()=>{if(b.parentNode)b.parentNode.removeChild(b)},1300);
 }
 

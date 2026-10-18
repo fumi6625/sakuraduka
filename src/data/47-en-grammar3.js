@@ -82,7 +82,7 @@ He is ( ) young to drive a car.|too|so|very|enough|too ～ to ... は「～す�
 She is old ( ) to travel alone.|enough|too|so|very|形容詞 ＋ enough to ～「～するのに十分…」。
 It is easy ( ) me to swim.|for|of|to|at|It is ～ for 人 to ... は「人にとって…は～だ」。
 It is kind ( ) you to help me.|of|for|to|at|人の性格を表す形容詞のときは of。
-I wish I ( ) a bird.|were|am|was|be|実現しない願いは仮定法。I wish I were ～。
+I wish I ( ) a bird.|were|am|will be|have been|実現しない願いは仮定法。I wish I were ～。
 If I ( ) rich, I would buy a big house.|were|am|will be|have been|仮定法過去。If I were ～, I would ...
 What a beautiful flower ( )!|it is|is it|it was|was it|感嘆文は What ＋ a ＋ 形容詞 ＋ 名詞 ＋ 主語 ＋ 動詞！
 How fast ( ) runs!|he|him|his|himself|How ＋ 副詞 ＋ 主語 ＋ 動詞！
@@ -97,8 +97,8 @@ She looks ( ) a student.|like|as|for|at|look like ～「～のように見える
 This is the first time I ( ) visited Kyoto.|have|did|am|was|It's the first time ～ は現在完了を使う。
 Please keep the window ( ).|closed|close|closing|closes|keep ＋ 目的語 ＋ 過去分詞「～のままにしておく」。
 I want this letter ( ) by tomorrow.|sent|send|sending|sends|want ＋ 物 ＋ 過去分詞「～してもらいたい」。
-He asked me what time it ( ).|was|is|will be|has been|時制の一致で過去形にする。
-She said that she ( ) busy.|was|is|will|has been|主節が過去なので that 節も過去（時制の一致）。
+He asked me what time it ( ).|was|will be|has been|be|時制の一致で過去形にする。
+She said that she ( ) busy.|was|will|has been|be|主節が過去なので that 節も過去（時制の一致）。
 Mt. Fuji is higher than any other mountain ( ) Japan.|in|of|than|among|「日本のほかのどの山よりも」。範囲は in。
 I'm looking for a pen ( ) well.|which writes|which write|who writes|writes|先行詞 a pen は単数。which writes。
 `;

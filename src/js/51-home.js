@@ -1,14 +1,14 @@
 /* ===== ホーム：「いま やること」が1つだけ大きく出る画面 =====
    習慣づくりの途中の子向け。
    → 迷わせない（次の1つだけを大きく）／短く区切る／すぐ勝てる／自己申告にたよらない */
-const STAGE_SHORT={hw:'宿題',mem:'暗記',math:'数学',mis:'ミス退治',ref:'ふりかえり'};
+const STAGE_SHORT={hw:'宿題',mem:'暗記',math:'数学',mis:'ミス退治',ref:'ふりかえり',diag:'診断'};
 const stageShort=(s,wd)=>s.id==='sub'?WDP[wd].short:STAGE_SHORT[s.id];
 const SUB_IC={英:'eng',国:'jp',理:'sci',社:'soc',総:'bolt'};
 const stageIcon=s=>s.id==='sub'?(s.boss?'trophy':SUB_IC[s.subj]||'star'):STAGE_IC[s.id];
 const starsOf=(ok,n)=>{if(!n)return'';const a=ok/n;return a>=.95?'★★★':a>=.8?'★★☆':'★☆☆'};
 const rankOfAcc=a=>a>=.95?'S':a>=.85?'A':a>=.7?'B':'C';
 const GREET=['今日の一歩が、500日後の合格につながる。','続けている人が、いちばん強い。','昨日の自分より、1ミリ前へ。','まちがいは伸びしろ。','3分でも、立派な前進。','ノートを開いた時点で、もう勝ってる。','焦らなくていい。止まらなければいい。','わからないを見つけた日は、大成長の日。','小さな「できた」を集めよう。','桜は、冬のあいだに力をためて咲く。','未来の自分が、今日の自分を見ている。','やるのは、目の前の1問だけ。'];
-const stageMeta=s=>s.kind==='session'?`<span class="chp">約${Math.max(1,s.min)}分</span><span class="chp">${s.items.length}問</span><span class="chp xp">+${s.xp}XP</span>`:`<span class="chp xp">+${s.xp}XP</span>`;
+const stageMeta=s=>s.kind==='session'?`<span class="chp">約${Math.max(1,s.min)}分</span><span class="chp">${s.items.length}問</span><span class="chp xp">+${s.xp}XP</span>`:(s.xp?`<span class="chp xp">+${s.xp}XP</span>`:`<span class="chp">約${s.min||3}分</span>`);
 const goBtn=s=>s.id==='hw'?'チェックする':s.id==='ref'?'ふりかえる':'スタート！';
 
 function stageCard(s){
@@ -40,11 +40,11 @@ function monthMini(){
 /* いまの段階の説明（ならし → ふつう → しっかり） */
 function tierNote(date,tier){
  const T=TIERS[tier],base=baseTier(date);
- if(S.light[date])return'きょうは「ミニ」でOK。短くても、やった日は ぬられる。';
+ if(S.light[date])return'きょうは「ミニ」でOK。やった日は ぬられる。';
  if(S.tier&&S.tier!=='auto')return'段階は保護者が決めています。';
- if(tier<base)return'さいきん おやすみが多かったので、量を へらしたよ。3日つづけると、もどる。';
- if(tier===1){const d=14-Math.max(0,diff(S.start||date,date));return'まずは短く。'+(d>0?'あと'+d+'日 つづけると「ふつう」に！':'つづけると「ふつう」に！')}
- if(tier===2){const d=28-Math.max(0,diff(S.start||date,date));return'すこしずつ増やす時期。'+(d>0?'あと'+d+'日で「しっかり」へ。':'')}
+ if(tier<base)return'おやすみが多かったので、量を へらしたよ。';
+ if(tier===1){const d=Math.max(0,14-doneDays(date));return d>0?'まずは短く。あと'+d+'日で「ふつう」へ。':'つづけると「ふつう」へ。'}
+ if(tier===2){const d=Math.max(0,28-doneDays(date));return d>0?'あと'+d+'日で「しっかり」へ。':'もうすぐ「しっかり」へ。'}
  return T.note;
 }
 const nowHM=()=>{const d=new Date();return pad(d.getHours())+':'+pad(d.getMinutes())};
@@ -53,7 +53,7 @@ function vowChip(okDay){
  const at=S.at||'',late=at&&nowHM()>at;
  return `<button class="vowb${late?' late':''}" data-act="vow">${ico('timer')}${late?'やくそくの時間をすぎたよ。3分だけ！':at?'やくそく '+at+' にスタート':'やくそくの時間を決める'}</button>`;
 }
-const briefDesc=(d,n=22)=>{let out='';for(const p of String(d||'').split('・')){const nx=out?out+'・'+p:p;if(nx.length>n&&out)break;out=nx}return out.length>n?out.slice(0,n-1)+'…':out};
+const briefDesc=(d,n=22)=>{let out='';for(const p of String(d||'').split('／')){const nx=out?out+'／'+p:p;if(nx.length>n&&out)break;out=nx}return out.length>n?out.slice(0,n-1)+'…':out};
 function nowCard(next,tier,okDay,rec){
  const T=TIERS[tier],isS=next.kind==='session';
  const need=tier===1?(okDay?0:1):Math.max(0,2-stageKeys(rec).length);
@@ -61,7 +61,7 @@ function nowCard(next,tier,okDay,rec){
  return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'#ffe81a',{drops:7,stroke:'#000',sw:5})}</div>
   <span class="lb">いま やること</span>
   <div class="nrow"><div class="nico">${ico(stageIcon(next))}</div><div class="ntx"><h2>${esc(next.t)}</h2><p>${esc(briefDesc(next.desc))}</p></div></div>
-  <div class="chips">${isS?`<span class="chp">約${Math.max(1,next.min)}分</span><span class="chp">${next.items.length}問</span>`:''}<span class="chp xp">+${next.xp}XP</span></div>
+  <div class="chips">${isS?`<span class="chp">約${Math.max(1,next.min)}分</span><span class="chp">${next.items.length}問</span>`:next.xp?'':`<span class="chp">約${next.min||3}分</span>`}${next.xp||isS?`<span class="chp xp">+${next.xp}XP</span>`:''}</div>
   <button class="bt pri xl w100" data-act="stageGo" data-a="${next.id}">${goBtn(next)}</button>
   <p class="goal">${goal}</p><p class="tnote">${esc(tierNote(today(),tier))}</p>${vowChip(okDay)}</div>`;
 }
@@ -78,7 +78,8 @@ function renderHome(){
  const appMin=sum(real.filter(s=>!s.done&&s.kind==='session').map(s=>s.min));
  const flow=real.map(s=>stageShort(s,wd)).join('<i> ▶ </i>');
  const tm=previewDay(addDays(date,1));
- const intro=!S.nick?`<div class="card"><h2>はじめに：呼び名を決めよう</h2><p class="mini">本名は入れない。あとから変えられます。</p><div class="row"><input id="nickIn" type="text" maxlength="12" placeholder="ニックネーム" style="flex:1;min-width:180px"><button class="bt pri" data-act="nickSet">きまり！</button></div></div>`:'';
+ const intro=!S.nick?`<div class="card"><h2>はじめに：呼び名を決めよう</h2><p class="mini">本名は入れない。あとから変えられます。</p><div class="row"><input id="nickIn" type="text" maxlength="12" placeholder="ニックネーム" style="flex:1;min-width:180px"><button class="bt" data-act="nickSet">きまり！</button></div></div>`:'';
+ const pinAsk=(S.nick&&!S.pin&&doneDays(date)>=1&&(!S.pinSkip||diff(S.pinSkip,date)>=7))?`<div class="card"><h2>おうちの人へ</h2><p class="mini">4けたの暗証番号を決めると、宿題のOKと月の目標が「自己申告」ではなくなります。</p><div class="row"><button class="bt pri" data-page="family">決める</button><button class="bt gh" data-act="pinLater">あとで</button></div></div>`:'';
  const diagTip=(!SJL.every(s=>S.diag[s]&&S.diag[s].done)&&S.tot.n<40)?`<div class="tomorrow"><span class="lb sm c">おすすめ</span><span>ミニ診断（約10分）で、いまの実力を知ろう。</span><button class="bt sm sp" data-page="diag">診断へ</button></div>`:'';
  const L=`
  <div class="hero cmp" data-s="${W.subj}">
@@ -88,9 +89,9 @@ function renderHome(){
  </div>
  ${next?nowCard(next,tier,okDay,rec):clearedCard()}
  <div class="route" aria-label="きょうの流れ">${route.map(s=>`<button class="nd ${s.auto?'auto':s.done?'done':s===next?'now':''}" data-act="stageGo" data-a="${s.id}"><span class="dot">${s.done&&!s.auto?ico('check'):ico(stageIcon(s))}</span>${esc(stageShort(s,wd))}</button>`).join('')}</div>
- ${todo.length?`<details class="fold later"><summary><span class="lb sm y">このあと</span><span class="lt">${todo.length}つ：${esc(todo.map(s=>stageShort(s,wd)).join(' → '))}</span></summary><div class="stages">${todo.map(stageCard).join('')}</div></details>`:''}
+ ${todo.length?`<details class="fold later"><summary><span class="lb sm y">このあと</span><span class="lt">${todo.length}つ</span></summary><div class="stages">${todo.map(stageCard).join('')}</div></details>`:''}
  ${done.length?`<details class="fold cleared-list"><summary>クリアしたステージ（${done.length}）</summary><div class="stages">${done.map(stageCard).join('')}</div></details>`:''}
-${intro}${diagTip}
+${intro}${diagTip}${pinAsk}
  <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。3分のドリルだけでOK）</span></div>`;
  const R=`
  <div class="card"><div class="rowh"><h2>今週の流れ</h2></div>${weekStrip(date)}
@@ -107,6 +108,7 @@ function hwSheet(){
   <div class="timer" id="hwT">25:00</div>
   <div class="seg" id="hwLen">${[15,25,40].map(m=>`<button data-act="hwLen" data-a="${m}" aria-pressed="${m===25}">${m}分</button>`).join('')}</div>
   <div class="row" style="justify-content:center"><button class="bt cy" data-act="hwGo" id="hwBtn">集中タイマー スタート</button></div>
+  <h4 style="text-align:center;margin-top:16px">おわったら</h4>
   ${pin?`<div class="pinbox"><b>おうちの人のOK</b><p class="mini" style="margin:2px 0 8px">見せて、4けたの番号を入れてもらう。</p><input id="pinIn" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="● ● ● ●" aria-label="暗証番号"></div>`:`<p class="mini" style="text-align:center">おうちの人に見せてから押そう。</p>`}
   <div class="row" style="justify-content:center;margin-top:12px"><button class="bt pri xl" data-act="hwDone">${done?'もう一度おわった':pin?'OKをもらった！':'おわった！'} +${XPST.hw}XP</button></div>`);
  hwTick(true);

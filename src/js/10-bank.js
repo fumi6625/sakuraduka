@@ -63,6 +63,9 @@ function distractQA(it,f,n=3){
 }
 const mt=s=>String(s).split(/[;；、,，／/・]/).map(x=>x.trim()).filter(Boolean);
 const shareMean=(a,b)=>{const A=mt(a);return mt(b).some(x=>A.includes(x))};
+/* つづりで答える問題：同じ品詞で、日本語の意味が重なる別の英単語（shop と store など）も正解にする */
+const SYN_EW={};
+const synOf=it=>SYN_EW[it.id]||(SYN_EW[it.id]=[it.en,...BK.EW.items.filter(x=>x.id!==it.id&&x.pos===it.pos&&shareMean(it.ja,x.ja)).map(x=>x.en)]);
 function distractEW(it,f){
  const out=[],seen=new Set([it[f]]);
  for(const pool of [EWPOS[it.pos]||[],BK.EW.items]){
@@ -101,7 +104,7 @@ function present(it){
  const b=boxOf(it);
  switch(it.k){
   case 'word':
-   if(b>=4)return{kind:'typ',q:it.ja,sub:'英語で書こう（'+POSJ[it.pos]+'）',accept:[it.en],ph:'つづり',len:it.en.length,first:it.en[0],say:it.en,exp:it.en+'　＝　'+it.ja};
+   if(b>=4)return{kind:'typ',q:it.ja,sub:'英語で書こう（'+POSJ[it.pos]+'）',accept:synOf(it),ph:'つづり',len:it.en.length,first:it.en[0],say:it.en,exp:it.en+'　＝　'+it.ja};
    if(b>=2)return{kind:'mc',q:it.ja,sub:'英語にすると？',choices:mkC(it.en,distractEW(it,'en')),say:it.en,exp:it.en+'　＝　'+it.ja};
    return{kind:'mc',q:it.en,sub:'意味は？',choices:mkC(it.ja,distractEW(it,'ja')),audio:it.en,say:it.en,exp:it.en+'　＝　'+it.ja};
   case 'verb':{

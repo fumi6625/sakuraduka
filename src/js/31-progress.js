@@ -15,7 +15,7 @@ const wkWins=()=>Object.values(S.wk).filter(w=>w.sc>=8).length;
 /* ----- 連続記録 ----- */
 const stageKeys=rec=>Object.keys(rec.stg||{});
 /* 合格ライン：ならし期は「ドリルを1つ」、ふつう以上は「ドリル1つ＋もう1つ」 */
-const dayOK=(rec,tier)=>{const k=stageKeys(rec),sess=k.some(x=>x!=='hw'&&x!=='ref');return tier===1?sess:(k.length>=2&&sess)};
+const dayOK=(rec,tier)=>{const k=stageKeys(rec).filter(x=>x!=='diag'),sess=k.some(x=>x!=='hw'&&x!=='ref');return tier===1?sess:(k.length>=2&&sess)};
 const curStreak=()=>{const t=today();if(S.last===t||S.last===addDays(t,-1))return S.streak;if(S.last===addDays(t,-2)&&S.freeze>0)return S.streak;return 0};
 const STREAK_BONUS={3:30,7:70,14:150,30:300,60:500,100:1000};
 function streakUp(){
@@ -103,6 +103,18 @@ function checkBadges(){
 }
 
 /* ----- 月のマイルストーン ----- */
+/* 記録から自動で決まる目標（自己申告にしない）。キー：月|番号 */
+const GOAL_AUTO={
+ '2026-10|1':()=>SJL.every(s=>S.diag[s]&&S.diag[s].done),
+ '2026-10|4':()=>S.best>=7,
+ '2026-11|3':()=>{const m=mistakeStats();return m.all>=10&&m.dead>=5},
+ '2027-02|3':()=>mistakeStats().dead>=30};
+const isAutoGoal=(k,i)=>!!GOAL_AUTO[gid(k,i)];
+function syncAutoGoals(){
+ const out=[];
+ for(const key in GOAL_AUTO){if(S.ms[key])continue;if(GOAL_AUTO[key]()){const [k,i]=key.split('|');out.push(toggleGoal(k,+i))}}
+ return out;
+}
 const mStat=m=>{const n=m.g.length,d=m.g.filter((_,i)=>S.ms[gid(m.k,i)]).length;return{n,d,p:n?d/n:0,clear:d>=Math.ceil(n*.8)}};
 const curMonth=()=>{const mk=today().slice(0,7);if(mk<=ROADMAP[0].k)return ROADMAP[0].k;const L=ROADMAP[ROADMAP.length-1].k;return mk>=L?L:mk};
 const rwText=m=>S.mrw[m.k]||m.rw;
@@ -117,7 +129,7 @@ function toggleGoal(k,i){
 
 /* ----- 今日のデータ採点（1〜5）：自己採点とくらべて、自分の甘さ・厳しさに気づくため ----- */
 function dayScore(date=today()){
- const rec=peekDay(date),keys=stageKeys(rec).filter(k=>k!=='hw'&&k!=='ref');
+ const rec=peekDay(date),keys=stageKeys(rec).filter(k=>k!=='hw'&&k!=='ref'&&k!=='diag');
  if(!keys.length)return 1;
  const n=sum(keys.map(k=>rec.stg[k].n||0)),ok=sum(keys.map(k=>rec.stg[k].ok||0)),acc=n?ok/n:0;
  const rt=(S.rt&&S.rt.d===date)?S.rt.stg.filter(p=>p.kind==='session'&&p.ids.length):[];

@@ -34,12 +34,16 @@ function addManualMistake(subj,cause,memo){
  ITEMS[id]=it;S.gx[id]=snap(it);S.srs[id]={b:0,n:0,w:1,d:DN()+1};return it;
 }
 /* ----- えらび方 ----- */
+/* 復習の順番：まちがえたばかり（箱が小さい＝間隔が短い）ものを先に。同じ箱なら、おくれが大きい順 */
 function dueItems(pred,limit){
  const t=DN(),out=[];
  for(const id in S.srs){const s=S.srs[id];if(s.d>t)continue;const it=ITEMS[id];if(!it||(pred&&!pred(it)))continue;out.push([t-s.d,s.b,it])}
- out.sort((a,b)=>b[0]-a[0]||a[1]-b[1]);
+ out.sort((a,b)=>a[1]-b[1]||b[0]-a[0]);
  return out.slice(0,limit).map(x=>x[2]);
 }
+/* いま復習の期限がきている問題の数。young=true なら、まちがえたばかり・おぼえかけ（箱0〜3）だけ数える。
+   これがたまりすぎたら、新しい問題を減らして、復習を先にする（長くおぼえている箱4以上のおくれは数えない） */
+function dueCount(young){const t=DN();let n=0;for(const id in S.srs){const s=S.srs[id];if(s.d<=t&&ITEMS[id]&&(!young||s.b<=3))n++}return n}
 function newItems(bank,n,o={}){
  const ex=o.ex||new Set(),out=[],items=BK[bank].items;
  const ok=it=>!S.srs[it.id]&&!ex.has(it.id)&&(!o.pred||o.pred(it));

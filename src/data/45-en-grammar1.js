@@ -56,7 +56,7 @@ We ( ) a good time last summer.|had|have|has|having|have の過去形は had。
 He ( ) his key at home.|left|leave|leaves|leaving|leave の過去形は left。
 I ( ) him at the station two days ago.|saw|see|seen|sees|two days ago は過去。see の過去形は saw。
 She ( ) up at six yesterday.|got|get|gets|getting|get の過去形は got。
-The movie ( ) interesting.|was|were|is|be|the movie は単数の過去で was。
+The movie we watched last night ( ) interesting.|was|were|is|be|last night があるので過去。the movie は単数なので was。
 Tom ( ) not at school yesterday.|was|were|did|is|be動詞の過去の否定は was not。
 What ( ) you do last Sunday?|did|do|does|are|過去の疑問文は did。
 They ( ) hard in the park.|worked|work|works|working|規則動詞の過去形は ed。
@@ -109,7 +109,7 @@ Would you ( ) some tea?|like|likes|liking|liked|Would you like ～? は「～は
 Could you ( ) me?|help|helps|helping|helped|助動詞のあとは原形。
 I ( ) swim when I was a child.|could|can|will|must|過去の「できた」は could。
 It ( ) be true. (ありえない)|can't|must|may|will|can't be ～ は「～のはずがない」。
-Mary ( ) not come to the party.|will|are|does|is|will not で未来の否定。
+Mary ( ) not come to the party tomorrow.|will|are|did|is|tomorrow があるので未来。will not で未来の否定。
 You ( ) be quiet in the library.|must|does|are|do|必要・義務の must。
 ( ) I help you?|Shall|Do|Are|Is|Shall I ～? は「～しましょうか」と申し出る表現。
 You look tired. You ( ) go to bed early.|should|shoulds|are|does|アドバイスには should。

@@ -74,11 +74,11 @@ The window ( ) by Tom yesterday.|was broken|broke|breaks|is broken|過去の受�
 Many books ( ) in this library.|are read|read|is read|reads|books が複数なので are read。
 This picture was ( ) by a famous artist.|painted|paint|painting|paints|受け身は過去分詞。
 Rice is ( ) in Japan.|grown|grow|growing|grew|grow の過去分詞は grown。
-The letter ( ) written by Ken.|was|did|were|is|過去の受け身。単数なので was。
+The letter ( ) written by Ken yesterday.|was|did|were|is|yesterday があるので過去の受け身。単数なので was。
 Is French ( ) in Canada?|spoken|speak|speaking|spoke|受け身の疑問文。
 The party ( ) held last Sunday.|was|is|were|did|last Sunday があるので was held。
 This song is loved ( ) many people.|by|with|from|at|行為をする人は by。
-The cake ( ) not made by my mother.|was|did|were|is|受け身の否定は was not made。
+The cake ( ) not made by my mother last Sunday.|was|did|were|is|last Sunday があるので過去の受け身。was not made。
 When was this temple ( )?|built|build|building|builds|build の過去分詞は built。
 The soccer game was ( ) because of the rain.|canceled|cancel|canceling|cancels|受け身は過去分詞。
 Mt. Fuji can be ( ) from here.|seen|see|saw|seeing|助動詞のあとの受け身は be ＋ 過去分詞。

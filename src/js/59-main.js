@@ -8,7 +8,14 @@ function dockBadges(){
  set('home',left);set('drill',due);
 }
 function refresh(){
- renderHud();RENDER[tab]();dockBadges();
+ autoGoals();renderHud();RENDER[tab]();dockBadges();
+}
+/* 記録から決まる目標は、達成したら自動でつく */
+function autoGoals(){
+ const rs=syncAutoGoals();if(!rs.length)return;
+ rs.forEach((r,j)=>setTimeout(()=>{toast('マイルストーン達成 +'+r.xp+'XP（記録から自動）');Snd.ok()},400+j*2400));
+ if(rs.some(r=>r.lv))setTimeout(()=>levelUp(rs.find(r=>r.lv).lv.to),1500);
+ save();
 }
 function show(id){
  if(!RENDER[id])id='home';
@@ -35,6 +42,7 @@ const ACT={
   const s=routeFor().find(x=>x.id===id);if(!s)return;
   if(id==='hw'){hwSheet();return}
   if(id==='ref'){refSheet();return}
+  if(id==='diag'){S.dg=s.subj;openPage('diag');return}
   if(s.auto){toast('いまは再戦するミスがありません。ミスが出ると、ここに集まります');return}
   startSession({title:s.t,subj:s.subj,items:s.items,skipBrief:!s.boss,stageId:s.done?null:s.id,boss:s.boss,desc:s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,brk:s.brk,min:s.min,xp:s.done?0:s.xp});
  },
@@ -116,6 +124,20 @@ const ACT={
  ovClose(){closeOv()},sheetClose(){closeSheet()},back(){closePage()},
  /* ---- マイルストーン ---- */
  goal(a){
+  const [k,i]=a.split('|');
+  if(isAutoGoal(k,+i)){toast('この目標は、記録から自動で達成になります');return}
+  if(S.pinOn&&S.pin&&!S.ms[gid(k,+i)]){
+   openSheet(`<h2>おうちの人のOK</h2><p>この目標は、おうちの人が確かめてから つけよう。</p><div class="pinbox"><input id="gpIn" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="● ● ● ●" aria-label="暗証番号"></div><div class="row" style="justify-content:center"><button class="bt pri xl" data-act="goalPin" data-a="${a}">OKをもらった</button></div>`);
+   return;
+  }
+  ACT.goalDo(a);
+ },
+ goalPin(a){
+  if((($('#gpIn')||{}).value||'')!==S.pin){toast('暗証番号がちがうよ');return}
+  closeSheet();ACT.goalDo(a);
+ },
+ pinLater(){S.pinSkip=today();save();refresh()},
+ goalDo(a){
   const [k,i]=a.split('|'),r=toggleGoal(k,+i);
   if(r.on){toast('マイルストーン達成 +'+r.xp+'XP');Snd.ok();if(r.xp>=100)FX.confetti(70)}
   if(r.chest)setTimeout(()=>{toast('宝箱が開いた！ +100XP');FX.confetti(140);Snd.clear()},900);

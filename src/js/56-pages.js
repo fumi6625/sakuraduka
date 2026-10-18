@@ -70,7 +70,11 @@ function dgPick(j){
  const r=S.diag[S.dg],list=DIAG[S.dg];if(dgFb||r.done)return;
  const qi=r.ans.length;r.ans.push(j);if(j===list[qi].a)r.sc++;dgFb=true;
  let res=null;
- if(r.ans.length>=list.length){r.done=1;r.at=today();if(!r.paid){r.paid=1;res=addXP(10);toast(SJN[S.dg]+'の診断　+10XP')}}
+ if(r.ans.length>=list.length){
+  r.done=1;r.at=today();if(!r.paid){r.paid=1;res=addXP(10);toast(SJN[S.dg]+'の診断　+10XP')}
+  const st=S.rt&&S.rt.d===today()?S.rt.stg.find(x=>x.id==='diag'&&x.subj===S.dg):null;   // きょうのルートの診断ステージを、クリアにする
+  if(st)completeStage(today(),'diag',{ok:r.sc,n:0,sec:0,min:3});
+ }
  const nb=checkBadges();nb.forEach(b=>setTimeout(()=>toast('バッジ獲得：'+b[1]),1200));
  save();renderDg();renderDiagOut();renderHud();if(res)levelUp(res.to);
 }
