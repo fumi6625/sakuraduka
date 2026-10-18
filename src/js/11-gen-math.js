@@ -32,10 +32,13 @@ GEN.pn_mul={name:'正負の数の乗除・累乗',f(r,lv){
   return{q:`${pr(n)} ÷ ${pr(d)} ＝ ？`,a:[String(k)],disp:sg(k),exp:[k>0?'同じ符号どうしの商は ＋':'ちがう符号どうしの商は −',Math.abs(n)+' ÷ '+Math.abs(d)+' ＝ '+Math.abs(k)+'　→　'+sg(k)],v:()=>k*d===n};
  }
  if(lv===2){
-  const t=ri(r,0,2);
-  if(t===0){const a=ri(r,2,6),v=a*a;return{q:`(${MI}${a})² ＝ ？`,a:[String(v)],disp:String(v),exp:[`(${MI}${a})² は (${MI}${a}) を2回かける：(${MI}${a}) × (${MI}${a}) ＝ ${v}`],v:()=>v===(-a)**2}}
-  if(t===1){const a=ri(r,2,6),v=-a*a;return{q:`${MI}${a}² ＝ ？`,a:[String(v)],disp:sg(v),exp:[`${MI}${a}² は「${a}² に − をつけたもの」：${MI}(${a} × ${a}) ＝ ${sg(v)}`,`(${MI}${a})² とは別もの。かっこがあるか必ず確認`],v:()=>v===-(a*a)}}
-  const b=ri(r,2,4),v=(-b)**3;return{q:`(${MI}${b})³ ＝ ？`,a:[String(v)],disp:sg(v),exp:[`(${MI}${b})³ ＝ (${MI}${b}) × (${MI}${b}) × (${MI}${b})`,'マイナスが3個（奇数個）なので答えは −',`${b}³ ＝ ${b**3}　→　${sg(v)}`],v:()=>v===(-b)**3};
+  const t=ri(r,0,5);
+  if(t===0){const a=ri(r,2,12),v=a*a;return{q:`(${MI}${a})² ＝ ？`,a:[String(v)],disp:String(v),exp:[`(${MI}${a})² は (${MI}${a}) を2回かける：(${MI}${a}) × (${MI}${a}) ＝ ${v}`],v:()=>v===(-a)**2}}
+  if(t===1){const a=ri(r,2,12),v=-a*a;return{q:`${MI}${a}² ＝ ？`,a:[String(v)],disp:sg(v),exp:[`${MI}${a}² は「${a}² に − をつけたもの」：${MI}(${a} × ${a}) ＝ ${sg(v)}`,`(${MI}${a})² とは別もの。かっこがあるか必ず確認`],v:()=>v===-(a*a)}}
+  if(t===3){const a=ri(r,2,6),b=ri(r,2,6),v=a*a*(-b);return{q:`(${MI}${a})² × (${MI}${b}) ＝ ？`,a:[String(v)],disp:sg(v),exp:[`(${MI}${a})² ＝ ${a*a}`,`${a*a} × (${MI}${b}) ＝ ${sg(v)}（ちがう符号の積は −）`],v:()=>v===(-a)**2*(-b)}}
+  if(t===4){const a=ri(r,2,9),b=ri(r,2,9),v=b*b-a*a;return{q:`${MI}${a}² ＋ ${b}² ＝ ？`,a:[String(v)],disp:sg(v),exp:[`${MI}${a}² ＝ ${MI}${a*a}（${a}² に − をつけたもの）`,`${b}² ＝ ${b*b}`,`${sg(-a*a)} ＋ ${b*b} ＝ ${sg(v)}`],v:()=>v===-(a*a)+b*b}}
+  if(t===5){const a=ri(r,2,4),v=a**4;return{q:`(${MI}${a})⁴ ＝ ？`,a:[String(v)],disp:String(v),exp:[`(${MI}${a})⁴ ＝ (${MI}${a}) を4回かける`,'マイナスが4個（偶数個）なので答えは ＋',`${a}⁴ ＝ ${v}`],v:()=>v===(-a)**4}}
+  const b=ri(r,2,5),v=(-b)**3;return{q:`(${MI}${b})³ ＝ ？`,a:[String(v)],disp:sg(v),exp:[`(${MI}${b})³ ＝ (${MI}${b}) × (${MI}${b}) × (${MI}${b})`,'マイナスが3個（奇数個）なので答えは −',`${b}³ ＝ ${b**3}　→　${sg(v)}`],v:()=>v===(-b)**3};
  }
  const a=ri(r,2,4),b=ri(r,2,5),d=ri(r,2,4),k=ri(r,1,4),c=d*k,v=a*a*b+k;
  return{q:`(${MI}${a})² × ${b} − ${c} ÷ (${MI}${d}) ＝ ？`,a:[String(v)],disp:String(v),exp:[`累乗が先：(${MI}${a})² ＝ ${a*a}　→　${a*a} × ${b} ＝ ${a*a*b}`,`わり算：${c} ÷ (${MI}${d}) ＝ ${MI}${k}`,`ひき算：${a*a*b} − (${MI}${k}) ＝ ${a*a*b} + ${k} ＝ ${v}`],v:()=>v===(-a)**2*b-c/(-d)};

@@ -43,7 +43,8 @@ function dueItems(pred,limit){
 }
 /* いま復習の期限がきている問題の数。young=true なら、まちがえたばかり・おぼえかけ（箱0〜3）だけ数える。
    これがたまりすぎたら、新しい問題を減らして、復習を先にする（長くおぼえている箱4以上のおくれは数えない） */
-function dueCount(young){const t=DN();let n=0;for(const id in S.srs){const s=S.srs[id];if(s.d<=t&&ITEMS[id]&&(!young||s.b<=3))n++}return n}
+/* 期限が来た復習の数。young：まだ若い（箱0〜3）ものだけ／pred：数える教材をしぼる */
+function dueCount(young,pred){const t=DN();let n=0;for(const id in S.srs){const s=S.srs[id];if(s.d>t||(young&&s.b>3))continue;const it=ITEMS[id];if(it&&(!pred||pred(it)))n++}return n}
 function newItems(bank,n,o={}){
  const ex=o.ex||new Set(),out=[],items=BK[bank].items;
  const ok=it=>!S.srs[it.id]&&!ex.has(it.id)&&(!o.pred||o.pred(it));
@@ -64,4 +65,4 @@ function bankStats(b){
 const mistakeStats=()=>{let all=0,dead=0;for(const id in S.srs){const s=S.srs[id];if(s.w>0){all++;if(s.b>=4)dead++}}return{all,dead,open:all-dead}};
 const totalItems=()=>Object.values(BK).reduce((t,b)=>t+b.items.length,0);
 const SEC={word:8,verb:10,mc:14,listen:22,read:18,yomi:8,term:9,syn:9,qa:9,order:35,seq:30,self:45,gen:32,mist:40};
-const estMin=items=>Math.max(1,Math.ceil(sum(items.map(it=>(SEC[it.k]||12)+(it.k==='read'&&items.indexOf(it)===items.findIndex(x=>x.pid===it.pid)?70:0)))*1.35/60));
+const estMin=items=>Math.max(1,Math.ceil(sum(items.map(it=>(SEC[it.k]||12)+(it.k==='read'&&items.indexOf(it)===items.findIndex(x=>x.pid===it.pid)?70:0)))*1.5/60));   // 1.5倍＝まちがえた問題のやりなおし・読み直し・タップのおくれを見こむ

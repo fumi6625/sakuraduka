@@ -42,6 +42,15 @@ const EWPOS={};BK.EW.items.forEach(it=>(EWPOS[it.pos]||(EWPOS[it.pos]=[])).push(
 const lenOK=(a,b)=>{const x=String(a).length,y=String(b).length;return x<=y*2+2&&y<=x*2+2};
 /* 片方がもう片方をふくむ（例：「土一揆」と「正長の土一揆」）ものは、まぎらわしいので、まちがいの選択肢に使わない */
 const nested=(a,b)=>{a=String(a);b=String(b);const s=a.length<=b.length?a:b,l=s===a?b:a;return s.length>=2&&l.includes(s)};
+/* 「AとBのどちら？」「A？B？」の問いから、AとBを取り出す（なければ null）。2択の問いに、関係のない別の答えが並ばないようにするため */
+function dochira(q){
+ const w=q.match(/([^？]*)？([^、，？]{1,10})？$/);   // 「…は強い？弱い？」の形
+ if(w){const A=w[1].split(/[、，]|では|は|が|を|に|の|より/).pop(),B=w[2];return A&&B&&A!==B&&A.length<=10?[A,B]:null}
+ const k=q.search(/どちら|どっち/);if(k<0)return null;
+ const head=q.slice(0,k).replace(/[、，]\s*$/,''),ms=[...head.matchAll(/と(?![こきもおう])/g)];if(!ms.length)return null;
+ const i=ms[ms.length-1].index,A=head.slice(0,i).split(/[、，]|では|は/).pop(),B=head.slice(i+1).split(/では|で|の|、|，/)[0];
+ return A&&B&&A!==B&&A.length<=12&&B.length<=12?[A,B]:null;
+}
 function distractQA(it,f,n=3){
  const ans=it[f],seen=new Set([ans]),out=[],keys=tagKeys(it);
  for(const pass of [0,1]){
@@ -122,7 +131,11 @@ function present(it){
    if(b>=3&&parity(it)===1)return{kind:'mc',q:it.m,sub:'あてはまる'+it.tag+'は？',choices:mkC(it.w,distractQA(it,'w')),exp:it.w+'：'+it.m};
    return{kind:'mc',q:'「'+it.w+'」',sub:it.tag+'の意味は？',choices:mkC(it.m,distractQA(it,'m')),exp:it.w+'：'+it.m};
   case 'syn':return{kind:'mc',q:'「'+it.w+'」',sub:it.tag==='対義語'?'反対の意味の言葉は？':'意味が近い言葉は？',choices:mkC(it.m,distractQA(it,'m')),exp:it.w+(it.tag==='対義語'?'　⇔　':'　≒　')+it.m};
-  case 'qa':return{kind:'mc',q:it.q,sub:it.tag.split('/')[1]||it.tag,choices:mkC(it.a,distractQA(it,'a')),exp:it.exp};
+  case 'qa':{
+   let ds=null;const ab=dochira(it.q);
+   if(ab){const other=(ab[0]===it.a||ab[0].endsWith(it.a))?ab[1]:(ab[1]===it.a||ab[1].endsWith(it.a))?ab[0]:null;if(other)ds=[other,'どちらにも当てはまる','どちらにも当てはまらない']}   // 2択の問いは、もう一方の答え＋「どちらも／どちらでもない」で4択にする
+   return{kind:'mc',q:it.q,sub:it.tag.split('/')[1]||it.tag,choices:mkC(it.a,ds||distractQA(it,'a')),exp:it.exp};
+  }
   case 'order':{const t=it.en.split(' ');let s=shuffle(t);for(let i=0;i<8&&s.join(' ')===t.join(' ');i++)s=shuffle(t);
    return{kind:'order',q:it.ja,sub:'英語を正しい順にならべよう',tokens:s,answers:it.alts,join:' ',exp:it.en}}
   case 'seq':{let s=shuffle(it.seq);for(let i=0;i<8&&s.join('')===it.seq.join('');i++)s=shuffle(it.seq);

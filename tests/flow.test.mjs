@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { loadCore } from '../scripts/headless.mjs';
 
 const NAMES = ['S', 'setToday', 'routeFor', 'present', 'judge', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'dayOK', 'peekDay',
-  'BK', 'restoreGx', 'syncAutoGoals', 'isAutoGoal', 'SJL', 'PASS'];
+  'BK', 'restoreGx', 'syncAutoGoals', 'isAutoGoal', 'SJL', 'PASS', 'ITEMS', 'dochira'];
 const START = '2026-10-19';
 const rng = (seed) => { let r = seed; return () => { r = (r * 1664525 + 1013904223) >>> 0; return r / 4294967296; }; };
 
@@ -149,4 +149,89 @@ test('目標：記録から自動で付くものだけが自動になる', () =>
   assert.equal(got.length, 1);
   assert.ok(C.S.ms['2026-10|4']);
   assert.equal(C.syncAutoGoals().length, 0, '2回目は付け直さない（XPが二重に入らない）');
+});
+
+/** 指定の曜日だけ（日=0）、acc の正答率でやった日々を days 日ぶん進める。やった日の route を返す */
+function simulate(C, days, acc, dows = null, seed = 1, skip = () => false) {
+  const rand = rng(seed), out = [];
+  for (let i = 0; i < days; i++) {
+    const date = C.addDays(START, i);
+    if ((dows && !dows.includes(new Date(date + 'T00:00:00').getDay())) || skip(i)) continue;
+    out.push({ i, date, route: doDay(C, date, rand, acc) });
+  }
+  return out;
+}
+const seenBy = (C, bank) => C.BK[bank].items.filter((it) => C.S.srs[it.id]).length;
+const minutesOf = (route) => route.reduce((t, s) => t + (s.min || 0), 0);
+
+test('毎日やる子：理科・社会の一問一答が、1年ちょっとでほぼ一通り出る', () => {
+  const C = loadCore(NAMES);
+  simulate(C, 400, 0.9);
+  assert.ok(seenBy(C, 'SQ') >= 0.8 * C.BK.SQ.items.length, `理科 ${seenBy(C, 'SQ')}/${C.BK.SQ.items.length}`);
+  assert.ok(seenBy(C, 'OQ') >= 0.6 * C.BK.OQ.items.length, `社会 ${seenBy(C, 'OQ')}/${C.BK.OQ.items.length}`);
+  assert.ok(seenBy(C, 'JG') >= 0.4 * C.BK.JG.items.length, `国語の文法・古文 ${seenBy(C, 'JG')}/${C.BK.JG.items.length}`);
+});
+
+test('週3日（月水金）しかやらない子でも、国語・社会・理科・英語のどれにもふれる', () => {
+  const C = loadCore(NAMES);
+  simulate(C, 280, 0.75, [1, 3, 5]);
+  for (const b of ['SQ', 'OQ', 'JG', 'JI', 'EG']) assert.ok(seenBy(C, b) >= 20, `${b} が ${seenBy(C, b)} 問しか出ていない`);
+});
+
+test('1日の時間の見積りは、段階ごとの上限をこえない', () => {
+  const C = loadCore(NAMES);
+  const days = simulate(C, 120, 0.8);
+  const worst = Math.max(...days.map((d) => minutesOf(d.route)));
+  assert.ok(worst <= 39, `いちばん長い日の見積り ${worst} 分`);
+  const early = Math.max(...days.slice(0, 14).map((d) => minutesOf(d.route)));
+  assert.ok(early <= 15, `ならし期の見積り ${early} 分`);
+});
+
+test('7日以上休んだあとは、量をもどして、少しずつ戻す', () => {
+  const C = loadCore(NAMES);
+  const days = simulate(C, 100, 0.85, null, 3, (i) => i >= 60 && i < 74);
+  const before = days.filter((d) => d.i >= 53 && d.i < 60).map((d) => minutesOf(d.route));
+  const back = days.filter((d) => d.i >= 74).slice(0, 8).map((d) => minutesOf(d.route));
+  assert.ok(Math.max(...before) >= 25, '休む前は、しっかり期の量');
+  assert.ok(back[0] <= 15, `休み明け初日は短く：${back[0]}分`);
+  assert.ok(back[2] <= 20, `3日目もまだ短い：${back[2]}分`);
+  assert.ok(back[7] > back[0] + 8, `すこしずつ戻る：${back.join(',')}`);
+});
+
+test('正答が4割に届かないドリルでは、合格ライン・連続記録に数えない', () => {
+  const C = loadCore(NAMES);
+  assert.equal(C.dayOK({ stg: { mem: { ok: 0, n: 10 }, hw: {} } }, 1), false);
+  assert.equal(C.dayOK({ stg: { mem: { ok: 3, n: 10 }, hw: {} } }, 1), false);
+  assert.equal(C.dayOK({ stg: { mem: { ok: 4, n: 10 }, hw: {} } }, 1), true);
+  assert.equal(C.dayOK({ stg: { mem: { ok: 1, n: 10 }, math: { ok: 8, n: 10 } } }, 2), true, 'もう1つのドリルが4割以上ならOK');
+});
+
+test('「AとBのどちら？」「A？B？」の問いは、もう一方の答えも選択肢に入る', () => {
+  const C = loadCore(NAMES);
+  let n = 0;
+  for (const b of Object.keys(C.BK)) for (const it of C.BK[b].items) {
+    if (it.k !== 'qa') continue;
+    const ab = C.dochira(it.q);
+    if (!ab) continue;
+    const other = ab.find((x) => x !== it.a && !x.endsWith(it.a));
+    if (!other) continue;
+    const V = C.present(it);
+    n++;
+    assert.ok(V.choices.some((c) => c.t === other), `${it.q} の選択肢に「${other}」がない`);
+  }
+  assert.ok(n >= 8, `2択の問い ${n} 件`);
+});
+
+test('長文の選択肢：正解が最長に偏らない（どの順位も4割以下）', () => {
+  const C = loadCore(NAMES);
+  for (const [label, arr] of [['国語', C.PASS.J], ['英語', C.PASS.E]]) {
+    const r = [0, 0, 0, 0]; let n = 0;
+    for (const p of arr) for (const q of p.qs) {
+      const c = q[1].length, ws = [q[2], q[3], q[4]].map((x) => x.length);
+      const rank = ws.filter((w) => w > c).length + ws.filter((w) => w === c).length / 2;
+      r[Math.min(3, Math.round(rank))]++; n++;
+    }
+    assert.ok(Math.max(...r) / n <= 0.45, `${label}の長文：正解の長さの順位 ${r.join('/')}`);
+    assert.ok(r[0] / n <= 0.4, `${label}の長文：正解が最長の割合 ${Math.round(r[0] / n * 100)}%`);
+  }
 });

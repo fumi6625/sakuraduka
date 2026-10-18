@@ -7,7 +7,7 @@ const PASS_E=[
 [`筆者が次に京都へ行きたいのはいつですか。`,`秋`,`春`,`夏`,`冬`,`visit Kyoto again in autumn（秋にまた行きたい）`]]},
 {id:'e02',title:'My Dream',text:`I want to be a vet in the future. I love animals, and I have a dog named Pochi. When Pochi was sick last year, a kind vet helped him. I was very moved. Now I volunteer at an animal shelter every Saturday. I wash dogs and walk with them. It is hard work, but I am happy to see them smile. To become a vet, I must study science and English hard.`,qs:[
 [`筆者の将来の夢は何ですか。`,`獣医になること`,`医者になること`,`先生になること`,`歌手になること`,`I want to be a vet（獣医になりたい）`],
-[`筆者が毎週土曜日にしていることは何ですか。`,`動物保護施設でボランティアをする`,`犬を飼う`,`病院で働く`,`英語を教える`,`volunteer at an animal shelter every Saturday`],
+[`筆者が毎週土曜日にしていることは何ですか。`,`動物保護施設でボランティアをする`,`自分の犬を連れて、公園で散歩をする`,`近所の病院で、受付の仕事を手伝う`,`友だちに、英語の勉強を教えてあげる`,`volunteer at an animal shelter every Saturday`],
 [`獣医になるために、筆者は何を一生懸命勉強しなければなりませんか。`,`理科と英語`,`数学と国語`,`社会と音楽`,`美術と体育`,`I must study science and English hard.`],
 [`去年ポチが病気のとき、だれが助けてくれましたか。`,`やさしい獣医`,`筆者の友だち`,`筆者の姉`,`先生`,`a kind vet helped him`]]},
 {id:'e03',title:'A New Classmate',text:`Emma is a new student in our class. She came from Canada last month. She speaks Japanese a little, and she is learning it every day. At lunch time, she tried to eat with chopsticks, but it was difficult. We showed her how to use them. After many tries, she could pick up a small bean! She said, "Thank you. I'm happy to be your friend." Now she is a member of our baseball club. She is the best pitcher in the club.`,qs:[
@@ -19,7 +19,7 @@ const PASS_E=[
 [`筆者のクラスは学園祭で何をしましたか。`,`カフェを開いた`,`劇をした`,`お化け屋敷をした`,`映画を上映した`,`My class opened a cafe.`],
 [`筆者は何を担当しましたか。`,`お茶`,`ポスター`,`花のかざりつけ`,`会計`,`I was in charge of tea.`],
 [`2日目に売れたお茶は何杯ですか。`,`200杯`,`20杯`,`2杯`,`220杯`,`we sold two hundred cups of tea`],
-[`筆者が学んだことは何ですか。`,`協力することの大切さ`,`お金の大切さ`,`早起きの大切さ`,`英語の大切さ`,`working together is important`]]},
+[`筆者が学んだことは何ですか。`,`協力することの大切さ`,`お金を使うことの大切さ`,`早く起きることの大切さ`,`英語を話すことの大切さ`,`working together is important`]]},
 {id:'e05',title:'Recycling at Our School',text:`In our school, students collect plastic bottles every Friday. We wash the bottles and put them in a big box. Last year, we collected about 3,000 bottles. A company made them into new things, like T-shirts and bags. Our teacher said, "A plastic bottle can have a second life." Now, many students bring their own water bottles, so we use fewer plastic bottles. I think we should think about the earth more.`,qs:[
 [`生徒たちは毎週何曜日にペットボトルを集めますか。`,`金曜日`,`月曜日`,`水曜日`,`日曜日`,`every Friday`],
 [`昨年、約何本のペットボトルが集まりましたか。`,`3,000本`,`300本`,`30,000本`,`1,300本`,`about 3,000 bottles`],
@@ -28,13 +28,13 @@ const PASS_E=[
 {id:'e06',title:'A Letter from Australia',text:`Dear Ken, How are you? I'm in Sydney now. It's December, but it is summer here! Yesterday was Christmas Day. My family went to the beach, and we swam in the sea. We also had a barbecue. It was very different from Christmas in Japan. I miss you. Please write to me soon. Your friend, Mike`,qs:[
 [`マイクは今どこにいますか。`,`シドニー`,`東京`,`ロンドン`,`ニューヨーク`,`I'm in Sydney now.`],
 [`オーストラリアの12月はどんな季節ですか。`,`夏`,`冬`,`春`,`秋`,`It's December, but it is summer here!`],
-[`マイクの家族はクリスマスに何をしましたか。`,`海で泳いでバーベキューをした`,`スキーをした`,`家でケーキを作った`,`映画を見た`,`swam in the sea / had a barbecue`],
+[`マイクの家族はクリスマスに何をしましたか。`,`海で泳いでバーベキューをした`,`雪山でスキーをして遊んだ`,`家でクリスマスケーキを作った`,`家族みんなで映画館へ行った`,`swam in the sea / had a barbecue`],
 [`マイクはケンに何をしてほしいと言っていますか。`,`すぐに手紙を書いてほしい`,`オーストラリアに来てほしい`,`写真を送ってほしい`,`電話してほしい`,`Please write to me soon.`]]},
 {id:'e07',title:'My Grandmother\'s Garden',text:`My grandmother has a small garden behind her house. She grows tomatoes, cucumbers, and many kinds of flowers. Every weekend, I visit her and help with the work. At first, I didn't like it because I got dirty. But last summer, she gave me a big tomato from the garden. It was so sweet and fresh! Now I enjoy working in the garden. My grandmother says, "Plants need time and love, just like people."`,qs:[
 [`祖母の庭はどこにありますか。`,`家の裏`,`学校の近く`,`駅のそば`,`公園の中`,`behind her house`],
 [`筆者が最初、手伝いを好きではなかった理由は何ですか。`,`体がよごれるから`,`つかれるから`,`暑いから`,`虫がこわいから`,`I didn't like it because I got dirty.`],
 [`昨年の夏、祖母は筆者に何をくれましたか。`,`大きなトマト`,`花束`,`きゅうり`,`ケーキ`,`she gave me a big tomato`],
-[`祖母の言葉の意味に最も近いものはどれですか。`,`植物にも人にも時間と愛情が必要だ`,`植物は人より強い`,`庭の仕事は簡単だ`,`人は植物から学べない`,`Plants need time and love, just like people.`]]},
+[`祖母の言葉の意味に最も近いものはどれですか。`,`植物にも人にも時間と愛情が必要だ`,`植物は人間よりもずっと強い生き物だ`,`庭の仕事は、だれにとっても簡単だ`,`人は植物から学べることは何もない`,`Plants need time and love, just like people.`]]},
 {id:'e08',title:'Learning to Ride a Bike',text:`When I was seven, I couldn't ride a bike. My friends could ride, and I felt sad. My father said, "Let's practice together." Every evening, we went to the park. I fell down many times, and my knees hurt. I wanted to give up. But my father said, "You can do it. Don't stop." After two weeks, I finally rode the bike without his help. He clapped his hands and smiled. I will never forget that day.`,qs:[
 [`筆者は何歳のとき自転車に乗れませんでしたか。`,`7歳`,`5歳`,`10歳`,`12歳`,`When I was seven`],
 [`筆者は練習をどこでしましたか。`,`公園`,`学校の校庭`,`家の中`,`駅前`,`we went to the park`],
@@ -48,16 +48,16 @@ const PASS_E=[
 {id:'e10',title:'Volunteer Day',text:`Last Sunday, our class joined a volunteer activity at the beach. At first, the beach looked beautiful, but we found many cans, bottles, and plastic bags. In two hours, we filled thirty bags with garbage. A man who lives near the beach said, "Thank you. You made the beach clean again." I felt proud. I learned that one small action can change a place. I will not throw away garbage anywhere.`,qs:[
 [`クラスは日曜日にどこで活動しましたか。`,`浜辺`,`公園`,`川`,`学校`,`at the beach`],
 [`2時間でどれくらいのごみを集めましたか。`,`30袋`,`3袋`,`13袋`,`300袋`,`we filled thirty bags with garbage`],
-[`浜辺の近くに住む男性は何と言いましたか。`,`ありがとう。浜辺がきれいになった`,`ごみを持ち帰って`,`また来てください`,`もう少し働いて`,`Thank you. You made the beach clean again.`],
-[`筆者が学んだことは何ですか。`,`小さな行動が場所を変える`,`大人は何もしない`,`ごみはなくならない`,`友だちは大切だ`,`one small action can change a place`]]},
+[`浜辺の近くに住む男性は何と言いましたか。`,`ありがとう。浜辺がきれいになった`,`ごみは、必ず持ち帰ってください`,`また今度も、ぜひ来てください`,`もう少し長い時間、働いてください`,`Thank you. You made the beach clean again.`],
+[`筆者が学んだことは何ですか。`,`小さな行動が場所を変える`,`大人は何もしてくれない`,`ごみは、決してなくならない`,`友だちとの時間が大切だ`,`one small action can change a place`]]},
 {id:'e11',title:'Life in Space',text:`Astronauts live on the International Space Station for about six months. In space, there is almost no gravity, so everything floats. Astronauts sleep in sleeping bags that are fixed to the wall. They also exercise for about two hours every day. Why? Without gravity, muscles and bones become weak. Food is another problem. They cannot cook with fire, so most of their meals are dried or packed in special bags. Even so, many astronauts say that looking at the earth from space is the best part of their job.`,qs:[
 [`宇宙飛行士は国際宇宙ステーションに約どのくらい滞在しますか。`,`約6か月`,`約6日`,`約6週間`,`約6年`,`for about six months`],
-[`宇宙飛行士が毎日約2時間運動する理由は何ですか。`,`無重力では筋肉や骨が弱くなるから`,`時間が余るから`,`寒いから`,`食事を消化するため`,`Without gravity, muscles and bones become weak.`],
-[`宇宙での食事について正しいものはどれですか。`,`火を使えないので、乾燥食品や特別な袋に入った食事が多い`,`毎日火で調理する`,`地球から料理人が来る`,`食事はしない`,`They cannot cook with fire.`],
-[`多くの宇宙飛行士が仕事でいちばんよいと言うことは何ですか。`,`宇宙から地球を見ること`,`眠ること`,`運動すること`,`食事をすること`,`looking at the earth from space is the best part`]]},
+[`宇宙飛行士が毎日約2時間運動する理由は何ですか。`,`無重力では筋肉や骨が弱くなるから`,`宇宙では、時間がたくさん余るから`,`ステーションの中は、とても寒いから`,`食べたものを、きちんと消化するため`,`Without gravity, muscles and bones become weak.`],
+[`宇宙での食事について正しいものはどれですか。`,`火が使えないので、乾燥食品や袋入りの食事が多い`,`毎日、火を使って新鮮な料理を作って食べる`,`地球から、専門の料理人が来て作ってくれる`,`宇宙では食欲がなくなるので食事はしない`,`They cannot cook with fire.`],
+[`多くの宇宙飛行士が仕事でいちばんよいと言うことは何ですか。`,`宇宙から地球を見ること`,`ぐっすり眠って休むこと`,`無重力の中で運動すること`,`仲間と楽しく食事をすること`,`looking at the earth from space is the best part`]]},
 {id:'e12',title:'Why We Need Sleep',text:`Many students stay up late to study or play games. However, sleep is very important for teenagers. Scientists say that students aged thirteen to eighteen need eight to ten hours of sleep every night. While we sleep, our brains organize what we have learned during the day. If we do not sleep enough, it becomes difficult to remember things and to concentrate. That is why a good night's sleep is more helpful than studying until midnight.`,qs:[
 [`13歳から18歳の生徒は、1日何時間の睡眠が必要だと書かれていますか。`,`8〜10時間`,`5〜6時間`,`11〜12時間`,`3〜4時間`,`eight to ten hours of sleep every night`],
-[`眠っている間に脳は何をしますか。`,`日中に学んだことを整理する`,`何もしない`,`新しいことを学ぶ`,`体を動かす`,`our brains organize what we have learned during the day`],
-[`睡眠が足りないとどうなりますか。`,`覚えることや集中することが難しくなる`,`背が高くなる`,`体重が増える`,`夢をよく見る`,`it becomes difficult to remember things and to concentrate`],
-[`筆者がいちばん言いたいことは何ですか。`,`夜ふかしの勉強より、十分な睡眠が役に立つ`,`もっと遅くまで勉強すべきだ`,`ゲームは勉強に役立つ`,`睡眠は短いほどよい`,`a good night's sleep is more helpful than studying until midnight`]]}
+[`眠っている間に脳は何をしますか。`,`日中に学んだことを整理する`,`何も働かないで休んでいる`,`新しいことを次々に学ぶ`,`体を動かして運動している`,`our brains organize what we have learned during the day`],
+[`睡眠が足りないとどうなりますか。`,`覚えることや集中することが難しくなる`,`背がぐんぐん伸びて、服が着られなくなる`,`体重が増えて、体がとても重くなる`,`楽しい夢をよく見て、気分がよくなる`,`it becomes difficult to remember things and to concentrate`],
+[`筆者がいちばん言いたいことは何ですか。`,`夜ふかしの勉強より、十分な睡眠が役に立つ`,`もっと遅くまで、夜ふかしして勉強すべきだ`,`ゲームは、勉強の役に立つことが多い`,`睡眠は、短ければ短いほどよい`,`a good night's sleep is more helpful than studying until midnight`]]}
 ];

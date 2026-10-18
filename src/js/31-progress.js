@@ -15,7 +15,8 @@ const wkWins=()=>Object.values(S.wk).filter(w=>w.sc>=8).length;
 /* ----- 連続記録 ----- */
 const stageKeys=rec=>Object.keys(rec.stg||{});
 /* 合格ライン：ならし期は「ドリルを1つ」、ふつう以上は「ドリル1つ＋もう1つ」 */
-const dayOK=(rec,tier)=>{const k=stageKeys(rec).filter(x=>x!=='diag'),sess=k.some(x=>x!=='hw'&&x!=='ref');return tier===1?sess:(k.length>=2&&sess)};
+/* 合格ラインの日：ドリルを1つ（ふつう以上は、もう1ステージ）。ただし、正答が4割に届かないドリルは数えない（てきとうに押して、連続記録をのばさないように） */
+const dayOK=(rec,tier)=>{const k=stageKeys(rec).filter(x=>x!=='diag'),sess=k.some(x=>{if(x==='hw'||x==='ref')return false;const g=rec.stg[x];return !g.n||g.ok/g.n>=.4});return tier===1?sess:(k.length>=2&&sess)};
 const curStreak=()=>{const t=today();if(S.last===t||S.last===addDays(t,-1))return S.streak;if(S.last===addDays(t,-2)&&S.freeze>0)return S.streak;return 0};
 const STREAK_BONUS={3:30,7:70,14:150,30:300,60:500,100:1000};
 function streakUp(){
@@ -36,7 +37,7 @@ function stageXP(id,r){
  const base=XPST[id]||0,n=r.n||0,ok=r.ok||0;
  if(r.boss)return ok>=8?80:30;
  if(!n)return base;
- return Math.round(base*(0.6+0.4*ok/n))+(n>=5&&ok===n?10:0);
+ return Math.round(base*(0.4+0.6*ok/n))+(n>=5&&ok===n?10:0);   // 正答が少ないほど減る（全問まちがいで4割）
 }
 /* r: {ok,n,sec,combo,boss,min,note}   戻り値は画面に出す内容 */
 function completeStage(date,id,r){
@@ -47,6 +48,7 @@ function completeStage(date,id,r){
  const mins=r.min!=null?r.min:Math.max(1,Math.round((r.sec||0)/60)),sj=st.subj||'総';
  d.stg[id]={ok:r.ok||0,n:r.n||0,xp:out.xp,sec:r.sec||0,cb:r.combo||0,at:Date.now(),note:r.note||''};
  d.min[sj]=(d.min[sj]||0)+mins;
+ if(id==='sub'&&st.ty!==undefined)S.subLast[st.ty]=date;   // どの教科の日を、いつやったか（やすんだ教科を先に回すために覚えておく）
  if(r.boss){const k=monday(date),prev=S.wk[k]?S.wk[k].x:0;S.wk[k]={sc:r.ok,x:Math.max(prev,out.xp)}}
  out.lv=addXP(out.xp);
  const tier=S.rt&&S.rt.d===date?S.rt.tier:3;

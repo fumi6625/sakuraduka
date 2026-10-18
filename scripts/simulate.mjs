@@ -1,5 +1,6 @@
 // 毎日のルートを、ブラウザなしで何日分もシミュレーションする。
-//   node scripts/simulate.mjs [日数=30] [正答率=0.75] [--sample 2026-10-19] [--json out.json]
+//   node scripts/simulate.mjs [日数=30] [正答率=0.75] [--sample 2026-10-19] [--json out.json] [--dpw 3] [--break 100:14]
+//   --dpw N：週にN日だけやる子（3＝月水金、4＝月火木金、5＝平日、2＝土日）／--break 開始日めから:日数：その間は休む（おやすみ明けの確認）
 // 出力：日ごとの内容（ステージ名・問題数・予想時間）と、各教材の消化状況。
 import fs from 'node:fs';
 import { loadCore } from './headless.mjs';
@@ -18,8 +19,11 @@ const out = { days: [] };
 const wdn = '日月火水木金土';
 const dayLines = [];
 
+const DPW = { 2: [6, 0], 3: [1, 3, 5], 4: [1, 2, 4, 5], 5: [1, 2, 3, 4, 5] }[+flag('--dpw')] || null;
+const [BRK0, BRKN] = (flag('--break') || '-1:0').split(':').map(Number);
 for (let i = 0; i < DAYS; i++) {
   const date = C.addDays(start, i);
+  if ((i >= BRK0 && i < BRK0 + BRKN) || (DPW && !DPW.includes(new Date(date + 'T00:00:00').getDay()))) continue;
   C.setToday(date);
   const stages = C.routeFor(date);
   const rec = { date, wd: wdn[new Date(date + 'T00:00:00').getDay()], stages: [] };

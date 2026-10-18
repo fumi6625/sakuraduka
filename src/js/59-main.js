@@ -36,6 +36,13 @@ function afterSimple(res,msg){
  if(res&&res.lv)setTimeout(()=>levelUp(res.lv.to),600);
  refresh();
 }
+/* 保護者OKがオンのとき、暗証番号がいる操作（目標・宿題・設定の変更など）。合っていたら fn を実行する */
+let PIN_NEXT=null;
+function needPin(msg,fn){
+ if(!(S.pinOn&&S.pin)){fn();return}
+ PIN_NEXT=fn;
+ openSheet(`<h2>おうちの人のOK</h2><p>${esc(msg)}</p><div class="pinbox"><input id="gpIn" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="● ● ● ●" aria-label="暗証番号"></div><div class="row" style="justify-content:center"><button class="bt pri xl" data-act="pinGo">OKをもらった</button></div>`);
+}
 const ACT={
  /* ---- ステージ ---- */
  stageGo(id){
@@ -86,7 +93,7 @@ const ACT={
   openSheet(`<h2>やる時間を決めよう</h2><p class="mini">「何時に始めるか」を先に決めておくと、始めやすい。時間がきても通知は出ないので、ホームを開いたときに思い出せるよ。</p><div class="seg">${['16:00','17:00','18:00','19:00','20:00','21:00'].map(t=>`<button data-act="vowSet" data-a="${t}" aria-pressed="${at===t}">${t}</button>`).join('')}<button data-act="vowSet" data-a="none" aria-pressed="${!at}">きめない</button></div>`);
  },
  vowSet(t){S.at=t==='none'?'':t;save();closeSheet();renderHome();toast(S.at?'やくそく：'+S.at+' にスタート！':'やくそくを消した')},
- light(){const d=today();if(S.light[d])delete S.light[d];else S.light[d]=1;save();refresh();toast(S.light[d]?'いそがしい日モード：量をへらしたよ':'ふつうのルートにもどしたよ')},
+ light(){const d=today(),set=()=>{S.light[d]=1;save();refresh();toast('いそがしい日モード：量をへらしたよ')};if(S.light[d]){delete S.light[d];save();refresh();toast('ふつうのルートにもどしたよ')}else needPin('きょうを「ミニの日」にします（量をへらす）。',set)},
  nickSet(){const v=($('#nickIn').value||'').trim().slice(0,12);if(!v){toast('なまえを入れてね');return}S.nick=v;save();toast(v+'、よろしく！');FX.confetti(50);refresh()},
  /* ---- プレイヤー ---- */
  plGo(){plGo()},plQuit(){plQuit()},plClose(){closeOv();plClose()},plNext(){plNext()},
@@ -126,15 +133,12 @@ const ACT={
  goal(a){
   const [k,i]=a.split('|');
   if(isAutoGoal(k,+i)){toast('この目標は、記録から自動で達成になります');return}
-  if(S.pinOn&&S.pin&&!S.ms[gid(k,+i)]){
-   openSheet(`<h2>おうちの人のOK</h2><p>この目標は、おうちの人が確かめてから つけよう。</p><div class="pinbox"><input id="gpIn" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="● ● ● ●" aria-label="暗証番号"></div><div class="row" style="justify-content:center"><button class="bt pri xl" data-act="goalPin" data-a="${a}">OKをもらった</button></div>`);
-   return;
-  }
-  ACT.goalDo(a);
+  if(S.ms[gid(k,+i)])ACT.goalDo(a);
+  else needPin('この目標は、おうちの人が確かめてから つけよう。',()=>ACT.goalDo(a));
  },
- goalPin(a){
+ pinGo(){
   if((($('#gpIn')||{}).value||'')!==S.pin){toast('暗証番号がちがうよ');return}
-  closeSheet();ACT.goalDo(a);
+  const f=PIN_NEXT;PIN_NEXT=null;closeSheet();if(f)f();
  },
  pinLater(){S.pinSkip=today();save();refresh()},
  goalDo(a){
@@ -178,20 +182,20 @@ const ACT={
  team(k){if(!TEAMS[k])return;S.team=k;applyTeam();paintBg();save();initInputs();renderHud()},
  sound(){S.sound=S.sound?0:1;save();initInputs();if(S.sound)Snd.ok()},
  pinToggle(){
-  if(S.pinOn){S.pinOn=0;save();initInputs();toast('保護者OKをオフにした');return}
+  if(S.pinOn){needPin('保護者OKをオフにします。',()=>{S.pinOn=0;save();initInputs();toast('保護者OKをオフにした')});return}
   const v=($('#setPin').value||'').trim();
   if(!/^\d{4}$/.test(v)){toast('4けたの数字を入れてから、オンにしてね');return}
   S.pin=v;S.pinOn=1;save();initInputs();toast('保護者OKをオンにした。宿題のチェックに必要になります');
  },
- tierSet(v){S.tier=v==='auto'?'auto':+v;S.rt=null;save();initInputs();toast(v==='auto'?'段階：おまかせ（だんだん増える）':'段階を「'+TIERS[+v].name+'」にした')},
+ tierSet(v){needPin('1日の量の段階を変えます。',()=>{S.tier=v==='auto'?'auto':+v;S.rt=null;save();initInputs();toast(v==='auto'?'段階：おまかせ（だんだん増える）':'段階を「'+TIERS[+v].name+'」にした')})},
  async report(){const t=reportText();$('#rpt').value=t;const ok=await copyText(t);toast(ok?'週報をコピーした':'下の文を長押しでコピーしてね')},
  bkMake(){$('#bk').value=btoa(unescape(encodeURIComponent(JSON.stringify(S))))},
  async bkCopy(){if(!$('#bk').value)ACT.bkMake();const ok=await copyText($('#bk').value);toast(ok?'バックアップをコピーした。メモアプリなどに保存してね':'長押しでコピーしてね')},
- bkLoad(){try{const o=JSON.parse(decodeURIComponent(escape(atob($('#bk').value.trim()))));if(!o||typeof o.xp!=='number')throw 0;S=norm(o);save();reloadAll();show(VIEWS.includes(S.tab)?S.tab:'home');toast('復元した')}catch(e){toast('復元できなかった。文字列をもう一度たしかめてね')}},
+ bkLoad(){let o;try{o=JSON.parse(decodeURIComponent(escape(atob($('#bk').value.trim()))));if(!o||typeof o.xp!=='number')throw 0}catch(e){toast('復元できなかった。文字列をもう一度たしかめてね');return}needPin('バックアップから復元します。いまの記録は置きかわります。',()=>{S=norm(o);save();reloadAll();show(VIEWS.includes(S.tab)?S.tab:'home');toast('復元した')})},
  reroute(){S.rt=null;save();refresh();toast('きょうのルートを作り直した')},
  reset(){
   const b=$('#rstBtn');
-  if(b.dataset.armed){S=fresh();save();reloadAll();show('home');b.textContent='すべてリセット';delete b.dataset.armed;toast('リセットした');return}
+  if(b.dataset.armed){delete b.dataset.armed;b.textContent='すべてリセット';needPin('すべての記録を消します。',()=>{S=fresh();save();reloadAll();show('home');toast('リセットした')});return}
   b.dataset.armed='1';b.textContent='本当に消す？ もう一度タップ';setTimeout(()=>{delete b.dataset.armed;if(b)b.textContent='すべてリセット'},4000);
  }
 };

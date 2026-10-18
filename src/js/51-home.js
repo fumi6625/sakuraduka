@@ -2,7 +2,7 @@
    習慣づくりの途中の子向け。
    → 迷わせない（次の1つだけを大きく）／短く区切る／すぐ勝てる／自己申告にたよらない */
 const STAGE_SHORT={hw:'宿題',mem:'暗記',math:'数学',mis:'ミス退治',ref:'ふりかえり',diag:'診断'};
-const stageShort=(s,wd)=>s.id==='sub'?WDP[wd].short:STAGE_SHORT[s.id];
+const stageShort=(s,wd)=>s.id==='sub'?(s.short||WDP[wd].short):STAGE_SHORT[s.id];
 const SUB_IC={英:'eng',国:'jp',理:'sci',社:'soc',総:'bolt'};
 const stageIcon=s=>s.id==='sub'?(s.boss?'trophy':SUB_IC[s.subj]||'star'):STAGE_IC[s.id];
 const starsOf=(ok,n)=>{if(!n)return'';const a=ok/n;return a>=.95?'★★★':a>=.8?'★★☆':'★☆☆'};
@@ -26,10 +26,10 @@ function stageCard(s){
   ${label?`<div class="go"><button class="bt${s.done?' gh sm':''}" data-act="stageGo" data-a="${s.id}">${label}</button></div>`:''}</article>`;
 }
 function weekStrip(date){
- const mon=monday(date),days=[1,2,3,4,5,6,0];
+ const mon=monday(date),days=[1,2,3,4,5,6,0],sub=S.rt&&S.rt.d===date?S.rt.stg.find(x=>x.id==='sub'):null;
  return `<div class="week">${days.map((wd,i)=>{
-  const d=addDays(mon,i),W=WDP[wd],past=d<date,isT=d===date,st=dayState(d);
-  return `<div class="wd ${isT?'today':past?'past':''} ${past&&(st==='ok'||st==='full')?'ok':''}"><b>${'日月火水木金土'[wd]}</b><span>${W.boss?'ボス':W.short}</span><i>${dt(d).getDate()}日</i></div>`}).join('')}</div>`;
+  const d=addDays(mon,i),W=WDP[wd],past=d<date,isT=d===date,st=dayState(d),lab=isT&&sub&&sub.short?(sub.ty===0?'ボス':sub.short):(W.boss?'ボス':W.short);   // 今日は、やすんだ教科を先に回した日なら、その教科の名前を出す
+  return `<div class="wd ${isT?'today':past?'past':''} ${past&&(st==='ok'||st==='full')?'ok':''}"><b>${'日月火水木金土'[wd]}</b><span>${lab}</span><i>${dt(d).getDate()}日</i></div>`}).join('')}</div>`;
 }
 function monthMini(){
  const m=ROADMAP.find(x=>x.k===curMonth()),st=mStat(m);
