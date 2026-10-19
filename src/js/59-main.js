@@ -171,7 +171,7 @@ const ACT={
  drillDue(){const items=drillItems({type:'due',n:10});if(!items.length){toast('ふくしゅう待ちの問題はありません');return}startSession({title:'ふくしゅうまとめ',subj:'総',items,skipBrief:true})},
  dsMode(m){DS.mode=m;drillSheet(DS.key)},dsN(n){DS.n=+n;drillSheet(DS.key)},dsLv(l){DS.lv=+l;drillSheet(DS.key)},
  drillGo(){drillGo()},
- mistDrill(){const items=weakItems(20);if(!items.length){toast('いまミスはありません');return}closePage();startSession({title:'ミス退治（自由練習）',subj:'総',items,skipBrief:true})},
+ mistDrill(){const items=weakItems(20).map(freshen);if(!items.length){toast('いまミスはありません');return}closePage();startSession({title:'ミス退治（自由練習）',subj:'総',items,skipBrief:true})},
  msAdd(){const memo=$('#msMemo').value.trim();addManualMistake($('#msSub').value,$('#msKind').value,memo);const r=addXP(5);$('#msMemo').value='';save();toast('ミスを登録した。あした再戦だ！ +5XP');renderMistPage();renderHud();if(r)levelUp(r.to)},
  /* ---- 診断・教科・AI先生 ---- */
  dgTab(s){S.dg=s;dgFb=false;save();renderDg()},dgNext(){dgFb=false;renderDg()},

@@ -9,13 +9,13 @@ function srsAnswer(it,ok){
  s.n++;if(!ok)s.w++;
  s.d=t+BOXD[s.b];S.srs[it.id]=s;
 }
-const snap=it=>({id:it.id,subj:it.subj,k:it.k,gid:it.gid,lv:it.lv,tag:it.tag,q:it.q,a:it.a,accept:it.accept,disp:it.disp,exp:it.exp,ch:it.ch,unit:it.unit});
+const snap=it=>({id:it.id,subj:it.subj,k:it.k,gid:it.gid,lv:it.lv,tag:it.tag,q:it.q,a:it.a,accept:it.accept,disp:it.disp,exp:it.exp,ch:it.ch,unit:it.unit,fd:it.fd});
 /* 自動生成問題・学校のテストのミスは、まちがえたときだけ保存して再戦に回す */
 function recordAnswer(it,ok){
  let lv='';
  if(it.k==='gen'){
   lv=genResult(it.gid,ok);
-  if(!ok){S.gx[it.id]=snap(it);srsAnswer(it,false)}
+  if(!ok){S.gx[it.id]=snap(it);ITEMS[it.id]=Object.assign({bank:'MG',k:'gen'},S.gx[it.id]);srsAnswer(it,false)}   // その場で復習の対象に（ページを開きっぱなしでも、あしたの再戦に出る）
   else if(S.srs[it.id]){srsAnswer(it,true);if(S.srs[it.id].b>=5)delete S.gx[it.id]}
   return lv;
  }

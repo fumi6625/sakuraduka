@@ -4,7 +4,8 @@ const BANK_IC={EW:'eng',EV:'redo',EG:'book',EO:'pen',EL:'vol',ER:'book',EC:'penc
 const BANK_HINT={EW:'つづり・意味・音声',EV:'過去形・過去分詞',EG:'文法の4択',EO:'語を並べて英文に',EL:'聞いて答える',ER:'長文読解（1題ずつ）',EC:'英作文（自己採点）',JK:'読みを答える',JW:'漢字を選ぶ・書く',JI:'意味と使い方',JS:'対義語・類義語',JG:'品詞・敬語・古文・漢文',JR:'読解（1題ずつ）',JC:'作文の型',MQ:'定義・性質・公式',MS:'考え方（自己採点）',SQ:'理科の一問一答',OQ:'社会の一問一答',OT:'年代の並べかえ'};
 function dueByBank(){
  const t=DN(),m={};
- for(const id in S.srs){const s=S.srs[id];if(s.d<=t){const it=ITEMS[id];if(it)m[it.bank]=(m[it.bank]||0)+1}}
+ /* 「待ち」は まだ定着していない（箱0〜3）だけ。おぼえた問題の見なおしは、毎日のミッションが順番に出す */
+ for(const id in S.srs){const s=S.srs[id];if(s.d<=t&&s.b<=3){const it=ITEMS[id];if(it)m[it.bank]=(m[it.bank]||0)+1}}
  return m;
 }
 let DS={key:'',mode:'due',n:20,lv:0};
@@ -78,7 +79,7 @@ function mistList(){
 function renderMistPage(){
  const ms=mistakeStats(),L=mistList().slice(0,80);
  $('#pg-mist .body').innerHTML=`<div class="res"><div><b>${ms.all}</b><span>登録したミス</span></div><div><b>${ms.dead}</b><span>たおした（箱4以上）</span></div><div><b>${ms.open}</b><span>のこり</span></div></div>
- <p class="mini">まちがえた問題は「あした」「4日後」「8日後」「16日後」…と、だんだん間をあけて また出ます。連続で正解して、箱4に入ったら「たおした」。</p>
+ <p class="mini">まちがえた問題は「あした」「4日後」「8日後」「16日後」…と、だんだん間をあけて また出ます。連続で正解して、箱4に入ったら「たおした」。計算のミスは、<b>数字を変えた同じ型の問題</b>で再戦します（答えを丸おぼえしても たおせません）。</p>
  <div class="row" style="margin:8px 0"><button class="bt pri" data-act="mistDrill"${ms.open?'':' disabled'}>ミスだけで練習（20問）</button></div>
  <div class="card"><h2>学校のテストのミスを登録</h2><p class="mini">テストや宿題でまちがえた問題を、あとで再戦できます。</p>
   <div class="row"><div><label for="msSub">教科</label><select id="msSub">${SJL.map(s=>`<option value="${s}">${SJN[s]}</option>`).join('')}</select></div><div><label for="msKind">原因</label><select id="msKind"><option>知識不足</option><option>理解不足</option><option>ケアレス</option><option>時間不足</option></select></div></div>

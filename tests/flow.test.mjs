@@ -283,3 +283,29 @@ test('もともと週に2日の子は、段階をもどされない（先週ま�
   assert.ok(C.doneDays(date) >= 28, `やった日数 ${C.doneDays(date)}`);
   assert.equal(C.tierFor(date), 3, 'しっかり期まで進める');
 });
+
+test('再戦：まちがえた計算問題は、数字を変えた同じ型で出る（記録は元の問題のまま）', () => {
+  const C = loadCore([...NAMES, 'GEN', 'makeGen', 'drillItems', 'genKey']);
+  // 種類がたっぷりある生成問題を1つ選ぶ
+  const gid = Object.keys(C.GEN).find((id) => {
+    const ks = new Set(); for (let s = 1; s <= 40; s++) ks.add(C.genKey(C.makeGen(id, 2, s * 7919)));
+    return ks.size >= 30;
+  });
+  assert.ok(gid, '種類の多い生成問題がある');
+  C.setToday(START); C.restoreGx();
+  const it = C.makeGen(gid, 2, 4321), q0 = it.q;
+  C.recordAnswer(it, false);
+  assert.equal(C.S.srs[it.id].b, 0);
+  const d1 = C.addDays(START, 1);
+  C.setToday(d1);
+  const a = C.drillItems({ type: 'due', n: 10 }), b = C.drillItems({ type: 'due', n: 10 });
+  const f = a.find((x) => x.id === it.id);
+  assert.ok(f, '翌日に再戦に出る');
+  assert.notEqual(f.q, q0, '同じ文のまま出さない（数字を変える）');
+  assert.equal(f.gid, gid); assert.equal(f.lv, 2);
+  assert.equal(b.find((x) => x.id === it.id).q, f.q, 'その日のうちは中身が変わらない');
+  C.recordAnswer(f, true);                       // 新しい数字で正解 → 元の記録が進む
+  assert.equal(C.S.srs[it.id].b, 1);
+  C.setToday(C.addDays(START, 2));
+  assert.equal(C.drillItems({ type: 'due', n: 10 }).some((x) => x.id === it.id), false, '2日目は出ない（間があく）');
+});
