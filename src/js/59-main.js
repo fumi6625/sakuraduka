@@ -3,7 +3,7 @@ const VIEWS=['home','drill','map','reward','menu'];
 const RENDER={home:renderHome,drill:renderDrill,map:renderMap,reward:renderReward,menu:renderMenu};
 let tab='home';
 function dockBadges(){
- const left=routeFor().filter(s=>!s.done).length,due=sum(Object.values(dueByBank()));
+ const left=flowState().steps,due=sum(Object.values(dueByBank()));   // ホーム：一本道にのこっている数（れんらくをふくむ）
  const set=(id,n)=>{const e=$('#nb-'+id);if(!e)return;e.hidden=!n;e.textContent=n>99?'99+':n};
  set('home',left);set('drill',due);
 }
@@ -45,14 +45,37 @@ function needPin(msg,fn){
 }
 const ACT={
  /* ---- ステージ ---- */
- stageGo(id){
-  const s=routeFor().find(x=>x.id===id);if(!s)return;
-  if(id==='hw'){hwSheet();return}
-  if(id==='ref'){refSheet();return}
-  if(id==='diag'){S.dg=s.subj;openPage('diag');return}
-  if(s.auto){toast('いまは再戦するミスがありません。ミスが出ると、ここに集まります');return}
-  startSession({title:s.t,subj:s.subj,items:s.items,skipBrief:!s.boss,stageId:s.done?null:s.id,boss:s.boss,desc:s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,brk:s.brk,min:s.min,xp:s.done?0:s.xp});
+ stageGo(id){const s=routeFor().find(x=>x.id===id);if(s)startStage(s)},
+ /* ---- 一本道：つぎへ／完了れんらく ---- */
+ flowGo(){
+  flowCdStop();closeOv();closeSheet();
+  if(PG)closePage();
+  if(PL)plClose();
+  if(tab!=='home')show('home');   // 一本道の足場は、ホーム
+  const F=flowState();
+  if(F.target){startStage(F.target);return}
+  if(F.ready&&!F.sent)contactSheet();
  },
+ contact(){
+  const F=flowState();
+  if(!F.ready){toast(F.all?'せいかいが 4わりに とどいた ドリルが ひつようだよ（もう一度 やってみよう）':'あと'+F.left+'つ おわったら おせるよ');return}
+  contactSheet();
+ },
+ async mailCopy(){const F=flowState();if(!F.ready)return;const ok=await copyText(mailText(F).text);if(ok)contactMark('文を コピーした。メールやLINEに はりつけて、おくってね');else toast('コピーできなかった。「おくる文を見る」から 長押しでコピーしてね')},
+ async mailShare(){const F=flowState();if(!F.ready||!navigator.share)return;const M=mailText(F);try{await navigator.share({title:M.subject,text:M.body});contactMark()}catch(e){}},
+ mailSetup(){closeSheet();openPage('family');setTimeout(()=>{const e=$('#setMailF');if(e&&e.scrollIntoView)e.scrollIntoView({block:'center'})},250)},
+ mailSave(){
+  const f=cleanMail($('#setMailF').value),m=cleanMail($('#setMailM').value);
+  if((f&&!validMail(f))||(m&&!validMail(m))){toast('メールアドレスの かたちが ちがうみたい。もう一度 見てね');return}
+  needPin('れんらく先のメールアドレスを 保存します。',()=>{S.mail={f,m};['#setMailF','#setMailM'].forEach(k=>{const e=$(k);if(e)delete e.dataset.dirty});save();initInputs();toast(f||m?'メールアドレスを 保存した':'メールアドレスを 消した')});
+ },
+ mailTest(){
+  const typed=[cleanMail($('#setMailF').value),cleanMail($('#setMailM').value)].filter(validMail),to=[...new Set(typed.length?typed:mailAddrs())];
+  if(!to.length){toast('先に メールアドレスを 入れてね');return}
+  toast('メールアプリを ひらくよ。ひらかないときは、メールアプリの せっていを 見てね');
+  location.href=mailtoURL(to,{subject:'【さくらクエスト】テストメール',body:'これは、さくらクエストの「完了れんらく」の テストです。\nこのメールが とどけば、せっていは OK です。\n（ボタンを おしても、アプリが かってに メールを おくることはありません）'});
+ },
+ autoToggle(){const set=()=>{S.flowAuto=S.flowAuto?0:1;save();initInputs();toast(S.flowAuto?'つぎへ 自動でつなぐ：オン':'つぎへ 自動でつなぐ：オフ（ボタンで すすむ）')};if(S.flowAuto)needPin('「つぎへ 自動でつなぐ」を オフにします。',set);else set()},
  hwLen(m){hwLenM=+m;$$('#hwLen button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a===hwLenM)));hwTick(true)},
  hwGo(){
   const btn=$('#hwBtn');
@@ -65,6 +88,7 @@ const ACT={
   if(hwTimer){used=Math.round((Date.now()-hwTimer.t0)/60000);clearInterval(hwTimer.iv);hwTimer=null}
   const res=completeStage(today(),'hw',{n:0,min:used>0?used:st.min});
   closeSheet();FX.confetti(50);Snd.ok();afterSimple(res,res.first?(res.held?'宿題クリア！ XPは、ドリルで4割以上とれたら入るよ':'宿題クリア！ +'+res.xp+'XP'):'');
+  flowBridge();
  },
  refStar(i){
   refSelf=+i;$$('#refStars button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a<=refSelf)));
@@ -81,6 +105,7 @@ const ACT={
   closeSheet();FX.confetti(40);Snd.ok();
   afterSimple(res,res.first?(bonus?'ふりかえり完了！ めききボーナス +5XP':res.held?'ふりかえり完了！ XPは、ドリルで4割以上とれたら入るよ':'ふりかえり完了 +'+res.xp+'XP'):'');
   if(bonus&&!res.lv)setTimeout(()=>levelUp(bonus.to),700);
+  flowBridge();
  },
  tsukkomi(){
   const items=drillItems({type:'tf',n:10});
@@ -203,6 +228,8 @@ const ACT={
  }
 };
 document.addEventListener('click',e=>{
+ if(FCD&&!e.target.closest('[data-act="flowGo"]'))flowCdStop(true);   // さわったら、自動でつぎへ進むのを止める
+ if(e.target.closest('a[data-mailsent]')){contactMark();return}   // メールを開くリンク：ふつうに開かせて、「押した」を記録する
  const t=e.target.closest('[data-act],[data-tab],[data-page]');
  if(!t){
   if(e.target.id==='sheet')closeSheet();
@@ -226,6 +253,7 @@ document.addEventListener('input',e=>{
  else if(el.id==='naiGk'){S.nai.gk=+el.value;S.nai.set=1;save();naiOut()}
  else if(el.id==='setNick'){S.nick=el.value.slice(0,12);saveSoon();renderHud()}
  else if(el.id==='setPin'){el.value=el.value.replace(/\D/g,'').slice(0,4)}
+ else if(el.id==='setMailF'||el.id==='setMailM'){el.dataset.dirty='1'}
  else if(el.dataset.memo!=null){S.memo[+el.dataset.memo]=el.value;saveSoon()}
 });
 document.addEventListener('keydown',e=>{
@@ -246,7 +274,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!PL&&!PG)
 document.addEventListener('touchstart',()=>{},{passive:true});
 
 /* ---- 開発用：?debug を付けると、テスト用の入り口が出る ---- */
-if(/[?&]debug/.test(location.search))window.__sq={get S(){return S},get PL(){return PL},ACT,routeFor,present,judge,correctText,show,refresh,openPage,makeGen,GEN,BK,ITEMS,startSession,levelUp,setToday,completeStage,recordAnswer,drillItems,lvInfo};
+if(/[?&]debug/.test(location.search))window.__sq={get S(){return S},get PL(){return PL},ACT,routeFor,flowState,mailText,present,judge,correctText,show,refresh,openPage,makeGen,GEN,BK,ITEMS,startSession,levelUp,setToday,completeStage,recordAnswer,drillItems,lvInfo};
 
 /* ---- 初期化 ---- */
 (function init(){

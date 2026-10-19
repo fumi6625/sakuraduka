@@ -276,7 +276,7 @@ details.fold>summary{font-weight:900}
 details.fold>summary::before{content:"▶";font-size:11px;margin-right:8px;color:var(--team-t)}
 details.fold[open]>summary::before{content:"▼"}
 label{display:block;font-size:13px;font-weight:900;color:var(--tx2);margin:6px 0 3px}
-input[type=text],input[type=number],input[type=date],select,textarea{width:auto;min-height:48px;padding:6px 12px;font-size:17px;font-weight:700;color:var(--tx);background:var(--field);border:3px solid var(--ink);border-radius:13px;box-shadow:inset 0 0 0 2px var(--field-ring);-webkit-appearance:none;appearance:none}
+input[type=text],input[type=email],input[type=number],input[type=date],select,textarea{width:auto;min-height:48px;padding:6px 12px;font-size:17px;font-weight:700;color:var(--tx);background:var(--field);border:3px solid var(--ink);border-radius:13px;box-shadow:inset 0 0 0 2px var(--field-ring);-webkit-appearance:none;appearance:none}
 select{padding-right:34px;background-image:linear-gradient(45deg,transparent 50%,var(--arrow) 50%),linear-gradient(135deg,var(--arrow) 50%,transparent 50%);background-position:calc(100% - 20px) 55%,calc(100% - 14px) 55%;background-size:6px 6px;background-repeat:no-repeat}
 textarea{width:100%;min-height:110px;font-size:14px;font-family:ui-monospace,Menlo,monospace}
 input:focus,select:focus,textarea:focus{outline:none;box-shadow:inset 0 0 0 3px var(--team)}
@@ -994,6 +994,43 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 .thm .tsw{flex:none;position:relative;width:46px;height:46px;border:3px solid var(--tk);border-radius:14px;background:var(--tb);overflow:hidden}
 .thm .tsw i{position:absolute;left:6px;right:6px;top:7px;height:13px;border:2px solid var(--tk);border-radius:6px;background:var(--tc)}
 .thm .tsw u{position:absolute;left:6px;bottom:6px;width:14px;height:14px;border:2px solid var(--tk);border-radius:50%;background:var(--ta)}
+
+/* ===== きょうの一本道・完了れんらく ===== */
+.route .nd.par .dot{border-style:dashed}
+.route .nd.goal .dot{border-style:dashed}
+.route .nd.goal.lock{opacity:.75}
+.route .nd.goal.now::before,.route .nd.goal.sent::before{background:var(--team);height:8px;top:21px;border:2px solid var(--ink);border-width:2px 0}
+.route .nd.goal.now .dot{background:var(--lime);border:3px solid #fff;color:var(--on);box-shadow:0 0 0 3px var(--ink),0 0 22px var(--lime);animation:pulse 1.2s ease-in-out infinite}
+.route .nd.goal.now{color:var(--tx-hi)}
+.route .nd.goal.sent .dot{background:var(--green);border:3px solid var(--ink);color:var(--on-green);box-shadow:3px 3px 0 var(--ink)}
+.rs2 .route{margin:18px 0 4px}
+.cbar{display:flex;align-items:center;gap:14px;width:100%;min-height:68px;margin:2px 0 14px;padding:10px 16px;text-align:left;color:var(--tx2);background:var(--sunk-a);border:3px dashed rgba(var(--line-rgb),.4);border-radius:20px}
+.cbar svg{flex:none;width:30px;height:30px}
+.cbar b{display:block;font-family:var(--f-d);font-size:17px;line-height:1.3;color:var(--tx)}
+.cbar small{display:block;margin-top:2px;font-size:14px;font-weight:700}
+.nowc.goalc p{margin:8px 0 12px;font-weight:900;color:var(--on);text-shadow:none}
+.nowc.goalc .bt.cbtn{min-height:84px;padding:8px 18px;font-size:24px;line-height:1.25;gap:12px}
+.nowc.goalc .bt.cbtn svg{width:34px;height:34px}
+.nowc.goalc .bt.cbtn:not(.sent){animation:nudge 1.6s ease-in-out infinite}
+.nowc.goalc .oka{margin:16px 0 0;font-weight:700}
+.nowc.goalc .row .bt{flex:1;min-width:150px}
+@keyframes nudge{50%{transform:scale(1.025)}}
+.nxt{margin:16px 0 4px;text-align:center}
+.nxb{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:84px;margin-top:10px;padding:10px 22px;text-align:left}
+.nxb b{display:block;font-size:26px;line-height:1.2}
+.nxb small{display:block;margin-top:2px;font-family:var(--f-b,inherit);font-size:14px;font-weight:700;line-height:1.35}
+.nxb svg.ic{flex:none;width:38px;height:38px}
+.nxc{min-height:1.7em;margin:10px 0 6px;font-size:14px;font-weight:900;color:var(--tx2)}
+.cta.mis{margin-top:6px}
+.csum{list-style:none;margin:10px 0;padding:0}
+.csum li{display:flex;align-items:center;gap:10px;min-height:44px;padding:4px 2px;border-bottom:2px dashed rgba(var(--line-rgb),.18);font-weight:900}
+.csum li svg{flex:none;width:22px;height:22px;color:var(--green-t)}
+.csum li span{flex:1}
+.csum li b{font-family:var(--f-d);color:var(--tx2)}
+.cto{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0 12px}
+.cto .chp{white-space:normal;word-break:break-all}
+.csheet .cbtn{min-height:78px;font-size:23px;margin:4px 0 8px}
+.csheet .cbtn svg{width:32px;height:32px}
 </style>
 <div id="bg" aria-hidden="true"></div>
 <div class="app">
@@ -1134,6 +1171,14 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
    <li><b>入っていないもの：</b>応用問題・過去問・作文・内申点。本当の実力は、学校のテストや模試の点で確かめてください。</li>
    <li><b>テスト・模試の記録：</b>「診断・内申シミュレーター」に、返ってきた点を記録できます（暗証番号をオンにしていると、おうちの人のOKが要ります）。合格圏のめやす（約640点）までの距離が出ます。</li></ul>
   <p class="mini">どの数字も推定のめやすで、<b>合格をほしょうするものではありません</b>。公式の合格ラインでもありません。</p></div>
+ <div class="card"><span class="eyebrow px">CONTACT</span><h2>「完了れんらく」ボタン（メール）の見かた</h2>
+  <ul>
+   <li><b>しくみ：</b>きょうのミッションがぜんぶ終わり、合格ライン（正答4割以上のドリルなど）にも届いたときだけ、ホームの「おかあさん・おとうさんに 完了れんらく」ボタンが押せます。押すと、下の「設定」で入れたアドレスあてのメール作成画面が開きます。</li>
+   <li><b>自動では送りません。</b>子どもが自分でボタンを押し、メールアプリの「送信」まで押すことが、「やった」のアピールになります。アプリは通信をしていません（メールアプリを開くだけです）。</li>
+   <li><b>メールが開かないとき：</b>iPadの「メール」アプリにアカウントが入っていないと開きません。そのときは、画面の「文をコピー」か「ほかのアプリでおくる」（LINEなど）を使えます。学校のiPadで使えるアプリは、学校の決まりをご確認ください。</li>
+   <li><b>はじめに一度：</b>設定にアドレスを入れたら、「テストメールを作る」で試してください。暗証番号（保護者OK）をオンにすると、宛先を子どもが変えられなくなります。</li>
+   <li><b>宿題：</b>保護者OKがオンのときは、宿題の確認におうちの人のOKがいるので、れんらくの条件には入れていません。メールに「宿題はOKがまだ」と書いてあるときは、見てあげてください。</li>
+   <li><b>とどいたかどうか：</b>アプリからは確かめられません。ボタンを押した日は、週報に「完了れんらく ◯/7日」と出ます。メールが来ない日は、責めずに「送信まで押せた？」と聞いてあげてください。</li></ul></div>
  <div class="grid">
   <div class="card"><h2>週1回、日曜の10分</h2><ol><li>週報（下のボタンでコピー）を見る</li><li>ほめるポイントを<b>2つ</b>、行動で伝える（例：「毎日続けたね」「ミスを直したね」）</li><li>質問を<b>1つ</b>だけ（「いま、いちばん困っていることは？」）</li><li>来週のごほうびの約束を確認</li></ol>
    <button class="bt pri sm" data-act="report">週報をコピー</button><textarea id="rpt" readonly style="margin-top:8px" placeholder="ここに週報が出ます" aria-label="週報"></textarea></div>
@@ -1152,10 +1197,20 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
   <h4>勉強の量（段階）</h4>
   <p class="mini">「おまかせ」は、はじめの2週間は短く（約3〜13分）、そのあと少しずつ増えます。おやすみが多い週は、段階はそのままで量を少なめにして、やった日ごとに戻します。7日以上あいたあとは短いところから、1日ごとに戻していきます。「ミニの日」は、暗証番号を決めていないと週2回までです。</p>
   <div class="seg" id="setTier"></div>
+  <h4>つぎのステージへ 自動でつなぐ</h4>
+  <p class="mini">ステージが終わったあと、数秒でつぎのステージが始まります（画面のどこかをさわると止まります）。「始めるのがつらい」をへらすための設定です。オフにすると、「つぎへ」ボタンを押したときだけ進みます。オフにするときは、暗証番号がいります。</p>
+  <div class="row"><div><label for="setAuto">自動でつなぐ</label><button class="sw" id="setAuto" data-act="autoToggle" aria-pressed="true" aria-label="つぎのステージへ自動でつなぐ"></button></div></div>
   <h4>保護者OK（宿題のチェック）</h4>
   <p class="mini">オンにすると、ホームの「宿題・提出物」を終えるとき、月の目標をつけるとき、「ミニの日」にするとき、段階を変えるとき、リセット・復元・保護者OKをオフにするときに、4けたの暗証番号が必要になります（自己申告でごまかせないように）。暗証番号は子どもに教えない。</p>
   <div class="row"><div><label for="setPin">暗証番号（4けた）</label><input id="setPin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" style="width:130px"></div><div><label for="setPinOn">保護者OK</label><button class="sw" id="setPinOn" data-act="pinToggle" aria-pressed="false" aria-label="保護者OK"></button></div></div>
+  <h4>おうちの人へ「完了れんらく」のメール</h4>
+  <p class="mini">ホームの「おかあさん・おとうさんに 完了れんらく」ボタンは、きょうのミッションがぜんぶ終わって合格ラインにも届いたときだけ押せます。押すと、ここに入れた宛先あてのメール作成画面が開きます。<b>アプリが自動で送ることはありません</b>（子どもが自分でボタンを押し、メールアプリの「送信」まで押すことが、「やった」の合図になります）。アドレスはこのiPadの中にだけ保存されます。暗証番号をオンにすると、宛先を変えるときに暗証番号がいります。</p>
+  <div class="row"><div><label for="setMailF">おとうさんのメール</label><input id="setMailF" type="email" inputmode="email" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="例：otosan@example.com" style="width:280px;max-width:100%"></div>
+   <div><label for="setMailM">おかあさんのメール</label><input id="setMailM" type="email" inputmode="email" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="例：okasan@example.com" style="width:280px;max-width:100%"></div></div>
+  <div class="row" style="margin-top:8px"><button class="bt pri sm" data-act="mailSave">保存</button><button class="bt sm" data-act="mailTest">テストメールを作る</button></div>
+  <p class="mini" id="mailNote" style="margin-top:6px"></p>
   <h4>バックアップ</h4>
+  <p class="mini">バックアップの文字列には、記録のほか、暗証番号とメールアドレスもふくまれます。人に見せたり、ほかの人がさわれる場所に置いたりしないでください。</p>
   <textarea id="bk" aria-label="バックアップ" placeholder="「バックアップを作る」を押すと、ここに文字列が出ます。復元するときはここに貼って「復元」。"></textarea>
   <div class="row" style="margin-top:8px"><button class="bt sm" data-act="bkMake">バックアップを作る</button><button class="bt sm" data-act="bkCopy">コピー</button><button class="bt sm" data-act="bkLoad">復元</button><button class="bt sm" data-act="reroute">きょうのルートを作り直す</button><button class="bt sm ng" data-act="reset" id="rstBtn">すべてリセット</button></div></div>
  <div class="card"><h2>この資料について</h2>
@@ -7896,9 +7951,9 @@ let memStore=null;
 const ls={get(){try{return localStorage.getItem(KEY)}catch(e){return memStore}},set(v){memStore=v;try{localStorage.setItem(KEY,v)}catch(e){}}};
 const DEF={nick:'',team:'pink',sound:1,exam:'2028-03-01',xp:0,coin:0,streak:0,best:0,last:'',freeze:1,
  days:{},ms:{},mc:{},got:{},mrw:{},nai:{a:{},b:{},t3:39,gk:315,set:0},diag:{},badges:{},shop:null,gacha:null,
- wk:{},memo:['','',''],tab:'home',sj:'数',dg:'国',srs:{},gx:{},gs:{},light:{},refl:{},rt:null,tot:{n:0,ok:0},rlog:[],tier:'auto',start:'',pin:'',pinOn:0,pinSkip:'',tf:{n:0,ok:0},at:'',subLast:{},sw:{},kh:{},tl:[],theme:'normal'};
+ wk:{},memo:['','',''],tab:'home',sj:'数',dg:'国',srs:{},gx:{},gs:{},light:{},refl:{},rt:null,tot:{n:0,ok:0},rlog:[],tier:'auto',start:'',pin:'',pinOn:0,pinSkip:'',tf:{n:0,ok:0},at:'',subLast:{},sw:{},kh:{},tl:[],theme:'normal',mail:{f:'',m:''},flowAuto:1};
 const fresh=()=>{const o=JSON.parse(JSON.stringify(DEF));o.shop=SHOP0.map(x=>({n:x[0],c:x[1]}));o.gacha=GACHA0.slice();return o};
-const norm=o=>{o=o||{};const r=Object.assign(fresh(),o);r.nai=Object.assign({},DEF.nai,o.nai);r.tot=Object.assign({n:0,ok:0},o.tot);r.tf=Object.assign({n:0,ok:0},o.tf);if(!r.shop)r.shop=fresh().shop;if(!r.gacha)r.gacha=fresh().gacha;return r};
+const norm=o=>{o=o||{};const r=Object.assign(fresh(),o);r.nai=Object.assign({},DEF.nai,o.nai);r.tot=Object.assign({n:0,ok:0},o.tot);r.tf=Object.assign({n:0,ok:0},o.tf);r.mail=Object.assign({f:'',m:''},o.mail);if(!r.shop)r.shop=fresh().shop;if(!r.gacha)r.gacha=fresh().gacha;return r};
 let S;
 try{S=norm(JSON.parse(ls.get()||'{}'))}catch(e){S=fresh()}
 const save=()=>ls.set(JSON.stringify(S));
@@ -9086,6 +9141,8 @@ const goodOf=rec=>{
  const pin=!!(S.pinOn&&S.pin),k=stageKeys(rec).filter(x=>x!=='diag');
  return{sess:k.filter(x=>{if(x==='hw'||x==='ref')return false;const g=rec.stg[x];return !g.n||g.ok/g.n>=.4}).length,hw:pin&&k.includes('hw')?1:0};
 };
+/* 正答4割に届かなかったドリル（goodOf の反対）。やりなおして4割以上とれたら、合格ラインに数える */
+const lowRes=g=>!!(g&&g.n&&g.ok/g.n<.4);
 const dayOK=(rec,tier)=>{const g=goodOf(rec);return tier===1?g.sess>=1:(g.sess>=1&&g.sess+g.hw>=2)};
 /* 合格ラインまで、あと何つか */
 const dayNeed=(rec,tier)=>{const g=goodOf(rec);return tier===1?Math.max(0,1-g.sess):Math.max(g.sess>=1?0:1,2-g.sess-g.hw)};
@@ -9114,14 +9171,16 @@ function stageXP(id,r){
 }
 /* r: {ok,n,sec,combo,boss,min,note}   戻り値は画面に出す内容 */
 function completeStage(date,id,r){
- const d=dayRec(date),out={xp:0,first:!d.stg[id],lv:null,streak:null,full:false,fullBonus:0,coin:0};
- if(!out.first)return out;
+ const d=dayRec(date),old=d.stg[id],redo=!!old&&lowRes(old)&&!lowRes(r);   // 4割未満だったドリルは、やりなおして4割以上とれたら数える（道をふさがない）
+ const out={xp:0,first:!old||redo,lv:null,streak:null,full:false,fullBonus:0,coin:0};
+ if(!out.first){if(lowRes(old)&&lowRes(r))out.low=true;return out}
  const had=goodOf(d).sess>=1;   // この前までに、正答4割以上のドリルがあったか
- out.xp=stageXP(id,r);
+ const was=redo?(old.xp||0):0;   // やりなおしのときは、前に入ったXPを引く（二重にもらわない）
+ out.xp=Math.max(0,stageXP(id,r)-was);
  if((r.n||0)>=5&&(r.ok||0)/r.n<.4)out.low=true;
  const st=(S.rt&&S.rt.d===date?S.rt.stg.find(x=>x.id===id):null)||{};
  const mins=r.min!=null?r.min:Math.max(1,Math.round((r.sec||0)/60)),sj=st.subj||'総';
- d.stg[id]={ok:r.ok||0,n:r.n||0,xp:out.xp,sec:r.sec||0,cb:r.combo||0,at:Date.now(),note:r.note||''};
+ d.stg[id]={ok:r.ok||0,n:r.n||0,xp:out.xp+was,sec:(redo?old.sec||0:0)+(r.sec||0),cb:Math.max(r.combo||0,redo?old.cb||0:0),at:Date.now(),note:r.note||''};
  d.min[sj]=(d.min[sj]||0)+mins;
  const good=goodOf(d).sess>=1;
  /* 宿題・ふりかえり・全クリのXPは、その日に「正答4割以上のドリル」が1つあるときだけ。ない日の宿題・ふりかえりのXPは預かって、あとでドリルがとれたら入る */
@@ -9266,7 +9325,7 @@ function reportText(){
  const mon=monday(today()),days=[...Array(7)].map((_,i)=>addDays(mon,i));let ok=0,full=0,n=0,c=0;const min={};
  days.forEach(d=>{const r=S.days[d];if(r){ok+=r.ok?1:0;full+=r.full?1:0;n+=r.n||0;c+=r.c||0;for(const k in r.min)min[k]=(min[k]||0)+r.min[k]}});
  const tot=sum(Object.values(min)),w=S.wk[mon],m=ROADMAP.find(x=>x.k===curMonth()),st=mStat(m),L=lvInfo(S.xp),ms=mistakeStats();
- return `【さくらクエスト 週報】${S.nick||'（呼び名なし）'}\n期間：${mon}〜${days[6]}\n合格ラインの日：${ok}/7日（全ステージクリア：${full}日）　いまの段階：${TIERS[S.rt&&S.rt.tier||1].name}\n連続記録：${curStreak()}日\n答えた問題：${n}問（正解 ${c}問・${n?Math.round(c/n*100):0}%）\n学習時間：${tot}分（${Object.keys(min).map(k=>SJN[k]+min[k]+'分').join('、')||'記録なし'}）\n週ボス：${w?w.sc+'/10問':'まだ'}\nミス：登録${ms.all}体／たおした${ms.dead}体／のこり${ms.open}体\nおぼえた問題（箱4以上）：${masteredCount()}問\n${pathReportLine()}\n今月のマイルストーン：${st.d}/${st.n}\nレベル：Lv.${L.lv}「${L.name}」（${S.xp}XP）\nひとこと：`;
+ return `【さくらクエスト 週報】${S.nick||'（呼び名なし）'}\n期間：${mon}〜${days[6]}\n合格ラインの日：${ok}/7日（全ステージクリア：${full}日）　いまの段階：${TIERS[S.rt&&S.rt.tier||1].name}\n連続記録：${curStreak()}日\n答えた問題：${n}問（正解 ${c}問・${n?Math.round(c/n*100):0}%）\n学習時間：${tot}分（${Object.keys(min).map(k=>SJN[k]+min[k]+'分').join('、')||'記録なし'}）\n週ボス：${w?w.sc+'/10問':'まだ'}\nミス：登録${ms.all}体／たおした${ms.dead}体／のこり${ms.open}体\nおぼえた問題（箱4以上）：${masteredCount()}問\n${pathReportLine()}\n完了れんらく（子どもがボタンを押した日）：${days.filter(d=>S.days[d]&&S.days[d].ct).length}/7日\n今月のマイルストーン：${st.d}/${st.n}\nレベル：Lv.${L.lv}「${L.name}」（${S.xp}XP）\nひとこと：`;
 }
 /* ===== 合格への近づき具合（推定）：いまの実力の見こみ・予定との差・入試の日の見こみ =====
    K（実力の見こみ）＝おぼえ具合の部分点。見ていない問題は0点、見た問題は箱が高いほど高い点（箱0＝.08 … 箱6＝1）。
@@ -9360,6 +9419,58 @@ function pathReportLine(date=today()){
  a.push('　※推定のめやすです。合格をほしょうするものではありません');
  return a.join('\n');
 }
+/* ===== きょうの一本道と、おうちの人への「完了れんらく」（画面に触れない部分） =====
+   マスト＝きょうのルートで、自動で空になっていないステージ（保護者OKがオンのときの宿題は、おうちの人のOKがいるので入れない）。
+   順番に1本の道でつなぐ：暗記 → 数学 → 今日の教科 → ミス退治 → （診断）→ 宿題 → ふりかえり → 完了れんらく。
+   「完了れんらく」は、マストがぜんぶ終わって、きょうの合格ラインにも届いたときだけ押せる。
+   送るのは、子どもが押したときに開くメール作成画面（mailto）か、コピー・共有。アプリが自動で送ることはない
+   （子どもが自分で押すこと自体が「やった」のアピールになるので）。tests/contact.test.mjs が、通信をしていないことも見張る */
+const FLOW_NAME={hw:'宿題・提出物',mem:'暗記バトル',math:'数学ドリル',mis:'ミス退治',ref:'ふりかえり'};
+const flowName=s=>s.id==='diag'?'ミニ診断（'+(SJN[s.subj]||s.subj)+'）':s.id==='sub'?String(s.t).split('：')[0]:(FLOW_NAME[s.id]||s.t);
+const PINON=()=>!!(S.pinOn&&S.pin);
+const mustStages=route=>route.filter(s=>!s.auto&&!(s.id==='hw'&&PINON()));
+
+/* きょうの一本道の状態。next＝次のマスト／redo＝すべて終わったのに合格ラインに届かないとき、やりなおす（正答4割未満の）ドリル
+   ready＝れんらくボタンが押せる（マストがぜんぶ終わり、合格ラインにも届いた。やりなおす道が無いときは、行き止まりにしない） */
+function flowState(date=today()){
+ const route=routeFor(date),must=mustStages(route),rec=peekDay(date),tier=S.rt&&S.rt.d===date?S.rt.tier:tierFor(date);
+ const next=must.find(s=>!s.done)||null,all=!next,ok=dayOK(rec,tier);
+ const low=all&&!ok?must.filter(s=>s.kind==='session'&&lowRes(s.res)).sort((a,b)=>a.res.ok/a.res.n-b.res.ok/b.res.n):[];
+ const redo=low[0]||null,ready=all&&(ok||!redo);
+ const hw=route.find(s=>s.id==='hw');
+ const left=must.filter(s=>!s.done).length,sent=!!rec.ct;
+ return{route,must,next,redo,target:next||redo,all,ok,ready,left,sent,sentAt:rec.ct||0,
+  hwWait:!!(hw&&!hw.done&&PINON()),
+  steps:left+(redo?1:0)+(ready&&!sent?1:0)};   // 道にのこっている数（れんらくをふくむ）
+}
+
+/* ----- メールアドレス（このiPadの中だけに保存。コードや資料には入れない） ----- */
+const cleanMail=v=>String(v||'').normalize('NFKC').replace(/\s+/g,'');
+const validMail=v=>/^[A-Za-z0-9._+\-]+@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)+$/.test(v)&&v.length<=100;
+const mailAddrs=()=>{const m=S.mail||{};return[...new Set([cleanMail(m.f),cleanMail(m.m)].filter(validMail))]};
+const mailWho=()=>{const m=S.mail||{},f=validMail(cleanMail(m.f)),o=validMail(cleanMail(m.m));return f&&!o?'おとうさん':o&&!f?'おかあさん':'おとうさん・おかあさん'};
+const mdw=d=>{const x=dt(d);return(x.getMonth()+1)+'/'+x.getDate()+'（'+'日月火水木金土'[x.getDay()]+'）'};
+/* 送る文（子どもの言葉で、短く）。subject＝件名、body＝本文、text＝コピー・共有用 */
+function mailText(F,date=today()){
+ const rec=peekDay(date),nick=S.nick;
+ const rows=F.must.map(s=>'・'+flowName(s)+(s.kind==='session'&&s.res&&s.res.n?'　'+s.res.ok+'/'+s.res.n:''));
+ const ss=F.must.filter(s=>s.kind==='session'&&s.res&&s.res.n),n=sum(ss.map(s=>s.res.n)),ok=sum(ss.map(s=>s.res.ok)),min=sum(Object.values(rec.min||{}));
+ const L=[mailWho()+'へ','','きょう（'+mdw(date)+'）の ノルマ、ぜんぶ おわったよ！','','■ やったこと',...rows,'','■ きょうの まとめ'];
+ if(n)L.push('・せいかい '+ok+'/'+n+'（'+Math.round(ok/n*100)+'%）');
+ if(min)L.push('・べんきょうした時間 約'+min+'分');
+ if(curStreak())L.push('・れんぞく '+curStreak()+'日');
+ if(F.hwWait)L.push('','宿題は、おうちの人の OK が まだです。見てね！');
+ L.push('','さくらクエストから（'+(nick||'子ども')+'が じぶんで ボタンを おして つくった れんらくです）');
+ const subject='【さくらクエスト】きょうの ノルマ、おわったよ！'+(nick?'（'+nick+'）':''),body=L.join('\n');
+ return{subject,body,text:subject+'\n\n'+body};
+}
+/* メール作成画面を開くリンク（宛先は , でつなぐ。本文の改行は CRLF） */
+const mailtoURL=(to,m)=>'mailto:'+to.join(',')+'?subject='+encodeURIComponent(m.subject)+'&body='+encodeURIComponent(m.body.replace(/\n/g,'\r\n'));
+/* 「れんらくボタンを押した」記録。押せる状態（ready）のときだけ記録できる */
+function markContact(date=today()){
+ const F=flowState(date);if(!F.ready)return false;
+ const d=dayRec(date);d.ct=Date.now();d.cn=(d.cn||0)+1;return true;
+}
 /* ===== 画面の共通部品：アイコン・インクの飛沫・音・読み上げ・演出 ===== */
 /* 色を白とまぜてやわらかくする（先生ごとのこい色を、明るいテーマの画面にあわせて使う） */
 const soft=(hex,k=.55)=>{const n=parseInt(String(hex).replace('#',''),16);if(isNaN(n))return hex;const m=c=>Math.round(c+(255-c)*k);return 'rgb('+m(n>>16&255)+','+m(n>>8&255)+','+m(n&255)+')'};
@@ -9380,7 +9491,7 @@ const ICO={
  chat:'M4 5h16v11H9l-5 4zM8 9h8M8 12h5',chart:'M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-8',eng:'M5 19L12 4l7 15M8 14h8',jp:'M5 7h14M12 4v3M8 7c0 6 3 10 8 12M16 7c0 5-3 9-8 12',
  sci:'M9 3h6M10 3v6L5 19a2 2 0 002 2h10a2 2 0 002-2l-5-10V3',soc:'M12 3a9 9 0 100 18 9 9 0 000-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',
  math:'M5 5h14M5 19h14M17 5L7 19',all:'M12 3l3 6 6 1-4.5 4.5L17.5 21 12 18l-5.5 3 1-6.5L3 10l6-1z',sound:'M4 9v6h4l5 4V5L8 9z',
- pencil:'M4 20l1-4L16 5l3 3L8 19z',x:'M6 6l12 12M18 6L6 18',redo:'M20 12a8 8 0 11-3-6.2M20 4v5h-5',up:'M12 19V5M6 11l6-6 6 6',key:'M8 15a4 4 0 110-8 4 4 0 010 8zM11 11h9M17 11v4'
+ pencil:'M4 20l1-4L16 5l3 3L8 19z',mail:'M3 6h18v12H3zM3 7l9 7 9-7',x:'M6 6l12 12M18 6L6 18',redo:'M20 12a8 8 0 11-3-6.2M20 4v5h-5',up:'M12 19V5M6 11l6-6 6 6',key:'M8 15a4 4 0 110-8 4 4 0 010 8zM11 11h9M17 11v4'
 };
 const ico=(n,cls='')=>`<svg class="ic ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ICO[n]||ICO.star}"/></svg>`;
 const SJIC={国:'jp',数:'math',英:'eng',理:'sci',社:'soc',総:'all'};
@@ -9568,24 +9679,18 @@ function nowCard(next,tier,okDay,rec){
  const need=dayNeed(rec,tier);
  const goal=okDay?`<span class="chp ok">✓ きょうの合格ライン達成！</span> れんぞく ${curStreak()}日`:`<span class="chp w">合格ライン</span> ${tier===1?'どれか1つクリアでOK！':'あと'+Math.max(1,need)+'つクリアでOK！'}`;
  return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'var(--yellow)',{drops:7,stroke:'var(--ink)',sw:5})}</div>
-  <span class="lb">いま やること</span>
+  <span class="lb">${next.redo?'もう一度 やること':'いま やること'}</span>
   <div class="nrow"><div class="nico">${ico(stageIcon(next))}</div><div class="ntx"><h2>${esc(next.t)}</h2><p>${esc(briefDesc(next.desc))}</p></div></div>
   <div class="chips">${isS?`<span class="chp">約${Math.max(1,next.min)}分</span><span class="chp">${next.items.length}問</span>`:next.xp?'':`<span class="chp">約${next.min||3}分</span>`}${next.xp||isS?`<span class="chp xp">+${next.xp}XP</span>`:''}</div>
   <button class="bt pri xl w100" data-act="stageGo" data-a="${next.id}">${goBtn(next)}</button>
   <p class="goal">${goal}</p><p class="tnote">${esc(tierNote(today(),tier))}</p>${vowChip(okDay)}</div>`;
 }
-function clearedCard(){
- return `<div class="nowc cleared"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'var(--ink)',sw:5})}</div><span class="lb y">ぜんぶクリア！</span>
-  <h2 style="margin:12px 0 4px;font-size:30px">きょうは、もうバッチリ！</h2>
-  <p>まだ元気なら「おかわり」。好きな教材を、好きなだけ。（1日60XPまで）</p>
-  <div class="row"><button class="bt pri xl" data-tab="drill">おかわりドリル</button><button class="bt cy xl" data-act="tsukkomi">ツッコミバトル</button></div></div>`;
-}
 function renderHome(){
- const date=today(),route=routeFor(date),tier=S.rt.tier,T=TIERS[tier],wd=dt(date).getDay(),W=WDP[wd];
- const real=route.filter(s=>!s.auto),next=route.find(s=>!s.done),todo=real.filter(s=>!s.done&&s!==next),done=real.filter(s=>s.done);
+ const date=today(),F=flowState(date),route=F.route,tier=S.rt.tier,T=TIERS[tier],wd=dt(date).getDay(),W=WDP[wd];
+ const real=route.filter(s=>!s.auto),next=F.target,todo=real.filter(s=>!s.done&&s!==next),done=real.filter(s=>s.done);   // next＝一本道のつぎ（保護者OKの宿題は、おうちの人と）
  const rec=peekDay(date),okDay=dayOK(rec,tier),light=!!S.light[date];
- const appMin=sum(real.filter(s=>!s.done&&s.kind==='session').map(s=>s.min));
- const flow=real.map(s=>stageShort(s,wd)).join('<i> ▶ </i>');
+ const appMin=sum(F.must.filter(s=>!s.done&&s.kind==='session').map(s=>s.min));
+ const mustDone=F.must.filter(s=>s.done).length;
  const tm=previewDay(addDays(date,1));
  const intro=!S.nick?`<div class="card"><h2>はじめに：呼び名を決めよう</h2><p class="mini">本名は入れない。あとから変えられます。</p><div class="row"><input id="nickIn" type="text" maxlength="12" placeholder="ニックネーム" style="flex:1;min-width:180px"><button class="bt" data-act="nickSet">きまり！</button></div></div>`:'';
  const pinAsk=(S.nick&&!S.pin&&doneDays(date)>=1&&(!S.pinSkip||diff(S.pinSkip,date)>=7))?`<div class="card"><h2>おうちの人へ</h2><p class="mini">4けたの暗証番号を決めると、宿題のOKと月の目標が「自己申告」ではなくなります。</p><div class="row"><button class="bt pri" data-page="family">決める</button><button class="bt gh" data-act="pinLater">あとで</button></div></div>`:'';
@@ -9594,10 +9699,11 @@ function renderHome(){
  <div class="hero cmp" data-s="${W.subj}">
   <div class="sp1">${splatSVG(5,'var(--team)',{stroke:'var(--ink)',sw:4})}</div>
   <div class="t1"><span class="lb sm">きょうのミッション</span><span class="date">${dateJa(date)}</span><span class="chp t">${T.name}モード</span></div>
-  <div class="gp"><div class="tank"><i style="--w:${Math.round(done.length/real.length*100)}%"></i></div><b>${done.length}/${real.length}</b>${appMin?`<span class="mini left-min">のこり約${appMin}分</span>`:''}</div>
+  <div class="gp"><div class="tank"><i style="--w:${Math.round(mustDone/F.must.length*100)}%"></i></div><b>${mustDone}/${F.must.length}</b>${appMin?`<span class="mini left-min">のこり約${appMin}分</span>`:''}</div>
  </div>
- ${next?nowCard(next,tier,okDay,rec):clearedCard()}
- <div class="route" aria-label="きょうの流れ">${route.map(s=>`<button class="nd ${s.auto?'auto':s.done?'done':s===next?'now':''}" data-act="stageGo" data-a="${s.id}"><span class="dot">${s.done&&!s.auto?ico('check'):ico(stageIcon(s))}</span>${esc(stageShort(s,wd))}</button>`).join('')}</div>
+ ${next?nowCard(next===F.redo?Object.assign({},next,{done:false,redo:true,desc:'ゆっくり読んで もう一度。4割以上でOK！'}):next,tier,okDay,rec):goalCard(F)}
+ ${routeBar(F,wd,true)}
+ ${F.ready?'':lockBar(F)}
  ${todo.length?`<details class="fold later"><summary><span class="lb sm y">このあと</span><span class="lt">${todo.length}つ</span></summary><div class="stages">${todo.map(stageCard).join('')}</div></details>`:''}
  ${done.length?`<details class="fold cleared-list"><summary>クリアしたステージ（${done.length}）</summary><div class="stages">${done.map(stageCard).join('')}</div></details>`:''}
 ${intro}${diagTip}${pinAsk}
@@ -9848,7 +9954,7 @@ function finishSession(){
  const o=PL.o,n=PL.total,ok=PL.ok,sec=Math.round(PL.sec);
  const acc=n?ok/n:1,win=o.boss?ok>=8:true;
  let res=null,drill=null;
- const stageDone=o.stageId&&!(peekDay().stg[o.stageId]);
+ const prev=o.stageId?peekDay().stg[o.stageId]:null,stageDone=o.stageId&&(!prev||lowRes(prev));   // 正答4割未満だったドリルの「やりなおし」も、ここで数える
  if(stageDone){
   res=completeStage(today(),o.stageId,{ok,n,sec,combo:PL.maxCombo,boss:!!o.boss});
   if(S.rt&&S.rt.p)delete S.rt.p[o.stageId];
@@ -9861,6 +9967,7 @@ function renderResult(R){
  const {o,n,ok,sec,acc,win,res,drill,nb}=R,miss=PL.log.filter(x=>!x.ok);
  const xp=res?res.xp+(res.fullBonus||0):drill?drill.xp:0;
  const rank=rankOfAcc(acc);
+ const F=flowState(),cdOn=!!(S.flowAuto&&F.next),nx=nextBlock(F,{cd:cdOn});   // 一本道：つぎのステージ（なければ、れんらく）へ
  const head=o.boss?(win?'BOSS DOWN!':'おしい！'):acc>=.5||n===0?'CLEAR!':'おつかれ！';
  plRoot().innerHTML=`<div class="plb mid"><div class="rs2" data-rank="${rank}">
   <div class="splw">${splatSVG(hashStr(o.title)%97,'var(--team)',{drops:7,stroke:'var(--ink)',sw:5})}</div>
@@ -9873,8 +9980,9 @@ function renderResult(R){
   ${miss.length?`<p class="nt"><span class="chp w">まちがえた ${miss.length}問 → あした「ミス退治」で再戦</span></p>`:'<p class="nt"><span class="chp ok">ノーミス！</span></p>'}
   ${res&&res.streak?`<p class="nt"><span class="chp xp">${ico('flame')} れんぞく ${S.streak}日！${res.streak.bonus?' ボーナス +'+res.streak.bonus+'XP':''}</span></p>`:''}
   ${miss.length?`<details class="fold"><summary>まちがえた問題を見なおす（${miss.length}）</summary>${miss.map(m=>`<div class="mrow"><div class="mq">${esc(String(m.V.q).slice(0,160))}</div><div class="ma"><small>せいかい</small> <b>${esc(correctText(m.V))}</b></div>${m.V.exp?`<div class="mx">${esc(m.V.exp).replace(/\n/g,'<br>')}</div>`:''}</div>`).join('')}</details>`:''}
-  <div class="row act" style="justify-content:center"><button class="bt pri xl" data-act="plHome">${o.stageId&&res?'つぎへ':'ホームへ'}</button></div>
+  ${nx?routeBar(F,dt(today()).getDay(),false)+nx:`<div class="row act" style="justify-content:center"><button class="bt pri xl" data-act="plHome">ホームへ</button></div>`}
  </div></div>`;
+ if(cdOn)flowCdStart(6);
  /* XPカウントアップと演出 */
  const el=$('#xpV');let t=0;const iv=setInterval(()=>{t++;const v=Math.round(xp*Math.min(1,t/18));if(el)el.textContent='+'+v;if(t>=18)clearInterval(iv)},40);
  Snd.clear();FX.confetti(win?110:40);
@@ -9895,7 +10003,7 @@ function levelUp(lv){
  openOv(`<span class="big">LEVEL UP!</span>${lvHex(lv,96)}<p style="font-size:20px;margin:10px 0 2px"><b class="px">Lv.${lv}　${esc(r)}</b></p><p class="mini">${first?'ランクが上がった！新しい称号だ。':'つぎのレベルへ、また一歩。'}</p><p><button class="bt pri xl" data-act="ovClose">やった！</button></p>`);
 }
 function plClose(){
- clearTimeout(PL&&PL.timer);try{speechSynthesis.cancel()}catch(e){}
+ flowCdStop();clearTimeout(PL&&PL.timer);try{speechSynthesis.cancel()}catch(e){}
  PL=null;const r=plRoot();r.hidden=true;r.innerHTML='';document.body.style.overflow='';document.body.classList.remove('inpl');
  flushSave();refresh();
 }
@@ -9930,7 +10038,7 @@ function renderDrill(){
  const due=dueByBank(),totalDue=sum(Object.values(due)),ms=mistakeStats();
  const cta=totalDue?`<div class="cta"><div style="flex:1;min-width:220px"><h3>ふくしゅう待ち ${totalDue}問</h3><p>日がたって忘れかけた問題を、先にたおしておこう。</p></div><button class="bt pri xl" data-act="drillDue">まとめて10問</button></div>`:`<div class="tomorrow"><span class="lb sm l">ばっちり</span><span>いまの ふくしゅう待ちは ありません。好きな教材で「あたらしい問題」を。</span></div>`;
  let html=`<div class="card"><span class="lb">ドリル</span><p style="margin:10px 0 2px">好きな教材を、好きなだけ。<b>まちがえた問題は、あした また出る</b>から、まちがえるほど強くなる。</p>
-  <p class="mini">きょうのミッションとは別の「おかわり」。ここでの自由練習は1日60XPまで。</p></div>${cta}
+  <p class="mini">きょうのミッションとは別の「おかわり」。ここでの自由練習は1日60XPまで。</p></div>${missionCard(flowState())}${cta}
   <div class="tsk"><div style="flex:1;min-width:220px"><span class="lb sm o">あたらしい</span><h3 style="margin-top:8px">ツッコミバトル</h3><p class="mini" style="margin:2px 0 0">ライバルの答えは合ってる？ まちがってる？　まちがいを見つけるのが得意なあなたの出番。10問。</p></div><button class="bt cy xl" data-act="tsukkomi">やってみる</button></div>
   <div class="row" style="margin:6px 0 4px"><button class="bt cy" data-page="mist">${ico('splat')}ミス図鑑（のこり${ms.open}体）</button></div>`;
  ['数','英','国','理','社'].forEach(s=>{
@@ -10081,6 +10189,7 @@ function renderMenu(){
   <li><b>ホーム</b>を開く。「いま やること」のカードの<b>スタート！</b>を押すだけ。</li>
   <li>問題に答える。まちがえた問題は、すぐ もう一度出る。<b>5問ごとにラウンドクリア</b>。あしたも「ミス退治」で再戦。</li>
   <li>ドリルを<b>1つクリアで合格ライン</b>（れんぞく記録セーフ。ふつう以上は2つ）。ぜんぶクリアで大ボーナス。</li>
+  <li>おわったら<b>「つぎへ」</b>で、そのまま つぎのステージへ（数秒でつながるよ。さわると とまる）。きょうのミッションが ぜんぶ おわったら、<b>「完了れんらく」</b>ボタンを じぶんで おして、おうちの人に メール。</li>
   <li>XPで<b>ランク</b>が上がり、コインで<b>ごほうび</b>と交換。やった日が<b>マップ</b>に ぬられていく。</li></ol>
   <p class="mini">iPadは Safari の共有ボタン →「ホーム画面に追加」で、アプリのように全画面で使えます。記録はこのiPadの中に保存されます（月1回、バックアップを）。</p></div>`;
 }
@@ -10126,7 +10235,7 @@ let dgFb=false;
 function renderDg(){
  $('#dgTabs').innerHTML=SJL.map(s=>`<button class="bt sm" data-act="dgTab" data-a="${s}" aria-pressed="${S.dg===s}">${SJN[s]}${S.diag[s]&&S.diag[s].done?' ✓':''}</button>`).join('');
  const s=S.dg,list=DIAG[s],n=list.length,r=S.diag[s]||(S.diag[s]={ans:[],sc:0});
- if(r.done&&!dgFb){const L=lvl(r.sc,n);$('#quizBox').innerHTML=`<div class="res"><div><b>${r.sc}/${n}</b><span>${SJN[s]}の得点</span></div><div><b>${L}</b><span>${ADV[L].s}</span></div></div><p>${ADV[L].t}</p><button class="bt" data-act="dgAgain">もう一度やる</button>`;return}
+ if(r.done&&!dgFb){const L=lvl(r.sc,n);$('#quizBox').innerHTML=`<div class="res"><div><b>${r.sc}/${n}</b><span>${SJN[s]}の得点</span></div><div><b>${L}</b><span>${ADV[L].s}</span></div></div><p>${ADV[L].t}</p><button class="bt" data-act="dgAgain">もう一度やる</button>${diagFlowNext()}`;return}
  const qi=dgFb?r.ans.length-1:r.ans.length,q=list[qi],ch=dgFb?r.ans[qi]:-1;
  $('#quizBox').innerHTML=`<p class="mini">${SJN[s]}　${qi+1}/${n}　<span class="chp">${q.l}</span></p><p style="white-space:pre-wrap"><b>${esc(q.q)}</b></p>`+q.o.map((o,j)=>`<button class="opt${dgFb&&j===q.a?' ok':dgFb&&j===ch?' ng':''}" data-act="dgPick" data-a="${j}" ${dgFb?'disabled':''}>${'ABCD'[j]}．${esc(o)}</button>`).join('')+(dgFb?`<div class="exp"><b>${ch===q.a?'正解！':'おしい！'}</b>　${esc(q.e)}</div><p><button class="bt pri" data-act="dgNext">${r.ans.length>=n?'結果を見る':'つぎへ'}</button></p>`:'');
 }
@@ -10190,6 +10299,9 @@ function initInputs(){
  $('#setSound').setAttribute('aria-pressed',String(!!S.sound));
  $('#setTier').innerHTML=[['auto','おまかせ'],[1,'ならし'],[2,'ふつう'],[3,'しっかり']].map(x=>`<button data-act="tierSet" data-a="${x[0]}" aria-pressed="${String(S.tier)===String(x[0])}">${x[1]}</button>`).join('');
  $('#setPin').value=S.pin||'';$('#setPinOn').setAttribute('aria-pressed',String(!!(S.pinOn&&S.pin)));
+ [['#setMailF','f'],['#setMailM','m']].forEach(x=>{const e=$(x[0]);if(e&&!e.dataset.dirty)e.value=(S.mail||{})[x[1]]||''});   // 入力の途中は、ほかの設定をさわっても消さない
+ $('#setAuto').setAttribute('aria-pressed',String(!!S.flowAuto));
+ $('#mailNote').textContent=mailAddrs().length?'いま入っている宛先：'+mailAddrs().length+'件（ホームの「完了れんらく」で使います）':'まだ宛先が入っていません。入れると、ホームの「完了れんらく」でメールが作れます。';
  $$('[data-memo]').forEach(i=>i.value=S.memo[i.dataset.memo]||'');
 }
 function reloadAll(){
@@ -10233,12 +10345,137 @@ function naiLogHTML(){
   <div class="row"><select id="naiLabel" aria-label="記録の種類"><option>学校のテスト</option><option>校外の模試</option><option>通知表</option><option>自分で見積もり</option></select><button class="bt sm" data-act="naiLog">いまの総合点を記録する</button>${rows?'<button class="bt sm" data-act="naiUndo">いちばん新しい記録を消す</button>':''}</div>
   ${rows?`<div class="tlh mini">棒の黄色い線：合格圏のめやす（約${NAI_LINE}点）と安全圏のめやす（約${NAI_SAFE}点）。どちらも推定で、公式の合格ラインではありません。</div>${rows}`:'<p class="mini">まだ記録がありません。記録がたまると、点数の伸びが見えます。</p>'}</div>`;
 }
+/* ===== きょうの一本道・完了れんらく（画面） =====
+   ホーム／結果画面／ドリルタブ／宿題・ふりかえり・診断のあと、どこからでも「つぎ」へ1タップでつながる。
+   結果画面と宿題・ふりかえりのあとは、数秒でつぎのステージが始まる（どこかをタップすると止まる）。
+   ただし「完了れんらく」だけは自動にしない。子どもが自分で押す */
+const hmOf=t=>{const d=new Date(t);return pad(d.getHours())+':'+pad(d.getMinutes())};
+
+/* 1つのステージを始める（ホームのボタン・結果画面の「つぎへ」・ドリルタブのカードで共通） */
+function startStage(s){
+ if(s.id==='hw'){hwSheet();return}
+ if(s.id==='ref'){refSheet();return}
+ if(s.id==='diag'){S.dg=s.subj;openPage('diag');return}
+ if(s.auto){toast('いまは再戦するミスがありません。ミスが出ると、ここに集まります');return}
+ const redo=s.done&&lowRes(s.res),count=!s.done||redo;   // 正答4割未満だったドリルは、やりなおして4割以上とれたら数える
+ startSession({title:s.t,subj:s.subj,items:s.items,skipBrief:!s.boss,stageId:count?s.id:null,boss:s.boss,
+  desc:redo?'ゆっくり読んで、もう一度！ 4割以上とれたら、きょうの合格ラインに数えるよ':s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,
+  brk:s.brk,min:s.min,xp:count?s.xp:0});
+}
+
+/* 一本道のバー（ホームはボタン／結果画面は見るだけ）。さいごの「れんらく」は、押せるまで鍵 */
+function routeBar(F,wd,live){
+ const T=live?'button':'div';
+ const nodes=F.route.map(s=>{
+  const cls=s.auto?'auto':s===F.target?'now':s.done?'done':'',par=s.id==='hw'&&PINON()&&!s.done?' par':'';
+  return `<${T} class="nd ${cls}${par}"${live?` data-act="stageGo" data-a="${s.id}"`:''}><span class="dot">${s.done&&!s.auto&&s!==F.target?ico('check'):ico(stageIcon(s))}</span>${esc(stageShort(s,wd))}</${T}>`}).join('');
+ const g=F.sent?'sent':F.ready?'now':'lock';
+ return `<div class="route" aria-label="きょうの流れ">${nodes}<${T} class="nd goal ${g}"${live?' data-act="contact"':''}><span class="dot">${ico(F.sent?'check':F.ready?'mail':'lock')}</span>れんらく</${T}></div>`;
+}
+/* まだ押せないときの、れんらくボタン（鍵つき。押しても何も始まらない） */
+function lockBar(F){
+ const why=F.all?'せいかいが 4わりに とどいた ドリルが ひつよう。もう一度 やってみよう':'あと'+F.left+'つ おわったら おせるよ';
+ return `<button class="cbar" data-act="contact" aria-disabled="true">${ico('lock')}<span><b>おかあさん・おとうさんに 完了れんらく</b><small>${why}</small></span></button>`;
+}
+/* マストがぜんぶ終わったときのカード（れんらくボタン＋おかわり） */
+function goalCard(F){
+ const due=sum(Object.values(dueByBank()));
+ return `<div class="nowc cleared goalc"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'var(--ink)',sw:5})}</div><span class="lb y">ぜんぶクリア！</span>
+  <h2>きょうの ノルマ、おわった！</h2>
+  <p>${F.sent?`${ico('check')} れんらくボタンを おしたよ（${hmOf(F.sentAt)}）`:'あとは、おうちの人に つたえるだけ。<b>じぶんで ボタンを おして</b>、メールを おくろう！'}</p>
+  <button class="bt pri xl w100 cbtn${F.sent?' sent':''}" data-act="contact">${ico('mail')}${F.sent?'もう一度 れんらくする':'おかあさん・おとうさんに 完了れんらく'}</button>
+  <p class="mini oka">まだ元気なら「おかわり」。好きな教材を、好きなだけ。（1日60XPまで）</p>
+  <div class="row">${due?`<button class="bt cy xl" data-act="drillDue">ふくしゅう ${Math.min(10,due)}問</button>`:''}<button class="bt xl" data-tab="drill">おかわりドリル</button><button class="bt cy xl" data-act="tsukkomi">ツッコミバトル</button></div></div>`;
+}
+
+/* つぎへ進むブロック。F.target があれば「つぎのステージ」、なければ（れんらくが押せるなら）れんらくへ */
+function nextBlock(F,o={}){
+ const t=F.target,rest=o.rest===false?'':`<button class="bt gh sm" data-act="plHome">${ico('home')}ひとやすみ（ホームへ）</button>`;
+ if(t){
+  const redo=t===F.redo,m=t.kind==='session'?`約${Math.max(1,t.min)}分・${t.items.length}問`:t.id==='diag'?'約3分・6問':t.id==='ref'?'約2分':'',lab=t.id==='diag'?'ミニ診断（'+SJN[t.subj]+'）':flowName(t);
+  return `<div class="nxt"><span class="lb sm y">${redo?'もう一度':'つぎ'}</span>
+   <button class="bt pri xl w100 nxb" data-act="flowGo"><span><b>${esc(lab)}</b><small>${redo?'4割以上とれたら、きょうの合格ラインに数えるよ':m}</small></span>${ico('play')}</button>
+   ${o.cd?'<p class="nxc" id="nxc"></p>':''}${rest}</div>`;
+ }
+ if(F.ready&&!F.sent)return `<div class="nxt"><span class="lb sm y">ゴール</span>
+  <button class="bt pri xl w100 nxb" data-act="flowGo"><span><b>ぜんぶ おわった！</b><small>おうちの人に れんらくしよう</small></span>${ico('mail')}</button>${rest}</div>`;
+ return '';
+}
+
+/* ----- 自動でつぎへ：数秒のカウントダウン。さわると止まる／画面を見ていないとき・ほかの表示が出ているときは始めない ----- */
+let FCD=null;
+function flowCdStart(sec){
+ flowCdStop();
+ if(!$('#nxc'))return;
+ FCD={end:Date.now()+sec*1000,iv:setInterval(flowCdTick,250)};flowCdTick();
+}
+function flowCdTick(){
+ if(!FCD)return;
+ const el=$('#nxc');
+ if(!el){flowCdStop();return}
+ if(!$('#ov').hidden){FCD.end+=250;return}   // レベルアップなどの表示中は待つ
+ const left=Math.ceil((FCD.end-Date.now())/1000);
+ if(left>0){el.textContent='つぎが '+left+'びょうで はじまるよ（どこかをタップで とまる）';return}
+ const seen=!document.hidden;
+ flowCdStop();
+ if(seen)ACT.flowGo();else el.textContent='';
+}
+function flowCdStop(note){
+ if(FCD){clearInterval(FCD.iv);FCD=null}
+ const el=$('#nxc');if(el&&note)el.textContent='じぶんの ペースで どうぞ';
+}
+/* 宿題・ふりかえり・診断のあと：つぎへつなぐ（自動でつなぐのがオンなら、カウントダウンつき） */
+function flowBridge(){
+ setTimeout(()=>{
+  if(PL||PG)return;
+  const F=flowState();
+  if(F.ready&&!F.sent){contactSheet();return}
+  if(F.next&&S.flowAuto){openSheet(`<h2>ナイス！</h2>${nextBlock(F,{cd:true,rest:false})}`,'bridge');flowCdStart(6)}
+  else if(F.redo)openSheet(`<h2>あと一歩！</h2><p>せいかいが 4わりに とどいた ドリルが あると、きょうの合格ライン。もう一度 やってみよう。</p>${nextBlock(F,{rest:false})}`,'bridge');   // やりなおしは、自動では始めない
+ },900);
+}
+
+/* ----- 完了れんらく：シート ----- */
+function contactSheet(){
+ const F=flowState();
+ if(!F.ready){toast(F.all?'せいかい4わり いじょうの ドリルが ひつようだよ':'あと'+F.left+'つ おわったら おせるよ');return}
+ const to=mailAddrs(),M=mailText(F),url=mailtoURL(to,M),share=typeof navigator!=='undefined'&&!!navigator.share;
+ const who=mailWho();
+ openSheet(`<h2>${ico('mail')} ${who}に 完了れんらく</h2>
+  <p>ぜんぶ おわったね！ <b>じぶんで ボタンを おして</b>、メールで つたえよう。</p>
+  <ul class="csum">${F.must.map(s=>`<li>${ico('check')}<span>${esc(flowName(s))}</span>${s.kind==='session'&&s.res&&s.res.n?`<b>${s.res.ok}/${s.res.n}</b>`:''}</li>`).join('')}</ul>
+  ${to.length?`<p class="mini cto">宛先：${to.map(a=>`<span class="chp">${esc(a)}</span>`).join(' ')}</p>
+   <a class="bt pri xl w100 cbtn" data-mailsent href="${esc(url)}">${ico('mail')}メールを つくる</a>
+   <p class="mini">おすと メールアプリが ひらくよ。<b>右上の「送信」まで おして</b>、はじめて とどくよ。${F.sent?`<br>（${hmOf(F.sentAt)} に ボタンを おしたよ）`:''}</p>`
+  :`<div class="pinbox"><b>メールアドレスが まだ入っていないよ</b><p class="mini" style="margin:4px 0 10px">おうちの人に、「おうちの人・設定」で入れてもらってね。</p><button class="bt" data-act="mailSetup">せっていを ひらく</button></div>`}
+  <div class="row" style="justify-content:center;margin-top:10px"><button class="bt sm" data-act="mailCopy">文を コピー</button>${share?'<button class="bt sm" data-act="mailShare">ほかのアプリで おくる</button>':''}</div>
+  <details class="fold"><summary>おくる文を見る</summary><pre class="code">${esc(M.text)}</pre></details>`,'csheet');
+}
+/* 「ボタンを押した」を記録する（メールを開くリンク／共有／コピーのどれでも）。押せる状態でなければ記録しない */
+function contactMark(msg){
+ if(!markContact())return false;
+ save();Snd.ok();FX.confetti(70);toast(msg||'れんらくボタンを おしたよ！ メールの「送信」まで わすれずに');
+ setTimeout(()=>{if(!PL&&!PG)refresh()},400);
+ return true;
+}
+
+/* ----- ドリルタブの上：きょうのミッションの「つづき」（ドリルタブにいても、道からはぐれない） ----- */
+function missionCard(F){
+ const t=F.target;
+ if(t){
+  return `<div class="cta mis"><div style="flex:1;min-width:220px"><span class="lb sm y">${t===F.redo?'もう一度':'きょうの つづき'}</span><h3 style="margin-top:8px">${esc(flowName(t))}</h3><p>おかわりの前に、きょうのミッションを すすめよう（のこり${F.steps}つ）。</p></div><button class="bt pri xl" data-act="flowGo">つづける ${ico('play')}</button></div>`;
+ }
+ if(F.ready&&!F.sent)return `<div class="cta mis"><div style="flex:1;min-width:220px"><span class="lb sm y">ゴール</span><h3 style="margin-top:8px">ぜんぶ おわってるよ！</h3><p>おうちの人に れんらくしよう。</p></div><button class="bt pri xl" data-act="flowGo">${ico('mail')}れんらくへ</button></div>`;
+ return '';
+}
+/* 診断ページ：診断も一本道のひとつ。おわったら、そのまま つぎへ */
+function diagFlowNext(){const F=flowState();return F.route.some(s=>s.id==='diag'&&s.subj===S.dg)&&(F.target||(F.ready&&!F.sent))?nextBlock(F,{rest:false}):''}
 /* ===== 起動・画面切りかえ・ボタンの動き ===== */
 const VIEWS=['home','drill','map','reward','menu'];
 const RENDER={home:renderHome,drill:renderDrill,map:renderMap,reward:renderReward,menu:renderMenu};
 let tab='home';
 function dockBadges(){
- const left=routeFor().filter(s=>!s.done).length,due=sum(Object.values(dueByBank()));
+ const left=flowState().steps,due=sum(Object.values(dueByBank()));   // ホーム：一本道にのこっている数（れんらくをふくむ）
  const set=(id,n)=>{const e=$('#nb-'+id);if(!e)return;e.hidden=!n;e.textContent=n>99?'99+':n};
  set('home',left);set('drill',due);
 }
@@ -10280,14 +10517,37 @@ function needPin(msg,fn){
 }
 const ACT={
  /* ---- ステージ ---- */
- stageGo(id){
-  const s=routeFor().find(x=>x.id===id);if(!s)return;
-  if(id==='hw'){hwSheet();return}
-  if(id==='ref'){refSheet();return}
-  if(id==='diag'){S.dg=s.subj;openPage('diag');return}
-  if(s.auto){toast('いまは再戦するミスがありません。ミスが出ると、ここに集まります');return}
-  startSession({title:s.t,subj:s.subj,items:s.items,skipBrief:!s.boss,stageId:s.done?null:s.id,boss:s.boss,desc:s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,brk:s.brk,min:s.min,xp:s.done?0:s.xp});
+ stageGo(id){const s=routeFor().find(x=>x.id===id);if(s)startStage(s)},
+ /* ---- 一本道：つぎへ／完了れんらく ---- */
+ flowGo(){
+  flowCdStop();closeOv();closeSheet();
+  if(PG)closePage();
+  if(PL)plClose();
+  if(tab!=='home')show('home');   // 一本道の足場は、ホーム
+  const F=flowState();
+  if(F.target){startStage(F.target);return}
+  if(F.ready&&!F.sent)contactSheet();
  },
+ contact(){
+  const F=flowState();
+  if(!F.ready){toast(F.all?'せいかいが 4わりに とどいた ドリルが ひつようだよ（もう一度 やってみよう）':'あと'+F.left+'つ おわったら おせるよ');return}
+  contactSheet();
+ },
+ async mailCopy(){const F=flowState();if(!F.ready)return;const ok=await copyText(mailText(F).text);if(ok)contactMark('文を コピーした。メールやLINEに はりつけて、おくってね');else toast('コピーできなかった。「おくる文を見る」から 長押しでコピーしてね')},
+ async mailShare(){const F=flowState();if(!F.ready||!navigator.share)return;const M=mailText(F);try{await navigator.share({title:M.subject,text:M.body});contactMark()}catch(e){}},
+ mailSetup(){closeSheet();openPage('family');setTimeout(()=>{const e=$('#setMailF');if(e&&e.scrollIntoView)e.scrollIntoView({block:'center'})},250)},
+ mailSave(){
+  const f=cleanMail($('#setMailF').value),m=cleanMail($('#setMailM').value);
+  if((f&&!validMail(f))||(m&&!validMail(m))){toast('メールアドレスの かたちが ちがうみたい。もう一度 見てね');return}
+  needPin('れんらく先のメールアドレスを 保存します。',()=>{S.mail={f,m};['#setMailF','#setMailM'].forEach(k=>{const e=$(k);if(e)delete e.dataset.dirty});save();initInputs();toast(f||m?'メールアドレスを 保存した':'メールアドレスを 消した')});
+ },
+ mailTest(){
+  const typed=[cleanMail($('#setMailF').value),cleanMail($('#setMailM').value)].filter(validMail),to=[...new Set(typed.length?typed:mailAddrs())];
+  if(!to.length){toast('先に メールアドレスを 入れてね');return}
+  toast('メールアプリを ひらくよ。ひらかないときは、メールアプリの せっていを 見てね');
+  location.href=mailtoURL(to,{subject:'【さくらクエスト】テストメール',body:'これは、さくらクエストの「完了れんらく」の テストです。\nこのメールが とどけば、せっていは OK です。\n（ボタンを おしても、アプリが かってに メールを おくることはありません）'});
+ },
+ autoToggle(){const set=()=>{S.flowAuto=S.flowAuto?0:1;save();initInputs();toast(S.flowAuto?'つぎへ 自動でつなぐ：オン':'つぎへ 自動でつなぐ：オフ（ボタンで すすむ）')};if(S.flowAuto)needPin('「つぎへ 自動でつなぐ」を オフにします。',set);else set()},
  hwLen(m){hwLenM=+m;$$('#hwLen button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a===hwLenM)));hwTick(true)},
  hwGo(){
   const btn=$('#hwBtn');
@@ -10300,6 +10560,7 @@ const ACT={
   if(hwTimer){used=Math.round((Date.now()-hwTimer.t0)/60000);clearInterval(hwTimer.iv);hwTimer=null}
   const res=completeStage(today(),'hw',{n:0,min:used>0?used:st.min});
   closeSheet();FX.confetti(50);Snd.ok();afterSimple(res,res.first?(res.held?'宿題クリア！ XPは、ドリルで4割以上とれたら入るよ':'宿題クリア！ +'+res.xp+'XP'):'');
+  flowBridge();
  },
  refStar(i){
   refSelf=+i;$$('#refStars button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a<=refSelf)));
@@ -10316,6 +10577,7 @@ const ACT={
   closeSheet();FX.confetti(40);Snd.ok();
   afterSimple(res,res.first?(bonus?'ふりかえり完了！ めききボーナス +5XP':res.held?'ふりかえり完了！ XPは、ドリルで4割以上とれたら入るよ':'ふりかえり完了 +'+res.xp+'XP'):'');
   if(bonus&&!res.lv)setTimeout(()=>levelUp(bonus.to),700);
+  flowBridge();
  },
  tsukkomi(){
   const items=drillItems({type:'tf',n:10});
@@ -10438,6 +10700,8 @@ const ACT={
  }
 };
 document.addEventListener('click',e=>{
+ if(FCD&&!e.target.closest('[data-act="flowGo"]'))flowCdStop(true);   // さわったら、自動でつぎへ進むのを止める
+ if(e.target.closest('a[data-mailsent]')){contactMark();return}   // メールを開くリンク：ふつうに開かせて、「押した」を記録する
  const t=e.target.closest('[data-act],[data-tab],[data-page]');
  if(!t){
   if(e.target.id==='sheet')closeSheet();
@@ -10461,6 +10725,7 @@ document.addEventListener('input',e=>{
  else if(el.id==='naiGk'){S.nai.gk=+el.value;S.nai.set=1;save();naiOut()}
  else if(el.id==='setNick'){S.nick=el.value.slice(0,12);saveSoon();renderHud()}
  else if(el.id==='setPin'){el.value=el.value.replace(/\D/g,'').slice(0,4)}
+ else if(el.id==='setMailF'||el.id==='setMailM'){el.dataset.dirty='1'}
  else if(el.dataset.memo!=null){S.memo[+el.dataset.memo]=el.value;saveSoon()}
 });
 document.addEventListener('keydown',e=>{
@@ -10481,7 +10746,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!PL&&!PG)
 document.addEventListener('touchstart',()=>{},{passive:true});
 
 /* ---- 開発用：?debug を付けると、テスト用の入り口が出る ---- */
-if(/[?&]debug/.test(location.search))window.__sq={get S(){return S},get PL(){return PL},ACT,routeFor,present,judge,correctText,show,refresh,openPage,makeGen,GEN,BK,ITEMS,startSession,levelUp,setToday,completeStage,recordAnswer,drillItems,lvInfo};
+if(/[?&]debug/.test(location.search))window.__sq={get S(){return S},get PL(){return PL},ACT,routeFor,flowState,mailText,present,judge,correctText,show,refresh,openPage,makeGen,GEN,BK,ITEMS,startSession,levelUp,setToday,completeStage,recordAnswer,drillItems,lvInfo};
 
 /* ---- 初期化 ---- */
 (function init(){

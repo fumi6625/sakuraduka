@@ -198,7 +198,7 @@ function finishSession(){
  const o=PL.o,n=PL.total,ok=PL.ok,sec=Math.round(PL.sec);
  const acc=n?ok/n:1,win=o.boss?ok>=8:true;
  let res=null,drill=null;
- const stageDone=o.stageId&&!(peekDay().stg[o.stageId]);
+ const prev=o.stageId?peekDay().stg[o.stageId]:null,stageDone=o.stageId&&(!prev||lowRes(prev));   // 正答4割未満だったドリルの「やりなおし」も、ここで数える
  if(stageDone){
   res=completeStage(today(),o.stageId,{ok,n,sec,combo:PL.maxCombo,boss:!!o.boss});
   if(S.rt&&S.rt.p)delete S.rt.p[o.stageId];
@@ -211,6 +211,7 @@ function renderResult(R){
  const {o,n,ok,sec,acc,win,res,drill,nb}=R,miss=PL.log.filter(x=>!x.ok);
  const xp=res?res.xp+(res.fullBonus||0):drill?drill.xp:0;
  const rank=rankOfAcc(acc);
+ const F=flowState(),cdOn=!!(S.flowAuto&&F.next),nx=nextBlock(F,{cd:cdOn});   // 一本道：つぎのステージ（なければ、れんらく）へ
  const head=o.boss?(win?'BOSS DOWN!':'おしい！'):acc>=.5||n===0?'CLEAR!':'おつかれ！';
  plRoot().innerHTML=`<div class="plb mid"><div class="rs2" data-rank="${rank}">
   <div class="splw">${splatSVG(hashStr(o.title)%97,'var(--team)',{drops:7,stroke:'var(--ink)',sw:5})}</div>
@@ -223,8 +224,9 @@ function renderResult(R){
   ${miss.length?`<p class="nt"><span class="chp w">まちがえた ${miss.length}問 → あした「ミス退治」で再戦</span></p>`:'<p class="nt"><span class="chp ok">ノーミス！</span></p>'}
   ${res&&res.streak?`<p class="nt"><span class="chp xp">${ico('flame')} れんぞく ${S.streak}日！${res.streak.bonus?' ボーナス +'+res.streak.bonus+'XP':''}</span></p>`:''}
   ${miss.length?`<details class="fold"><summary>まちがえた問題を見なおす（${miss.length}）</summary>${miss.map(m=>`<div class="mrow"><div class="mq">${esc(String(m.V.q).slice(0,160))}</div><div class="ma"><small>せいかい</small> <b>${esc(correctText(m.V))}</b></div>${m.V.exp?`<div class="mx">${esc(m.V.exp).replace(/\n/g,'<br>')}</div>`:''}</div>`).join('')}</details>`:''}
-  <div class="row act" style="justify-content:center"><button class="bt pri xl" data-act="plHome">${o.stageId&&res?'つぎへ':'ホームへ'}</button></div>
+  ${nx?routeBar(F,dt(today()).getDay(),false)+nx:`<div class="row act" style="justify-content:center"><button class="bt pri xl" data-act="plHome">ホームへ</button></div>`}
  </div></div>`;
+ if(cdOn)flowCdStart(6);
  /* XPカウントアップと演出 */
  const el=$('#xpV');let t=0;const iv=setInterval(()=>{t++;const v=Math.round(xp*Math.min(1,t/18));if(el)el.textContent='+'+v;if(t>=18)clearInterval(iv)},40);
  Snd.clear();FX.confetti(win?110:40);
@@ -245,7 +247,7 @@ function levelUp(lv){
  openOv(`<span class="big">LEVEL UP!</span>${lvHex(lv,96)}<p style="font-size:20px;margin:10px 0 2px"><b class="px">Lv.${lv}　${esc(r)}</b></p><p class="mini">${first?'ランクが上がった！新しい称号だ。':'つぎのレベルへ、また一歩。'}</p><p><button class="bt pri xl" data-act="ovClose">やった！</button></p>`);
 }
 function plClose(){
- clearTimeout(PL&&PL.timer);try{speechSynthesis.cancel()}catch(e){}
+ flowCdStop();clearTimeout(PL&&PL.timer);try{speechSynthesis.cancel()}catch(e){}
  PL=null;const r=plRoot();r.hidden=true;r.innerHTML='';document.body.style.overflow='';document.body.classList.remove('inpl');
  flushSave();refresh();
 }

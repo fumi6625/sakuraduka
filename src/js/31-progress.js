@@ -24,6 +24,8 @@ const goodOf=rec=>{
  const pin=!!(S.pinOn&&S.pin),k=stageKeys(rec).filter(x=>x!=='diag');
  return{sess:k.filter(x=>{if(x==='hw'||x==='ref')return false;const g=rec.stg[x];return !g.n||g.ok/g.n>=.4}).length,hw:pin&&k.includes('hw')?1:0};
 };
+/* 正答4割に届かなかったドリル（goodOf の反対）。やりなおして4割以上とれたら、合格ラインに数える */
+const lowRes=g=>!!(g&&g.n&&g.ok/g.n<.4);
 const dayOK=(rec,tier)=>{const g=goodOf(rec);return tier===1?g.sess>=1:(g.sess>=1&&g.sess+g.hw>=2)};
 /* 合格ラインまで、あと何つか */
 const dayNeed=(rec,tier)=>{const g=goodOf(rec);return tier===1?Math.max(0,1-g.sess):Math.max(g.sess>=1?0:1,2-g.sess-g.hw)};
@@ -52,14 +54,16 @@ function stageXP(id,r){
 }
 /* r: {ok,n,sec,combo,boss,min,note}   戻り値は画面に出す内容 */
 function completeStage(date,id,r){
- const d=dayRec(date),out={xp:0,first:!d.stg[id],lv:null,streak:null,full:false,fullBonus:0,coin:0};
- if(!out.first)return out;
+ const d=dayRec(date),old=d.stg[id],redo=!!old&&lowRes(old)&&!lowRes(r);   // 4割未満だったドリルは、やりなおして4割以上とれたら数える（道をふさがない）
+ const out={xp:0,first:!old||redo,lv:null,streak:null,full:false,fullBonus:0,coin:0};
+ if(!out.first){if(lowRes(old)&&lowRes(r))out.low=true;return out}
  const had=goodOf(d).sess>=1;   // この前までに、正答4割以上のドリルがあったか
- out.xp=stageXP(id,r);
+ const was=redo?(old.xp||0):0;   // やりなおしのときは、前に入ったXPを引く（二重にもらわない）
+ out.xp=Math.max(0,stageXP(id,r)-was);
  if((r.n||0)>=5&&(r.ok||0)/r.n<.4)out.low=true;
  const st=(S.rt&&S.rt.d===date?S.rt.stg.find(x=>x.id===id):null)||{};
  const mins=r.min!=null?r.min:Math.max(1,Math.round((r.sec||0)/60)),sj=st.subj||'総';
- d.stg[id]={ok:r.ok||0,n:r.n||0,xp:out.xp,sec:r.sec||0,cb:r.combo||0,at:Date.now(),note:r.note||''};
+ d.stg[id]={ok:r.ok||0,n:r.n||0,xp:out.xp+was,sec:(redo?old.sec||0:0)+(r.sec||0),cb:Math.max(r.combo||0,redo?old.cb||0:0),at:Date.now(),note:r.note||''};
  d.min[sj]=(d.min[sj]||0)+mins;
  const good=goodOf(d).sess>=1;
  /* 宿題・ふりかえり・全クリのXPは、その日に「正答4割以上のドリル」が1つあるときだけ。ない日の宿題・ふりかえりのXPは預かって、あとでドリルがとれたら入る */
@@ -204,5 +208,5 @@ function reportText(){
  const mon=monday(today()),days=[...Array(7)].map((_,i)=>addDays(mon,i));let ok=0,full=0,n=0,c=0;const min={};
  days.forEach(d=>{const r=S.days[d];if(r){ok+=r.ok?1:0;full+=r.full?1:0;n+=r.n||0;c+=r.c||0;for(const k in r.min)min[k]=(min[k]||0)+r.min[k]}});
  const tot=sum(Object.values(min)),w=S.wk[mon],m=ROADMAP.find(x=>x.k===curMonth()),st=mStat(m),L=lvInfo(S.xp),ms=mistakeStats();
- return `【さくらクエスト 週報】${S.nick||'（呼び名なし）'}\n期間：${mon}〜${days[6]}\n合格ラインの日：${ok}/7日（全ステージクリア：${full}日）　いまの段階：${TIERS[S.rt&&S.rt.tier||1].name}\n連続記録：${curStreak()}日\n答えた問題：${n}問（正解 ${c}問・${n?Math.round(c/n*100):0}%）\n学習時間：${tot}分（${Object.keys(min).map(k=>SJN[k]+min[k]+'分').join('、')||'記録なし'}）\n週ボス：${w?w.sc+'/10問':'まだ'}\nミス：登録${ms.all}体／たおした${ms.dead}体／のこり${ms.open}体\nおぼえた問題（箱4以上）：${masteredCount()}問\n${pathReportLine()}\n今月のマイルストーン：${st.d}/${st.n}\nレベル：Lv.${L.lv}「${L.name}」（${S.xp}XP）\nひとこと：`;
+ return `【さくらクエスト 週報】${S.nick||'（呼び名なし）'}\n期間：${mon}〜${days[6]}\n合格ラインの日：${ok}/7日（全ステージクリア：${full}日）　いまの段階：${TIERS[S.rt&&S.rt.tier||1].name}\n連続記録：${curStreak()}日\n答えた問題：${n}問（正解 ${c}問・${n?Math.round(c/n*100):0}%）\n学習時間：${tot}分（${Object.keys(min).map(k=>SJN[k]+min[k]+'分').join('、')||'記録なし'}）\n週ボス：${w?w.sc+'/10問':'まだ'}\nミス：登録${ms.all}体／たおした${ms.dead}体／のこり${ms.open}体\nおぼえた問題（箱4以上）：${masteredCount()}問\n${pathReportLine()}\n完了れんらく（子どもがボタンを押した日）：${days.filter(d=>S.days[d]&&S.days[d].ct).length}/7日\n今月のマイルストーン：${st.d}/${st.n}\nレベル：Lv.${L.lv}「${L.name}」（${S.xp}XP）\nひとこと：`;
 }

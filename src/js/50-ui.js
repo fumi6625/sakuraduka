@@ -18,7 +18,7 @@ const ICO={
  chat:'M4 5h16v11H9l-5 4zM8 9h8M8 12h5',chart:'M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-8',eng:'M5 19L12 4l7 15M8 14h8',jp:'M5 7h14M12 4v3M8 7c0 6 3 10 8 12M16 7c0 5-3 9-8 12',
  sci:'M9 3h6M10 3v6L5 19a2 2 0 002 2h10a2 2 0 002-2l-5-10V3',soc:'M12 3a9 9 0 100 18 9 9 0 000-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',
  math:'M5 5h14M5 19h14M17 5L7 19',all:'M12 3l3 6 6 1-4.5 4.5L17.5 21 12 18l-5.5 3 1-6.5L3 10l6-1z',sound:'M4 9v6h4l5 4V5L8 9z',
- pencil:'M4 20l1-4L16 5l3 3L8 19z',x:'M6 6l12 12M18 6L6 18',redo:'M20 12a8 8 0 11-3-6.2M20 4v5h-5',up:'M12 19V5M6 11l6-6 6 6',key:'M8 15a4 4 0 110-8 4 4 0 010 8zM11 11h9M17 11v4'
+ pencil:'M4 20l1-4L16 5l3 3L8 19z',mail:'M3 6h18v12H3zM3 7l9 7 9-7',x:'M6 6l12 12M18 6L6 18',redo:'M20 12a8 8 0 11-3-6.2M20 4v5h-5',up:'M12 19V5M6 11l6-6 6 6',key:'M8 15a4 4 0 110-8 4 4 0 010 8zM11 11h9M17 11v4'
 };
 const ico=(n,cls='')=>`<svg class="ic ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ICO[n]||ICO.star}"/></svg>`;
 const SJIC={国:'jp',数:'math',英:'eng',理:'sci',社:'soc',総:'all'};

@@ -1,0 +1,125 @@
+/* ===== きょうの一本道・完了れんらく（画面） =====
+   ホーム／結果画面／ドリルタブ／宿題・ふりかえり・診断のあと、どこからでも「つぎ」へ1タップでつながる。
+   結果画面と宿題・ふりかえりのあとは、数秒でつぎのステージが始まる（どこかをタップすると止まる）。
+   ただし「完了れんらく」だけは自動にしない。子どもが自分で押す */
+const hmOf=t=>{const d=new Date(t);return pad(d.getHours())+':'+pad(d.getMinutes())};
+
+/* 1つのステージを始める（ホームのボタン・結果画面の「つぎへ」・ドリルタブのカードで共通） */
+function startStage(s){
+ if(s.id==='hw'){hwSheet();return}
+ if(s.id==='ref'){refSheet();return}
+ if(s.id==='diag'){S.dg=s.subj;openPage('diag');return}
+ if(s.auto){toast('いまは再戦するミスがありません。ミスが出ると、ここに集まります');return}
+ const redo=s.done&&lowRes(s.res),count=!s.done||redo;   // 正答4割未満だったドリルは、やりなおして4割以上とれたら数える
+ startSession({title:s.t,subj:s.subj,items:s.items,skipBrief:!s.boss,stageId:count?s.id:null,boss:s.boss,
+  desc:redo?'ゆっくり読んで、もう一度！ 4割以上とれたら、きょうの合格ラインに数えるよ':s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,
+  brk:s.brk,min:s.min,xp:count?s.xp:0});
+}
+
+/* 一本道のバー（ホームはボタン／結果画面は見るだけ）。さいごの「れんらく」は、押せるまで鍵 */
+function routeBar(F,wd,live){
+ const T=live?'button':'div';
+ const nodes=F.route.map(s=>{
+  const cls=s.auto?'auto':s===F.target?'now':s.done?'done':'',par=s.id==='hw'&&PINON()&&!s.done?' par':'';
+  return `<${T} class="nd ${cls}${par}"${live?` data-act="stageGo" data-a="${s.id}"`:''}><span class="dot">${s.done&&!s.auto&&s!==F.target?ico('check'):ico(stageIcon(s))}</span>${esc(stageShort(s,wd))}</${T}>`}).join('');
+ const g=F.sent?'sent':F.ready?'now':'lock';
+ return `<div class="route" aria-label="きょうの流れ">${nodes}<${T} class="nd goal ${g}"${live?' data-act="contact"':''}><span class="dot">${ico(F.sent?'check':F.ready?'mail':'lock')}</span>れんらく</${T}></div>`;
+}
+/* まだ押せないときの、れんらくボタン（鍵つき。押しても何も始まらない） */
+function lockBar(F){
+ const why=F.all?'せいかいが 4わりに とどいた ドリルが ひつよう。もう一度 やってみよう':'あと'+F.left+'つ おわったら おせるよ';
+ return `<button class="cbar" data-act="contact" aria-disabled="true">${ico('lock')}<span><b>おかあさん・おとうさんに 完了れんらく</b><small>${why}</small></span></button>`;
+}
+/* マストがぜんぶ終わったときのカード（れんらくボタン＋おかわり） */
+function goalCard(F){
+ const due=sum(Object.values(dueByBank()));
+ return `<div class="nowc cleared goalc"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'var(--ink)',sw:5})}</div><span class="lb y">ぜんぶクリア！</span>
+  <h2>きょうの ノルマ、おわった！</h2>
+  <p>${F.sent?`${ico('check')} れんらくボタンを おしたよ（${hmOf(F.sentAt)}）`:'あとは、おうちの人に つたえるだけ。<b>じぶんで ボタンを おして</b>、メールを おくろう！'}</p>
+  <button class="bt pri xl w100 cbtn${F.sent?' sent':''}" data-act="contact">${ico('mail')}${F.sent?'もう一度 れんらくする':'おかあさん・おとうさんに 完了れんらく'}</button>
+  <p class="mini oka">まだ元気なら「おかわり」。好きな教材を、好きなだけ。（1日60XPまで）</p>
+  <div class="row">${due?`<button class="bt cy xl" data-act="drillDue">ふくしゅう ${Math.min(10,due)}問</button>`:''}<button class="bt xl" data-tab="drill">おかわりドリル</button><button class="bt cy xl" data-act="tsukkomi">ツッコミバトル</button></div></div>`;
+}
+
+/* つぎへ進むブロック。F.target があれば「つぎのステージ」、なければ（れんらくが押せるなら）れんらくへ */
+function nextBlock(F,o={}){
+ const t=F.target,rest=o.rest===false?'':`<button class="bt gh sm" data-act="plHome">${ico('home')}ひとやすみ（ホームへ）</button>`;
+ if(t){
+  const redo=t===F.redo,m=t.kind==='session'?`約${Math.max(1,t.min)}分・${t.items.length}問`:t.id==='diag'?'約3分・6問':t.id==='ref'?'約2分':'',lab=t.id==='diag'?'ミニ診断（'+SJN[t.subj]+'）':flowName(t);
+  return `<div class="nxt"><span class="lb sm y">${redo?'もう一度':'つぎ'}</span>
+   <button class="bt pri xl w100 nxb" data-act="flowGo"><span><b>${esc(lab)}</b><small>${redo?'4割以上とれたら、きょうの合格ラインに数えるよ':m}</small></span>${ico('play')}</button>
+   ${o.cd?'<p class="nxc" id="nxc"></p>':''}${rest}</div>`;
+ }
+ if(F.ready&&!F.sent)return `<div class="nxt"><span class="lb sm y">ゴール</span>
+  <button class="bt pri xl w100 nxb" data-act="flowGo"><span><b>ぜんぶ おわった！</b><small>おうちの人に れんらくしよう</small></span>${ico('mail')}</button>${rest}</div>`;
+ return '';
+}
+
+/* ----- 自動でつぎへ：数秒のカウントダウン。さわると止まる／画面を見ていないとき・ほかの表示が出ているときは始めない ----- */
+let FCD=null;
+function flowCdStart(sec){
+ flowCdStop();
+ if(!$('#nxc'))return;
+ FCD={end:Date.now()+sec*1000,iv:setInterval(flowCdTick,250)};flowCdTick();
+}
+function flowCdTick(){
+ if(!FCD)return;
+ const el=$('#nxc');
+ if(!el){flowCdStop();return}
+ if(!$('#ov').hidden){FCD.end+=250;return}   // レベルアップなどの表示中は待つ
+ const left=Math.ceil((FCD.end-Date.now())/1000);
+ if(left>0){el.textContent='つぎが '+left+'びょうで はじまるよ（どこかをタップで とまる）';return}
+ const seen=!document.hidden;
+ flowCdStop();
+ if(seen)ACT.flowGo();else el.textContent='';
+}
+function flowCdStop(note){
+ if(FCD){clearInterval(FCD.iv);FCD=null}
+ const el=$('#nxc');if(el&&note)el.textContent='じぶんの ペースで どうぞ';
+}
+/* 宿題・ふりかえり・診断のあと：つぎへつなぐ（自動でつなぐのがオンなら、カウントダウンつき） */
+function flowBridge(){
+ setTimeout(()=>{
+  if(PL||PG)return;
+  const F=flowState();
+  if(F.ready&&!F.sent){contactSheet();return}
+  if(F.next&&S.flowAuto){openSheet(`<h2>ナイス！</h2>${nextBlock(F,{cd:true,rest:false})}`,'bridge');flowCdStart(6)}
+  else if(F.redo)openSheet(`<h2>あと一歩！</h2><p>せいかいが 4わりに とどいた ドリルが あると、きょうの合格ライン。もう一度 やってみよう。</p>${nextBlock(F,{rest:false})}`,'bridge');   // やりなおしは、自動では始めない
+ },900);
+}
+
+/* ----- 完了れんらく：シート ----- */
+function contactSheet(){
+ const F=flowState();
+ if(!F.ready){toast(F.all?'せいかい4わり いじょうの ドリルが ひつようだよ':'あと'+F.left+'つ おわったら おせるよ');return}
+ const to=mailAddrs(),M=mailText(F),url=mailtoURL(to,M),share=typeof navigator!=='undefined'&&!!navigator.share;
+ const who=mailWho();
+ openSheet(`<h2>${ico('mail')} ${who}に 完了れんらく</h2>
+  <p>ぜんぶ おわったね！ <b>じぶんで ボタンを おして</b>、メールで つたえよう。</p>
+  <ul class="csum">${F.must.map(s=>`<li>${ico('check')}<span>${esc(flowName(s))}</span>${s.kind==='session'&&s.res&&s.res.n?`<b>${s.res.ok}/${s.res.n}</b>`:''}</li>`).join('')}</ul>
+  ${to.length?`<p class="mini cto">宛先：${to.map(a=>`<span class="chp">${esc(a)}</span>`).join(' ')}</p>
+   <a class="bt pri xl w100 cbtn" data-mailsent href="${esc(url)}">${ico('mail')}メールを つくる</a>
+   <p class="mini">おすと メールアプリが ひらくよ。<b>右上の「送信」まで おして</b>、はじめて とどくよ。${F.sent?`<br>（${hmOf(F.sentAt)} に ボタンを おしたよ）`:''}</p>`
+  :`<div class="pinbox"><b>メールアドレスが まだ入っていないよ</b><p class="mini" style="margin:4px 0 10px">おうちの人に、「おうちの人・設定」で入れてもらってね。</p><button class="bt" data-act="mailSetup">せっていを ひらく</button></div>`}
+  <div class="row" style="justify-content:center;margin-top:10px"><button class="bt sm" data-act="mailCopy">文を コピー</button>${share?'<button class="bt sm" data-act="mailShare">ほかのアプリで おくる</button>':''}</div>
+  <details class="fold"><summary>おくる文を見る</summary><pre class="code">${esc(M.text)}</pre></details>`,'csheet');
+}
+/* 「ボタンを押した」を記録する（メールを開くリンク／共有／コピーのどれでも）。押せる状態でなければ記録しない */
+function contactMark(msg){
+ if(!markContact())return false;
+ save();Snd.ok();FX.confetti(70);toast(msg||'れんらくボタンを おしたよ！ メールの「送信」まで わすれずに');
+ setTimeout(()=>{if(!PL&&!PG)refresh()},400);
+ return true;
+}
+
+/* ----- ドリルタブの上：きょうのミッションの「つづき」（ドリルタブにいても、道からはぐれない） ----- */
+function missionCard(F){
+ const t=F.target;
+ if(t){
+  return `<div class="cta mis"><div style="flex:1;min-width:220px"><span class="lb sm y">${t===F.redo?'もう一度':'きょうの つづき'}</span><h3 style="margin-top:8px">${esc(flowName(t))}</h3><p>おかわりの前に、きょうのミッションを すすめよう（のこり${F.steps}つ）。</p></div><button class="bt pri xl" data-act="flowGo">つづける ${ico('play')}</button></div>`;
+ }
+ if(F.ready&&!F.sent)return `<div class="cta mis"><div style="flex:1;min-width:220px"><span class="lb sm y">ゴール</span><h3 style="margin-top:8px">ぜんぶ おわってるよ！</h3><p>おうちの人に れんらくしよう。</p></div><button class="bt pri xl" data-act="flowGo">${ico('mail')}れんらくへ</button></div>`;
+ return '';
+}
+/* 診断ページ：診断も一本道のひとつ。おわったら、そのまま つぎへ */
+function diagFlowNext(){const F=flowState();return F.route.some(s=>s.id==='diag'&&s.subj===S.dg)&&(F.target||(F.ready&&!F.sent))?nextBlock(F,{rest:false}):''}

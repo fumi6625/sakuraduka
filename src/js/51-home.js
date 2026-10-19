@@ -60,24 +60,18 @@ function nowCard(next,tier,okDay,rec){
  const need=dayNeed(rec,tier);
  const goal=okDay?`<span class="chp ok">✓ きょうの合格ライン達成！</span> れんぞく ${curStreak()}日`:`<span class="chp w">合格ライン</span> ${tier===1?'どれか1つクリアでOK！':'あと'+Math.max(1,need)+'つクリアでOK！'}`;
  return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'var(--yellow)',{drops:7,stroke:'var(--ink)',sw:5})}</div>
-  <span class="lb">いま やること</span>
+  <span class="lb">${next.redo?'もう一度 やること':'いま やること'}</span>
   <div class="nrow"><div class="nico">${ico(stageIcon(next))}</div><div class="ntx"><h2>${esc(next.t)}</h2><p>${esc(briefDesc(next.desc))}</p></div></div>
   <div class="chips">${isS?`<span class="chp">約${Math.max(1,next.min)}分</span><span class="chp">${next.items.length}問</span>`:next.xp?'':`<span class="chp">約${next.min||3}分</span>`}${next.xp||isS?`<span class="chp xp">+${next.xp}XP</span>`:''}</div>
   <button class="bt pri xl w100" data-act="stageGo" data-a="${next.id}">${goBtn(next)}</button>
   <p class="goal">${goal}</p><p class="tnote">${esc(tierNote(today(),tier))}</p>${vowChip(okDay)}</div>`;
 }
-function clearedCard(){
- return `<div class="nowc cleared"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'var(--ink)',sw:5})}</div><span class="lb y">ぜんぶクリア！</span>
-  <h2 style="margin:12px 0 4px;font-size:30px">きょうは、もうバッチリ！</h2>
-  <p>まだ元気なら「おかわり」。好きな教材を、好きなだけ。（1日60XPまで）</p>
-  <div class="row"><button class="bt pri xl" data-tab="drill">おかわりドリル</button><button class="bt cy xl" data-act="tsukkomi">ツッコミバトル</button></div></div>`;
-}
 function renderHome(){
- const date=today(),route=routeFor(date),tier=S.rt.tier,T=TIERS[tier],wd=dt(date).getDay(),W=WDP[wd];
- const real=route.filter(s=>!s.auto),next=route.find(s=>!s.done),todo=real.filter(s=>!s.done&&s!==next),done=real.filter(s=>s.done);
+ const date=today(),F=flowState(date),route=F.route,tier=S.rt.tier,T=TIERS[tier],wd=dt(date).getDay(),W=WDP[wd];
+ const real=route.filter(s=>!s.auto),next=F.target,todo=real.filter(s=>!s.done&&s!==next),done=real.filter(s=>s.done);   // next＝一本道のつぎ（保護者OKの宿題は、おうちの人と）
  const rec=peekDay(date),okDay=dayOK(rec,tier),light=!!S.light[date];
- const appMin=sum(real.filter(s=>!s.done&&s.kind==='session').map(s=>s.min));
- const flow=real.map(s=>stageShort(s,wd)).join('<i> ▶ </i>');
+ const appMin=sum(F.must.filter(s=>!s.done&&s.kind==='session').map(s=>s.min));
+ const mustDone=F.must.filter(s=>s.done).length;
  const tm=previewDay(addDays(date,1));
  const intro=!S.nick?`<div class="card"><h2>はじめに：呼び名を決めよう</h2><p class="mini">本名は入れない。あとから変えられます。</p><div class="row"><input id="nickIn" type="text" maxlength="12" placeholder="ニックネーム" style="flex:1;min-width:180px"><button class="bt" data-act="nickSet">きまり！</button></div></div>`:'';
  const pinAsk=(S.nick&&!S.pin&&doneDays(date)>=1&&(!S.pinSkip||diff(S.pinSkip,date)>=7))?`<div class="card"><h2>おうちの人へ</h2><p class="mini">4けたの暗証番号を決めると、宿題のOKと月の目標が「自己申告」ではなくなります。</p><div class="row"><button class="bt pri" data-page="family">決める</button><button class="bt gh" data-act="pinLater">あとで</button></div></div>`:'';
@@ -86,10 +80,11 @@ function renderHome(){
  <div class="hero cmp" data-s="${W.subj}">
   <div class="sp1">${splatSVG(5,'var(--team)',{stroke:'var(--ink)',sw:4})}</div>
   <div class="t1"><span class="lb sm">きょうのミッション</span><span class="date">${dateJa(date)}</span><span class="chp t">${T.name}モード</span></div>
-  <div class="gp"><div class="tank"><i style="--w:${Math.round(done.length/real.length*100)}%"></i></div><b>${done.length}/${real.length}</b>${appMin?`<span class="mini left-min">のこり約${appMin}分</span>`:''}</div>
+  <div class="gp"><div class="tank"><i style="--w:${Math.round(mustDone/F.must.length*100)}%"></i></div><b>${mustDone}/${F.must.length}</b>${appMin?`<span class="mini left-min">のこり約${appMin}分</span>`:''}</div>
  </div>
- ${next?nowCard(next,tier,okDay,rec):clearedCard()}
- <div class="route" aria-label="きょうの流れ">${route.map(s=>`<button class="nd ${s.auto?'auto':s.done?'done':s===next?'now':''}" data-act="stageGo" data-a="${s.id}"><span class="dot">${s.done&&!s.auto?ico('check'):ico(stageIcon(s))}</span>${esc(stageShort(s,wd))}</button>`).join('')}</div>
+ ${next?nowCard(next===F.redo?Object.assign({},next,{done:false,redo:true,desc:'ゆっくり読んで もう一度。4割以上でOK！'}):next,tier,okDay,rec):goalCard(F)}
+ ${routeBar(F,wd,true)}
+ ${F.ready?'':lockBar(F)}
  ${todo.length?`<details class="fold later"><summary><span class="lb sm y">このあと</span><span class="lt">${todo.length}つ</span></summary><div class="stages">${todo.map(stageCard).join('')}</div></details>`:''}
  ${done.length?`<details class="fold cleared-list"><summary>クリアしたステージ（${done.length}）</summary><div class="stages">${done.map(stageCard).join('')}</div></details>`:''}
 ${intro}${diagTip}${pinAsk}

@@ -24,7 +24,7 @@ function renderDrill(){
  const due=dueByBank(),totalDue=sum(Object.values(due)),ms=mistakeStats();
  const cta=totalDue?`<div class="cta"><div style="flex:1;min-width:220px"><h3>ふくしゅう待ち ${totalDue}問</h3><p>日がたって忘れかけた問題を、先にたおしておこう。</p></div><button class="bt pri xl" data-act="drillDue">まとめて10問</button></div>`:`<div class="tomorrow"><span class="lb sm l">ばっちり</span><span>いまの ふくしゅう待ちは ありません。好きな教材で「あたらしい問題」を。</span></div>`;
  let html=`<div class="card"><span class="lb">ドリル</span><p style="margin:10px 0 2px">好きな教材を、好きなだけ。<b>まちがえた問題は、あした また出る</b>から、まちがえるほど強くなる。</p>
-  <p class="mini">きょうのミッションとは別の「おかわり」。ここでの自由練習は1日60XPまで。</p></div>${cta}
+  <p class="mini">きょうのミッションとは別の「おかわり」。ここでの自由練習は1日60XPまで。</p></div>${missionCard(flowState())}${cta}
   <div class="tsk"><div style="flex:1;min-width:220px"><span class="lb sm o">あたらしい</span><h3 style="margin-top:8px">ツッコミバトル</h3><p class="mini" style="margin:2px 0 0">ライバルの答えは合ってる？ まちがってる？　まちがいを見つけるのが得意なあなたの出番。10問。</p></div><button class="bt cy xl" data-act="tsukkomi">やってみる</button></div>
   <div class="row" style="margin:6px 0 4px"><button class="bt cy" data-page="mist">${ico('splat')}ミス図鑑（のこり${ms.open}体）</button></div>`;
  ['数','英','国','理','社'].forEach(s=>{

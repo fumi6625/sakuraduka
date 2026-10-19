@@ -12,6 +12,7 @@ function renderMenu(){
   <li><b>ホーム</b>を開く。「いま やること」のカードの<b>スタート！</b>を押すだけ。</li>
   <li>問題に答える。まちがえた問題は、すぐ もう一度出る。<b>5問ごとにラウンドクリア</b>。あしたも「ミス退治」で再戦。</li>
   <li>ドリルを<b>1つクリアで合格ライン</b>（れんぞく記録セーフ。ふつう以上は2つ）。ぜんぶクリアで大ボーナス。</li>
+  <li>おわったら<b>「つぎへ」</b>で、そのまま つぎのステージへ（数秒でつながるよ。さわると とまる）。きょうのミッションが ぜんぶ おわったら、<b>「完了れんらく」</b>ボタンを じぶんで おして、おうちの人に メール。</li>
   <li>XPで<b>ランク</b>が上がり、コインで<b>ごほうび</b>と交換。やった日が<b>マップ</b>に ぬられていく。</li></ol>
   <p class="mini">iPadは Safari の共有ボタン →「ホーム画面に追加」で、アプリのように全画面で使えます。記録はこのiPadの中に保存されます（月1回、バックアップを）。</p></div>`;
 }
@@ -57,7 +58,7 @@ let dgFb=false;
 function renderDg(){
  $('#dgTabs').innerHTML=SJL.map(s=>`<button class="bt sm" data-act="dgTab" data-a="${s}" aria-pressed="${S.dg===s}">${SJN[s]}${S.diag[s]&&S.diag[s].done?' ✓':''}</button>`).join('');
  const s=S.dg,list=DIAG[s],n=list.length,r=S.diag[s]||(S.diag[s]={ans:[],sc:0});
- if(r.done&&!dgFb){const L=lvl(r.sc,n);$('#quizBox').innerHTML=`<div class="res"><div><b>${r.sc}/${n}</b><span>${SJN[s]}の得点</span></div><div><b>${L}</b><span>${ADV[L].s}</span></div></div><p>${ADV[L].t}</p><button class="bt" data-act="dgAgain">もう一度やる</button>`;return}
+ if(r.done&&!dgFb){const L=lvl(r.sc,n);$('#quizBox').innerHTML=`<div class="res"><div><b>${r.sc}/${n}</b><span>${SJN[s]}の得点</span></div><div><b>${L}</b><span>${ADV[L].s}</span></div></div><p>${ADV[L].t}</p><button class="bt" data-act="dgAgain">もう一度やる</button>${diagFlowNext()}`;return}
  const qi=dgFb?r.ans.length-1:r.ans.length,q=list[qi],ch=dgFb?r.ans[qi]:-1;
  $('#quizBox').innerHTML=`<p class="mini">${SJN[s]}　${qi+1}/${n}　<span class="chp">${q.l}</span></p><p style="white-space:pre-wrap"><b>${esc(q.q)}</b></p>`+q.o.map((o,j)=>`<button class="opt${dgFb&&j===q.a?' ok':dgFb&&j===ch?' ng':''}" data-act="dgPick" data-a="${j}" ${dgFb?'disabled':''}>${'ABCD'[j]}．${esc(o)}</button>`).join('')+(dgFb?`<div class="exp"><b>${ch===q.a?'正解！':'おしい！'}</b>　${esc(q.e)}</div><p><button class="bt pri" data-act="dgNext">${r.ans.length>=n?'結果を見る':'つぎへ'}</button></p>`:'');
 }
@@ -121,6 +122,9 @@ function initInputs(){
  $('#setSound').setAttribute('aria-pressed',String(!!S.sound));
  $('#setTier').innerHTML=[['auto','おまかせ'],[1,'ならし'],[2,'ふつう'],[3,'しっかり']].map(x=>`<button data-act="tierSet" data-a="${x[0]}" aria-pressed="${String(S.tier)===String(x[0])}">${x[1]}</button>`).join('');
  $('#setPin').value=S.pin||'';$('#setPinOn').setAttribute('aria-pressed',String(!!(S.pinOn&&S.pin)));
+ [['#setMailF','f'],['#setMailM','m']].forEach(x=>{const e=$(x[0]);if(e&&!e.dataset.dirty)e.value=(S.mail||{})[x[1]]||''});   // 入力の途中は、ほかの設定をさわっても消さない
+ $('#setAuto').setAttribute('aria-pressed',String(!!S.flowAuto));
+ $('#mailNote').textContent=mailAddrs().length?'いま入っている宛先：'+mailAddrs().length+'件（ホームの「完了れんらく」で使います）':'まだ宛先が入っていません。入れると、ホームの「完了れんらく」でメールが作れます。';
  $$('[data-memo]').forEach(i=>i.value=S.memo[i.dataset.memo]||'');
 }
 function reloadAll(){
