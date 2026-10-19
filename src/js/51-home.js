@@ -87,7 +87,6 @@ function renderHome(){
  </div>
  ${next?nowCard(next===F.redo?Object.assign({},next,{done:false,redo:true,desc:'ゆっくり読んで もう一度。4割以上でOK！'}):next,tier,okDay,rec):goalCard(F)}
  ${routeBar(F,wd,true)}
- ${F.ready?'':lockBar(F)}
  ${todo.length?`<details class="fold later"><summary><span class="lb sm y">このあと</span><span class="lt">${todo.length}つ</span></summary><div class="stages">${todo.map(stageCard).join('')}</div></details>`:''}
  ${done.length?`<details class="fold cleared-list"><summary>クリアしたステージ（${done.length}）</summary><div class="stages">${done.map(stageCard).join('')}</div></details>`:''}
 ${intro}${diagTip}${pinAsk}

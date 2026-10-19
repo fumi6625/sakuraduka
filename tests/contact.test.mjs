@@ -1,8 +1,7 @@
-// きょうの「一本道」と、おうちの人への「完了れんらく」を確かめる。
+// きょうの「一本道」と、暗証番号・抜け道の対策を確かめる。
 //   node --test tests/contact.test.mjs
 // ・マストの決め方（自動で空のステージ・保護者OKの宿題は入れない）／順番／ボタンが押せる条件
 // ・正答4割未満のドリルは、やりなおして4割以上とれたら数える（行き止まりにしない・XPは二重にもらわない）
-// ・メールアドレスの形／mailto の作り方（宛先・件名・本文）／押した記録は「押せる状態」のときだけ
 // ・アプリは自動では送らない（通信の部品を使っていない・カウントダウンは れんらくに進まない）
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -12,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { loadCore } from '../scripts/headless.mjs';
 
 const NAMES = ['S', 'XPST', 'backupObj', 'restoreFrom', 'pinTry', 'pinLockMin', 'mistakeXP', 'setToday', 'routeFor', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'peekDay', 'dayOK', 'lowRes', 'norm', 'fresh',
-  'flowState', 'mustStages', 'markContact', 'mailText', 'mailtoURL', 'mailAddrs', 'mailWho', 'cleanMail', 'validMail', 'flowName', 'reportText', 'curStreak'];
+  'flowState', 'mustStages', 'flowName', 'reportText', 'curStreak'];
 const START = '2026-10-19';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -45,9 +44,7 @@ test('一本道：順番どおりに「つぎ」が進み、ぜんぶ終わっ�
   let F = C.flowState();
   assert.equal(F.next.id, must[0].id, '最初のつぎ＝いちばん上のマスト');
   assert.equal(F.ready, false);
-  assert.equal(F.steps, must.length + 0, '道にのこっている数＝マストの数（れんらくはまだ数えない）');
-  assert.equal(C.markContact(START), false, 'まだ押せない：記録もできない');
-  assert.equal(C.peekDay(START).ct, undefined);
+  assert.equal(F.steps, must.length);
   for (let i = 0; i < must.length; i++) {
     F = C.flowState();
     assert.equal(F.next.id, must[i].id, `${i + 1}つ目のつぎ`);
@@ -58,16 +55,7 @@ test('一本道：順番どおりに「つぎ」が進み、ぜんぶ終わっ�
   assert.equal(F.next, null);
   assert.equal(F.ok, true, '正答8割台で全部やったので、合格ライン');
   assert.equal(F.ready, true);
-  assert.equal(F.sent, false);
-  assert.equal(F.steps, 1, 'のこりは「れんらく」だけ');
-  assert.equal(C.markContact(START), true);
-  const rec = C.peekDay(START);
-  assert.ok(rec.ct > 0 && rec.cn === 1);
-  F = C.flowState();
-  assert.equal(F.sent, true);
   assert.equal(F.steps, 0);
-  assert.equal(C.markContact(START), true, '押しなおしてもよい（メールが開かなかったときのため）');
-  assert.equal(C.peekDay(START).cn, 2);
 });
 
 test('順番をとばしても、つぎは「まだのうちの先頭」。れんらくは、ぜんぶ終わるまで押せない', () => {
@@ -77,7 +65,6 @@ test('順番をとばしても、つぎは「まだのうちの先頭」。れ�
   const F = C.flowState();
   assert.equal(F.next.id, must[0].id);
   assert.equal(F.ready, false);
-  assert.equal(C.markContact(START), false);
 });
 
 test('ぜんぶ終わっても、正答4割に届かなかった日は押せない。やりなおして4割以上とれたら押せる（行き止まりにしない）', () => {
@@ -90,7 +77,6 @@ test('ぜんぶ終わっても、正答4割に届かなかった日は押せな�
   assert.equal(F.ready, false);
   assert.ok(F.redo && F.redo.kind === 'session' && C.lowRes(F.redo.res), 'やりなおす先が出る');
   assert.equal(F.target, F.redo);
-  assert.equal(C.markContact(START), false);
   const before = C.S.xp;
   assert.equal(C.peekDay(START).stg[F.redo.id].xp, 0, '4割未満はXPなし');
   // やりなおし（4割以上）→ 数える。XPは、ここで1回だけ入る
@@ -141,18 +127,15 @@ test('合格ラインに数えられるドリルが、どうやっても作れ�
   assert.equal(F.ready, true, 'それでも、れんらくは押せる');
 });
 
-test('保護者OKがオンのとき：宿題はれんらくの条件に入れない。メールには「宿題はOKがまだ」と書く', () => {
+test('保護者OKがオンのとき：宿題は一本道に入れない（hwWait で、おうちの人に見せる案内を出す）', () => {
   const C = fresh();
   C.S.nick = 'さくら'; C.S.pin = '4321'; C.S.pinOn = 1;
   const route = C.routeFor(START);
   C.mustStages(route).forEach((s) => play(C, START, s));
   const F = C.flowState();
   assert.equal(F.route.find((s) => s.id === 'hw').done, false, '宿題はまだ');
-  assert.equal(F.ready, true, 'それでも、れんらくは押せる（おうちの人が来てからOKを入れるため）');
+  assert.equal(F.ready, true, '宿題がまだでも、一本道は終わり');
   assert.equal(F.hwWait, true);
-  const M = C.mailText(F);
-  assert.ok(/宿題は、おうちの人の OK が まだです/.test(M.body));
-  assert.ok(!M.body.includes('4321') && !M.text.includes('4321'), '暗証番号は、文に入れない');
   // 暗証番号なしなら、宿題もマスト：やるまで押せない
   const C2 = fresh();
   C2.mustStages(C2.routeFor(START)).filter((s) => s.id !== 'hw').forEach((s) => play(C2, START, s));
@@ -160,127 +143,50 @@ test('保護者OKがオンのとき：宿題はれんらくの条件に入れな
   assert.equal(C2.flowState().next.id, 'hw');
 });
 
-test('メールアドレス：形を確かめる（全角・空白は直す。複数・改行・ヘッダ注入はだめ）', () => {
+test('設定の保存：自動でつなぐ のはじめの値', () => {
   const C = fresh();
-  assert.equal(C.cleanMail('  Ａｂｃ＠Example.com '), 'Abc@Example.com', '全角と空白を直す');
-  for (const ok of ['a@b.com', 'taro.yamada+quiz@mail.example.co.jp', 'a_b-c@sub.domain.jp', 'x..y@ezweb.ne.jp'])
-    assert.ok(C.validMail(ok), ok + ' はOK');
-  for (const ng of ['', 'a', 'a@b', '@b.com', 'a@b..', 'a@b.com,c@d.com', 'a@b.com;c@d.com', 'a@b.com\nbcc:x@y.com', 'a@b.com?cc=x@y.com', '<a@b.com>', 'a@b.c%0Abcc:x@y.com', 'a@b.com&body=1'])
-    assert.ok(!C.validMail(C.cleanMail(ng)), JSON.stringify(ng) + ' はだめ');
-  for (const raw of ['a b@c.com', 'a@b.com\n', 'a@b.com\nbcc:x@y.com'])
-    assert.ok(!C.validMail(raw), '空白・改行が入ったままの ' + JSON.stringify(raw) + ' はだめ（保存の前に、空白は取りのぞく）');
-  C.S.mail = { f: 'otosan@example.com', m: ' okasan@example.com ' };
-  assert.deepEqual([...C.mailAddrs()], ['okasan@example.com', 'otosan@example.com'], 'おかあさん・おとうさんの順');
-  assert.equal(C.mailWho(), 'おかあさん・おとうさん');
-  C.S.mail = { f: 'otosan@example.com', m: 'otosan@example.com' };
-  assert.equal(C.mailAddrs().length, 1, '同じアドレスは1つにまとめる');
-  C.S.mail = { f: 'otosan@example.com', m: 'こわれた' };
-  assert.equal(C.mailWho(), 'おとうさん');
-  C.S.mail = { f: '', m: 'okasan@example.com' };
-  assert.equal(C.mailWho(), 'おかあさん');
-  C.S.mail = { f: '', m: '' };
-  assert.equal(C.mailAddrs().length, 0);
+  assert.equal(C.norm({}).flowAuto, 1);
+  assert.equal(C.norm({ flowAuto: 0 }).flowAuto, 0);
 });
 
-test('mailto：宛先は , でつなぎ、件名・本文は1つずつ正しく符号化される', () => {
-  const C = fresh();
-  C.S.nick = 'さくら'; C.S.mail = { f: 'otosan@example.com', m: 'okasan@example.com' };
-  C.mustStages(C.routeFor(START)).forEach((s) => play(C, START, s, 0.8));
-  const F = C.flowState(), M = C.mailText(F), url = C.mailtoURL(C.mailAddrs(), M);
-  assert.ok(url.startsWith('mailto:okasan@example.com,otosan@example.com?subject='));
-  assert.ok(!/[\s"<>]/.test(url), 'URLに空白・改行・引用符が残っていない');
-  const [head, q] = url.split('?'), params = q.split('&');
-  assert.equal(params.length, 2, 'subject と body だけ（本文の & で枝分かれしない）');
-  assert.equal(decodeURIComponent(params[0].slice('subject='.length)), M.subject);
-  assert.equal(decodeURIComponent(params[1].slice('body='.length)), M.body.replace(/\n/g, '\r\n'), '本文の改行は CRLF');
-  assert.ok(url.length < 2300, 'メールアプリに渡せる長さ');
-  assert.ok(M.subject.includes('さくら'), '件名に呼び名');
-  for (const s of F.must) assert.ok(M.body.includes(C.flowName(s)), C.flowName(s) + ' が本文に入っている');
-  assert.ok(/せいかい \d+\/\d+（\d+%）/.test(M.body), '正答の数と率が入っている（自己申告ではなく、記録から）');
-  assert.ok(M.body.startsWith('おかあさん・おとうさんへ'));
-  assert.ok(M.text.startsWith(M.subject));
-  // 呼び名なしなら、件名にかっこを付けない
-  C.S.nick = '';
-  assert.ok(!/（.*）$/.test(C.mailText(F).subject));
-});
-
-test('週報に「完了れんらく」の日数が出る', () => {
-  const C = fresh();
-  const must = C.mustStages(C.routeFor(START));
-  must.forEach((s) => play(C, START, s));
-  assert.ok(/完了れんらく（子どもがボタンを押した日）：0\/7日/.test(C.reportText()));
-  C.markContact(START);
-  assert.ok(/完了れんらく（子どもがボタンを押した日）：1\/7日/.test(C.reportText()));
-});
-
-test('設定の保存：メールの宛先・自動でつなぐ のはじめの値。古いバックアップにも入る', () => {
-  const C = fresh();
-  const a = C.norm({});
-  assert.deepEqual({ ...a.mail }, { f: '', m: '' });
-  assert.equal(a.flowAuto, 1);
-  const b = C.norm({ mail: { f: 'a@b.com' }, flowAuto: 0 });
-  assert.deepEqual({ ...b.mail }, { f: 'a@b.com', m: '' });
-  assert.equal(b.flowAuto, 0);
-});
-
-test('自動では送らない：通信の部品を使っていない／自動でつなぐ処理は れんらくに進まない', () => {
+test('通信をしない（メールの自動送信などの部品を使っていない）。自動でつなぐ処理は、つぎのステージを始めるだけ', () => {
   const dir = path.join(root, 'src/js');
   const all = fs.readdirSync(dir).filter((f) => f.endsWith('.js')).map((f) => [f, fs.readFileSync(path.join(dir, f), 'utf8')]);
   const html = ['head.html', 'body.html'].map((f) => fs.readFileSync(path.join(root, 'src', f), 'utf8')).join('');
-  for (const [f, src] of all) {
-    assert.ok(!/\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource|importScripts/.test(src), f + '：通信をしている');
-  }
+  for (const [f, src] of all) assert.ok(!/\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource|importScripts|mailto:/.test(src), f + '：通信・メールを使っている');
   assert.ok(!/<form\b|\.submit\s*\(/.test(html + all.map((x) => x[1]).join('')), 'フォーム送信を使っていない');
   const flowJs = fs.readFileSync(path.join(dir, '58-flow.js'), 'utf8');
   const tick = flowJs.slice(flowJs.indexOf('function flowCdTick'), flowJs.indexOf('function flowCdStop'));
-  assert.ok(tick.includes('ACT.flowGo') && !/contact|mail|markContact/i.test(tick), 'カウントダウンが呼ぶのは「つぎへ」だけ');
-  // 「押した」の記録は、押せる状態のときだけ。呼び出し元は、クリックの処理（ACT・リンクのクリック）だけ
-  const callers = all.filter(([f, s]) => /contactMark\s*\(/.test(s.replace(/function contactMark\s*\(/, ''))).map((x) => x[0]);
-  assert.deepEqual(callers.sort(), ['59-main.js']);
-  const mainJs = all.find((x) => x[0] === '59-main.js')[1];
-  const seg = (a, b) => mainJs.slice(mainJs.indexOf(a), mainJs.indexOf(b));
-  const count = (t) => (t.match(/contactMark\s*\(/g) || []).length;
-  const allowed = [seg(' async mailCopy(', ' async mailShare('), seg(' async mailShare(', ' mailSetup('), ...mainJs.split('\n').filter((l) => l.includes('data-mailsent'))].map(count).reduce((a, b) => a + b, 0);
-  assert.ok(allowed >= 3 && count(mainJs) === allowed, 'contactMark は、コピー・共有・メールを開くリンクのクリックでだけ呼ぶ');
-  assert.ok(!/setTimeout\([^)]*contactMark|setInterval\([^)]*contactMark/.test(mainJs + flowJs), 'タイマーから呼ばない');
+  assert.ok(tick.includes('ACT.flowGo'), 'カウントダウンが呼ぶのは「つぎへ」');
 });
 
 test('バックアップに暗証番号は入らない。復元しても、いまの端末の暗証番号はそのまま（文字列を読んで暗証番号を知られない）', () => {
   const C = fresh();
-  C.S.pin = '4321'; C.S.pinOn = 1; C.S.pinSkip = '2026-10-01'; C.S.xp = 777; C.S.mail = { f: 'a@example.com', m: '' };
+  C.S.pin = '4321'; C.S.pinOn = 1; C.S.pinSkip = '2026-10-01'; C.S.xp = 777;
   const text = JSON.stringify(C.backupObj());
   assert.ok(!text.includes('4321'), 'pin の値が文字列に入っていない');
   assert.ok(!/"pin(On|Skip|Fail)?"/.test(text), 'pin・pinOn・pinSkip・pinFail のキー自体が入っていない');
-  assert.ok(text.includes('"xp":777') && text.includes('a@example.com'), '記録と宛先は入る');
+  assert.ok(text.includes('"xp":777') , '記録と宛先は入る');
   // 古いバックアップ（暗証番号が入っているもの）を復元しても、いまの端末の設定が残る
   const old = JSON.parse(text); old.pin = '0000'; old.pinOn = 0; old.xp = 5;
   const n = C.restoreFrom(old);
   assert.equal(n.pin, '4321'); assert.equal(n.pinOn, 1); assert.equal(n.xp, 5);
-  assert.equal(n.mail.f, 'a@example.com');
   // 暗証番号を決めていない端末では、復元しても暗証番号はつかない
   const D = fresh(); const m = D.restoreFrom({ xp: 9, pin: '1111', pinOn: 1 });
   assert.ok(!m.pin && !m.pinOn);
 });
 
-test('やりなおしたとき：1回目の結果がのこり、メールに「1回目 1/7→やりなおし」と書く。自分でつけるものは、そう書く', () => {
+test('やりなおしたとき：1回目の結果が f にのこる', () => {
   const C = fresh();
-  C.S.nick = 'さくら';
   const route = C.routeFor(START), must = C.mustStages(route);
-  must.forEach((s) => play(C, START, s, s.id === 'mem' ? 0.1 : 0.9));   // 暗記だけ、てきとうに押した
+  must.forEach((s) => play(C, START, s, s.id === 'mem' ? 0.1 : 0.9));
   const mem = route.find((s) => s.id === 'mem'), first = { ...C.peekDay(START).stg.mem };
   assert.ok(C.lowRes(first), '1回目は4割未満');
-  assert.equal(first.f, undefined, '1回目には、f（やりなおし前の結果）はない');
-  play(C, START, mem, 0.95);   // やりなおし
-  const now = C.peekDay(START).stg.mem;
-  assert.deepEqual({ ...now.f }, { ok: first.ok, n: first.n }, '1回目の結果がのこる');
-  play(C, START, mem, 0.95);   // もう一度やっても、1回目の記録は変わらない
+  assert.equal(first.f, undefined);
+  play(C, START, mem, 0.95);
   assert.deepEqual({ ...C.peekDay(START).stg.mem.f }, { ok: first.ok, n: first.n });
-  C.S.refl[START] = { t: 'x', s: 4, d: 3 };
-  const M = C.mailText(C.flowState());
-  assert.ok(new RegExp('暗記バトル　\\d+/\\d+（1回目 ' + first.ok + '/' + first.n + '→やりなおし）').test(M.body), M.body);
-  assert.ok(/数学ドリル　\d+\/\d+\n/.test(M.body) && !/数学ドリル.*1回目/.test(M.body), 'やりなおしていないドリルには、1回目と書かない');
-  assert.ok(/宿題・提出物（じぶんでチェック）/.test(M.body), '宿題は、じぶんでチェックしたと分かる');
-  assert.ok(/ふりかえり　自分4点／データ3点/.test(M.body), 'ふりかえりは、自分の点とデータの点');
+  play(C, START, mem, 0.95);
+  assert.deepEqual({ ...C.peekDay(START).stg.mem.f }, { ok: first.ok, n: first.n });
 });
 
 test('やりなおしのセッションは、おぼえ具合（箱）・答えた数に記録しない（見たばかりの答えを、もう一度答えるだけなので）', () => {
@@ -314,27 +220,3 @@ test('学校のテストのミスの登録：XPは1日1回だけ（何回登録�
   assert.equal(C.S.xp, 10);
 });
 
-test('メール文：きょうの量（ならし／ふつう／しっかり）と、ミニの日を書く', () => {
-  const C = fresh();
-  const route = C.routeFor(START);
-  C.mustStages(route).forEach((s) => play(C, START, s));
-  assert.ok(/・きょうの量：ならし\n/.test(C.mailText(C.flowState()).body) || /・きょうの量：ならし$/m.test(C.mailText(C.flowState()).body));
-  const D = fresh();
-  D.S.light[START] = 1;
-  D.mustStages(D.routeFor(START)).forEach((s) => play(D, START, s));
-  assert.ok(/・きょうの量：ならし（ミニの日）/.test(D.mailText(D.flowState()).body), 'ミニの日と分かる');
-});
-
-test('メール文は、ならし・ふつう・しっかりのどの日でも短い（mailto が長くなりすぎない）。日付は「10/19 月」の形', () => {
-  const C = fresh();
-  C.S.nick = 'さくらさくら'; C.S.mail = { f: 'otosan@example.com', m: 'okasan@example.com' }; C.S.pin = '1234'; C.S.pinOn = 1;
-  let max = 0;
-  for (let i = 0; i < 45; i++) {
-    const d = C.addDays(START, i); C.setToday(d);
-    for (const st of C.routeFor(d)) play(C, d, st, i % 3 === 0 ? 0.2 : 0.85);
-    const F = C.flowState(d), M = C.mailText(F, d), u = C.mailtoURL(C.mailAddrs(), M);
-    max = Math.max(max, u.length);
-    assert.ok(/きょう（\d+\/\d+ [日月火水木金土]）の ノルマ/.test(M.body), M.body.split('\n')[2]);
-  }
-  assert.ok(max < 2300, `45日のうち最長のURLが ${max} 文字`);
-});

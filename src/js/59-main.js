@@ -46,7 +46,7 @@ function needPin(msg,fn){
 const ACT={
  /* ---- ステージ ---- */
  stageGo(id){const s=routeFor().find(x=>x.id===id);if(s)startStage(s)},
- /* ---- 一本道：つぎへ／完了れんらく ---- */
+ /* ---- 一本道：つぎへ ---- */
  flowGo(){
   flowCdStop();closeOv();closeSheet();
   if(PG)closePage();
@@ -54,32 +54,6 @@ const ACT={
   if(tab!=='home')show('home');   // 一本道の足場は、ホーム
   const F=flowState();
   if(F.target){startStage(F.target);return}
-  if(F.ready&&!F.sent)contactSheet();
- },
- contact(){
-  const F=flowState();
-  if(!F.ready){toast(F.all?'せいかいが 4わりに とどいた ドリルが ひつようだよ（もう一度 やってみよう）':'あと'+F.left+'つ おわったら おせるよ');return}
-  contactSheet();
- },
- async mailCopy(){
-  const F=flowState();if(!F.ready)return;
-  const ok=await copyText(mailText(F).text);
-  if(!ok){toast('コピーできなかった。「おくる文を見る」から 長押しでコピーしてね');return}
-  const m='文を コピーした。メールやLINEに はりつけて、おくってね';
-  if(mailAddrs().length)contactMark(m);else toast(m);   // 宛先がないときは、コピーだけでは「押した」にしない
- },
- async mailShare(){const F=flowState();if(!F.ready||!navigator.share)return;const M=mailText(F);try{await navigator.share({title:M.subject,text:M.body});contactMark()}catch(e){}},
- mailSetup(){closeSheet();openPage('family');setTimeout(()=>{const e=$('#setMailF');if(e&&e.scrollIntoView)e.scrollIntoView({block:'center'})},250)},
- mailSave(){
-  const f=cleanMail($('#setMailF').value),m=cleanMail($('#setMailM').value);
-  if((f&&!validMail(f))||(m&&!validMail(m))){toast('メールアドレスの かたちが ちがうみたい。もう一度 見てね');return}
-  needPin('れんらく先のメールアドレスを 保存します。',()=>{S.mail={f,m};['#setMailF','#setMailM'].forEach(k=>{const e=$(k);if(e)delete e.dataset.dirty});save();initInputs();toast(!(f||m)?'メールアドレスを 消した':PINON()?'メールアドレスを 保存した':'メールアドレスを 保存した。暗証番号（保護者OK）を決めると、子どもが宛先を変えられなくなります')});
- },
- mailTest(){
-  const typed=[cleanMail($('#setMailF').value),cleanMail($('#setMailM').value)].filter(validMail),to=[...new Set(typed.length?typed:mailAddrs())];
-  if(!to.length){toast('先に メールアドレスを 入れてね');return}
-  toast('メールアプリを ひらくよ。ひらかないときは、メールアプリの せっていを 見てね');
-  location.href=mailtoURL(to,{subject:'【さくらクエスト】テストメール',body:'これは、さくらクエストの「完了れんらく」の テストです。\nこのメールが とどけば、せっていは OK です。\n（ボタンを おしても、アプリが かってに メールを おくることはありません）'});
  },
  autoToggle(){const set=()=>{S.flowAuto=S.flowAuto?0:1;save();initInputs();toast(S.flowAuto?'つぎへ 自動でつなぐ：オン':'つぎへ 自動でつなぐ：オフ（ボタンで すすむ）')};if(S.flowAuto)needPin('「つぎへ 自動でつなぐ」を オフにします。',set);else set()},
  hwLen(m){hwLenM=+m;$$('#hwLen button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a===hwLenM)));hwTick(true)},
@@ -246,7 +220,6 @@ const ACT={
 };
 document.addEventListener('click',e=>{
  if(FCD&&!e.target.closest('[data-act="flowGo"]')&&!e.target.closest('#ov'))flowCdStop(true);   // さわったら、自動でつぎへ進むのを止める（レベルアップの表示を閉じるだけなら止めない）
- if(e.target.closest('a[data-mailsent]')){contactMark();return}   // メールを開くリンク：ふつうに開かせて、「押した」を記録する
  const t=e.target.closest('[data-act],[data-tab],[data-page]');
  if(!t){
   if(e.target.id==='sheet')closeSheet();
@@ -270,7 +243,6 @@ document.addEventListener('input',e=>{
  else if(el.id==='naiGk'){S.nai.gk=+el.value;S.nai.set=1;save();naiOut()}
  else if(el.id==='setNick'){S.nick=el.value.slice(0,12);saveSoon();renderHud()}
  else if(el.id==='setPin'){el.value=el.value.replace(/\D/g,'').slice(0,4)}
- else if(el.id==='setMailF'||el.id==='setMailM'){el.dataset.dirty='1'}
  else if(el.dataset.memo!=null){S.memo[+el.dataset.memo]=el.value;saveSoon()}
 });
 document.addEventListener('keydown',e=>{
@@ -291,7 +263,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!PL&&!PG)
 document.addEventListener('touchstart',()=>{},{passive:true});
 
 /* ---- 開発用：?debug を付けると、テスト用の入り口が出る ---- */
-if(/[?&]debug/.test(location.search))window.__sq={get S(){return S},get PL(){return PL},ACT,routeFor,flowState,mailText,present,judge,correctText,show,refresh,openPage,makeGen,GEN,BK,ITEMS,startSession,levelUp,setToday,completeStage,recordAnswer,drillItems,lvInfo};
+if(/[?&]debug/.test(location.search))window.__sq={get S(){return S},get PL(){return PL},ACT,routeFor,flowState,present,judge,correctText,show,refresh,openPage,makeGen,GEN,BK,ITEMS,startSession,levelUp,setToday,completeStage,recordAnswer,drillItems,lvInfo};
 
 /* ---- 初期化 ---- */
 (function init(){

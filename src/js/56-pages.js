@@ -12,7 +12,7 @@ function renderMenu(){
   <li><b>ホーム</b>を開く。「いま やること」のカードの<b>スタート！</b>を押すだけ。</li>
   <li>問題に答える。まちがえた問題は、すぐ もう一度出る。<b>5問ごとにラウンドクリア</b>。あしたも「ミス退治」で再戦。</li>
   <li>ドリルを<b>1つクリアで合格ライン</b>（れんぞく記録セーフ。ふつう以上は2つ）。ぜんぶクリアで大ボーナス。</li>
-  <li>おわったら<b>「つぎへ」</b>で、そのまま つぎのステージへ（数秒でつながるよ。さわると とまる）。きょうのミッションが ぜんぶ おわったら、<b>「完了れんらく」</b>ボタンを じぶんで おして、おうちの人に メール。</li>
+  <li>おわったら<b>「つぎへ」</b>で、そのまま つぎのステージへ（数秒でつながるよ。さわると とまる）。</li>
   <li>XPで<b>ランク</b>が上がり、コインで<b>ごほうび</b>と交換。やった日が<b>マップ</b>に ぬられていく。</li></ol>
   <p class="mini">iPadは Safari の共有ボタン →「ホーム画面に追加」で、アプリのように全画面で使えます。記録はこのiPadの中に保存されます（月1回、バックアップを）。</p></div>`;
 }
@@ -122,9 +122,7 @@ function initInputs(){
  $('#setSound').setAttribute('aria-pressed',String(!!S.sound));
  $('#setTier').innerHTML=[['auto','おまかせ'],[1,'ならし'],[2,'ふつう'],[3,'しっかり']].map(x=>`<button data-act="tierSet" data-a="${x[0]}" aria-pressed="${String(S.tier)===String(x[0])}">${x[1]}</button>`).join('');
  $('#setPin').value=S.pin||'';$('#setPinOn').setAttribute('aria-pressed',String(!!(S.pinOn&&S.pin)));
- [['#setMailF','f'],['#setMailM','m']].forEach(x=>{const e=$(x[0]);if(e&&!e.dataset.dirty)e.value=(S.mail||{})[x[1]]||''});   // 入力の途中は、ほかの設定をさわっても消さない
  $('#setAuto').setAttribute('aria-pressed',String(!!S.flowAuto));
- $('#mailNote').textContent=mailAddrs().length?'いま入っている宛先：'+mailAddrs().length+'件（ホームの「完了れんらく」で使います）':'まだ宛先が入っていません。入れると、ホームの「完了れんらく」でメールが作れます。';
  $$('[data-memo]').forEach(i=>i.value=S.memo[i.dataset.memo]||'');
 }
 function reloadAll(){
