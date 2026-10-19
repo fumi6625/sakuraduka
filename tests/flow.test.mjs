@@ -124,6 +124,8 @@ test('長文：国語・英語とも40題あり、どの問いも4択で、正�
       for (const q of p.qs) assert.equal(new Set(q.slice(1, 5)).size, 4, `${p.id}: 選択肢が重なる`);
     }
   }
+  // 国語の長文：入試の長さ（800字以上）が10題以上ある
+  assert.ok(C.PASS.J.filter((p) => p.text.length >= 800).length >= 10, `800字以上の国語の長文 ${C.PASS.J.filter((p) => p.text.length >= 800).length}題`);
   // 英語の長文：どれも100語以上で、設問の2つは英語（入試B問題の形）。英語の設問の正解が、英文の中に根拠をもつ
   for (const p of C.PASS.E) {
     assert.ok(p.text.trim().split(/\s+/).length >= 100, `${p.id} が短い：${p.text.trim().split(/\s+/).length}語`);
