@@ -14,9 +14,16 @@ const wkWins=()=>Object.values(S.wk).filter(w=>w.sc>=8).length;
 
 /* ----- 連続記録 ----- */
 const stageKeys=rec=>Object.keys(rec.stg||{});
-/* 合格ライン：ならし期は「ドリルを1つ」、ふつう以上は「ドリル1つ＋もう1つ」 */
-/* 合格ラインの日：ドリルを1つ（ふつう以上は、もう1ステージ）。ただし、正答が4割に届かないドリルは数えない（てきとうに押して、連続記録をのばさないように） */
-const dayOK=(rec,tier)=>{const k=stageKeys(rec).filter(x=>x!=='diag'),sess=k.some(x=>{if(x==='hw'||x==='ref')return false;const g=rec.stg[x];return !g.n||g.ok/g.n>=.4});return tier===1?sess:(k.length>=2&&sess)};
+/* 合格ラインの日：ならし期は「ドリルを1つ」、ふつう以上は「ドリル1つ＋もう1つ」。
+   数えるのは「正答4割以上のドリル」と、保護者OK（暗証番号）をオンにしているときの「宿題」だけ。
+   てきとうに押したドリルや、自己採点のふりかえりでは、連続記録をのばせない */
+const goodOf=rec=>{
+ const pin=!!(S.pinOn&&S.pin),k=stageKeys(rec).filter(x=>x!=='diag');
+ return{sess:k.filter(x=>{if(x==='hw'||x==='ref')return false;const g=rec.stg[x];return !g.n||g.ok/g.n>=.4}).length,hw:pin&&k.includes('hw')?1:0};
+};
+const dayOK=(rec,tier)=>{const g=goodOf(rec);return tier===1?g.sess>=1:(g.sess>=1&&g.sess+g.hw>=2)};
+/* 合格ラインまで、あと何つか */
+const dayNeed=(rec,tier)=>{const g=goodOf(rec);return tier===1?Math.max(0,1-g.sess):Math.max(g.sess>=1?0:1,2-g.sess-g.hw)};
 const curStreak=()=>{const t=today();if(S.last===t||S.last===addDays(t,-1))return S.streak;if(S.last===addDays(t,-2)&&S.freeze>0)return S.streak;return 0};
 const STREAK_BONUS={3:30,7:70,14:150,30:300,60:500,100:1000};
 function streakUp(){
@@ -35,15 +42,17 @@ function streakUp(){
 /* ----- ステージ完了：XPの計算・保存・全クリ判定 ----- */
 function stageXP(id,r){
  const base=XPST[id]||0,n=r.n||0,ok=r.ok||0;
- if(r.boss)return ok>=8?80:30;
+ if(r.boss)return ok>=8?80:ok>=4?30:0;
  if(!n)return base;
- return Math.round(base*(0.4+0.6*ok/n))+(n>=5&&ok===n?10:0);   // 正答が少ないほど減る（全問まちがいで4割）
+ if(n>=5&&ok/n<.4)return 0;   // 正答が4割に届かないときは、XPなし（てきとうに押してXPをかせげないように）
+ return Math.round(base*(0.4+0.6*ok/n))+(n>=5&&ok===n?10:0);
 }
 /* r: {ok,n,sec,combo,boss,min,note}   戻り値は画面に出す内容 */
 function completeStage(date,id,r){
  const d=dayRec(date),out={xp:0,first:!d.stg[id],lv:null,streak:null,full:false,fullBonus:0,coin:0};
  if(!out.first)return out;
  out.xp=stageXP(id,r);
+ if((r.n||0)>=5&&(r.ok||0)/r.n<.4)out.low=true;
  const st=(S.rt&&S.rt.d===date?S.rt.stg.find(x=>x.id===id):null)||{};
  const mins=r.min!=null?r.min:Math.max(1,Math.round((r.sec||0)/60)),sj=st.subj||'総';
  d.stg[id]={ok:r.ok||0,n:r.n||0,xp:out.xp,sec:r.sec||0,cb:r.combo||0,at:Date.now(),note:r.note||''};

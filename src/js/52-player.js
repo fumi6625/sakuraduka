@@ -218,6 +218,7 @@ function renderResult(R){
   <div class="rk"><i>${rank}</i><span>ランク</span></div>
   <p class="rt">${esc(o.title)}${o.boss?(win?'　ボスをたおした！':'　あと'+(8-ok)+'問でたおせた…'):''}</p>
   <div class="rtl"><div><b>${ok}<small>/${n}</small></b><span>せいかい</span></div><div><b id="xpV">+0</b><span>XP${res&&res.fullBonus?'（全クリ+'+res.fullBonus+'）':drill&&!drill.xp?'（きょうの自由練習は上限）':''}</span></div><div><b>×${PL.maxCombo}</b><span>さいだいコンボ</span></div><div><b>${fmtMin(Math.max(1,Math.round(sec/60)))}</b><span>かかった時間</span></div></div>
+  ${res&&res.low?`<p class="nt"><span class="chp w">正答が4割に届かなかったので、今回はXPなし。ゆっくり読んで、もう一度やってみよう</span></p>`:''}
   ${PL.newMast?`<p class="nt"><span class="chp ok">★ あたらしく おぼえた ${PL.newMast}問</span></p>`:''}
   ${miss.length?`<p class="nt"><span class="chp w">まちがえた ${miss.length}問 → あした「ミス退治」で再戦</span></p>`:'<p class="nt"><span class="chp ok">ノーミス！</span></p>'}
   ${res&&res.streak?`<p class="nt"><span class="chp xp">${ico('flame')} れんぞく ${S.streak}日！${res.streak.bonus?' ボーナス +'+res.streak.bonus+'XP':''}</span></p>`:''}

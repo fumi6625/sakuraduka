@@ -49,7 +49,7 @@ GEN.lit_calc={name:'文字式の計算',f(r,lv){
   const a=rnz(r,-6,6),b=rnz(r,-9,9),c=rnz(r,-6,6),d=rnz(r,-9,9),sub=r()<.5;
   A=sub?a-c:a+c;B=sub?b-d:b+d;q=`(${lin(a,b)}) ${sub?'−':'+'} (${lin(c,d)})`;
   wr=sub?[[a-c,b+d],[a+c,b-d],[a+c,b+d]]:[[a-c,b+d],[a+c,b-d],[a-c,b-d]];
-  exp=[sub?'かっこの前が − なので、かっこの中の符号がすべて変わる':'かっこをそのままはずす','x の項：'+sg(sub?a-c:a+c)+'x ／ 数の項：'+sg(B)];
+  exp=[sub?'かっこの前が − なので、かっこの中の符号がすべて変わる':'かっこをそのままはずす','x の項：'+((sub?a-c:a+c)===0?'なし（0）':sg(sub?a-c:a+c)+'x')+' ／ 数の項：'+sg(B)];
  }else{
   const a=rnz(r,-5,5),d=rnz(r,lv===3?-5:2,5),b=rnz(r,1,4),e=rnz(r,1,4),c=rnz(r,-6,6),f=rnz(r,-6,6);
   A=a*b-d*e;B=a*c-d*f;

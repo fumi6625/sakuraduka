@@ -97,7 +97,7 @@ GEN.expand={name:'式の展開',f(r,lv){
   else if(t===4){const p=ri(r,2,4),q=ri(r,2,9);L=[p,q];R=[p,-q];expr=`(${lin(p,q)})(${lin(p,-q)})`;wr=[[p*p,0,q*q],[p*p,2*p*q,-q*q],[p,0,-q*q],[p*p,-2*p*q,-q*q]];ex=[`(${lin(p,q)})(${lin(p,-q)}) ＝ (${p}x)² − ${q}²`,'（和と差の積：真ん中の項が消える）']}
   else{L=[1,a];R=[1,-a];expr=`(${lin(1,a)})(${lin(1,-a)})`;wr=[[1,0,a*a],[1,2*a,-a*a],[1,-2*a,-a*a],[1,a,-a*a]];ex=[`(x ＋ ${a})(x − ${a}) ＝ x² − ${a}²`,'（和と差の積：真ん中の項が消える）']}}
  else{const p=pick([2,3],r),q=rnz(r,-5,5),s=rnz(r,-5,5),u=pick([1,2],r);L=[p,q];R=[u,s];expr=`(${lin(p,q)})(${lin(u,s)})`;
-  const A=p*u,B=p*s+q*u,C=q*s;wr=[[A,p*s-q*u,C],[A,B,-C],[A,p*q+u*s,C],[A,B,C+B]];ex=[`${lin(p,q)} と ${lin(u,s)} を分配：${p}x×(${lin(u,s)}) ＋ ${pr(q)}×(${lin(u,s)})`,`＝ ${q2(A,p*s,0)} ＋ ${q2(0,q*u,q*s)} ＝ ${q2(A,B,C)}`]}
+  const A=p*u,B=p*s+q*u,C=q*s;wr=[[A,p*s-q*u,C],[A,B,-C],[A,p*q+u*s,C],[A,B,C+B]];ex=[`${lin(p,q)} と ${lin(u,s)} を分配：${p}x×(${lin(u,s)}) ＋ ${pr(q)}×(${lin(u,s)})`,`＝ (${q2(A,p*s,0)}) ＋ (${q2(0,q*u,q*s)}) ＝ ${q2(A,B,C)}`]}
  const P=mulP(L,R),ans=pStr(P);
  return{q:`${expr} を展開すると？`,ch:uniq4(ans,wr.map(pStr),k=>q2(P[0],P[1]+k,P[2])),a:[],disp:ans,exp:ex,v:()=>[-2,1,3,5].every(x=>ev(L,x)*ev(R,x)===ev(P,x))};
 }};
@@ -114,16 +114,18 @@ GEN.factor={name:'因数分解',f(r,lv){
 }};
 const simpRad=n=>{let k=1,m=n;for(let i=Math.floor(Math.sqrt(n));i>=2;i--){if(m%(i*i)===0){k=i;m=m/(i*i);break}}if(m===1)return String(k);return(k===1?'':k)+'√'+m};
 GEN.sqrt={name:'平方根',f(r,lv){
- const M=[2,3,5,6,7],M2=[2,3,5,6,7,10,11,13];
+ const M=[2,3,5,6,7],M2=[2,3,5,6,7,10,11,13],cf=(j,m)=>(j===1?'':j)+'√'+m;
+ /* 「a√b」「√b」「n」の値。誤答が正解と同じ値（√63 と 3√7 など）にならないよう、のぞくために使う */
+ const rv=s=>{const m=String(s).replace(/\s/g,'').match(/^(\d*)(?:√(\d+))?$/);if(!m||(!m[1]&&!m[2]))return NaN;return(m[1]===''?1:+m[1])*(m[2]?Math.sqrt(+m[2]):1)},dv=(c,ws)=>ws.filter(w=>!(Math.abs(rv(w)-rv(c))<1e-9));
  if(lv===1&&r()<.3){const a=ri(r,2,7),m=pick(M2,r);return{q:`${a}√${m} ＝ √□ の □ にあてはまる数は？`,a:[String(a*a*m)],disp:String(a*a*m),exp:['根号の外の数は、2乗して根号の中に入れる',`${a}√${m} ＝ √(${a}² × ${m}) ＝ √${a*a*m}`],v:()=>true}}
  if(lv===1){const k=ri(r,2,9),m=pick(M2,r),N=k*k*m,ans=k+'√'+m;
-  return{q:`√${N} を a√b の形（b はできるだけ小さい整数）にすると？`,ch:uniq4(ans,[m+'√'+k,(k*k)+'√'+m,k+'√'+(m*2)],j=>(k+j)+'√'+m),a:[],disp:ans,exp:[`${N} ＝ ${k*k} × ${m}（${k}² × ${m}）`,`√${N} ＝ √${k*k} × √${m} ＝ ${ans}`],v:()=>true}}
+  return{q:`√${N} を a√b の形（b はできるだけ小さい整数）にすると？`,ch:uniq4(ans,dv(ans,[m+'√'+k,(k*k)+'√'+m,k+'√'+(m*2)]),j=>(k+j)+'√'+m),a:[],disp:ans,exp:[`${N} ＝ ${k*k} × ${m}（${k}² × ${m}）`,`√${N} ＝ √${k*k} × √${m} ＝ ${ans}`],v:()=>true}}
  if(lv===2){const k=ri(r,2,5),m=pick(M,r),N=k*k*m,ds=[];for(let d=2;d<N;d++)if(N%d===0&&d<=30&&N/d<=30)ds.push(d);const ds2=ds.filter(d=>!Number.isInteger(Math.sqrt(d))&&!Number.isInteger(Math.sqrt(N/d))),d=pick(ds2.length?ds2:ds,r),e=N/d,ans=k+'√'+m;
-  return{q:`√${d} × √${e} を計算すると？`,ch:uniq4(ans,['√'+N,m+'√'+k,(k*k)+'√'+m],j=>(k+j)+'√'+m),a:[],disp:ans,exp:[`√a × √b ＝ √(ab)　→　√${d} × √${e} ＝ √${N}`,`${N} ＝ ${k*k} × ${m} なので　√${N} ＝ ${ans}`],v:()=>d*e===N}}
+  return{q:`√${d} × √${e} を計算すると？`,ch:uniq4(ans,dv(ans,['√'+(d+e),m+'√'+k,(k*k)+'√'+m]),j=>(k+j)+'√'+m),a:[],disp:ans,exp:[`√a × √b ＝ √(ab)　→　√${d} × √${e} ＝ √${N}`,`${N} ＝ ${k*k} × ${m} なので　√${N} ＝ ${ans}`],v:()=>d*e===N}}
  if(r()<.5){const m=pick(M2,r);let k1=ri(r,1,6),k2=ri(r,1,6);if(k1===1&&k2===1)k1=2;const a=k1*k1*m,b=k2*k2*m,ans=(k1+k2)+'√'+m;
-  return{q:`√${a} ＋ √${b} を計算すると？`,ch:uniq4(ans,['√'+(a+b),(k1*k2)+'√'+m,(k1+k2)+'√'+(2*m)],j=>(k1+k2+j)+'√'+m),a:[],disp:ans,exp:[`それぞれ簡単にする：√${a} ＝ ${simpRad(a)}、√${b} ＝ ${simpRad(b)}`,`ルートの中が同じなので係数をたす：${k1} ＋ ${k2} ＝ ${k1+k2}　→　${ans}`],v:()=>true}}
- const m=pick(M2,r),j=ri(r,1,6),c=j*m,ans=j+'√'+m;
- return{q:`${c}/√${m} の分母を有理化すると？`,ch:uniq4(ans,[c+'√'+m,j+'/√'+m,(c*m)+'√'+m],q=>(j+q)+'√'+m),a:[],disp:ans,exp:[`分母と分子に √${m} をかける：${c}×√${m} ÷ (√${m}×√${m})`,`＝ ${c}√${m} ÷ ${m} ＝ ${ans}`],v:()=>true};
+  return{q:`√${a} ＋ √${b} を計算すると？`,ch:uniq4(ans,dv(ans,['√'+(a+b),(k1*k2)+'√'+m,(k1+k2)+'√'+(2*m)]),j=>(k1+k2+j)+'√'+m),a:[],disp:ans,exp:[`それぞれ簡単にする：√${a} ＝ ${simpRad(a)}、√${b} ＝ ${simpRad(b)}`,`ルートの中が同じなので係数をたす：${k1} ＋ ${k2} ＝ ${k1+k2}　→　${ans}`],v:()=>true}}
+ const m=pick(M2,r),j=ri(r,1,6),c=j*m,ans=cf(j,m);
+ return{q:`${c}/√${m} の分母を有理化すると？`,ch:uniq4(ans,dv(ans,[c+'√'+m,j+'/√'+m,(c*m)+'√'+m]),q=>(j+q)+'√'+m),a:[],disp:ans,exp:[`分母と分子に √${m} をかける：${c}×√${m} ÷ (√${m}×√${m})`,`＝ ${c}√${m} ÷ ${m} ＝ ${ans}`],v:()=>true};
 }};
 const rootAcc=rs=>{const u=[...new Set(rs)].sort((a,b)=>a-b),perms=u.length===1?[u]:[u,[...u].reverse()],a=[];perms.forEach(p=>{const s=p.map(String);a.push('x='+s.join(','),s.join(','),'x='+s.join(',x='))});return a};
 GEN.quad_eq={name:'二次方程式',f(r,lv){
@@ -142,7 +144,7 @@ GEN.quad_fn={name:'関数 y＝ax²',f(r,lv){
  if(lv===1){const a=rnz(r,-5,6),x=rnz(r,-6,6),v=a*x*x;
   return{q:`関数 y ＝ ${a===1?'':a===-1?MI:sg(a)}x² で、x ＝ ${sg(x)} のとき y の値は？`,a:[String(v)],disp:sg(v),exp:[`x に ${pr(x)} を入れる：${pr(a)}×${pr(x)}²`,`${pr(x)}² ＝ ${x*x} なので　${pr(a)} × ${x*x} ＝ ${sg(v)}`],v:()=>true}}
  if(lv===2){const a=rnz(r,-5,6),p=ri(r,-5,3),q=p+ri(r,1,5);
-  return{q:`関数 y ＝ ${a===1?'':a===-1?MI:sg(a)}x² で、x が ${sg(p)} から ${sg(q)} まで増加するときの変化の割合は？`,a:[String(a*(p+q))],disp:sg(a*(p+q)),exp:[`y の増加量 ＝ ${pr(a)}×${q}² − ${pr(a)}×${pr(p)}² ＝ ${sg(a*q*q)} − ${pr(a*p*p)} ＝ ${sg(a*(q*q-p*p))}`,`x の増加量 ＝ ${q} − ${pr(p)} ＝ ${q-p}`,`変化の割合 ＝ ${sg(a*(q*q-p*p))} ÷ ${q-p} ＝ ${sg(a*(p+q))}（ a × (p＋q) でも求まる）`],v:()=>(q*q-p*p)%(q-p)===0}}
+  return{q:`関数 y ＝ ${a===1?'':a===-1?MI:sg(a)}x² で、x が ${sg(p)} から ${sg(q)} まで増加するときの変化の割合は？`,a:[String(a*(p+q))],disp:sg(a*(p+q)),exp:[`y の増加量 ＝ ${pr(a)}×${pr(q)}² − ${pr(a)}×${pr(p)}² ＝ ${sg(a*q*q)} − ${pr(a*p*p)} ＝ ${sg(a*(q*q-p*p))}`,`x の増加量 ＝ ${pr(q)} − ${pr(p)} ＝ ${q-p}`,`変化の割合 ＝ ${sg(a*(q*q-p*p))} ÷ ${q-p} ＝ ${sg(a*(p+q))}（ a × (p＋q) でも求まる）`],v:()=>(q*q-p*p)%(q-p)===0}}
  const a=ri(r,1,6),p=ri(r,1,6),q=ri(r,1,7),mx=a*Math.max(p*p,q*q);
  return{q:`関数 y ＝ ${a===1?'':a}x² で、x の変域が ${MI}${p} ≦ x ≦ ${q} のとき、y の最大値は？`,a:[String(mx)],disp:String(mx),exp:[`a > 0 なので、x の絶対値が大きいほど y が大きい`,`x ＝ ${MI}${p} のとき y ＝ ${a*p*p}、x ＝ ${q} のとき y ＝ ${a*q*q}`,`大きいほう　${mx}`],v:()=>true};
 }};
@@ -160,7 +162,7 @@ GEN.pythag={name:'三平方の定理',f(r,lv){
  return{q:`座標平面上の2点 A(${sg(x1)}, ${sg(y1)})、B(${sg(x2)}, ${sg(y2)}) の間の距離は？`,a:[String(t[2]*k)],disp:String(t[2]*k),exp:[`x の差 ${Math.abs(x2-x1)}、y の差 ${Math.abs(y2-y1)} を直角をはさむ2辺とみる`,`√(${Math.abs(x2-x1)}² ＋ ${Math.abs(y2-y1)}²) ＝ √${(Math.abs(x2-x1))**2+(Math.abs(y2-y1))**2} ＝ ${t[2]*k}`],v:()=>true};
 }};
 GEN.area_vol={name:'円・立体の計量',f(r,lv){
- const P=n=>[n+'π',n+'pi'];
+ const P=n=>n===1?['π','pi','1π','1pi']:[n+'π',n+'pi'],pi_=n=>(n===1?'':n)+'π';
  if(lv===1){const rr=ri(r,2,20),t=ri(r,0,3),d=2*rr;
   if(t===0)return{q:`半径 ${rr}cm の円の面積は？（π を使って）`,a:P(rr*rr),unit:'cm²',disp:rr*rr+'π cm²',exp:['円の面積 ＝ π × 半径²',`π × ${rr}² ＝ ${rr*rr}π`],v:()=>true};
   if(t===1)return{q:`半径 ${rr}cm の円の周の長さは？（π を使って）`,a:P(2*rr),unit:'cm',disp:2*rr+'π cm',exp:['円周 ＝ 2 × π × 半径',`2 × π × ${rr} ＝ ${2*rr}π`],v:()=>true};
@@ -171,8 +173,8 @@ GEN.area_vol={name:'円・立体の計量',f(r,lv){
    for(let k=0;k<200&&!c;k++){const rr=pick([2,3,4,5,6,8,9,10,12,15],r),th=pick(TH,r),v=area?rr*rr*th/360:2*rr*th/360;if(Number.isInteger(v))c=[rr,th,v]}
    if(!c)c=[6,90,area?9:3];
    const [rr,th,v]=c;
-   if(area)return{q:`半径 ${rr}cm、中心角 ${th}° のおうぎ形の面積は？（π を使って）`,a:P(v),unit:'cm²',disp:v+'π cm²',exp:['おうぎ形の面積 ＝ 円の面積 × 中心角/360',`${rr*rr}π × ${th}/360 ＝ ${v}π`],v:()=>true};
-   return{q:`半径 ${rr}cm、中心角 ${th}° のおうぎ形の弧の長さは？（π を使って）`,a:P(v),unit:'cm',disp:v+'π cm',exp:['弧の長さ ＝ 円周 × 中心角/360',`${2*rr}π × ${th}/360 ＝ ${v}π`],v:()=>true}}
+   if(area)return{q:`半径 ${rr}cm、中心角 ${th}° のおうぎ形の面積は？（π を使って）`,a:P(v),unit:'cm²',disp:pi_(v)+' cm²',exp:['おうぎ形の面積 ＝ 円の面積 × 中心角/360',`${rr*rr}π × ${th}/360 ＝ ${pi_(v)}`],v:()=>true};
+   return{q:`半径 ${rr}cm、中心角 ${th}° のおうぎ形の弧の長さは？（π を使って）`,a:P(v),unit:'cm',disp:pi_(v)+' cm',exp:['弧の長さ ＝ 円周 × 中心角/360',`${2*rr}π × ${th}/360 ＝ ${pi_(v)}`],v:()=>true}}
   const rr=ri(r,2,9),h=ri(r,2,12);
   if(r()<.5)return{q:`底面の半径 ${rr}cm、高さ ${h}cm の円柱の体積は？（π を使って）`,a:P(rr*rr*h),unit:'cm³',disp:rr*rr*h+'π cm³',exp:['円柱の体積 ＝ 底面積 × 高さ',`π × ${rr}² × ${h} ＝ ${rr*rr*h}π`],v:()=>true};
   return{q:`底面の半径 ${rr}cm、高さ ${h}cm の円柱の表面積は？（π を使って）`,a:P(2*rr*(rr+h)),unit:'cm²',disp:2*rr*(rr+h)+'π cm²',exp:['表面積 ＝ 底面積×2 ＋ 側面積',`底面 ${rr*rr}π×2 ＝ ${2*rr*rr}π、側面 ＝ 2π×${rr}×${h} ＝ ${2*rr*h}π`,`合計 ${2*rr*(rr+h)}π`],v:()=>true}}

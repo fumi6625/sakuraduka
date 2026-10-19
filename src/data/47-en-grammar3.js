@@ -8,7 +8,7 @@ I have never ( ) sushi.|eaten|ate|eat|eating|eat の過去分詞は eaten。
 He has ( ) here since last year.|lived|live|living|lives|since ～「～以来」は現在完了。
 How long have you ( ) in Japan?|been|be|was|being|How long have you been ～?「どのくらい～にいますか」。
 She has ( ) been to Kyoto. （一度も）|never|ever|already|just|否定の経験は never。
-We ( ) known each other for five years.|have|are|did|had|for five years なので have known。
+We ( ) known each other for five years.|have|are|did|will|for five years なので have known。
 I have just ( ) home.|come|came|coming|comes|just ＋ 現在完了。come の過去分詞は come。
 Have you ( ) lunch yet?|had|have|has|having|have の過去分詞は had。
 He has ( ) to Australia twice.|been|be|was|being|have been to ～「～へ行ったことがある」。
@@ -25,7 +25,7 @@ I have ( ) my friend for a long time.|known|know|knew|knowing|know の過去分�
 He ( ) not come yet.|has|have|is|did|has not come yet「まだ来ていない」。
 We have lived here ( ) ten years.|for|since|during|from|期間の長さには for。
 She has ( ) Japanese for two years.|studied|study|studies|studying|現在完了は have/has ＋ 過去分詞。
-Have you finished your work ( )?|yet|already|ever|never|疑問文の「もう」は yet。
+I have not finished my homework ( ).|yet|already|ever|never|否定文の「まだ（～ない）」は yet。
 Mary has ( ) to the zoo before.|been|be|went|going|have been to ～ の経験用法。
 I have ( ) to a foreign country.|never been|ever been|already been|been never|never は have と過去分詞の間に入る。
 My father has worked here ( ) 2005.|since|for|in|from|2005年「以来」は since。
@@ -84,11 +84,11 @@ It is easy ( ) me to swim.|for|of|to|at|It is ～ for 人 to ... は「人にと
 It is kind ( ) you to help me.|of|for|to|at|人の性格を表す形容詞のときは of。
 I wish I ( ) a bird.|were|am|will be|have been|実現しない願いは仮定法。I wish I were ～。
 If I ( ) rich, I would buy a big house.|were|am|will be|have been|仮定法過去。If I were ～, I would ...
-What a beautiful flower ( )!|it is|is it|it was|was it|感嘆文は What ＋ a ＋ 形容詞 ＋ 名詞 ＋ 主語 ＋ 動詞！
+What a beautiful flower ( )!|it is|is it|it are|are it|感嘆文は What ＋ a ＋ 形容詞 ＋ 名詞 ＋ 主語 ＋ 動詞！（疑問文の語順にしない）
 How fast ( ) runs!|he|him|his|himself|How ＋ 副詞 ＋ 主語 ＋ 動詞！
 The number of students ( ) increasing.|is|are|do|does|the number of ～ は「～の数」で単数扱い。
 A lot of students ( ) in the gym.|are|is|does|has|a lot of ＋ 複数名詞は複数扱い。
-Either you or Tom ( ) wrong.|is|are|am|be|either A or B は B に動詞を合わせる。
+Everyone ( ) happy today.|is|are|am|be|everyone は単数あつかいなので is。
 Each of the boys ( ) a bag.|has|have|having|haves|each は単数扱い。
 He asked me ( ) I liked Japanese food.|if|that|what|which|「～かどうか」は if。
 I wonder ( ) he will come.|whether|what|who|which|whether は「～かどうか」。
@@ -98,7 +98,7 @@ This is the first time I ( ) visited Kyoto.|have|did|am|was|It's the first time 
 Please keep the window ( ).|closed|close|closing|closes|keep ＋ 目的語 ＋ 過去分詞「～のままにしておく」。
 I want this letter ( ) by tomorrow.|sent|send|sending|sends|want ＋ 物 ＋ 過去分詞「～してもらいたい」。
 He asked me what time it ( ).|was|will be|has been|be|時制の一致で過去形にする。
-She said that she ( ) busy.|was|will|has been|be|主節が過去なので that 節も過去（時制の一致）。
+She said that she ( ) busy at that time.|was|is|will be|has been|主節が過去で「そのとき」なので、that 節も過去（時制の一致）。
 Mt. Fuji is higher than any other mountain ( ) Japan.|in|of|than|among|「日本のほかのどの山よりも」。範囲は in。
 I'm looking for a pen ( ) well.|which writes|which write|who writes|writes|先行詞 a pen は単数。which writes。
 `;

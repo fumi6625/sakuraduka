@@ -4,8 +4,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { loadCore } from '../scripts/headless.mjs';
 
-const NAMES = ['S', 'setToday', 'routeFor', 'present', 'judge', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'dayOK', 'peekDay',
-  'BK', 'restoreGx', 'syncAutoGoals', 'isAutoGoal', 'SJL', 'PASS', 'ITEMS', 'dochira'];
+const NAMES = ['S', 'setToday', 'routeFor', 'present', 'judge', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'dayOK', 'dayNeed', 'peekDay',
+  'BK', 'restoreGx', 'syncAutoGoals', 'isAutoGoal', 'SJL', 'PASS', 'ITEMS', 'dochira', 'stageXP', 'tierFor', 'doneDays'];
 const START = '2026-10-19';
 const rng = (seed) => { let r = seed; return () => { r = (r * 1664525 + 1013904223) >>> 0; return r / 4294967296; }; };
 
@@ -203,7 +203,14 @@ test('正答が4割に届かないドリルでは、合格ライン・連続記�
   assert.equal(C.dayOK({ stg: { mem: { ok: 0, n: 10 }, hw: {} } }, 1), false);
   assert.equal(C.dayOK({ stg: { mem: { ok: 3, n: 10 }, hw: {} } }, 1), false);
   assert.equal(C.dayOK({ stg: { mem: { ok: 4, n: 10 }, hw: {} } }, 1), true);
-  assert.equal(C.dayOK({ stg: { mem: { ok: 1, n: 10 }, math: { ok: 8, n: 10 } } }, 2), true, 'もう1つのドリルが4割以上ならOK');
+  assert.equal(C.dayOK({ stg: { mem: { ok: 1, n: 10 }, math: { ok: 8, n: 10 } } }, 2), false, '2つとも4割以上でないと、ふつう以上では合格ラインにならない');
+  assert.equal(C.dayOK({ stg: { mem: { ok: 5, n: 10 }, math: { ok: 8, n: 10 } } }, 2), true);
+  assert.equal(C.dayOK({ stg: { mem: { ok: 8, n: 10 }, ref: {} } }, 2), false, 'ふりかえり（自己採点）は、2つ目に数えない');
+  assert.equal(C.dayOK({ stg: { mem: { ok: 8, n: 10 }, hw: {} } }, 2), false, '保護者OKがオフなら、宿題は2つ目に数えない');
+  C.S.pin = '1234'; C.S.pinOn = 1;
+  assert.equal(C.dayOK({ stg: { mem: { ok: 8, n: 10 }, hw: {} } }, 2), true, '保護者OKがオンなら、宿題が2つ目になる');
+  assert.equal(C.dayNeed({ stg: { mem: { ok: 8, n: 10 } } }, 2), 1);
+  assert.equal(C.dayNeed({ stg: { hw: {} } }, 2), 1, 'ドリルが1つもない日は、あと1つ以上');
 });
 
 test('「AとBのどちら？」「A？B？」の問いは、もう一方の答えも選択肢に入る', () => {
@@ -234,4 +241,45 @@ test('長文の選択肢：正解が最長に偏らない（どの順位も4割�
     assert.ok(Math.max(...r) / n <= 0.45, `${label}の長文：正解の長さの順位 ${r.join('/')}`);
     assert.ok(r[0] / n <= 0.4, `${label}の長文：正解が最長の割合 ${Math.round(r[0] / n * 100)}%`);
   }
+});
+
+test('受験前の3か月：高い箱（5〜6）のふくしゅうも出る／どの教科も1割以上ある', () => {
+  const C = loadCore(NAMES), rand = rng(42);
+  let high = 0, late = 0; const bySubj = {};
+  for (let i = 0; i < 500; i++) {
+    const date = C.addDays(START, i);
+    C.setToday(date); C.restoreGx();
+    const route = C.routeFor(date);
+    for (const st of route) {
+      if (st.kind === 'session' && st.items.length) {
+        let ok = 0;
+        for (const it of st.items) {
+          const s = C.S.srs[it.id];
+          if (i >= 400 && s && s.b >= 5 && it.k !== 'gen') high++;
+          if (i >= 410) { late++; bySubj[it.subj || '?'] = (bySubj[it.subj || '?'] || 0) + 1; }
+          const g = rand() < 0.9; C.recordAnswer(it, g); C.noteAnswer(g); if (g) ok++;
+        }
+        C.completeStage(date, st.id, { ok, n: st.items.length, sec: st.items.length * 12, boss: !!st.boss });
+      } else C.completeStage(date, st.id, { ok: 0, n: 0, sec: 0, min: st.min || 1 });
+    }
+  }
+  assert.ok(high >= 400, `箱5〜6のふくしゅう ${high} 回（最後の100日）`);
+  for (const sj of ['英', '国', '数', '理', '社']) assert.ok((bySubj[sj] || 0) / late >= 0.1, `${sj} の割合 ${Math.round((bySubj[sj] || 0) / late * 100)}%（最後の90日）`);
+});
+
+test('XP：正答が4割に届かないときは0（てきとうに押してかせげない）', () => {
+  const C = loadCore(NAMES);
+  assert.equal(C.stageXP('mem', { ok: 1, n: 10 }), 0);
+  assert.ok(C.stageXP('mem', { ok: 4, n: 10 }) > 0);
+  assert.ok(C.stageXP('mem', { ok: 10, n: 10 }) > C.stageXP('mem', { ok: 5, n: 10 }));
+  assert.equal(C.stageXP('sub', { ok: 2, n: 10, boss: true }), 0);
+});
+
+test('もともと週に2日の子は、段階をもどされない（先週までよくやっていた子が、やすんだときだけもどす）', () => {
+  const C = loadCore(NAMES);
+  simulate(C, 140, 0.85, [0, 6]);
+  const date = C.addDays(START, 141);
+  C.setToday(date);
+  assert.ok(C.doneDays(date) >= 28, `やった日数 ${C.doneDays(date)}`);
+  assert.equal(C.tierFor(date), 3, 'しっかり期まで進める');
 });

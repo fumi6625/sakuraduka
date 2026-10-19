@@ -56,7 +56,7 @@ function vowChip(okDay){
 const briefDesc=(d,n=22)=>{let out='';for(const p of String(d||'').split('／')){const nx=out?out+'／'+p:p;if(nx.length>n&&out)break;out=nx}return out.length>n?out.slice(0,n-1)+'…':out};
 function nowCard(next,tier,okDay,rec){
  const T=TIERS[tier],isS=next.kind==='session';
- const need=tier===1?(okDay?0:1):Math.max(0,2-stageKeys(rec).length);
+ const need=dayNeed(rec,tier);
  const goal=okDay?`<span class="chp ok">✓ きょうの合格ライン達成！</span> れんぞく ${curStreak()}日`:`<span class="chp w">合格ライン</span> ${tier===1?'どれか1つクリアでOK！':'あと'+Math.max(1,need)+'つクリアでOK！'}`;
  return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'#ffe81a',{drops:7,stroke:'#000',sw:5})}</div>
   <span class="lb">いま やること</span>

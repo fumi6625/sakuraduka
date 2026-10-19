@@ -24,11 +24,11 @@ test('まちがいの選択肢に、正解をふくむ（またはふくまれ�
 test('しっかり期：国語の日に作文の問題、数学ドリルに「考え方」の問題が入る', () => {
   const C = loadCore(NAMES);
   let jc = 0, ms = 0;
-  for (let i = 0; i < 49; i++) {
+  for (let i = 0; i < 70; i++) {
     const d = C.addDays(START, i);
     C.setToday(d);
     const route = C.routeFor(d);
-    if (i >= 28) {
+    if (i >= 49) {
       const sub = route.find((s) => s.id === 'sub'), math = route.find((s) => s.id === 'math');
       if (sub && sub.items.some((it) => it.bank === 'JC')) jc++;
       if (math && math.items.some((it) => it.bank === 'MS')) ms++;

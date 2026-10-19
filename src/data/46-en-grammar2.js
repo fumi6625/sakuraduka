@@ -2,13 +2,13 @@
 RAW_EG+=`
 #不定詞
 I want ( ) a doctor.|to be|be|being|am|want のあとは to ＋ 動詞の原形（名詞的用法）。
-She likes ( ) books.|to read|read|reads|reading|like のあとに to不定詞が置ける。
+She wants ( ) many books this summer.|to read|read|reads|reading|want のあとは to不定詞（want ～ing とは言わない）。
 I went to the library ( ) some books.|to borrow|borrow|borrowing|borrowed|「～するために」（副詞的用法）は to ＋ 原形。
 He has a lot of homework ( ).|to do|doing|do|does|「～するための」（形容詞的用法）。名詞のあとに to ＋ 原形。
 I'm happy ( ) you.|to see|see|seeing|saw|感情の理由は to不定詞。「あなたに会えてうれしい」。
 It is important ( ) study every day.|to|for|of|at|It is ～ to ... で「…することは～だ」。
 She decided ( ) abroad.|to study|study|studying|studied|decide のあとは to不定詞。
-My dream is ( ) a pilot.|to become|become|becoming|became|「夢は～になることだ」。
+My dream is ( ) a pilot.|to become|become|became|becomes|「夢は～になることだ」。
 I have no time ( ) TV.|to watch|watch|watching|watched|time を修飾する形容詞的用法。
 Please tell me what ( ) do.|to|do|doing|did|疑問詞 ＋ to不定詞。what to do「何をすべきか」。
 He was ( ) tired to walk.|too|so|very|enough|too ～ to ... で「～すぎて…できない」。
@@ -32,7 +32,7 @@ He is good at ( ) pictures.|drawing|to draw|draw|draws|前置詞のあとは動�
 ( ) English is fun.|Studying|To studying|Study|Studied|動名詞は主語になれる。
 Thank you for ( ) me.|helping|to help|help|helped|前置詞 for のあとは動名詞。
 I like ( ) soccer. （どちらも可）|playing|play|plays|played|like は動名詞も to不定詞も目的語にとれる。
-He stopped ( ) when he saw me.|talking|to talk|talk|talks|stop ＋ ～ing は「～するのをやめる」。
+The students stopped ( ) when the teacher came in. （おしゃべりをやめた）|talking|to talk|talk|talks|stop ＋ ～ing は「～するのをやめる」。（stop to ～ は「～するために立ち止まる」）
 Mike is interested in ( ) Japanese history.|learning|to learn|learn|learned|be interested in のあとは動名詞。
 I'm looking forward to ( ) you.|seeing|see|to see|saw|look forward to のあとは動名詞。
 Would you mind ( ) the window?|opening|to open|open|opened|mind のあとは動名詞。
@@ -111,8 +111,8 @@ I was so happy ( ) I cried.|that|what|which|who|so ～ that ... は「とても�
 Study hard, ( ) you will pass the test.|and|or|but|so|命令文，and ～「そうすれば～」。
 Although he is young, ( ) is very strong.|he|him|his|himself|Although の節のあとの主語。
 I'll go out ( ) it stops raining.|after|because|but|so|after は「～したあとで」。
-Wash your hands ( ) you eat.|before|after|but|so|before は「～する前に」。
-I don't know ( ) he will come.|if|that|what|which|if は「～かどうか」。
+Wash your hands ( ) you eat. （食事の前に）|before|after|but|so|before は「～する前に」。
+I don't know ( ) he will come.|if|but|what|which|if は「～かどうか」。
 Both Ken ( ) Mike are my classmates.|and|or|but|so|both A and B「AもBも」。
 #前置詞
 I get up ( ) six every morning.|at|in|on|by|時刻には at。

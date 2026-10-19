@@ -98,13 +98,13 @@ I can ( ) the piano.|play|plays|playing|to play|can のあとは動詞の原形�
 She ( ) swim fast.|can|cans|is can|does can|can は主語が3人称単数でも s をつけない。
 ( ) you open the window?|Can|Do|Are|Is|Can you ～? は「～してくれますか」。
 You ( ) study hard.|must|musts|are must|have must|must は「～しなければならない」。
-You ( ) not run here.|must|do|are|is|must not で「～してはいけない」。
+You ( ) not run here. （走ってはいけない）|must|does|are|is|must not で「～してはいけない」。
 He ( ) to go home now.|has|have|must|had|have to ～「～しなければならない」。主語が3単現なので has to。
 You don't ( ) to go there.|have|has|must|had|don't have to ～「～する必要はない」。
 ( ) I use your pen?|May|Do|Am|Are|May I ～? は「～してもいいですか」。
 You ( ) go home now.|may|are|do|does|may は「～してもよい」。
 You ( ) eat more vegetables.|should|shoulds|are should|do should|should は「～したほうがよい」。
-( ) we play tennis after school?|Shall|Will|Do|Are|Shall we ～? は「～しましょうか」。
+( ) we play tennis after school? （さそう言い方）|Shall|Will|Do|Are|Shall we ～? は「～しましょうか」とさそう言い方。
 Would you ( ) some tea?|like|likes|liking|liked|Would you like ～? は「～はいかがですか」。
 Could you ( ) me?|help|helps|helping|helped|助動詞のあとは原形。
 I ( ) swim when I was a child.|could|can|will|must|過去の「できた」は could。
@@ -122,7 +122,7 @@ That book is ( ).|mine|my|me|I|名詞がなければ「私のもの」の mine�
 Do you know ( )? (彼女を)|her|she|hers|herself|know の目的語には her。
 ( ) are good students. (私たちは)|We|Us|Our|Ours|主語になるのは we。
 Please help ( ). (私たちを)|us|we|our|ours|help の目的語には us。
-This is a dog. ( ) name is Pochi.|Its|It's|Their|Her|「その犬の名前」は its（it's は it is の短縮形）。
+This is a dog. ( ) name is Pochi.|Its|It's|Their|Hers|「その犬の名前」は its（it's は it is の短縮形）。
 These are not my pens. They are ( ).|yours|you|your|yourself|「あなたのもの」は yours。
 I want to see ( ). (彼らに)|them|they|their|theirs|see の目的語には them。
 This is Ms. Brown. ( ) is our English teacher.|She|Her|Hers|He|女性の主語は she。
@@ -150,7 +150,7 @@ There ( ) three rooms in my house.|are|is|has|have|three rooms は複数なの�
 ( ) is your birthday?|When|What|Who|Where|「いつ」をたずねるのは when。
 ( ) is that man?|Who|What|When|How|「だれ」をたずねるのは who。
 ( ) do you live?|Where|Who|Why|Which|「どこ」をたずねるのは where。
-( ) do you like better, tea or coffee?|Which|What|Who|Whose|選択肢から選ぶときは which。
+( ) do you like better, tea or coffee?|Which|Who|Whose|When|選択肢から選ぶときは which。
 ( ) bag is this?|Whose|Who|Which|What|「だれの」をたずねるのは whose。
 ( ) are you late?|Why|What|Where|Who|「なぜ」をたずねるのは why。
 ( ) do you go to school?|How|What|Who|Whose|手段をたずねるのは how。
