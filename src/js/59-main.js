@@ -88,7 +88,7 @@ const ACT={
   if(hwTimer){used=Math.round((Date.now()-hwTimer.t0)/60000);clearInterval(hwTimer.iv);hwTimer=null}
   const res=completeStage(today(),'hw',{n:0,min:used>0?used:st.min});
   closeSheet();FX.confetti(50);Snd.ok();afterSimple(res,res.first?(res.held?'宿題クリア！ XPは、ドリルで4割以上とれたら入るよ':'宿題クリア！ +'+res.xp+'XP'):'');
-  flowBridge();
+  flowBridge('hw');
  },
  refStar(i){
   refSelf=+i;$$('#refStars button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a<=refSelf)));
@@ -105,7 +105,7 @@ const ACT={
   closeSheet();FX.confetti(40);Snd.ok();
   afterSimple(res,res.first?(bonus?'ふりかえり完了！ めききボーナス +5XP':res.held?'ふりかえり完了！ XPは、ドリルで4割以上とれたら入るよ':'ふりかえり完了 +'+res.xp+'XP'):'');
   if(bonus&&!res.lv)setTimeout(()=>levelUp(bonus.to),700);
-  flowBridge();
+  flowBridge('ref');
  },
  tsukkomi(){
   const items=drillItems({type:'tf',n:10});

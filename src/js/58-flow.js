@@ -79,11 +79,13 @@ function flowCdStop(note){
  const el=$('#nxc'),bar=$('#cdb');if(bar)bar.style.width='0';
  if(el&&note)el.textContent='じぶんの ペースで どうぞ';
 }
-/* 宿題・ふりかえり・診断のあと：つぎへつなぐ（自動でつなぐのがオンなら、カウントダウンつき） */
-function flowBridge(){
+/* 宿題・ふりかえりのあと：つぎへつなぐ（自動でつなぐのがオンなら、カウントダウンつき）。
+   一本道に入っていないステージ（保護者OKがオンのときの、おうちの人がつける宿題）のあとは、何もしない */
+function flowBridge(id){
  setTimeout(()=>{
   if(PL||PG)return;
   const F=flowState();
+  if(id&&!F.must.some(s=>s.id===id))return;
   if(F.ready&&!F.sent){contactSheet();return}
   if(F.next&&S.flowAuto){openSheet(`<h2>ナイス！</h2>${nextBlock(F,{cd:true,rest:false})}`,'bridge');flowCdStart(6)}
   else if(F.redo)openSheet(`<h2>あと一歩！</h2><p>せいかいが 4わりに とどいた ドリルが あると、きょうの合格ライン。もう一度 やってみよう。</p>${nextBlock(F,{rest:false})}`,'bridge');   // やりなおしは、自動では始めない
