@@ -142,6 +142,23 @@ await run('ipad-flow', { w: 820, h: 1180 }, async ({ page: P, shot }) => {
   await P.evaluate(() => __sq.openPage('family')); await P.waitForTimeout(300);
   await P.evaluate(() => document.querySelector('#setMailF').scrollIntoView({ block: 'center' })); await P.waitForTimeout(300); await shot('66-flow-settings-mail');
 });
+/* ①の3 一本道のおわり：宿題のあとの橋のシート → 最後のステージの結果（ゴール版）→ れんらくのあとのホーム */
+const doneByRecord = (P, ids) => P.evaluate((ids) => { __sq.routeFor().filter((s) => ids.includes(s.id) && !s.done).forEach((s) => __sq.completeStage(__sq.S.rt.d, s.id, s.items.length ? { ok: Math.round(s.items.length * 0.9), n: s.items.length, sec: s.items.length * 12 } : { ok: 0, n: 0, sec: 0, min: 2 })); __sq.refresh(); }, ids);
+await run('ipad-flow-end', { w: 820, h: 1180 }, async ({ page: P, shot }) => {
+  await P.evaluate(() => { __sq.S.nick = 'さくら'; __sq.S.mail = { f: 'otosan@example.com', m: 'okasan@example.com' }; __sq.refresh(); document.addEventListener('click', (e) => { if (e.target.closest('a[data-mailsent]')) e.preventDefault(); }, true); });
+  await doneByRecord(P, ['mem', 'math']);
+  await P.evaluate(() => __sq.ACT.stageGo('hw')); await P.waitForTimeout(300);
+  await P.click('[data-act="hwDone"]'); await P.waitForTimeout(1500); await shot('67-flow-bridge-sheet'); await closeAny(P);
+});
+await run('ipad-flow-goal', { w: 820, h: 1180 }, async ({ page: P, shot }) => {
+  await P.evaluate(() => { __sq.S.nick = 'さくら'; __sq.S.mail = { f: 'otosan@example.com', m: 'okasan@example.com' }; __sq.refresh(); document.addEventListener('click', (e) => { if (e.target.closest('a[data-mailsent]')) e.preventDefault(); }, true); });
+  await doneByRecord(P, ['math', 'hw', 'ref']);
+  await P.click('[data-act="stageGo"][data-a="mem"] >> nth=0'); await P.waitForTimeout(500);
+  await solveAll(P, 0.9); await P.waitForTimeout(1800); await shot('68-flow-result-goal');
+  await P.click('.rs2 .nxb'); await P.waitForTimeout(600);
+  await P.click('#sheet a[data-mailsent]'); await P.waitForTimeout(600); await closeAny(P);
+  await P.waitForTimeout(400); await shot('69-flow-home-sent');
+});
 /* ② iPad よこ */
 await run('ipad-landscape', { w: 1180, h: 820 }, async ({ page: P, shot }) => {
   await seed(P); await shot('40-landscape-home');
@@ -152,6 +169,11 @@ await run('ipad-landscape', { w: 1180, h: 820 }, async ({ page: P, shot }) => {
 await run('phone', { w: 390, h: 844, dpr: 2 }, async ({ page: P, shot }) => {
   await seed(P); await shot('50-phone-home');
   await P.click('[data-act="stageGo"][data-a="mem"] >> nth=0'); await P.waitForTimeout(500); await shot('51-phone-question');
+  await solveAll(P, 0.9); await P.waitForTimeout(1800); await shot('52-phone-result-next');
+  await P.click('.rs2 .clear'); await P.waitForTimeout(200);
+  await P.evaluate(() => { __sq.S.mail = { f: 'otosan@example.com', m: 'okasan@example.com' }; __sq.ACT.plClose(); __sq.routeFor().filter((s) => !s.done && !s.auto).forEach((s) => __sq.completeStage(__sq.S.rt.d, s.id, s.items.length ? { ok: Math.round(s.items.length * 0.9), n: s.items.length, sec: s.items.length * 12 } : { ok: 0, n: 0, sec: 0, min: 2 })); __sq.refresh(); });
+  await P.waitForTimeout(300); await shot('53-phone-home-goal');
+  await P.evaluate(() => __sq.ACT.contact()); await P.waitForTimeout(500); await shot('54-phone-contact-sheet');
 });
 console.log(log.length ? '\n注意:\n' + log.join('\n') : '\nエラーなし');
 console.log('→', out);

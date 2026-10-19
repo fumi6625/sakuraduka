@@ -171,7 +171,7 @@ test('メールアドレス：形を確かめる（全角・空白は直す。�
     assert.ok(!C.validMail(raw), '空白・改行が入ったままの ' + JSON.stringify(raw) + ' はだめ（保存の前に、空白は取りのぞく）');
   C.S.mail = { f: 'otosan@example.com', m: ' okasan@example.com ' };
   assert.deepEqual([...C.mailAddrs()], ['otosan@example.com', 'okasan@example.com']);
-  assert.equal(C.mailWho(), 'おとうさん・おかあさん');
+  assert.equal(C.mailWho(), 'おかあさん・おとうさん');
   C.S.mail = { f: 'otosan@example.com', m: 'otosan@example.com' };
   assert.equal(C.mailAddrs().length, 1, '同じアドレスは1つにまとめる');
   C.S.mail = { f: 'otosan@example.com', m: 'こわれた' };
@@ -197,7 +197,7 @@ test('mailto：宛先は , でつなぎ、件名・本文は1つずつ正しく�
   assert.ok(M.subject.includes('さくら'), '件名に呼び名');
   for (const s of F.must) assert.ok(M.body.includes(C.flowName(s)), C.flowName(s) + ' が本文に入っている');
   assert.ok(/せいかい \d+\/\d+（\d+%）/.test(M.body), '正答の数と率が入っている（自己申告ではなく、記録から）');
-  assert.ok(M.body.startsWith('おとうさん・おかあさんへ'));
+  assert.ok(M.body.startsWith('おかあさん・おとうさんへ'));
   assert.ok(M.text.startsWith(M.subject));
   // 呼び名なしなら、件名にかっこを付けない
   C.S.nick = '';

@@ -27,7 +27,7 @@ function flowState(date=today()){
 const cleanMail=v=>String(v||'').normalize('NFKC').replace(/\s+/g,'');
 const validMail=v=>/^[A-Za-z0-9._+\-]+@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)+$/.test(v)&&v.length<=100;
 const mailAddrs=()=>{const m=S.mail||{};return[...new Set([cleanMail(m.f),cleanMail(m.m)].filter(validMail))]};
-const mailWho=()=>{const m=S.mail||{},f=validMail(cleanMail(m.f)),o=validMail(cleanMail(m.m));return f&&!o?'おとうさん':o&&!f?'おかあさん':'おとうさん・おかあさん'};
+const mailWho=()=>{const m=S.mail||{},f=validMail(cleanMail(m.f)),o=validMail(cleanMail(m.m));return f&&!o?'おとうさん':o&&!f?'おかあさん':'おかあさん・おとうさん'};
 const mdw=d=>{const x=dt(d);return(x.getMonth()+1)+'/'+x.getDate()+'（'+'日月火水木金土'[x.getDay()]+'）'};
 /* 送る文（子どもの言葉で、短く）。subject＝件名、body＝本文、text＝コピー・共有用 */
 function mailText(F,date=today()){

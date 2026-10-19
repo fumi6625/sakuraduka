@@ -213,6 +213,7 @@ function renderResult(R){
  const rank=rankOfAcc(acc);
  const F=flowState(),cdOn=!!(S.flowAuto&&F.next),nx=nextBlock(F,{cd:cdOn});   // 一本道：つぎのステージ（なければ、れんらく）へ
  const head=o.boss?(win?'BOSS DOWN!':'おしい！'):acc>=.5||n===0?'CLEAR!':'おつかれ！';
+ const fold=miss.length?`<details class="fold"><summary>まちがえた問題を見なおす（${miss.length}）</summary>${miss.map(m=>`<div class="mrow"><div class="mq">${esc(String(m.V.q).slice(0,160))}</div><div class="ma"><small>せいかい</small> <b>${esc(correctText(m.V))}</b></div>${m.V.exp?`<div class="mx">${esc(m.V.exp).replace(/\n/g,'<br>')}</div>`:''}</div>`).join('')}</details>`:'';   // 見なおしは、つぎのボタンの下（つぎのボタンを、画面の上のほうに）
  plRoot().innerHTML=`<div class="plb mid"><div class="rs2" data-rank="${rank}">
   <div class="splw">${splatSVG(hashStr(o.title)%97,'var(--team)',{drops:7,stroke:'var(--ink)',sw:5})}</div>
   <div class="clear">${head}</div>
@@ -223,13 +224,12 @@ function renderResult(R){
   ${PL.newMast?`<p class="nt"><span class="chp ok">★ あたらしく おぼえた ${PL.newMast}問</span></p>`:''}
   ${miss.length?`<p class="nt"><span class="chp w">まちがえた ${miss.length}問 → あした「ミス退治」で再戦</span></p>`:'<p class="nt"><span class="chp ok">ノーミス！</span></p>'}
   ${res&&res.streak?`<p class="nt"><span class="chp xp">${ico('flame')} れんぞく ${S.streak}日！${res.streak.bonus?' ボーナス +'+res.streak.bonus+'XP':''}</span></p>`:''}
-  ${miss.length?`<details class="fold"><summary>まちがえた問題を見なおす（${miss.length}）</summary>${miss.map(m=>`<div class="mrow"><div class="mq">${esc(String(m.V.q).slice(0,160))}</div><div class="ma"><small>せいかい</small> <b>${esc(correctText(m.V))}</b></div>${m.V.exp?`<div class="mx">${esc(m.V.exp).replace(/\n/g,'<br>')}</div>`:''}</div>`).join('')}</details>`:''}
   ${nx?routeBar(F,dt(today()).getDay(),false)+nx:`<div class="row act" style="justify-content:center"><button class="bt pri xl" data-act="plHome">ホームへ</button></div>`}
- </div></div>`;
+${fold}</div></div>`;
  if(cdOn)flowCdStart(6);
  /* XPカウントアップと演出 */
  const el=$('#xpV');let t=0;const iv=setInterval(()=>{t++;const v=Math.round(xp*Math.min(1,t/18));if(el)el.textContent='+'+v;if(t>=18)clearInterval(iv)},40);
- Snd.clear();FX.confetti(win?110:40);
+ Snd.clear();FX.confetti(nx?45:win?110:40);
  const msgs=[];
  nb.forEach(b=>msgs.push('バッジ獲得：'+b[1]));
  if(res&&res.streak&&res.streak.freeze)msgs.push('お休みトークンで連続記録を守った！');

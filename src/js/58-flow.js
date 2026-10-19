@@ -25,10 +25,10 @@ function routeBar(F,wd,live){
  const g=F.sent?'sent':F.ready?'now':'lock';
  return `<div class="route" aria-label="きょうの流れ">${nodes}<${T} class="nd goal ${g}"${live?' data-act="contact"':''}><span class="dot">${ico(F.sent?'check':F.ready?'mail':'lock')}</span>れんらく</${T}></div>`;
 }
-/* まだ押せないときの、れんらくボタン（鍵つき。押しても何も始まらない） */
+/* まだ押せないときの、れんらくボタン（鍵つき・1行。押しても何も始まらない） */
 function lockBar(F){
- const why=F.all?'せいかいが 4わりに とどいた ドリルが ひつよう。もう一度 やってみよう':'あと'+F.left+'つ おわったら おせるよ';
- return `<button class="cbar" data-act="contact" aria-disabled="true">${ico('lock')}<span><b>おかあさん・おとうさんに 完了れんらく</b><small>${why}</small></span></button>`;
+ const why=F.all?'せいかい4わり いじょうの ドリルが ひつよう':'あと'+F.left+'つ';
+ return `<button class="cbar" data-act="contact" aria-disabled="true">${ico('lock')}<b>おかあさん・おとうさんに 完了れんらく</b><small>${why}</small></button>`;
 }
 /* マストがぜんぶ終わったときのカード（れんらくボタン＋おかわり） */
 function goalCard(F){
@@ -38,7 +38,7 @@ function goalCard(F){
   <p>${F.sent?`${ico('check')} れんらくボタンを おしたよ（${hmOf(F.sentAt)}）`:'あとは、おうちの人に つたえるだけ。<b>じぶんで ボタンを おして</b>、メールを おくろう！'}</p>
   <button class="bt pri xl w100 cbtn${F.sent?' sent':''}" data-act="contact">${ico('mail')}${F.sent?'もう一度 れんらくする':'おかあさん・おとうさんに 完了れんらく'}</button>
   <p class="mini oka">まだ元気なら「おかわり」。好きな教材を、好きなだけ。（1日60XPまで）</p>
-  <div class="row">${due?`<button class="bt cy xl" data-act="drillDue">ふくしゅう ${Math.min(10,due)}問</button>`:''}<button class="bt xl" data-tab="drill">おかわりドリル</button><button class="bt cy xl" data-act="tsukkomi">ツッコミバトル</button></div></div>`;
+  <div class="row">${due?`<button class="bt cy" data-act="drillDue">ふくしゅう ${Math.min(10,due)}問</button>`:''}<button class="bt" data-tab="drill">おかわりドリル</button><button class="bt cy" data-act="tsukkomi">ツッコミバトル</button></div></div>`;
 }
 
 /* つぎへ進むブロック。F.target があれば「つぎのステージ」、なければ（れんらくが押せるなら）れんらくへ */
@@ -47,7 +47,7 @@ function nextBlock(F,o={}){
  if(t){
   const redo=t===F.redo,m=t.kind==='session'?`約${Math.max(1,t.min)}分・${t.items.length}問`:t.id==='diag'?'約3分・6問':t.id==='ref'?'約2分':'',lab=t.id==='diag'?'ミニ診断（'+SJN[t.subj]+'）':flowName(t);
   return `<div class="nxt"><span class="lb sm y">${redo?'もう一度':'つぎ'}</span>
-   <button class="bt pri xl w100 nxb" data-act="flowGo"><span><b>${esc(lab)}</b><small>${redo?'4割以上とれたら、きょうの合格ラインに数えるよ':m}</small></span>${ico('play')}</button>
+   <button class="bt pri xl w100 nxb" data-act="flowGo"><span><b>${esc(lab)}</b><small>${redo?'4割以上とれたら、きょうの合格ラインに数えるよ':m}</small></span>${ico('play')}${o.cd?'<i class="cdb" id="cdb"></i>':''}</button>
    ${o.cd?'<p class="nxc" id="nxc"></p>':''}${rest}</div>`;
  }
  if(F.ready&&!F.sent)return `<div class="nxt"><span class="lb sm y">ゴール</span>
@@ -60,14 +60,15 @@ let FCD=null;
 function flowCdStart(sec){
  flowCdStop();
  if(!$('#nxc'))return;
- FCD={end:Date.now()+sec*1000,iv:setInterval(flowCdTick,250)};flowCdTick();
+ FCD={end:Date.now()+sec*1000,total:sec*1000,iv:setInterval(flowCdTick,250)};flowCdTick();
 }
 function flowCdTick(){
  if(!FCD)return;
  const el=$('#nxc');
  if(!el){flowCdStop();return}
  if(!$('#ov').hidden){FCD.end+=250;return}   // レベルアップなどの表示中は待つ
- const left=Math.ceil((FCD.end-Date.now())/1000);
+ const left=Math.ceil((FCD.end-Date.now())/1000),bar=$('#cdb');
+ if(bar)bar.style.width=Math.min(100,Math.max(0,(1-(FCD.end-Date.now())/FCD.total)*100))+'%';   // ボタンの下の帯が、6秒でのびる
  if(left>0){el.textContent='つぎが '+left+'びょうで はじまるよ（どこかをタップで とまる）';return}
  const seen=!document.hidden;
  flowCdStop();
@@ -75,7 +76,8 @@ function flowCdTick(){
 }
 function flowCdStop(note){
  if(FCD){clearInterval(FCD.iv);FCD=null}
- const el=$('#nxc');if(el&&note)el.textContent='じぶんの ペースで どうぞ';
+ const el=$('#nxc'),bar=$('#cdb');if(bar)bar.style.width='0';
+ if(el&&note)el.textContent='じぶんの ペースで どうぞ';
 }
 /* 宿題・ふりかえり・診断のあと：つぎへつなぐ（自動でつなぐのがオンなら、カウントダウンつき） */
 function flowBridge(){
@@ -96,7 +98,7 @@ function contactSheet(){
  const who=mailWho();
  openSheet(`<h2>${ico('mail')} ${who}に 完了れんらく</h2>
   <p>ぜんぶ おわったね！ <b>じぶんで ボタンを おして</b>、メールで つたえよう。</p>
-  <ul class="csum">${F.must.map(s=>`<li>${ico('check')}<span>${esc(flowName(s))}</span>${s.kind==='session'&&s.res&&s.res.n?`<b>${s.res.ok}/${s.res.n}</b>`:''}</li>`).join('')}</ul>
+  <ul class="csum">${F.must.map(s=>`<li>${ico('check')}${esc(flowName(s))}${s.kind==='session'&&s.res&&s.res.n?`<b>${s.res.ok}/${s.res.n}</b>`:''}</li>`).join('')}</ul>
   ${to.length?`<p class="mini cto">宛先：${to.map(a=>`<span class="chp">${esc(a)}</span>`).join(' ')}</p>
    <a class="bt pri xl w100 cbtn" data-mailsent href="${esc(url)}">${ico('mail')}メールを つくる</a>
    <p class="mini">おすと メールアプリが ひらくよ。<b>右上の「送信」まで おして</b>、はじめて とどくよ。${F.sent?`<br>（${hmOf(F.sentAt)} に ボタンを おしたよ）`:''}</p>`
@@ -112,13 +114,17 @@ function contactMark(msg){
  return true;
 }
 
-/* ----- ドリルタブの上：きょうのミッションの「つづき」（ドリルタブにいても、道からはぐれない） ----- */
+/* ----- ドリルタブの上：きょうのミッションの「つづき」（ホームと同じ主役のカード。ドリルタブにいても、道からはぐれない） ----- */
 function missionCard(F){
  const t=F.target;
  if(t){
-  return `<div class="cta mis"><div style="flex:1;min-width:220px"><span class="lb sm y">${t===F.redo?'もう一度':'きょうの つづき'}</span><h3 style="margin-top:8px">${esc(flowName(t))}</h3><p>おかわりの前に、きょうのミッションを すすめよう（のこり${F.steps}つ）。</p></div><button class="bt pri xl" data-act="flowGo">つづける ${ico('play')}</button></div>`;
+  const m=t.kind==='session'?`約${Math.max(1,t.min)}分・${t.items.length}問`:t.id==='diag'?'約3分・6問':t.id==='ref'?'約2分':'';
+  return `<div class="nowc mis" data-s="${t.subj}"><div class="sp1">${splatSVG(9,'var(--yellow)',{drops:7,stroke:'var(--ink)',sw:5})}</div>
+   <span class="lb">${t===F.redo?'もう一度 やること':'きょうの つづき'}</span>
+   <div class="nrow"><div class="nico">${ico(stageIcon(t))}</div><div class="ntx"><h2>${esc(flowName(t))}</h2><p>${m?m+'・':''}のこり${F.steps}つ</p></div></div>
+   <button class="bt pri xl w100" data-act="flowGo">${t===F.redo?'もう一度！':'つづける！'}</button></div>`;
  }
- if(F.ready&&!F.sent)return `<div class="cta mis"><div style="flex:1;min-width:220px"><span class="lb sm y">ゴール</span><h3 style="margin-top:8px">ぜんぶ おわってるよ！</h3><p>おうちの人に れんらくしよう。</p></div><button class="bt pri xl" data-act="flowGo">${ico('mail')}れんらくへ</button></div>`;
+ if(F.ready&&!F.sent)return `<div class="nowc mis cleared"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'var(--ink)',sw:5})}</div><span class="lb y">ぜんぶクリア！</span><h2>ぜんぶ おわってるよ！</h2><p>おうちの人に れんらくしよう。</p><button class="bt pri xl w100" data-act="flowGo">${ico('mail')}れんらくへ</button></div>`;
  return '';
 }
 /* 診断ページ：診断も一本道のひとつ。おわったら、そのまま つぎへ */
