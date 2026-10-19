@@ -134,7 +134,7 @@ function paceF(date=today()){
 }
 /* 記録から自動で決まる目標（自己申告にしない）。キー：月|番号。n＝ふつうのペース（週5日・正答率8割台）で、その月までに届く数（scripts/simulate.mjs と tests で確かめる） */
 const qaStat=()=>{let n=0,w=0;for(const id in S.srs){const it=ITEMS[id];if(it&&(it.bank==='SQ'||it.bank==='OQ')){n+=S.srs[id].n;w+=S.srs[id].w}}return{n,acc:n?1-w/n:0}};
-const mathDays90=()=>Object.values(S.days).filter(d=>d.stg&&d.stg.math&&d.stg.math.n>=8&&d.stg.math.ok/d.stg.math.n>=.9).length;
+const mathDays90=()=>Object.values(S.days).filter(d=>d.stg&&d.stg.math&&d.stg.math.n>=6&&d.stg.math.ok/d.stg.math.n>=.9).length;
 const GOAL_AUTO={
  '2026-10|1':{f:()=>SJL.every(s=>S.diag[s]&&S.diag[s].done)},
  '2026-10|4':{f:()=>S.best>=7},

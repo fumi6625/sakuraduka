@@ -187,7 +187,7 @@ const ACT={
   if(!/^\d{4}$/.test(v)){toast('4けたの数字を入れてから、オンにしてね');return}
   S.pin=v;S.pinOn=1;save();initInputs();toast('保護者OKをオンにした。宿題のチェックに必要になります');
  },
- tierSet(v){if(!(S.pinOn&&S.pin)&&v!=='auto'&&+v<baseTier(today())){toast('量をへらすのは、おうちの人と暗証番号を決めてからにしよう');return}needPin('1日の量の段階を変えます。',()=>{S.tier=v==='auto'?'auto':+v;S.rt=null;save();initInputs();toast(v==='auto'?'段階：おまかせ（だんだん増える）':'段階を「'+TIERS[+v].name+'」にした')})},
+ tierSet(v){if(!(S.pinOn&&S.pin)&&v!=='auto'){toast('量を決めるのは、おうちの人と暗証番号を決めてからにしよう（いまは「おまかせ」）');return}needPin('1日の量の段階を変えます。',()=>{S.tier=v==='auto'?'auto':+v;S.rt=null;save();initInputs();toast(v==='auto'?'段階：おまかせ（だんだん増える）':'段階を「'+TIERS[+v].name+'」にした')})},
  async report(){const t=reportText();$('#rpt').value=t;const ok=await copyText(t);toast(ok?'週報をコピーした':'下の文を長押しでコピーしてね')},
  bkMake(){$('#bk').value=btoa(unescape(encodeURIComponent(JSON.stringify(S))))},
  async bkCopy(){if(!$('#bk').value)ACT.bkMake();const ok=await copyText($('#bk').value);toast(ok?'バックアップをコピーした。メモアプリなどに保存してね':'長押しでコピーしてね')},

@@ -180,7 +180,7 @@ const OLDW={'英':1,'国':1,'数':.6,'理':1.4,'社':1.4};
 function bMem(date,tier,cur,ex){
  const kk=kOf(date,tier),th=throttle(date);
  const late=date>='2028-01-15'?2:date>='2027-12-01'?1:0;
- const total=tier>=3?Math.round(14+16*Math.max(0,kk-.8)/.2):Math.max(6,Math.round(18*kk)),minNew=[3,2,1][late],slots=total-minNew;   // しっかり期は、1問ずつが短い暗記バトルを、18問から30問まで少しずつ長くする
+ const total=tier>=3?Math.round(14+22*Math.max(0,kk-.8)/.2):Math.max(6,Math.round(18*kk)),minNew=[3,2,1][late],slots=total-minNew;   // しっかり期は、1問ずつが短い暗記バトルを、18問から30問まで少しずつ長くする
  const old1=oldDue(ex,Math.min(slots,Math.round(slots*[.17,.6,.8][late])),date,late>0),x1=exSet(ex,old1);
  const young=dueItems(it=>REVB(it)&&!x1.has(it.id)&&boxOf(it)<=3,slots-old1.length);
  const old2=oldDue(exSet(x1,young),slots-old1.length-young.length,date,late>0);   // わかい復習が足りない日は、古い復習でうめる
@@ -204,8 +204,8 @@ function bMem(date,tier,cur,ex){
 function bMath(date,tier,cur,ex){
  const late=date>='2028-01-15'?2:date>='2027-12-01'?1:0,k=kOf(date,tier)*throttle(date)*[1,.75,.6][late],r=(n,m)=>Math.max(m,Math.round(n*k));   // 受験前の3か月は、数学の計算ドリルをへらして、そのぶん暗記・ふくしゅうの教科にまわす
  const full=tier===1||dn(date)%2===0;   // ふつう以上は、数学を1日おきにしっかり。ほかの日はかるめ（計算の感覚をたもつ）
- const pool=tier===1?EASY_M:cur.m,main=pool[dn(date)%pool.length],nMain=full?r(10,4):r(5,3),nWarm=full?r(4,2):r(3,2),kk3=kOf(date,tier),nApp=full&&tier>=3&&kk3>=.9?2:0;   // 応用・考え方・再戦は、しっかり期のなかほど（少し慣れてから）で入れる
- const mis=full&&tier>=3&&kk3>=.9?claimGen(dueItems(it=>it.subj==='数'&&!ex.has(it.id),6),ex).slice(0,3):[];
+ const pool=tier===1?EASY_M:cur.m,main=pool[dn(date)%pool.length],nMain=full?r(tier===1?8:6,3):r(4,3),nWarm=full?r(3,2):r(2,2),kk3=kOf(date,tier),nApp=full&&tier>=3&&kk3>=.9?1:0;   // 応用・考え方・再戦は、しっかり期のなかほど（少し慣れてから）で入れる
+ const mis=full&&tier>=3&&kk3>=.9?claimGen(dueItems(it=>it.subj==='数'&&!ex.has(it.id),6),ex).slice(0,2):[];
  const items=[...genMix(tier===1?EASY_M:cur.rv,nWarm,date,'warm',ex),...genOne(main,nMain,date,'main',ex),...(nApp?genMix(cur.w,nApp,date,'app',ex):[])];
  const want=nWarm+nMain+nApp;
  if(items.length<want)items.push(...genMix(tier===1?EASY_M:[...cur.rv,...cur.m],want-items.length,date,'fill',ex));   // ひとつのテーマで、ちがう問題を作りきれないときは、ほかのテーマで補う
@@ -215,8 +215,8 @@ function bMath(date,tier,cur,ex){
 }
 const misDesc=(n,pre)=>n?(pre?'再戦の予定はなし。苦手を先取りで'+n+'体':'まちがえた問題の再戦 '+n+'体'):'まだミスがありません（まちがえた問題は、ここに集まります）';
 function bMis(date,tier,ex){
- const n=Math.max(4,Math.round(8*kOf(date,tier)));
- let items=claimGen(dueItems(it=>{const s=S.srs[it.id];return s&&s.w>0&&!ex.has(it.id)},n*2),ex).slice(0,n),pre=false;
+ const n=Math.max(4,Math.round(8*kOf(date,tier))),gmax=Math.max(2,Math.round(3*kOf(date,tier)));   // 計算の再戦は3体まで（数学ドリルと合わせて、数学ばかりにならないように）。のこりは暗記・読解のミス
+ let g=0,items=claimGen(dueItems(it=>{const s=S.srs[it.id];return s&&s.w>0&&!ex.has(it.id)},n*4),ex).filter(it=>it.k!=='gen'||++g<=gmax).slice(0,n),pre=false;
  if(!items.length){items=claimGen(weakItems(Math.min(6,n)*2,it=>!ex.has(it.id)),ex).slice(0,Math.min(6,n));pre=items.length>0}
  return{t:'ミス退治',subj:'総',items,pre,desc:misDesc(items.length,pre)};
 }

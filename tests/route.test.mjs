@@ -46,7 +46,7 @@ test('おやすみが多い週のあとは、段階はそのままで、量を�
     mem.push(route.find((s) => s.id === 'mem').items.length);
   }
   assert.ok(mem[0] <= 16, `戻った日は少なめ：${mem[0]}問`);
-  assert.equal(mem[mem.length - 1], 30, `しばらくして、いつもの量：${mem.join(',')}`);
+  assert.equal(mem[mem.length - 1], 36, `しばらくして、いつもの量：${mem.join(',')}`);
   for (let i = 1; i < mem.length; i++) assert.ok(mem[i] - mem[i - 1] <= 12, `1日で急にふえない：${mem.join(',')}`);
 });
 
