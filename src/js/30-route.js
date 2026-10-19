@@ -300,7 +300,7 @@ function buildRoute(date,tier){
  add('mem',bMem(date,tier,cur,ex));
  add('math',bMath(date,tier,cur,ex));
  if(tier>=2)add('sub',bSub(date,wd,cur,ex,tier));   // 今日の教科（週ボスをふくむ）は、ならし期が終わってから
- if(tier>=2)add('mis',bMis(date,tier,ex));
+ if(tier>=2&&(tier>=3||effD(date)>=17))add('mis',bMis(date,tier,ex));   // ミス退治は、ふつう期に入って3日してから（今日の教科とミス退治がいっぺんに出て、量が急にふえないように）
  const dg=tier<=2?diagNext(date):null;
  if(dg)out.push({id:'diag',t:'ミニ診断：'+SJN[dg],kind:'check',subj:dg,min:3,items:[],desc:'いまの実力を知る。6問・約3分。点数が低くても大丈夫。（+10XP）'});
  out.push({id:'hw',t:'宿題・提出物',kind:'check',subj:'総',min:0,items:[],desc:'学校の宿題と提出物をおわらせる。内申に直結します。'+(S.pinOn&&S.pin?'おうちの人のOKが必要です。':'')});
