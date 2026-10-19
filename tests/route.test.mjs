@@ -140,3 +140,20 @@ test('ツッコミバトル：4択の問題から ○× を作り、判定でき
   }
   assert.ok(right > 20 && wrong > 20, '正しい／まちがいが、まんべんなく出る');
 });
+
+test('数学の正答率が低い（75%未満）あいだは、かるめの日をなくして毎日しっかり。高いときは、いつものとおり1日おき', () => {
+  const C = loadCore([...NAMES, 'mathAcc']);
+  for (let i = 0; i < 60; i++) doDay(C, C.addDays(START, i), 0.85);
+  const days = [60, 61, 62, 63].map((i) => C.addDays(START, i));
+  const mathN = (acc) => {
+    // 直前14日の数学ドリルの成績を、正答率 acc にそろえる
+    for (let j = 1; j <= 14; j++) { const d = C.S.days[C.addDays(days[0], -j)]; if (d && d.stg.math) { d.stg.math.n = 8; d.stg.math.ok = Math.round(8 * acc); } }
+    return days.map((d) => { C.setToday(d); C.S.rt = null; return C.routeFor(d).find((s) => s.id === 'math').items.length; });
+  };
+  const good = mathN(0.9), weak = mathN(0.55);
+  C.setToday(days[0]);
+  assert.ok(C.mathAcc(days[0]) < 0.75, `数学の正答率 ${C.mathAcc(days[0])}`);
+  assert.ok(Math.max(...good) - Math.min(...good) >= 3, `ふつうの子は、1日おきに多い・少ない：${good}`);
+  assert.ok(Math.min(...weak) >= Math.min(...good) + 2 && Math.min(...weak) >= 10, `苦手な子は毎日しっかり：${weak}（ふつう ${good}）`);
+});
+

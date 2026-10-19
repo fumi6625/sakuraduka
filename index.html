@@ -1076,7 +1076,7 @@ const ROADMAP=[
 
 /* 合格への近づき具合の「予定」：週5日（月〜金）・正答率85%で続けた子の、実力の見こみ(K)の進み（月末と入試の日の値）。
    scripts/plan-curve.mjs で作る。教材やルートを変えたら作りなおす（tests/path.test.mjs が、古くなっていないかを確かめる） */
-const PLAN_PATH={"d":["2026-10-18","2026-10-31","2026-11-30","2026-12-31","2027-01-31","2027-02-28","2027-03-31","2027-04-30","2027-05-31","2027-06-30","2027-07-31","2027-08-31","2027-09-30","2027-10-31","2027-11-30","2027-12-31","2028-01-31","2028-02-29","2028-03-01"],"K":{英:[0,10,51,106,150,191,227,256,282,311,341,380,410,439,480,520,553,586,587],国:[0,7,27,60,100,131,159,181,198,224,241,259,279,309,331,356,385,418,419],数:[0,16,63,97,120,153,199,226,250,276,294,303,340,350,356,370,382,393,394],理:[0,0,9,26,50,70,98,119,144,173,191,216,236,255,277,303,335,362,364],社:[0,0,12,31,51,71,96,123,143,160,176,196,218,235,254,288,319,350,350]}};
+const PLAN_PATH={"d":["2026-10-18","2026-10-31","2026-11-30","2026-12-31","2027-01-31","2027-02-28","2027-03-31","2027-04-30","2027-05-31","2027-06-30","2027-07-31","2027-08-31","2027-09-30","2027-10-31","2027-11-30","2027-12-31","2028-01-31","2028-02-29","2028-03-01"],"K":{英:[0,10,51,101,146,187,221,255,293,319,348,383,419,453,493,530,565,595,596],国:[0,7,27,62,105,131,161,182,206,241,263,283,307,335,358,390,414,450,451],数:[0,16,63,97,130,168,219,225,245,277,288,306,341,358,365,373,385,385,381],理:[0,0,9,28,51,74,101,123,143,170,195,213,237,257,275,306,339,362,365],社:[0,0,12,33,53,72,100,123,139,157,176,193,216,234,253,288,317,349,350]}};
 const SJ=[
  {id:'数',c:'#27358a',goal:'大阪府B問題で7割（63点）以上。安全圏は8割。',
   rhythm:['毎日：計算5問（5分）','月・水・金：教科書の例題→類題→章末（各20〜30分）','土：ミス図鑑の再戦と、弱点の単元','日：週ボス（数学2問）'],
@@ -7788,6 +7788,7 @@ function ansShape(a){
  if(/^[一-龥々]+$/.test(a))return a.length<=3?'k3':'k4';
  return'mix';
 }
+const shapeC=a=>{const x=ansShape(a);return x==='k3'||x==='k4'?'k':x};   // 漢字だけの答えは、3字以下も4字以上も同じ仲間
 /* 「増える」と「大きくなる」のように、同じ向きの変化は同じ意味なので、まちがいの選択肢に並べない */
 const chgDir=a=>/^(増える|大きくなる|長くなる|高くなる|上がる|強くなる|速くなる)$/.test(a)?'up':/^(減る|小さくなる|短くなる|低くなる|下がる|弱くなる|遅くなる)$/.test(a)?'down':'';
 function qGroup(it){
@@ -7807,18 +7808,19 @@ const jsC=w=>JSCL.findIndex(l=>l.includes(w));
 const shareKanji=(a,b)=>{const A=new Set(String(a).match(/[一-龥]/g)||[]);return (String(b).match(/[一-龥]/g)||[]).some(x=>A.has(x))};
 function distractQA(it,f,n=3){
  const ans=it[f],seen=new Set([ans]),out=[],keys=tagKeys(it),g=f==='a'?qGroup(it):'';
- for(const pass of g?[0,1,2,3]:[2,3]){   // 0：同じ型＋長さが近い／1：同じ型／2：長さが近い／3：なんでも
+ for(const pass of g?[0,1,4,2,3]:[2,3]){   // 0：同じ型＋長さが近い／1：同じ型／4：答えのかたちが同じ（型が小さいグループ・単独の名詞の問いも、数やカタカナの答えと並ばないように）／2：長さが近い／3：なんでも
   for(const k of keys){
    const pool=POOL[k]||[];
    if(pool.length<n+2&&k!==keys[keys.length-1])continue;
-   const h=g?qHead(it):'';
-   for(const c of g&&pass<=1?shuffle(pool).sort((x,y)=>(qHead(y)===h)-(qHead(x)===h)):shuffle(pool)){   // 同じ名詞の問い（「…気体は？」どうし）の答えを先に
+   const h=g?qHead(it):'',sf=String(ans).slice(-2),sc=c=>(qHead(c)===h)*2+(String(c[f]).slice(-2)===sf);
+   for(const c of g&&pass<=1?shuffle(pool).sort((x,y)=>sc(y)-sc(x)):shuffle(pool)){   // 同じ名詞の問い（「…気体は？」どうし）の答えを先に。つぎに、おわりの2字が同じ答え（「…の乱」「…一揆」どうし）
     if(out.length>=n)break;
     if(c.id===it.id||seen.has(c[f])||nested(c[f],ans))continue;
     if(f==='w'&&c.m===it.m)continue;
     if(it.k==='syn'&&(c.w===it.w||shareKanji(c[f],it.w)||shareKanji(c[f],ans)||(jsC(c[f])>=0&&(jsC(c[f])===jsC(ans)||jsC(c[f])===jsC(it.w)))))continue;   // 類義語・対義語：おなじ見出しのもうひとつの答えや、見出し・正解と同じ漢字をふくむ語（意味が近いかもしれない）は、まちがいに使わない
-    if(g==='s:chg'&&chgDir(c[f])&&chgDir(c[f])===chgDir(ans))continue;
+    if(chgDir(c[f])&&chgDir(c[f])===chgDir(ans))continue;   // 同じ向きの変化（増える／大きくなる）は同じ意味。どの型の問いでも、まちがいに並べない
     if(pass<=1&&qGroup(c)!==g)continue;
+    if(pass===4&&shapeC(c[f])!==shapeC(ans))continue;
     if((pass===0||pass===2)&&!lenOK(c[f],ans))continue;
     seen.add(c[f]);out.push(c[f]);
    }
@@ -8485,7 +8487,9 @@ function bankStats(b){
 const mistakeStats=()=>{let all=0,dead=0;for(const id in S.srs){const s=S.srs[id];if(s.w>0){all++;if(s.b>=4)dead++}}return{all,dead,open:all-dead}};
 const totalItems=()=>Object.values(BK).reduce((t,b)=>t+b.items.length,0);
 const SEC={word:8,verb:10,mc:14,listen:22,read:30,yomi:8,term:9,syn:9,qa:9,order:35,seq:30,self:45,gen:32,mist:40};
-const estMin=items=>Math.max(1,Math.ceil(sum(items.map(it=>(SEC[it.k]||12)+(it.k==='read'&&items.indexOf(it)===items.findIndex(x=>x.pid===it.pid)?70:0)))*1.5/60));   // 1.5倍＝まちがえた問題のやりなおし・読み直し・タップのおくれを見こむ
+/* 長文を読む時間（1題の最初の問いにだけ足す）：国語は1秒に約0.14字（800字で約115秒）、英語は1語0.6秒（150語で90秒） */
+const readSec=it=>{const x=String(it.text||'');return Math.min(150,Math.max(40,it.subj==='英'?x.split(/\s+/).length*.6:x.length/7))};
+const estMin=items=>Math.max(1,Math.ceil(sum(items.map(it=>(SEC[it.k]||12)+(it.k==='read'&&items.indexOf(it)===items.findIndex(x=>x.pid===it.pid)?readSec(it):0)))*1.5/60));   // 1.5倍＝まちがえた問題のやりなおし・読み直し・タップのおくれを見こむ
 /* ===== 今日のルート：ロードマップ → 毎日の教材 =====
    その日の「曜日」「月のカリキュラム(CUR)」「これまでの成績(SRS)」「いまの段階(ならし/ふつう/しっかり)」から、
    暗記 → 数学 → 今日の教科 → ミス退治 → 宿題チェック → ふりかえり を、実際の問題つきで組み立てる。
@@ -8539,8 +8543,20 @@ const genOne=(id,n,date,salt,ex)=>Array.from({length:n},(_,i)=>pickGen(id,date,s
 const genMix=(ids,n,date,salt,ex)=>Array.from({length:n},(_,i)=>pickGen(ids[(hashStr(date+salt)+i)%ids.length],date,salt,i,ex)).filter(Boolean);
 const exSet=(ex,items)=>new Set([...ex,...items.map(i=>i.id)]);
 const jn=a=>a.filter(Boolean).join('／');
+/* 長文を出す順：短いもの2題につき、長いもの（ふつうの2倍以上の長さ。入試の長さの読解）を1題ずつ混ぜる。長いものが、データの最後に回って届かないのを防ぐ */
+const PASS_ORD={};
+function passOrder(bank){
+ if(PASS_ORD[bank])return PASS_ORD[bank];
+ const items=BK[bank].items,pids=[...new Set(items.map(i=>i.pid))],len={};
+ items.forEach(i=>{if(!(i.pid in len))len[i.pid]=String(i.text||'').length});
+ const med=pids.map(p=>len[p]).sort((a,b)=>a-b)[pids.length>>1]||0,L=pids.filter(p=>len[p]>=med*2),Sh=pids.filter(p=>len[p]<med*2);
+ if(!L.length||!Sh.length)return PASS_ORD[bank]=pids;
+ const out=[];let a=0,b=0;
+ while(a<Sh.length||b<L.length){for(let k=0;k<2&&a<Sh.length;k++)out.push(Sh[a++]);if(b<L.length)out.push(L[b++])}
+ return PASS_ORD[bank]=out;
+}
 function nextPassage(bank,ex,date){
- const items=BK[bank].items,pids=[...new Set(items.map(i=>i.pid))];
+ const items=BK[bank].items,pids=passOrder(bank);
  for(const pid of pids){const qs=items.filter(i=>i.pid===pid);if(qs.some(q=>!S.srs[q.id])&&!qs.some(q=>ex.has(q.id)))return qs}
  if(!pids.length)return[];
  return items.filter(i=>i.pid===pids[hashStr(date+bank)%pids.length]&&!ex.has(i.id));
@@ -8651,7 +8667,7 @@ const REVB=it=>!!BK[it.bank]&&it.bank!=='ER'&&it.bank!=='JR';
    （前は箱の低い順に選んでいたので、箱5〜6は、期限が来てもほとんど出なかった） */
 function oldDue(ex,limit,date,stale){
  const t=DN(),by={};
- for(const id in S.srs){const s=S.srs[id];if(s.b<4||s.d>t||ex.has(id))continue;const it=ITEMS[id];if(!it||!REVB(it))continue;(by[it.subj||'?']||(by[it.subj||'?']=[])).push([(t-s.d)/BOXD[s.b],it])}   // 間隔にくらべて、おくれが大きいものから（箱5〜6も、期限をすぎたら順に回ってくる）
+ for(const id in S.srs){const s=S.srs[id];if(s.b<4||s.d>t||ex.has(id))continue;const it=ITEMS[id];if(!it||!REVB(it)||it.k==='self')continue;(by[it.subj||'?']||(by[it.subj||'?']=[])).push([(t-s.d)/BOXD[s.b],it])}   // 間隔にくらべて、おくれが大きいものから（箱5〜6も、期限をすぎたら順に回ってくる）
  const keys=Object.keys(by).sort(),lists=keys.map(k=>by[k].sort((a,b)=>b[0]-a[0])),pos=keys.map(()=>0),out=[],n=keys.length;
  const stride=keys.map(k=>1/(OLDW[k]||1)),pass=keys.map((_,j)=>((j+dn(date))%Math.max(1,n))*.01);   // 教科ごとの重み（理・社は、おぼえる量が多いので多め）で、順番に回す
  while(out.length<limit){
@@ -8691,9 +8707,14 @@ function bMem(date,tier,cur,ex){
  const nw=k=>fresh.filter(i=>i.bank===k).length;
  return{t:'暗記バトル',subj:'総',items,desc:jn([due.length&&'ふくしゅう'+due.length+'問',nw('EW')&&'英単語 新'+nw('EW'),nw('JK')&&'漢字 新'+nw('JK'),(nw('SQ')+nw('OQ'))&&'理社 新'+(nw('SQ')+nw('OQ')),(nw('JG')+nw('JI')+nw('JS'))&&'国語 新'+(nw('JG')+nw('JI')+nw('JS'))])||'まとめふくしゅう'};
 }
+/* 直近14日の数学ドリルの正答率（30問に満たないときは null） */
+function mathAcc(date){
+ let n=0,c=0;for(let i=1;i<=14;i++){const m=((S.days[addDays(date,-i)]||{}).stg||{}).math;if(m){n+=m.n||0;c+=m.ok||0}}
+ return n>=30?c/n:null;
+}
 function bMath(date,tier,cur,ex){
  const late=date>='2028-01-15'?2:date>='2027-12-01'?1:0,k=kOf(date,tier)*throttle(date)*[1,.75,.6][late],r=(n,m)=>Math.max(m,Math.round(n*k));   // 受験前の3か月は、数学の計算ドリルをへらして、そのぶん暗記・ふくしゅうの教科にまわす
- const full=tier===1||dn(date)%2===0;   // ふつう以上は、数学を1日おきにしっかり。ほかの日はかるめ（計算の感覚をたもつ）
+ const ma=mathAcc(date),full=tier===1||dn(date)%2===0||(ma!=null&&ma<.75);   // ふつう以上は、数学を1日おきにしっかり。ほかの日はかるめ（計算の感覚をたもつ）。ただし、直近の数学の正答率が75%を切っているあいだは、毎日しっかり
  const pool=tier===1?EASY_M:cur.m,main=pool[dn(date)%pool.length],nMain=full?r(tier===1?8:6,3):r(4,3),nWarm=full?r(3,2):r(2,2),kk3=kOf(date,tier),nApp=full&&tier>=3&&kk3>=.9?1:0;   // 応用・考え方・再戦は、しっかり期のなかほど（少し慣れてから）で入れる
  const mis=full&&tier>=3&&kk3>=.9?claimGen(dueItems(it=>it.subj==='数'&&!ex.has(it.id),6),ex).slice(0,2):[];
  const items=[...genMix(tier===1?EASY_M:cur.rv,nWarm,date,'warm',ex),...genOne(main,nMain,date,'main',ex),...(nApp?genMix(cur.w,nApp,date,'app',ex):[])];

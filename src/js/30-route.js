@@ -51,8 +51,20 @@ const genOne=(id,n,date,salt,ex)=>Array.from({length:n},(_,i)=>pickGen(id,date,s
 const genMix=(ids,n,date,salt,ex)=>Array.from({length:n},(_,i)=>pickGen(ids[(hashStr(date+salt)+i)%ids.length],date,salt,i,ex)).filter(Boolean);
 const exSet=(ex,items)=>new Set([...ex,...items.map(i=>i.id)]);
 const jn=a=>a.filter(Boolean).join('／');
+/* 長文を出す順：短いもの2題につき、長いもの（ふつうの2倍以上の長さ。入試の長さの読解）を1題ずつ混ぜる。長いものが、データの最後に回って届かないのを防ぐ */
+const PASS_ORD={};
+function passOrder(bank){
+ if(PASS_ORD[bank])return PASS_ORD[bank];
+ const items=BK[bank].items,pids=[...new Set(items.map(i=>i.pid))],len={};
+ items.forEach(i=>{if(!(i.pid in len))len[i.pid]=String(i.text||'').length});
+ const med=pids.map(p=>len[p]).sort((a,b)=>a-b)[pids.length>>1]||0,L=pids.filter(p=>len[p]>=med*2),Sh=pids.filter(p=>len[p]<med*2);
+ if(!L.length||!Sh.length)return PASS_ORD[bank]=pids;
+ const out=[];let a=0,b=0;
+ while(a<Sh.length||b<L.length){for(let k=0;k<2&&a<Sh.length;k++)out.push(Sh[a++]);if(b<L.length)out.push(L[b++])}
+ return PASS_ORD[bank]=out;
+}
 function nextPassage(bank,ex,date){
- const items=BK[bank].items,pids=[...new Set(items.map(i=>i.pid))];
+ const items=BK[bank].items,pids=passOrder(bank);
  for(const pid of pids){const qs=items.filter(i=>i.pid===pid);if(qs.some(q=>!S.srs[q.id])&&!qs.some(q=>ex.has(q.id)))return qs}
  if(!pids.length)return[];
  return items.filter(i=>i.pid===pids[hashStr(date+bank)%pids.length]&&!ex.has(i.id));
@@ -163,7 +175,7 @@ const REVB=it=>!!BK[it.bank]&&it.bank!=='ER'&&it.bank!=='JR';
    （前は箱の低い順に選んでいたので、箱5〜6は、期限が来てもほとんど出なかった） */
 function oldDue(ex,limit,date,stale){
  const t=DN(),by={};
- for(const id in S.srs){const s=S.srs[id];if(s.b<4||s.d>t||ex.has(id))continue;const it=ITEMS[id];if(!it||!REVB(it))continue;(by[it.subj||'?']||(by[it.subj||'?']=[])).push([(t-s.d)/BOXD[s.b],it])}   // 間隔にくらべて、おくれが大きいものから（箱5〜6も、期限をすぎたら順に回ってくる）
+ for(const id in S.srs){const s=S.srs[id];if(s.b<4||s.d>t||ex.has(id))continue;const it=ITEMS[id];if(!it||!REVB(it)||it.k==='self')continue;(by[it.subj||'?']||(by[it.subj||'?']=[])).push([(t-s.d)/BOXD[s.b],it])}   // 間隔にくらべて、おくれが大きいものから（箱5〜6も、期限をすぎたら順に回ってくる）
  const keys=Object.keys(by).sort(),lists=keys.map(k=>by[k].sort((a,b)=>b[0]-a[0])),pos=keys.map(()=>0),out=[],n=keys.length;
  const stride=keys.map(k=>1/(OLDW[k]||1)),pass=keys.map((_,j)=>((j+dn(date))%Math.max(1,n))*.01);   // 教科ごとの重み（理・社は、おぼえる量が多いので多め）で、順番に回す
  while(out.length<limit){
@@ -203,9 +215,14 @@ function bMem(date,tier,cur,ex){
  const nw=k=>fresh.filter(i=>i.bank===k).length;
  return{t:'暗記バトル',subj:'総',items,desc:jn([due.length&&'ふくしゅう'+due.length+'問',nw('EW')&&'英単語 新'+nw('EW'),nw('JK')&&'漢字 新'+nw('JK'),(nw('SQ')+nw('OQ'))&&'理社 新'+(nw('SQ')+nw('OQ')),(nw('JG')+nw('JI')+nw('JS'))&&'国語 新'+(nw('JG')+nw('JI')+nw('JS'))])||'まとめふくしゅう'};
 }
+/* 直近14日の数学ドリルの正答率（30問に満たないときは null） */
+function mathAcc(date){
+ let n=0,c=0;for(let i=1;i<=14;i++){const m=((S.days[addDays(date,-i)]||{}).stg||{}).math;if(m){n+=m.n||0;c+=m.ok||0}}
+ return n>=30?c/n:null;
+}
 function bMath(date,tier,cur,ex){
  const late=date>='2028-01-15'?2:date>='2027-12-01'?1:0,k=kOf(date,tier)*throttle(date)*[1,.75,.6][late],r=(n,m)=>Math.max(m,Math.round(n*k));   // 受験前の3か月は、数学の計算ドリルをへらして、そのぶん暗記・ふくしゅうの教科にまわす
- const full=tier===1||dn(date)%2===0;   // ふつう以上は、数学を1日おきにしっかり。ほかの日はかるめ（計算の感覚をたもつ）
+ const ma=mathAcc(date),full=tier===1||dn(date)%2===0||(ma!=null&&ma<.75);   // ふつう以上は、数学を1日おきにしっかり。ほかの日はかるめ（計算の感覚をたもつ）。ただし、直近の数学の正答率が75%を切っているあいだは、毎日しっかり
  const pool=tier===1?EASY_M:cur.m,main=pool[dn(date)%pool.length],nMain=full?r(tier===1?8:6,3):r(4,3),nWarm=full?r(3,2):r(2,2),kk3=kOf(date,tier),nApp=full&&tier>=3&&kk3>=.9?1:0;   // 応用・考え方・再戦は、しっかり期のなかほど（少し慣れてから）で入れる
  const mis=full&&tier>=3&&kk3>=.9?claimGen(dueItems(it=>it.subj==='数'&&!ex.has(it.id),6),ex).slice(0,2):[];
  const items=[...genMix(tier===1?EASY_M:cur.rv,nWarm,date,'warm',ex),...genOne(main,nMain,date,'main',ex),...(nApp?genMix(cur.w,nApp,date,'app',ex):[])];

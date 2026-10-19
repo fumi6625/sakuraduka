@@ -72,6 +72,7 @@ function ansShape(a){
  if(/^[一-龥々]+$/.test(a))return a.length<=3?'k3':'k4';
  return'mix';
 }
+const shapeC=a=>{const x=ansShape(a);return x==='k3'||x==='k4'?'k':x};   // 漢字だけの答えは、3字以下も4字以上も同じ仲間
 /* 「増える」と「大きくなる」のように、同じ向きの変化は同じ意味なので、まちがいの選択肢に並べない */
 const chgDir=a=>/^(増える|大きくなる|長くなる|高くなる|上がる|強くなる|速くなる)$/.test(a)?'up':/^(減る|小さくなる|短くなる|低くなる|下がる|弱くなる|遅くなる)$/.test(a)?'down':'';
 function qGroup(it){
@@ -91,18 +92,19 @@ const jsC=w=>JSCL.findIndex(l=>l.includes(w));
 const shareKanji=(a,b)=>{const A=new Set(String(a).match(/[一-龥]/g)||[]);return (String(b).match(/[一-龥]/g)||[]).some(x=>A.has(x))};
 function distractQA(it,f,n=3){
  const ans=it[f],seen=new Set([ans]),out=[],keys=tagKeys(it),g=f==='a'?qGroup(it):'';
- for(const pass of g?[0,1,2,3]:[2,3]){   // 0：同じ型＋長さが近い／1：同じ型／2：長さが近い／3：なんでも
+ for(const pass of g?[0,1,4,2,3]:[2,3]){   // 0：同じ型＋長さが近い／1：同じ型／4：答えのかたちが同じ（型が小さいグループ・単独の名詞の問いも、数やカタカナの答えと並ばないように）／2：長さが近い／3：なんでも
   for(const k of keys){
    const pool=POOL[k]||[];
    if(pool.length<n+2&&k!==keys[keys.length-1])continue;
-   const h=g?qHead(it):'';
-   for(const c of g&&pass<=1?shuffle(pool).sort((x,y)=>(qHead(y)===h)-(qHead(x)===h)):shuffle(pool)){   // 同じ名詞の問い（「…気体は？」どうし）の答えを先に
+   const h=g?qHead(it):'',sf=String(ans).slice(-2),sc=c=>(qHead(c)===h)*2+(String(c[f]).slice(-2)===sf);
+   for(const c of g&&pass<=1?shuffle(pool).sort((x,y)=>sc(y)-sc(x)):shuffle(pool)){   // 同じ名詞の問い（「…気体は？」どうし）の答えを先に。つぎに、おわりの2字が同じ答え（「…の乱」「…一揆」どうし）
     if(out.length>=n)break;
     if(c.id===it.id||seen.has(c[f])||nested(c[f],ans))continue;
     if(f==='w'&&c.m===it.m)continue;
     if(it.k==='syn'&&(c.w===it.w||shareKanji(c[f],it.w)||shareKanji(c[f],ans)||(jsC(c[f])>=0&&(jsC(c[f])===jsC(ans)||jsC(c[f])===jsC(it.w)))))continue;   // 類義語・対義語：おなじ見出しのもうひとつの答えや、見出し・正解と同じ漢字をふくむ語（意味が近いかもしれない）は、まちがいに使わない
-    if(g==='s:chg'&&chgDir(c[f])&&chgDir(c[f])===chgDir(ans))continue;
+    if(chgDir(c[f])&&chgDir(c[f])===chgDir(ans))continue;   // 同じ向きの変化（増える／大きくなる）は同じ意味。どの型の問いでも、まちがいに並べない
     if(pass<=1&&qGroup(c)!==g)continue;
+    if(pass===4&&shapeC(c[f])!==shapeC(ans))continue;
     if((pass===0||pass===2)&&!lenOK(c[f],ans))continue;
     seen.add(c[f]);out.push(c[f]);
    }
