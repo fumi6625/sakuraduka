@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { loadCore } from '../scripts/headless.mjs';
 
 const NAMES = ['S', 'setToday', 'routeFor', 'present', 'judge', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'dayOK', 'dayNeed', 'peekDay',
-  'BK', 'restoreGx', 'syncAutoGoals', 'isAutoGoal', 'SJL', 'PASS', 'ITEMS', 'dochira', 'stageXP', 'tierFor', 'doneDays', 'masteredBy', 'bankStats', 'qaStat', 'mathDays90', 'mistakeStats', 'GOAL_AUTO'];
+  'BK', 'restoreGx', 'syncAutoGoals', 'isAutoGoal', 'SJL', 'PASS', 'ITEMS', 'dochira', 'stageXP', 'tierFor', 'doneDays', 'masteredBy', 'bankStats', 'qaStat', 'mathDays90', 'mistakeStats', 'GOAL_AUTO', 'goalN', 'goalOK', 'paceF', 'goalText', 'ROADMAP'];
 const START = '2026-10-19';
 const rng = (seed) => { let r = seed; return () => { r = (r * 1664525 + 1013904223) >>> 0; return r / 4294967296; }; };
 
@@ -123,6 +123,12 @@ test('長文：国語・英語とも40題あり、どの問いも4択で、正�
       assert.ok(p.qs.length >= 3, `${p.id} の問いが少ない`);
       for (const q of p.qs) assert.equal(new Set(q.slice(1, 5)).size, 4, `${p.id}: 選択肢が重なる`);
     }
+  }
+  // 英語の長文：どれも100語以上で、設問の2つは英語（入試B問題の形）。英語の設問の正解が、英文の中に根拠をもつ
+  for (const p of C.PASS.E) {
+    assert.ok(p.text.trim().split(/\s+/).length >= 100, `${p.id} が短い：${p.text.trim().split(/\s+/).length}語`);
+    const en = p.qs.filter((q) => /^[A-Za-z]/.test(q[0]));
+    assert.ok(en.length >= 2, `${p.id} の英語の設問が${en.length}つ`);
   }
 });
 
@@ -387,4 +393,23 @@ test('ミニの日：暗証番号を決めていないときは、1週間に2回
   assert.equal(C.canLight(C.addDays(mon, 7)), true, '来週はまた使える');
   C.S.pin = '1234'; C.S.pinOn = 1;
   assert.equal(C.canLight(C.addDays(mon, 4)), true, '暗証番号があるときは、おうちの人が決める');
+});
+
+test('月の目標：数のある自動の目標は、その子のペース（週3日なら6割）にそろう。週5日の子はそのまま', () => {
+  const slow = loadCore(NAMES), rand = rng(31);
+  for (let i = 0; i <= 140; i++) {
+    const date = slow.addDays(START, i), wd = new Date(date + 'T00:00:00').getDay();
+    if ([1, 3, 5].includes(wd)) doDay(slow, date, rand, 0.85);
+  }
+  const d = slow.addDays(START, 141); slow.setToday(d);
+  const pf = slow.paceF(d);
+  assert.ok(pf >= 0.5 && pf <= 0.75, `週3日のペース ${pf.toFixed(2)}`);
+  assert.ok(slow.goalN('2027-02|2') < 800 && slow.goalN('2027-02|2') >= 400, `理社の延べ問題 ${slow.goalN('2027-02|2')}`);
+  assert.ok(slow.goalOK('2026-11|1') && slow.goalOK('2026-11|2'), '週3日でも、11月の英単語と数学の目標には届く');
+  const m = slow.ROADMAP.find((x) => x.k === '2027-02');
+  assert.ok(!slow.goalText(m, 2).includes('{n}') && slow.goalText(m, 2).includes(String(slow.goalN('2027-02|2'))), '文の {n} が、ペースの数になる');
+  const fast = loadCore(NAMES), r2 = rng(32);
+  for (let i = 0; i <= 60; i++) { const date = fast.addDays(START, i), wd = new Date(date + 'T00:00:00').getDay(); if (wd >= 1 && wd <= 5) doDay(fast, date, r2, 0.85); }
+  const d2 = fast.addDays(START, 61); fast.setToday(d2);
+  assert.equal(fast.goalN('2027-02|2'), 800, '週5日の子は、そのままの数');
 });

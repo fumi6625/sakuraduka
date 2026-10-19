@@ -123,23 +123,36 @@ function checkBadges(){
 
 /* ----- 月のマイルストーン ----- */
 /* 記録から自動で決まる目標（自己申告にしない）。キー：月|番号 */
-/* 数字は、このアプリのふつうのペース（週5日・正答率8割台）で、その月までに届く量にそろえてある（ペースは scripts/simulate.mjs で確かめる） */
+/* ペース：直近4週間に、合格ラインをこえた日の割合（週5日を1とする。いちばん下は .5。はじめの2週間は1）。
+   数のある自動の目標は、この子のペースでそろえる（週3日の子が、どの月も達成0にならないように）。週5日の子は、そのままの数 */
+function paceF(date=today()){
+ if(!S.start)return 1;
+ const span=Math.min(28,diff(S.start,date)+1);
+ if(span<14)return 1;
+ let n=0;for(let i=0;i<span;i++)if((S.days[addDays(date,-i)]||{}).ok)n++;
+ return clamp(n/(span*5/7),.5,1);
+}
+/* 記録から自動で決まる目標（自己申告にしない）。キー：月|番号。n＝ふつうのペース（週5日・正答率8割台）で、その月までに届く数（scripts/simulate.mjs と tests で確かめる） */
 const qaStat=()=>{let n=0,w=0;for(const id in S.srs){const it=ITEMS[id];if(it&&(it.bank==='SQ'||it.bank==='OQ')){n+=S.srs[id].n;w+=S.srs[id].w}}return{n,acc:n?1-w/n:0}};
 const mathDays90=()=>Object.values(S.days).filter(d=>d.stg&&d.stg.math&&d.stg.math.n>=8&&d.stg.math.ok/d.stg.math.n>=.9).length;
 const GOAL_AUTO={
- '2026-10|1':()=>SJL.every(s=>S.diag[s]&&S.diag[s].done),
- '2026-10|4':()=>S.best>=7,
- '2026-11|1':()=>bankStats('EW').seen>=40,
- '2026-11|2':()=>mathDays90()>=3,
- '2026-11|3':()=>{const m=mistakeStats();return m.all>=10&&m.dead>=5},
- '2027-02|2':()=>{const q=qaStat();return q.n>=800&&q.acc>=.8},
- '2027-02|3':()=>mistakeStats().dead>=100,
- '2027-05|3':()=>mistakeStats().dead>=250,
- '2028-02|2':()=>mistakeStats().dead>=600};
+ '2026-10|1':{f:()=>SJL.every(s=>S.diag[s]&&S.diag[s].done)},
+ '2026-10|4':{f:()=>S.best>=7},
+ '2026-11|1':{n:40,f:n=>bankStats('EW').seen>=n},
+ '2026-11|2':{n:3,min:2,f:n=>mathDays90()>=n},
+ '2026-11|3':{f:()=>{const m=mistakeStats();return m.all>=10&&m.dead>=5}},
+ '2027-02|2':{n:800,f:n=>{const q=qaStat();return q.n>=n&&q.acc>=.8}},
+ '2027-02|3':{n:100,f:n=>mistakeStats().dead>=n},
+ '2027-05|3':{n:250,f:n=>mistakeStats().dead>=n},
+ '2028-02|2':{n:600,f:n=>mistakeStats().dead>=n}};
 const isAutoGoal=(k,i)=>!!GOAL_AUTO[gid(k,i)];
+const goalN=key=>{const g=GOAL_AUTO[key];return g&&g.n?Math.max(g.min||1,Math.round(g.n*paceF())):0};
+const goalOK=key=>{const g=GOAL_AUTO[key];return !!g&&g.f(goalN(key))};
+/* 目標の文：数のある自動の目標は、{n} を、この子のペースの数にする */
+const goalText=(m,i)=>{const n=goalN(gid(m.k,i));return n?m.g[i][0].replace('{n}',n):m.g[i][0]};
 function syncAutoGoals(){
  const out=[];
- for(const key in GOAL_AUTO){if(S.ms[key])continue;if(GOAL_AUTO[key]()){const [k,i]=key.split('|');out.push(toggleGoal(k,+i))}}
+ for(const key in GOAL_AUTO){if(S.ms[key])continue;if(goalOK(key)){const [k,i]=key.split('|');out.push(toggleGoal(k,+i))}}
  return out;
 }
 const mStat=m=>{const n=m.g.length,d=m.g.filter((_,i)=>S.ms[gid(m.k,i)]).length;return{n,d,p:n?d/n:0,clear:d>=Math.ceil(n*.8)}};

@@ -34,7 +34,7 @@ function weekStrip(date){
 function monthMini(){
  const m=ROADMAP.find(x=>x.k===curMonth()),st=mStat(m);
  return `<div class="card"><div class="rowh"><h2>今月のマイルストーン</h2><span class="lb sm c">${esc(m.label)}</span><span class="sp mini px">${st.d}/${st.n}</span></div>
-  <p class="mini">${esc(m.th)}</p>${m.g.map((g,i)=>{const on=!!S.ms[gid(m.k,i)];return `<button class="q" data-act="goal" data-a="${m.k}|${i}" aria-pressed="${on}"><span class="box">${on?'✓':''}</span><span>${esc(g[0])}</span><span class="xp">+${g[1]}</span></button>`}).join('')}
+  <p class="mini">${esc(m.th)}</p>${m.g.map((g,i)=>{const on=!!S.ms[gid(m.k,i)];return `<button class="q" data-act="goal" data-a="${m.k}|${i}" aria-pressed="${on}"><span class="box">${on?'✓':''}</span><span>${esc(goalText(m,i))}</span><span class="xp">+${g[1]}</span></button>`}).join('')}
   <p style="margin-top:10px"><button class="bt sm" data-tab="map">ぜんぶの月を見る</button></p></div>`;
 }
 /* いまの段階の説明（ならし → ふつう → しっかり） */

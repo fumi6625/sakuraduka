@@ -2,7 +2,7 @@
 const START_DAY='2026-10-18';
 const openM=new Set();let mapInit=false;
 const ring=p=>`<svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="6"/><circle cx="22" cy="22" r="18" fill="none" stroke="var(--team)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${(113.1*p).toFixed(1)} 113.1" transform="rotate(-90 22 22)"/><text x="22" y="26.5" text-anchor="middle" font-size="12" font-weight="900" style="fill:#fff">${Math.round(p*100)}</text></svg>`;
-const goalsHTML=m=>m.g.map((g,i)=>{const on=!!S.ms[gid(m.k,i)],auto=isAutoGoal(m.k,i),mark=auto?'<small class="chp t">記録で自動</small>':S.pinOn&&S.pin&&!on?'<small class="chp">おうちの人OK</small>':'';return `<button class="q" data-act="goal" data-a="${m.k}|${i}" aria-pressed="${on}"><span class="box">${on?'✓':''}</span><span><b>${esc(g[0])}</b> ${mark}</span><span class="xp">+${g[1]}</span></button>`}).join('');
+const goalsHTML=m=>m.g.map((g,i)=>{const on=!!S.ms[gid(m.k,i)],auto=isAutoGoal(m.k,i),mark=auto?'<small class="chp t">記録で自動'+(goalN(gid(m.k,i))&&paceF()<1?'・あなたのペース':'')+'</small>':S.pinOn&&S.pin&&!on?'<small class="chp">おうちの人OK</small>':'';return `<button class="q" data-act="goal" data-a="${m.k}|${i}" aria-pressed="${on}"><span class="box">${on?'✓':''}</span><span><b>${esc(goalText(m,i))}</b> ${mark}</span><span class="xp">+${g[1]}</span></button>`}).join('');
 function turfHTML(){
  const t=today(),exam=S.exam,months=[];
  for(let y=2026,m=10;y<2028||m<=3;){months.push(y+'-'+pad(m));m++;if(m>12){m=1;y++}if(y===2028&&m>3)break}
@@ -34,7 +34,7 @@ function renderMap(){
   ${turfHTML()}</div>
   <div class="sec"><h2>4つの章</h2></div><div class="grid" id="phases">${PH.map(p=>`<div class="card" style="margin:0"><span class="lb sm c">第${p.n}章</span><h3 style="margin-top:8px">${p.name}</h3><p class="mini">${p.span}</p><p>${p.aim}</p><p class="mini">学習時間の目安：${p.time}</p></div>`).join('')}</div>
   <div class="sec"><h2>月ごとのマイルストーン</h2></div>
-  <p class="mini">学校のテストの時期は学校ごとにちがうので、月の目標は学校の年間予定にあわせてスライドしてOK。80%こえると宝箱が開く。</p>
+  <p class="mini">学校のテストの時期は学校ごとにちがうので、月の目標は学校の年間予定にあわせてスライドしてOK。80%こえると宝箱が開く。「記録で自動」の目標は、アプリの記録を見て自動でつき、数は直近4週間のペース（週5日が基準）にあわせて変わります。</p>
   <div id="months">${ROADMAP.map(m=>{const st=mStat(m),cur=curMonth();
    return `<details class="m" data-k="${m.k}" data-now="${m.k===cur?1:0}" ${openM.has(m.k)?'open':''}><summary>${ring(st.p)}<span style="min-width:0"><b class="px">${m.label}</b> <span class="chp">第${m.ph}章</span>${S.mc[m.k]?'<span class="chp ok">クリア</span>':''}<br><span class="mini">${esc(m.th)}</span></span><span class="mini sp">${st.d}/${st.n}</span></summary><div class="mb"><p>${esc(m.intro)}</p>${goalsHTML(m)}<h4>教科のフォーカス</h4><div class="tw"><table class="k">${SJL.map((s,i)=>`<tr><th>${SJN[s]}</th><td>${esc(m.s[i])}</td></tr>`).join('')}</table></div><p style="margin-top:10px"><span class="chp w">関所・ボス</span> ${esc(m.boss)}</p><p><span class="chp xp">宝箱</span> ${esc(rwText(m))}</p></div></details>`}).join('')}</div>`;
 }
