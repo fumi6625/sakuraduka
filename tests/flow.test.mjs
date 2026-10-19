@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { loadCore } from '../scripts/headless.mjs';
 
 const NAMES = ['S', 'setToday', 'routeFor', 'present', 'judge', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'dayOK', 'dayNeed', 'peekDay',
-  'BK', 'restoreGx', 'syncAutoGoals', 'isAutoGoal', 'SJL', 'PASS', 'ITEMS', 'dochira', 'stageXP', 'tierFor', 'doneDays'];
+  'BK', 'restoreGx', 'syncAutoGoals', 'isAutoGoal', 'SJL', 'PASS', 'ITEMS', 'dochira', 'stageXP', 'tierFor', 'doneDays', 'masteredBy', 'qaStat', 'mathDays90', 'mistakeStats', 'GOAL_AUTO'];
 const START = '2026-10-19';
 const rng = (seed) => { let r = seed; return () => { r = (r * 1664525 + 1013904223) >>> 0; return r / 4294967296; }; };
 
@@ -308,4 +308,24 @@ test('再戦：まちがえた計算問題は、数字を変えた同じ型で�
   assert.equal(C.S.srs[it.id].b, 1);
   C.setToday(C.addDays(START, 2));
   assert.equal(C.drillItems({ type: 'due', n: 10 }).some((x) => x.id === it.id), false, '2日目は出ない（間があく）');
+});
+
+test('月の目標：自動で付く目標は、ふつうのペース（月〜金・正答率85%）で、その月までに届く', () => {
+  const C = loadCore(NAMES);
+  const rand = rng(11), at = {};
+  const marks = { '2026-11-30': 'nov', '2027-02-28': 'feb', '2027-05-31': 'may' };
+  for (let i = 0; i <= 225; i++) {
+    const date = C.addDays(START, i), wd = new Date(date + 'T00:00:00').getDay();
+    if (wd >= 1 && wd <= 5) doDay(C, date, rand, 0.85);
+    if (marks[date]) {
+      C.setToday(date);
+      const q = C.qaStat(), m = C.mistakeStats();
+      at[marks[date]] = { ew: C.masteredBy('EW'), m90: C.mathDays90(), qn: q.n, qa: q.acc, dead: m.dead };
+    }
+  }
+  assert.ok(at.nov.ew >= 10 && at.nov.m90 >= 3, `11月末：英単語 ${at.nov.ew}語、数学90%の日 ${at.nov.m90}`);
+  assert.ok(at.feb.qn >= 800 && at.feb.qa >= 0.8, `2月末：理社 ${at.feb.qn}問 正答率 ${at.feb.qa.toFixed(2)}`);
+  assert.ok(at.feb.dead >= 100, `2月末：たおした ${at.feb.dead}`);
+  assert.ok(at.may.dead >= 250, `5月末：たおした ${at.may.dead}`);
+  for (const key of ['2026-11|1', '2026-11|2', '2027-02|2', '2027-02|3', '2027-05|3']) assert.ok(C.GOAL_AUTO[key], `${key} は自動の目標`);
 });

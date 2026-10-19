@@ -91,9 +91,9 @@ const BADGES=[
  ['s30','30日連続','1か月続けた',()=>S.best>=30],['s100','100日連続','100日続けた',()=>S.best>=100],
  ['q100','100問','合計100問に答えた',()=>S.tot.n>=100],['q1000','1,000問','合計1,000問に答えた',()=>S.tot.n>=1000],
  ['q5000','5,000問','合計5,000問に答えた',()=>S.tot.n>=5000],['q20000','20,000問','合計20,000問に答えた',()=>S.tot.n>=20000],
- ['w300','英単語300語','英単語を300語おぼえた',()=>masteredBy('EW')>=300],['w800','英単語800語','英単語を800語おぼえた',()=>masteredBy('EW')>=800],
- ['k150','漢字150字','漢字の読みを150語おぼえた',()=>masteredBy('JK')>=150],
- ['all500','500問マスター','500問をおぼえた（箱4以上）',()=>masteredCount()>=500],['all2000','2000問マスター','2000問をおぼえた（箱4以上）',()=>masteredCount()>=2000],
+ ['w100','英単語100語','英単語を100語おぼえた',()=>masteredBy('EW')>=100],['w300','英単語300語','英単語を300語おぼえた',()=>masteredBy('EW')>=300],['w450','英単語450語','英単語を450語おぼえた',()=>masteredBy('EW')>=450],
+ ['k80','漢字80語','漢字の読みを80語おぼえた',()=>masteredBy('JK')>=80],
+ ['all500','500問マスター','500問をおぼえた（箱4以上）',()=>masteredCount()>=500],['all1500','1500問マスター','1500問をおぼえた（箱4以上）',()=>masteredCount()>=1500],
  ['diag','現在地を知った','ミニ診断を5教科おわらせた',()=>SJL.every(s=>S.diag[s]&&S.diag[s].done)],
  ['nai','内申の作戦','内申の目標を決めた',()=>!!S.nai.set],
  ['mist10','ミス退治 10体','ミスを10体たおした',()=>mistakeStats().dead>=10],['mist50','ミス退治 50体','ミスを50体たおした',()=>mistakeStats().dead>=50],
@@ -115,11 +115,19 @@ function checkBadges(){
 
 /* ----- 月のマイルストーン ----- */
 /* 記録から自動で決まる目標（自己申告にしない）。キー：月|番号 */
+/* 数字は、このアプリのふつうのペース（週5日・正答率8割台）で、その月までに届く量にそろえてある（ペースは scripts/simulate.mjs で確かめる） */
+const qaStat=()=>{let n=0,w=0;for(const id in S.srs){const it=ITEMS[id];if(it&&(it.bank==='SQ'||it.bank==='OQ')){n+=S.srs[id].n;w+=S.srs[id].w}}return{n,acc:n?1-w/n:0}};
+const mathDays90=()=>Object.values(S.days).filter(d=>d.stg&&d.stg.math&&d.stg.math.n>=8&&d.stg.math.ok/d.stg.math.n>=.9).length;
 const GOAL_AUTO={
  '2026-10|1':()=>SJL.every(s=>S.diag[s]&&S.diag[s].done),
  '2026-10|4':()=>S.best>=7,
+ '2026-11|1':()=>masteredBy('EW')>=10,
+ '2026-11|2':()=>mathDays90()>=3,
  '2026-11|3':()=>{const m=mistakeStats();return m.all>=10&&m.dead>=5},
- '2027-02|3':()=>mistakeStats().dead>=30};
+ '2027-02|2':()=>{const q=qaStat();return q.n>=800&&q.acc>=.8},
+ '2027-02|3':()=>mistakeStats().dead>=100,
+ '2027-05|3':()=>mistakeStats().dead>=250,
+ '2028-02|2':()=>mistakeStats().dead>=600};
 const isAutoGoal=(k,i)=>!!GOAL_AUTO[gid(k,i)];
 function syncAutoGoals(){
  const out=[];
