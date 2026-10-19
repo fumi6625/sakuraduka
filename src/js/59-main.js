@@ -64,7 +64,7 @@ const ACT={
   const st=routeFor().find(x=>x.id==='hw');let used=0;
   if(hwTimer){used=Math.round((Date.now()-hwTimer.t0)/60000);clearInterval(hwTimer.iv);hwTimer=null}
   const res=completeStage(today(),'hw',{n:0,min:used>0?used:st.min});
-  closeSheet();FX.confetti(50);Snd.ok();afterSimple(res,res.first?'宿題クリア！ +'+res.xp+'XP':'');
+  closeSheet();FX.confetti(50);Snd.ok();afterSimple(res,res.first?(res.held?'宿題クリア！ XPは、ドリルで4割以上とれたら入るよ':'宿題クリア！ +'+res.xp+'XP'):'');
  },
  refStar(i){
   refSelf=+i;$$('#refStars button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a<=refSelf)));
@@ -79,7 +79,7 @@ const ACT={
   const res=completeStage(today(),'ref',{n:0,note:t,min:2});
   let bonus=null;if(res.first&&Math.abs(refSelf-data)<=1){bonus=addXP(5);res.xp+=5}
   closeSheet();FX.confetti(40);Snd.ok();
-  afterSimple(res,res.first?(bonus?'ふりかえり完了！ めききボーナス +5XP':'ふりかえり完了 +'+res.xp+'XP'):'');
+  afterSimple(res,res.first?(bonus?'ふりかえり完了！ めききボーナス +5XP':res.held?'ふりかえり完了！ XPは、ドリルで4割以上とれたら入るよ':'ふりかえり完了 +'+res.xp+'XP'):'');
   if(bonus&&!res.lv)setTimeout(()=>levelUp(bonus.to),700);
  },
  tsukkomi(){
@@ -93,7 +93,7 @@ const ACT={
   openSheet(`<h2>やる時間を決めよう</h2><p class="mini">「何時に始めるか」を先に決めておくと、始めやすい。時間がきても通知は出ないので、ホームを開いたときに思い出せるよ。</p><div class="seg">${['16:00','17:00','18:00','19:00','20:00','21:00'].map(t=>`<button data-act="vowSet" data-a="${t}" aria-pressed="${at===t}">${t}</button>`).join('')}<button data-act="vowSet" data-a="none" aria-pressed="${!at}">きめない</button></div>`);
  },
  vowSet(t){S.at=t==='none'?'':t;save();closeSheet();renderHome();toast(S.at?'やくそく：'+S.at+' にスタート！':'やくそくを消した')},
- light(){const d=today(),set=()=>{S.light[d]=1;save();refresh();toast('いそがしい日モード：量をへらしたよ')};if(S.light[d]){delete S.light[d];save();refresh();toast('ふつうのルートにもどしたよ')}else needPin('きょうを「ミニの日」にします（量をへらす）。',set)},
+ light(){const d=today(),set=()=>{S.light[d]=1;save();refresh();toast('いそがしい日モード：量をへらしたよ')};if(S.light[d]){delete S.light[d];save();refresh();toast('ふつうのルートにもどしたよ')}else if(!canLight(d))toast('ミニの日は 週2回まで。おうちの人と暗証番号を決めると、相談して使えるよ');else needPin('きょうを「ミニの日」にします（量をへらす）。',set)},
  nickSet(){const v=($('#nickIn').value||'').trim().slice(0,12);if(!v){toast('なまえを入れてね');return}S.nick=v;save();toast(v+'、よろしく！');FX.confetti(50);refresh()},
  /* ---- プレイヤー ---- */
  plGo(){plGo()},plQuit(){plQuit()},plClose(){closeOv();plClose()},plNext(){plNext()},
@@ -187,7 +187,7 @@ const ACT={
   if(!/^\d{4}$/.test(v)){toast('4けたの数字を入れてから、オンにしてね');return}
   S.pin=v;S.pinOn=1;save();initInputs();toast('保護者OKをオンにした。宿題のチェックに必要になります');
  },
- tierSet(v){needPin('1日の量の段階を変えます。',()=>{S.tier=v==='auto'?'auto':+v;S.rt=null;save();initInputs();toast(v==='auto'?'段階：おまかせ（だんだん増える）':'段階を「'+TIERS[+v].name+'」にした')})},
+ tierSet(v){if(!(S.pinOn&&S.pin)&&v!=='auto'&&+v<baseTier(today())){toast('量をへらすのは、おうちの人と暗証番号を決めてからにしよう');return}needPin('1日の量の段階を変えます。',()=>{S.tier=v==='auto'?'auto':+v;S.rt=null;save();initInputs();toast(v==='auto'?'段階：おまかせ（だんだん増える）':'段階を「'+TIERS[+v].name+'」にした')})},
  async report(){const t=reportText();$('#rpt').value=t;const ok=await copyText(t);toast(ok?'週報をコピーした':'下の文を長押しでコピーしてね')},
  bkMake(){$('#bk').value=btoa(unescape(encodeURIComponent(JSON.stringify(S))))},
  async bkCopy(){if(!$('#bk').value)ACT.bkMake();const ok=await copyText($('#bk').value);toast(ok?'バックアップをコピーした。メモアプリなどに保存してね':'長押しでコピーしてね')},

@@ -6,6 +6,19 @@
 const curOf=date=>{const k=date.slice(0,7);let c=CUR[0];for(const x of CUR)if(x.from<=k)c=x;return c};
 const MEMB=['EW','EV','JK','JI','JS','SQ','OQ'];
 const ewOpen=it=>+it.grp<=2||(+it.grp===3&&today()>='2027-03-01')||(+it.grp===4&&today()>='2027-05-01');
+/* 新しい英単語を n 語えらぶ。群3（中3）・群4（英検準2級）は、開く日（2027-03・05）になったら、群1・2をやりきる前にも
+   新しい語の4割ぶん混ぜる（入試・英検で要る語に、はやく触れる）。通し番号は日ごとにずらして、まんべんなく回す */
+function ewNew(n,ex,date=today()){
+ const out=[],hi=[...(date>='2027-03-01'?[3]:[]),...(date>='2027-05-01'?[4]:[])];
+ for(let i=0;i<n;i++){
+  const sx=exSet(ex,out),g=hi.length&&(dn(date)*3+i)%10<4?hi[(dn(date)+i)%hi.length]:0;
+  let a=g?newItems('EW',1,{pred:it=>+it.grp===g,ex:sx}):[];
+  if(!a.length)a=newItems('EW',1,{pred:ewOpen,ex:sx});
+  if(!a.length)break;
+  out.push(a[0]);
+ }
+ return out;
+}
 const uniq=a=>{const s=new Set();return a.filter(x=>x&&!s.has(x.id)&&s.add(x.id))};
 const seedOf=s=>(hashStr(s)%4e9)+1;
 /* 生成問題：同じ日に、同じ文・同じ答えの問題は出さない（種を変えて引き直す。ex に「K:文」を記録する） */
@@ -76,21 +89,26 @@ function effD(date){
 }
 const baseTier=date=>{const D=effD(date);return D<14?1:D<28?2:3};
 /* 量は、やった日数に合わせて、段階の中でも少しずつ増える（ならし .40→.53／ふつう .55→.75／しっかり .8→1.0） */
+/* 先週まではよくやっていたのに、この1週間にやすんだ（合格ラインの日が2日以下）ときは、段階はそのままで量だけ少なめにして、
+   やった日ごとに戻す（0日.7／1日.85／2日.95）。段階をいきなり1つ下げたり上げたりしない（3日めに量が急にはね上がらない）。
+   7日以上あいたあとは、別の仕組み（breakInfo／effD）で戻す */
+function easeF(date){
+ if(!S.start||breakInfo(date).n<99||diff(S.start,date)<7)return 1;
+ const o=okDays(date);
+ return o<=2&&okDays(date,8,14)>=4?[.7,.85,.95][o]:1;
+}
 const kOf=(date,tier)=>{
  if(S.tier&&S.tier!=='auto')return TIERS[tier].k;
- const D=effD(date);
- if(tier===1)return .4+Math.min(13,D)*.01;                                  // ならし：.40 → .53
- if(tier===2)return .55+Math.min(14,Math.max(0,D-14))*.014;                 // ふつう：.55 → .75
- return Math.min(1,.8+Math.max(0,D-28)*.005);                               // しっかり：.8 → 1.0
+ const D=effD(date),e=easeF(date);
+ if(tier===1)return (.4+Math.min(13,D)*.01)*e;                              // ならし：.40 → .53
+ if(tier===2)return (.55+Math.min(14,Math.max(0,D-14))*.014)*e;             // ふつう：.55 → .75
+ return Math.min(1,.8+Math.max(0,D-28)*.005)*e;                             // しっかり：.8 → 1.0
 };
 function tierFor(date){
  if(S.light[date])return 1;
  if(S.tier&&S.tier!=='auto')return Math.max(1,Math.min(3,+S.tier));
  if(!S.start)S.start=date;
- const w=Math.max(0,Math.floor(diff(S.start,date)/7));
- let t=baseTier(date);
- if(w>=1&&okDays(date)<=2&&okDays(date,8,14)>=4)t=Math.max(1,t-1);   // 先週までよくやっていたのに、この1週間にやすんだ（2日以下）ときだけ、1段階もどして立て直す。もともと週に2日の子は、もどさない
- return t;
+ return baseTier(date);   // やすんだ週の立て直しは、段階ではなく量（easeF）でやる。もともと週に2日の子は、もどさない
 }
 /* 正答率が低い週は、新しい問題を減らす（つまずいているときに増やさない） */
 function throttle(date){const r=recentAcc(date);return r.n>=30&&r.acc<.6?0.7:1}
@@ -143,7 +161,7 @@ const REVB=it=>!!BK[it.bank]&&it.bank!=='ER'&&it.bank!=='JR';
    （前は箱の低い順に選んでいたので、箱5〜6は、期限が来てもほとんど出なかった） */
 function oldDue(ex,limit,date,stale){
  const t=DN(),by={};
- for(const id in S.srs){const s=S.srs[id];if(s.b<4||s.d>t||ex.has(id))continue;const it=ITEMS[id];if(!it||!REVB(it))continue;(by[it.subj||'?']||(by[it.subj||'?']=[])).push([stale?(t-s.d)/BOXD[s.b]:-s.b*1000+(t-s.d),it])}   // stale：間隔にくらべて、おくれが大きいものから／ふだん：箱の低い（まだ弱い）ものから
+ for(const id in S.srs){const s=S.srs[id];if(s.b<4||s.d>t||ex.has(id))continue;const it=ITEMS[id];if(!it||!REVB(it))continue;(by[it.subj||'?']||(by[it.subj||'?']=[])).push([(t-s.d)/BOXD[s.b],it])}   // 間隔にくらべて、おくれが大きいものから（箱5〜6も、期限をすぎたら順に回ってくる）
  const keys=Object.keys(by).sort(),lists=keys.map(k=>by[k].sort((a,b)=>b[0]-a[0])),pos=keys.map(()=>0),out=[],n=keys.length;
  const stride=keys.map(k=>1/(OLDW[k]||1)),pass=keys.map((_,j)=>((j+dn(date))%Math.max(1,n))*.01);   // 教科ごとの重み（理・社は、おぼえる量が多いので多め）で、順番に回す
  while(out.length<limit){
@@ -168,14 +186,14 @@ function bMem(date,tier,cur,ex){
  const old2=oldDue(exSet(x1,young),slots-old1.length-young.length,date,late>0);   // わかい復習が足りない日は、古い復習でうめる
  const due=[...young,...old1,...old2];
  const newN=Math.max(minNew,Math.round((total-due.length)*th));
- const PAT=tier>=2?['EW','SQ','JG','OQ','JK','SQ','EW','OQ','JI','JS']:effD(date)>=7?['EW','JK','EW','SQ','JK','OQ','EW']:['EW','JK','EW','EW','JK'];   // 新しい問題の配分（英単語3：理科2：社会2：漢字1：国語の文法1：ことわざ等1）。日ごとに先頭をずらして、まんべんなく回す
+ const PAT=tier>=2?['EW','SQ','EW','OQ','JG','EW','OQ','EW','SQ','JK','EW','OQ','EW','JG','SQ','EW','OQ','EW','JI','JS']:effD(date)>=7?['EW','JK','EW','SQ','JK','OQ','EW']:['EW','JK','EW','EW','JK'];   // 新しい問題の配分（20回で：英単語8・社会4・理科3・国語の文法2・漢字1・ことわざ1・類義語1）。日ごとに先頭をずらして、まんべんなく回す
  const cnt={EW:0,JK:0,SQ:0,OQ:0,JG:0,JI:0,JS:0};for(let j=0;j<newN;j++)cnt[PAT[(dn(date)*3+j)%PAT.length]]++;
  const sx=exSet(ex,due);
- const ews=newItems('EW',cnt.EW,{pred:ewOpen,ex:sx}),jks=newItems('JK',cnt.JK,{prefs:cur.jk,ex:sx});
+ const ews=ewNew(cnt.EW,sx,date),jks=newItems('JK',cnt.JK,{prefs:cur.jk,ex:sx});
  const sqs=cnt.SQ?newItems('SQ',cnt.SQ,{prefs:cur.sc,ex:sx}):[],oqs=cnt.OQ?newItems('OQ',cnt.OQ,{prefs:cur.so,ex:sx}):[];
  const jgs=cnt.JG?newItems('JG',cnt.JG,{ex:sx}):[],jis=cnt.JI?newItems('JI',cnt.JI,{ex:sx}):[],jss=cnt.JS?newItems('JS',cnt.JS,{ex:sx}):[];
  const fresh=[...ews,...jks,...sqs,...oqs,...jgs,...jis,...jss],lack=newN-fresh.length;
- if(lack>0)fresh.push(...newItems('EW',lack,{pred:ewOpen,ex:exSet(sx,fresh)}));   // 出しきった教材の分は、英単語でおぎなう
+ if(lack>0)fresh.push(...ewNew(lack,exSet(sx,fresh),date));   // 出しきった教材の分は、英単語でおぎなう
  let items=interleave([...due,...fresh]);
  const minN=tier===1?6:10;
  if(items.length<minN)items=items.concat(shuffle(seenItems(it=>MEMB.includes(it.bank)&&!items.includes(it)&&!ex.has(it.id)),mulberry(seedOf(date))).slice(0,minN-items.length));
@@ -195,11 +213,12 @@ function bMath(date,tier,cur,ex){
  const warm=items.slice(0,nWarm),core=items.slice(nWarm,nWarm+nMain),tail=items.slice(nWarm+nMain);
  return{t:'数学ドリル',subj:'数',items:[...warm,...mq,...ms,...core,...tail,...mis],desc:jn(['テーマ「'+GEN[main].name+'」'+nMain+'問（Lv.'+genLv(main)+'）','ウォームアップ'+nWarm+'問',nApp&&'応用'+nApp+'問',(mq.length+ms.length+mis.length)&&'考え方・再戦'+(mq.length+ms.length+mis.length)+'問'])};
 }
+const misDesc=(n,pre)=>n?(pre?'再戦の予定はなし。苦手を先取りで'+n+'体':'まちがえた問題の再戦 '+n+'体'):'まだミスがありません（まちがえた問題は、ここに集まります）';
 function bMis(date,tier,ex){
  const n=Math.max(4,Math.round(8*kOf(date,tier)));
  let items=claimGen(dueItems(it=>{const s=S.srs[it.id];return s&&s.w>0&&!ex.has(it.id)},n*2),ex).slice(0,n),pre=false;
  if(!items.length){items=claimGen(weakItems(Math.min(6,n)*2,it=>!ex.has(it.id)),ex).slice(0,Math.min(6,n));pre=items.length>0}
- return{t:'ミス退治',subj:'総',items,desc:items.length?(pre?'再戦の予定はなし。苦手を先取りで'+items.length+'体':'まちがえた問題の再戦 '+items.length+'体'):'まだミスがありません（まちがえた問題は、ここに集まります）'};
+ return{t:'ミス退治',subj:'総',items,pre,desc:misDesc(items.length,pre)};
 }
 function bBoss(date,cur,ex){
  const items=[...pickSeenOrNew(['JW','JG','JI','JK','JS'],2,ex,date),...genMix(cur.m,2,date,'boss',ex),...pickSeenOrNew(['EG','EW','EV'],2,ex,date),...pickSeenOrNew(['SQ'],2,ex,date),...pickSeenOrNew(['OQ'],2,ex,date)];
@@ -222,7 +241,7 @@ function bSub(date,wd0,cur,ex,tier){
   const g=newItems('EG',nn('EG',6,3),{prefs:cur.g,ex}),sx=exSet(ex,g),dg=dueItems(it=>it.bank==='EG'&&!sx.has(it.id),6);
   const ev=[...dueItems(it=>it.bank==='EV'&&!sx.has(it.id),2),...newItems('EV',nn('EV',2),{ex:sx})];
   const eo=[...dueItems(it=>it.bank==='EO'&&!sx.has(it.id),3),...newItems('EO',nn('EO',4),{ex:sx})].slice(0,4),er=nextPassage('ER',sx,date);
-  const ewm=newItems('EW',nn('EW',3,2),{pred:ewOpen,ex:exSet(sx,[...ev,...eo])});
+  const ewm=ewNew(nn('EW',3,2),exSet(sx,[...ev,...eo]),date);
   keep=g.slice(0,3);
   items=[...dg,...g,...ewm,...ev,...eo,...er];p=[(dg.length+g.length)&&'文法'+(dg.length+g.length)+'問',ewm.length&&'新しい単語'+ewm.length,ev.length&&'不規則動詞'+ev.length,eo.length&&'並べかえ'+eo.length,er.length&&'長文1題']}
  else if(wd===2){
@@ -240,7 +259,7 @@ function bSub(date,wd0,cur,ex,tier){
   items=[...dq,...q,...ot];p=[(dq.length+q.length)&&'一問一答'+(dq.length+q.length)+'問',ot.length&&'年代ならべかえ'+ot.length]}
  else if(wd===5){
   const el=[...dueItems(it=>it.bank==='EL'&&!ex.has(it.id),3),...newItems('EL',nn('EL',5),{ex})].slice(0,7),sx=exSet(ex,el);
-  const eo=newItems('EO',nn('EO',4),{ex:sx}),ec=newItems('EC',1,{ex:sx}),ewn=newItems('EW',nn('EW',4,2),{pred:ewOpen,ex:sx}),ew=dueItems(it=>it.bank==='EW'&&boxOf(it)>=3&&!sx.has(it.id),5),ev=[...dueItems(it=>it.bank==='EV'&&!sx.has(it.id),2),...newItems('EV',nn('EV',2),{ex:sx})];
+  const eo=newItems('EO',nn('EO',4),{ex:sx}),ec=newItems('EC',1,{ex:sx}),ewn=ewNew(nn('EW',4,2),sx,date),ew=dueItems(it=>it.bank==='EW'&&boxOf(it)>=3&&!sx.has(it.id),5),ev=[...dueItems(it=>it.bank==='EV'&&!sx.has(it.id),2),...newItems('EV',nn('EV',2),{ex:sx})];
   keep=ec;
   items=[...el,...ew,...ewn,...ev,...eo,...ec];p=[el.length&&'リスニング'+el.length,(ew.length+ewn.length)&&'単語'+(ew.length+ewn.length),eo.length&&'並べかえ'+eo.length,ec.length&&'英作文1']}
  else if(wd===6){const b=bWeak(date,cur,ex);items=b.items;p=[b.desc]}
@@ -259,7 +278,7 @@ const CAPMIN={1:10,2:22,3:33};
 function capDay(out,tier){
  const cap=CAPMIN[tier]||36,sess=out.filter(s=>s.kind==='session'),fixed=out.filter(s=>s.kind!=='session').reduce((t,s)=>t+(s.min||0),0);
  const total=()=>sess.reduce((t,s)=>t+s.min,0)+fixed;
- for(const [id,floor] of [['math',12],['sub',10],['mis',5]]){
+ for(const [id,floor] of [['math',10],['sub',8],['mis',4]]){
   const st=sess.find(s=>s.id===id);if(!st)continue;
   let cut=false;
   const keep=new Set(st.keep||[]);   // その日の主役の教科の「新しい問題」の下限ぶんは、上限をこえても外さない（復習ばかりで新しい問題がゼロにならないように）
@@ -268,7 +287,7 @@ function capDay(out,tier){
    if(j<0)break;
    st.items.splice(j,1);st.min=estMin(st.items);cut=true;
   }
-  if(cut){st.brk=breakdown(st.items);if(id!=='mis')st.desc=descOf(st.items)||st.desc}
+  if(cut){st.brk=breakdown(st.items);st.desc=id==='mis'?misDesc(st.items.length,st.pre):(descOf(st.items)||st.desc)}
  }
  return out;
 }

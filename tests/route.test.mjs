@@ -32,14 +32,22 @@ test('段階：最初の2週間は「ならし」、そのあと少しずつ増�
   assert.deepEqual([...new Set(tiers.slice(28))], [3], '29日目からしっかり');
 });
 
-test('段階：おやすみが多い週は1つもどる', () => {
+test('おやすみが多い週のあとは、段階はそのままで、量を少なめにして、やった日ごとに戻す（急にはね上がらない）', () => {
   const C = loadCore(NAMES);
-  for (let i = 0; i < 30; i++) doDay(C, C.addDays(START, i), 0.8);
-  // 31〜37日目をほぼ休む（2日だけやる）
-  for (const i of [30, 33]) doDay(C, C.addDays(START, i), 0.8, ['mem']);
-  const d = C.addDays(START, 38);
+  for (let i = 0; i < 80; i++) doDay(C, C.addDays(START, i), 0.8);
+  // 81〜87日目をほぼ休む（2日だけやる）
+  for (const i of [80, 83]) doDay(C, C.addDays(START, i), 0.8, ['mem']);
+  const d = C.addDays(START, 88);
   C.setToday(d);
-  assert.equal(C.tierFor(d), 2, 'しっかり → ふつう に戻る');
+  assert.equal(C.tierFor(d), 3, '段階はしっかりのまま');
+  const mem = [];
+  for (let i = 88; i < 98; i++) {
+    const route = doDay(C, C.addDays(START, i), 1);
+    mem.push(route.find((s) => s.id === 'mem').items.length);
+  }
+  assert.ok(mem[0] <= 16, `戻った日は少なめ：${mem[0]}問`);
+  assert.equal(mem[mem.length - 1], 30, `しばらくして、いつもの量：${mem.join(',')}`);
+  for (let i = 1; i < mem.length; i++) assert.ok(mem[i] - mem[i - 1] <= 12, `1日で急にふえない：${mem.join(',')}`);
 });
 
 test('ならし期は、短くて、宿題とふりかえり以外は暗記と数学だけ', () => {

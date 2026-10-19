@@ -11,6 +11,9 @@ function addXP(n){
 }
 const hours=()=>Object.values(S.days).reduce((t,d)=>t+Object.values(d.min||{}).reduce((a,b)=>a+b,0),0)/60;
 const wkWins=()=>Object.values(S.wk).filter(w=>w.sc>=8).length;
+/* 「ミニの日」：暗証番号（保護者OK）を決めていないときは、1週間に2回まで。毎日ミニにして、連続記録だけ守るのを防ぐ */
+const lightUsed=date=>{const m=monday(date);return Object.keys(S.light).filter(d=>S.light[d]&&monday(d)===m).length};
+const canLight=date=>!!(S.pinOn&&S.pin)||lightUsed(date)<2;
 
 /* ----- 連続記録 ----- */
 const stageKeys=rec=>Object.keys(rec.stg||{});
@@ -51,19 +54,24 @@ function stageXP(id,r){
 function completeStage(date,id,r){
  const d=dayRec(date),out={xp:0,first:!d.stg[id],lv:null,streak:null,full:false,fullBonus:0,coin:0};
  if(!out.first)return out;
+ const had=goodOf(d).sess>=1;   // この前までに、正答4割以上のドリルがあったか
  out.xp=stageXP(id,r);
  if((r.n||0)>=5&&(r.ok||0)/r.n<.4)out.low=true;
  const st=(S.rt&&S.rt.d===date?S.rt.stg.find(x=>x.id===id):null)||{};
  const mins=r.min!=null?r.min:Math.max(1,Math.round((r.sec||0)/60)),sj=st.subj||'総';
  d.stg[id]={ok:r.ok||0,n:r.n||0,xp:out.xp,sec:r.sec||0,cb:r.combo||0,at:Date.now(),note:r.note||''};
  d.min[sj]=(d.min[sj]||0)+mins;
+ const good=goodOf(d).sess>=1;
+ /* 宿題・ふりかえり・全クリのXPは、その日に「正答4割以上のドリル」が1つあるときだけ。ない日の宿題・ふりかえりのXPは預かって、あとでドリルがとれたら入る */
+ if(!good&&(id==='hw'||id==='ref')){d.pend=(d.pend||0)+out.xp;d.stg[id].xp=0;out.xp=0;out.held=true}
+ else if(good&&!had&&d.pend){out.xp+=d.pend;d.pend=0}
  if(id==='sub'&&st.ty!==undefined)S.subLast[st.ty]=date;   // どの教科の日を、いつやったか（やすんだ教科を先に回すために覚えておく）
  if(r.boss){const k=monday(date),prev=S.wk[k]?S.wk[k].x:0;S.wk[k]={sc:r.ok,x:Math.max(prev,out.xp)}}
  out.lv=addXP(out.xp);
  const tier=S.rt&&S.rt.d===date?S.rt.tier:3;
  if(dayOK(d,tier)&&!d.ok){d.ok=1;out.streak=streakUp()}
  const rt=S.rt&&S.rt.d===date?S.rt.stg:[];
- if(!d.full&&rt.length&&rt.every(p=>d.stg[p.id]||(p.kind==='session'&&!p.ids.length))){d.full=1;out.full=true;out.fullBonus=20;const l2=addXP(20);out.lv=out.lv||l2}
+ if(!d.full&&good&&rt.length&&rt.every(p=>d.stg[p.id]||(p.kind==='session'&&!p.ids.length))){d.full=1;out.full=true;out.fullBonus=20;const l2=addXP(20);out.lv=out.lv||l2}
  out.coin=out.xp+out.fullBonus;
  return out;
 }
@@ -121,7 +129,7 @@ const mathDays90=()=>Object.values(S.days).filter(d=>d.stg&&d.stg.math&&d.stg.ma
 const GOAL_AUTO={
  '2026-10|1':()=>SJL.every(s=>S.diag[s]&&S.diag[s].done),
  '2026-10|4':()=>S.best>=7,
- '2026-11|1':()=>masteredBy('EW')>=10,
+ '2026-11|1':()=>bankStats('EW').seen>=40,
  '2026-11|2':()=>mathDays90()>=3,
  '2026-11|3':()=>{const m=mistakeStats();return m.all>=10&&m.dead>=5},
  '2027-02|2':()=>{const q=qaStat();return q.n>=800&&q.acc>=.8},

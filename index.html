@@ -885,7 +885,7 @@ details.later .st:first-child{margin-top:6px}
   <div class="tabs" id="sjTabs"></div></div>
  <div id="sjBody"></div>
  <div class="card"><h2>1週間のリズム</h2><div class="tw"><table id="wkTable"></table></div>
-  <p class="mini">毎日の共通メニュー：暗記バトル（ふくしゅう中心。しっかり期で約5〜8分）／数学ドリル（1日おきにしっかり）／今日の教科／ミス退治／ふりかえり。1日の目安は、しっかり期で約25〜33分（ホームに「のこり約○分」が出ます）。</p></div>
+  <p class="mini">毎日の共通メニュー：暗記バトル（ふくしゅう中心。しっかり期で約10分）／数学ドリル（1日おきにしっかり）／今日の教科／ミス退治／ふりかえり。1日の目安は、しっかり期で約30〜34分（長文の日は35分をこえることも。ホームに「のこり約○分」が出ます）。時間は、まちがえてやりなおす分もふくめた多めの見積りです。</p></div>
 </div></section>
 
 <section class="pg" id="pg-ai" hidden><div class="in"><div class="bar"><button class="bt sm" data-act="back">← もどる</button><h1>AI先生チーム</h1></div>
@@ -929,7 +929,7 @@ details.later .st:first-child{margin-top:6px}
    <div><label>チームカラー</label><div class="seg" id="setTeam"></div></div>
    <div><label for="setSound">効果音・読み上げ</label><button class="sw" id="setSound" data-act="sound" aria-pressed="true" aria-label="効果音と読み上げ"></button></div></div>
   <h4>勉強の量（段階）</h4>
-  <p class="mini">「おまかせ」は、はじめの2週間は短く（約3〜13分）、そのあと少しずつ増えます。おやすみが多い週は自動で1つ戻り、7日以上あいたあとは短いところから、1日ごとに戻していきます。</p>
+  <p class="mini">「おまかせ」は、はじめの2週間は短く（約3〜13分）、そのあと少しずつ増えます。おやすみが多い週は、段階はそのままで量を少なめにして、やった日ごとに戻します。7日以上あいたあとは短いところから、1日ごとに戻していきます。「ミニの日」は、暗証番号を決めていないと週2回までです。</p>
   <div class="seg" id="setTier"></div>
   <h4>保護者OK（宿題のチェック）</h4>
   <p class="mini">オンにすると、ホームの「宿題・提出物」を終えるとき、月の目標をつけるとき、「ミニの日」にするとき、段階を変えるとき、リセット・復元・保護者OKをオフにするときに、4けたの暗証番号が必要になります（自己申告でごまかせないように）。暗証番号は子どもに教えない。</p>
@@ -975,10 +975,10 @@ const PH=[
 const ROADMAP=[
  {k:'2026-10',ph:1,label:'2026年10月（後半）',th:'旅の準備',intro:'今日がスタート。まず「現在地」を知り、ごほうびと約束を決めよう。',
   g:[['この資料をiPadのホーム画面に追加し、呼び名を決めた',20],['ミニ診断（5教科）を受けた',50],['内申シミュレーターで、中3の評定の目標を決めた',30],['ごほうび（宝箱とごほうびリスト）を親子で決めた',30],['7日連続で「合格ライン」をこえた',100]],
-  s:['毎日：漢字5個＋語句3個','計算5問（正負・文字式・方程式）','基本単語を毎日10語','一問一答5問（中2の範囲）','白地図・年表の下書き'],
+  s:['毎日：漢字5個＋語句3個','計算5問（正負・文字式・方程式）','暗記バトルで、毎日 英単語（新しい語＋ふくしゅう）','一問一答5問（中2の範囲）','白地図・年表の下書き'],
   boss:'はじめの関所：ミニ診断（現在地チェック）',rw:'キックオフの夜：家族で「合格までのやくそく」を決める（家で映画かボードゲーム）'},
  {k:'2026-11',ph:1,label:'2026年11月',th:'習慣のレール',intro:'毎日同じ時間に机に向かう。量より「続くこと」を優先する。',
-  g:[['平日60分以上の学習を15日以上した',100],['アプリの英単語を10語、しっかりおぼえた（箱4）',60],['数学ドリルで、その日の正答率90%以上を3回出した',60],['ミス図鑑に10体登録し、5体たおした',50],['2学期期末テストの計画表を、2週間前までにつくった',50]],
+  g:[['平日60分以上の学習を15日以上した',100],['アプリの英単語を、40語はじめて見て答えた（出題ずみ）',60],['数学ドリルで、その日の正答率90%以上を3回出した',60],['ミス図鑑に10体登録し、5体たおした',50],['2学期期末テストの計画表を、2週間前までにつくった',50]],
   s:['読解を週2題（根拠に線）','連立方程式・一次関数の型','中2文法（不定詞・動名詞・比較・受け身）','化学変化・電流の計算を毎日2問','歴史（中世〜近世）・日本の諸地域'],
   boss:'関所：2学期期末テスト（学校）。目標は各教科で、前回の中間より+5点',rw:'好きな動画かゲームを家族と楽しむ（時間は事前に決める）'},
  {k:'2026-12',ph:1,label:'2026年12月',th:'2学期のしめくくり',intro:'期末テストと通知表。中2の評定は内申の2割。取りこぼさない。',
@@ -1015,7 +1015,7 @@ const ROADMAP=[
   boss:'関所：1学期期末テストと通知表',rw:'夏の前祝い：家で映画の夜（家族で順番に選ぶ）'},
  {k:'2027-08',ph:2,label:'2027年8月',th:'勝負の夏',intro:'部活が終わった人は特に大チャンス。総復習の1周目を終わらせる。',
   g:[['夏休みの学習時間が合計100時間を超えた',300],['中1〜2の総復習（5教科）を1周終えた',200],['桜塚高校の学校説明会（または体験入学）に参加した',100],['校外の模試を受け、判定を見た',100],['夏の総復習テスト（シンダン先生）で8割とった',100]],
-  s:['長文読解20題・古文の暗唱','中1〜2の計算・関数・図形をやり直す','単語3,000語・長文30題','4分野の一問一答を1周','地理・歴史を年表と白地図で1周'],
+  s:['長文読解20題・古文の暗唱','中1〜2の計算・関数・図形をやり直す','単語は暗記バトルでふくしゅう・長文30題','4分野の一問一答を1周','地理・歴史を年表と白地図で1周'],
   boss:'ボス：夏の総復習テスト＋校外模試（第2回）',rw:'【第2章クリア】家族で近場へお出かけ（歩き・自転車・お弁当持ちなど、お金をかけない）'},
  {k:'2027-09',ph:3,label:'2027年9月',th:'入試範囲を終わらせる',intro:'2学期の評定が、中3の内申のいちばん大きな部分になる。',
   g:[['2学期の目標評定を決め、先生に「評価のポイント」を聞いた',40],['理科・社会を11月までに一通り終える計画をつくった',50],['英検2級の対策を始めた（単語・長文）',60],['大阪府教育庁の公式サイトから過去問（B問題）をiPadに保存した',30],['週ボスを4回中3回クリアした',80]],
@@ -8212,6 +8212,19 @@ const estMin=items=>Math.max(1,Math.ceil(sum(items.map(it=>(SEC[it.k]||12)+(it.k
 const curOf=date=>{const k=date.slice(0,7);let c=CUR[0];for(const x of CUR)if(x.from<=k)c=x;return c};
 const MEMB=['EW','EV','JK','JI','JS','SQ','OQ'];
 const ewOpen=it=>+it.grp<=2||(+it.grp===3&&today()>='2027-03-01')||(+it.grp===4&&today()>='2027-05-01');
+/* 新しい英単語を n 語えらぶ。群3（中3）・群4（英検準2級）は、開く日（2027-03・05）になったら、群1・2をやりきる前にも
+   新しい語の4割ぶん混ぜる（入試・英検で要る語に、はやく触れる）。通し番号は日ごとにずらして、まんべんなく回す */
+function ewNew(n,ex,date=today()){
+ const out=[],hi=[...(date>='2027-03-01'?[3]:[]),...(date>='2027-05-01'?[4]:[])];
+ for(let i=0;i<n;i++){
+  const sx=exSet(ex,out),g=hi.length&&(dn(date)*3+i)%10<4?hi[(dn(date)+i)%hi.length]:0;
+  let a=g?newItems('EW',1,{pred:it=>+it.grp===g,ex:sx}):[];
+  if(!a.length)a=newItems('EW',1,{pred:ewOpen,ex:sx});
+  if(!a.length)break;
+  out.push(a[0]);
+ }
+ return out;
+}
 const uniq=a=>{const s=new Set();return a.filter(x=>x&&!s.has(x.id)&&s.add(x.id))};
 const seedOf=s=>(hashStr(s)%4e9)+1;
 /* 生成問題：同じ日に、同じ文・同じ答えの問題は出さない（種を変えて引き直す。ex に「K:文」を記録する） */
@@ -8282,21 +8295,26 @@ function effD(date){
 }
 const baseTier=date=>{const D=effD(date);return D<14?1:D<28?2:3};
 /* 量は、やった日数に合わせて、段階の中でも少しずつ増える（ならし .40→.53／ふつう .55→.75／しっかり .8→1.0） */
+/* 先週まではよくやっていたのに、この1週間にやすんだ（合格ラインの日が2日以下）ときは、段階はそのままで量だけ少なめにして、
+   やった日ごとに戻す（0日.7／1日.85／2日.95）。段階をいきなり1つ下げたり上げたりしない（3日めに量が急にはね上がらない）。
+   7日以上あいたあとは、別の仕組み（breakInfo／effD）で戻す */
+function easeF(date){
+ if(!S.start||breakInfo(date).n<99||diff(S.start,date)<7)return 1;
+ const o=okDays(date);
+ return o<=2&&okDays(date,8,14)>=4?[.7,.85,.95][o]:1;
+}
 const kOf=(date,tier)=>{
  if(S.tier&&S.tier!=='auto')return TIERS[tier].k;
- const D=effD(date);
- if(tier===1)return .4+Math.min(13,D)*.01;                                  // ならし：.40 → .53
- if(tier===2)return .55+Math.min(14,Math.max(0,D-14))*.014;                 // ふつう：.55 → .75
- return Math.min(1,.8+Math.max(0,D-28)*.005);                               // しっかり：.8 → 1.0
+ const D=effD(date),e=easeF(date);
+ if(tier===1)return (.4+Math.min(13,D)*.01)*e;                              // ならし：.40 → .53
+ if(tier===2)return (.55+Math.min(14,Math.max(0,D-14))*.014)*e;             // ふつう：.55 → .75
+ return Math.min(1,.8+Math.max(0,D-28)*.005)*e;                             // しっかり：.8 → 1.0
 };
 function tierFor(date){
  if(S.light[date])return 1;
  if(S.tier&&S.tier!=='auto')return Math.max(1,Math.min(3,+S.tier));
  if(!S.start)S.start=date;
- const w=Math.max(0,Math.floor(diff(S.start,date)/7));
- let t=baseTier(date);
- if(w>=1&&okDays(date)<=2&&okDays(date,8,14)>=4)t=Math.max(1,t-1);   // 先週までよくやっていたのに、この1週間にやすんだ（2日以下）ときだけ、1段階もどして立て直す。もともと週に2日の子は、もどさない
- return t;
+ return baseTier(date);   // やすんだ週の立て直しは、段階ではなく量（easeF）でやる。もともと週に2日の子は、もどさない
 }
 /* 正答率が低い週は、新しい問題を減らす（つまずいているときに増やさない） */
 function throttle(date){const r=recentAcc(date);return r.n>=30&&r.acc<.6?0.7:1}
@@ -8349,7 +8367,7 @@ const REVB=it=>!!BK[it.bank]&&it.bank!=='ER'&&it.bank!=='JR';
    （前は箱の低い順に選んでいたので、箱5〜6は、期限が来てもほとんど出なかった） */
 function oldDue(ex,limit,date,stale){
  const t=DN(),by={};
- for(const id in S.srs){const s=S.srs[id];if(s.b<4||s.d>t||ex.has(id))continue;const it=ITEMS[id];if(!it||!REVB(it))continue;(by[it.subj||'?']||(by[it.subj||'?']=[])).push([stale?(t-s.d)/BOXD[s.b]:-s.b*1000+(t-s.d),it])}   // stale：間隔にくらべて、おくれが大きいものから／ふだん：箱の低い（まだ弱い）ものから
+ for(const id in S.srs){const s=S.srs[id];if(s.b<4||s.d>t||ex.has(id))continue;const it=ITEMS[id];if(!it||!REVB(it))continue;(by[it.subj||'?']||(by[it.subj||'?']=[])).push([(t-s.d)/BOXD[s.b],it])}   // 間隔にくらべて、おくれが大きいものから（箱5〜6も、期限をすぎたら順に回ってくる）
  const keys=Object.keys(by).sort(),lists=keys.map(k=>by[k].sort((a,b)=>b[0]-a[0])),pos=keys.map(()=>0),out=[],n=keys.length;
  const stride=keys.map(k=>1/(OLDW[k]||1)),pass=keys.map((_,j)=>((j+dn(date))%Math.max(1,n))*.01);   // 教科ごとの重み（理・社は、おぼえる量が多いので多め）で、順番に回す
  while(out.length<limit){
@@ -8374,14 +8392,14 @@ function bMem(date,tier,cur,ex){
  const old2=oldDue(exSet(x1,young),slots-old1.length-young.length,date,late>0);   // わかい復習が足りない日は、古い復習でうめる
  const due=[...young,...old1,...old2];
  const newN=Math.max(minNew,Math.round((total-due.length)*th));
- const PAT=tier>=2?['EW','SQ','JG','OQ','JK','SQ','EW','OQ','JI','JS']:effD(date)>=7?['EW','JK','EW','SQ','JK','OQ','EW']:['EW','JK','EW','EW','JK'];   // 新しい問題の配分（英単語3：理科2：社会2：漢字1：国語の文法1：ことわざ等1）。日ごとに先頭をずらして、まんべんなく回す
+ const PAT=tier>=2?['EW','SQ','EW','OQ','JG','EW','OQ','EW','SQ','JK','EW','OQ','EW','JG','SQ','EW','OQ','EW','JI','JS']:effD(date)>=7?['EW','JK','EW','SQ','JK','OQ','EW']:['EW','JK','EW','EW','JK'];   // 新しい問題の配分（20回で：英単語8・社会4・理科3・国語の文法2・漢字1・ことわざ1・類義語1）。日ごとに先頭をずらして、まんべんなく回す
  const cnt={EW:0,JK:0,SQ:0,OQ:0,JG:0,JI:0,JS:0};for(let j=0;j<newN;j++)cnt[PAT[(dn(date)*3+j)%PAT.length]]++;
  const sx=exSet(ex,due);
- const ews=newItems('EW',cnt.EW,{pred:ewOpen,ex:sx}),jks=newItems('JK',cnt.JK,{prefs:cur.jk,ex:sx});
+ const ews=ewNew(cnt.EW,sx,date),jks=newItems('JK',cnt.JK,{prefs:cur.jk,ex:sx});
  const sqs=cnt.SQ?newItems('SQ',cnt.SQ,{prefs:cur.sc,ex:sx}):[],oqs=cnt.OQ?newItems('OQ',cnt.OQ,{prefs:cur.so,ex:sx}):[];
  const jgs=cnt.JG?newItems('JG',cnt.JG,{ex:sx}):[],jis=cnt.JI?newItems('JI',cnt.JI,{ex:sx}):[],jss=cnt.JS?newItems('JS',cnt.JS,{ex:sx}):[];
  const fresh=[...ews,...jks,...sqs,...oqs,...jgs,...jis,...jss],lack=newN-fresh.length;
- if(lack>0)fresh.push(...newItems('EW',lack,{pred:ewOpen,ex:exSet(sx,fresh)}));   // 出しきった教材の分は、英単語でおぎなう
+ if(lack>0)fresh.push(...ewNew(lack,exSet(sx,fresh),date));   // 出しきった教材の分は、英単語でおぎなう
  let items=interleave([...due,...fresh]);
  const minN=tier===1?6:10;
  if(items.length<minN)items=items.concat(shuffle(seenItems(it=>MEMB.includes(it.bank)&&!items.includes(it)&&!ex.has(it.id)),mulberry(seedOf(date))).slice(0,minN-items.length));
@@ -8401,11 +8419,12 @@ function bMath(date,tier,cur,ex){
  const warm=items.slice(0,nWarm),core=items.slice(nWarm,nWarm+nMain),tail=items.slice(nWarm+nMain);
  return{t:'数学ドリル',subj:'数',items:[...warm,...mq,...ms,...core,...tail,...mis],desc:jn(['テーマ「'+GEN[main].name+'」'+nMain+'問（Lv.'+genLv(main)+'）','ウォームアップ'+nWarm+'問',nApp&&'応用'+nApp+'問',(mq.length+ms.length+mis.length)&&'考え方・再戦'+(mq.length+ms.length+mis.length)+'問'])};
 }
+const misDesc=(n,pre)=>n?(pre?'再戦の予定はなし。苦手を先取りで'+n+'体':'まちがえた問題の再戦 '+n+'体'):'まだミスがありません（まちがえた問題は、ここに集まります）';
 function bMis(date,tier,ex){
  const n=Math.max(4,Math.round(8*kOf(date,tier)));
  let items=claimGen(dueItems(it=>{const s=S.srs[it.id];return s&&s.w>0&&!ex.has(it.id)},n*2),ex).slice(0,n),pre=false;
  if(!items.length){items=claimGen(weakItems(Math.min(6,n)*2,it=>!ex.has(it.id)),ex).slice(0,Math.min(6,n));pre=items.length>0}
- return{t:'ミス退治',subj:'総',items,desc:items.length?(pre?'再戦の予定はなし。苦手を先取りで'+items.length+'体':'まちがえた問題の再戦 '+items.length+'体'):'まだミスがありません（まちがえた問題は、ここに集まります）'};
+ return{t:'ミス退治',subj:'総',items,pre,desc:misDesc(items.length,pre)};
 }
 function bBoss(date,cur,ex){
  const items=[...pickSeenOrNew(['JW','JG','JI','JK','JS'],2,ex,date),...genMix(cur.m,2,date,'boss',ex),...pickSeenOrNew(['EG','EW','EV'],2,ex,date),...pickSeenOrNew(['SQ'],2,ex,date),...pickSeenOrNew(['OQ'],2,ex,date)];
@@ -8428,7 +8447,7 @@ function bSub(date,wd0,cur,ex,tier){
   const g=newItems('EG',nn('EG',6,3),{prefs:cur.g,ex}),sx=exSet(ex,g),dg=dueItems(it=>it.bank==='EG'&&!sx.has(it.id),6);
   const ev=[...dueItems(it=>it.bank==='EV'&&!sx.has(it.id),2),...newItems('EV',nn('EV',2),{ex:sx})];
   const eo=[...dueItems(it=>it.bank==='EO'&&!sx.has(it.id),3),...newItems('EO',nn('EO',4),{ex:sx})].slice(0,4),er=nextPassage('ER',sx,date);
-  const ewm=newItems('EW',nn('EW',3,2),{pred:ewOpen,ex:exSet(sx,[...ev,...eo])});
+  const ewm=ewNew(nn('EW',3,2),exSet(sx,[...ev,...eo]),date);
   keep=g.slice(0,3);
   items=[...dg,...g,...ewm,...ev,...eo,...er];p=[(dg.length+g.length)&&'文法'+(dg.length+g.length)+'問',ewm.length&&'新しい単語'+ewm.length,ev.length&&'不規則動詞'+ev.length,eo.length&&'並べかえ'+eo.length,er.length&&'長文1題']}
  else if(wd===2){
@@ -8446,7 +8465,7 @@ function bSub(date,wd0,cur,ex,tier){
   items=[...dq,...q,...ot];p=[(dq.length+q.length)&&'一問一答'+(dq.length+q.length)+'問',ot.length&&'年代ならべかえ'+ot.length]}
  else if(wd===5){
   const el=[...dueItems(it=>it.bank==='EL'&&!ex.has(it.id),3),...newItems('EL',nn('EL',5),{ex})].slice(0,7),sx=exSet(ex,el);
-  const eo=newItems('EO',nn('EO',4),{ex:sx}),ec=newItems('EC',1,{ex:sx}),ewn=newItems('EW',nn('EW',4,2),{pred:ewOpen,ex:sx}),ew=dueItems(it=>it.bank==='EW'&&boxOf(it)>=3&&!sx.has(it.id),5),ev=[...dueItems(it=>it.bank==='EV'&&!sx.has(it.id),2),...newItems('EV',nn('EV',2),{ex:sx})];
+  const eo=newItems('EO',nn('EO',4),{ex:sx}),ec=newItems('EC',1,{ex:sx}),ewn=ewNew(nn('EW',4,2),sx,date),ew=dueItems(it=>it.bank==='EW'&&boxOf(it)>=3&&!sx.has(it.id),5),ev=[...dueItems(it=>it.bank==='EV'&&!sx.has(it.id),2),...newItems('EV',nn('EV',2),{ex:sx})];
   keep=ec;
   items=[...el,...ew,...ewn,...ev,...eo,...ec];p=[el.length&&'リスニング'+el.length,(ew.length+ewn.length)&&'単語'+(ew.length+ewn.length),eo.length&&'並べかえ'+eo.length,ec.length&&'英作文1']}
  else if(wd===6){const b=bWeak(date,cur,ex);items=b.items;p=[b.desc]}
@@ -8465,7 +8484,7 @@ const CAPMIN={1:10,2:22,3:33};
 function capDay(out,tier){
  const cap=CAPMIN[tier]||36,sess=out.filter(s=>s.kind==='session'),fixed=out.filter(s=>s.kind!=='session').reduce((t,s)=>t+(s.min||0),0);
  const total=()=>sess.reduce((t,s)=>t+s.min,0)+fixed;
- for(const [id,floor] of [['math',12],['sub',10],['mis',5]]){
+ for(const [id,floor] of [['math',10],['sub',8],['mis',4]]){
   const st=sess.find(s=>s.id===id);if(!st)continue;
   let cut=false;
   const keep=new Set(st.keep||[]);   // その日の主役の教科の「新しい問題」の下限ぶんは、上限をこえても外さない（復習ばかりで新しい問題がゼロにならないように）
@@ -8474,7 +8493,7 @@ function capDay(out,tier){
    if(j<0)break;
    st.items.splice(j,1);st.min=estMin(st.items);cut=true;
   }
-  if(cut){st.brk=breakdown(st.items);if(id!=='mis')st.desc=descOf(st.items)||st.desc}
+  if(cut){st.brk=breakdown(st.items);st.desc=id==='mis'?misDesc(st.items.length,st.pre):(descOf(st.items)||st.desc)}
  }
  return out;
 }
@@ -8555,6 +8574,9 @@ function addXP(n){
 }
 const hours=()=>Object.values(S.days).reduce((t,d)=>t+Object.values(d.min||{}).reduce((a,b)=>a+b,0),0)/60;
 const wkWins=()=>Object.values(S.wk).filter(w=>w.sc>=8).length;
+/* 「ミニの日」：暗証番号（保護者OK）を決めていないときは、1週間に2回まで。毎日ミニにして、連続記録だけ守るのを防ぐ */
+const lightUsed=date=>{const m=monday(date);return Object.keys(S.light).filter(d=>S.light[d]&&monday(d)===m).length};
+const canLight=date=>!!(S.pinOn&&S.pin)||lightUsed(date)<2;
 
 /* ----- 連続記録 ----- */
 const stageKeys=rec=>Object.keys(rec.stg||{});
@@ -8595,19 +8617,24 @@ function stageXP(id,r){
 function completeStage(date,id,r){
  const d=dayRec(date),out={xp:0,first:!d.stg[id],lv:null,streak:null,full:false,fullBonus:0,coin:0};
  if(!out.first)return out;
+ const had=goodOf(d).sess>=1;   // この前までに、正答4割以上のドリルがあったか
  out.xp=stageXP(id,r);
  if((r.n||0)>=5&&(r.ok||0)/r.n<.4)out.low=true;
  const st=(S.rt&&S.rt.d===date?S.rt.stg.find(x=>x.id===id):null)||{};
  const mins=r.min!=null?r.min:Math.max(1,Math.round((r.sec||0)/60)),sj=st.subj||'総';
  d.stg[id]={ok:r.ok||0,n:r.n||0,xp:out.xp,sec:r.sec||0,cb:r.combo||0,at:Date.now(),note:r.note||''};
  d.min[sj]=(d.min[sj]||0)+mins;
+ const good=goodOf(d).sess>=1;
+ /* 宿題・ふりかえり・全クリのXPは、その日に「正答4割以上のドリル」が1つあるときだけ。ない日の宿題・ふりかえりのXPは預かって、あとでドリルがとれたら入る */
+ if(!good&&(id==='hw'||id==='ref')){d.pend=(d.pend||0)+out.xp;d.stg[id].xp=0;out.xp=0;out.held=true}
+ else if(good&&!had&&d.pend){out.xp+=d.pend;d.pend=0}
  if(id==='sub'&&st.ty!==undefined)S.subLast[st.ty]=date;   // どの教科の日を、いつやったか（やすんだ教科を先に回すために覚えておく）
  if(r.boss){const k=monday(date),prev=S.wk[k]?S.wk[k].x:0;S.wk[k]={sc:r.ok,x:Math.max(prev,out.xp)}}
  out.lv=addXP(out.xp);
  const tier=S.rt&&S.rt.d===date?S.rt.tier:3;
  if(dayOK(d,tier)&&!d.ok){d.ok=1;out.streak=streakUp()}
  const rt=S.rt&&S.rt.d===date?S.rt.stg:[];
- if(!d.full&&rt.length&&rt.every(p=>d.stg[p.id]||(p.kind==='session'&&!p.ids.length))){d.full=1;out.full=true;out.fullBonus=20;const l2=addXP(20);out.lv=out.lv||l2}
+ if(!d.full&&good&&rt.length&&rt.every(p=>d.stg[p.id]||(p.kind==='session'&&!p.ids.length))){d.full=1;out.full=true;out.fullBonus=20;const l2=addXP(20);out.lv=out.lv||l2}
  out.coin=out.xp+out.fullBonus;
  return out;
 }
@@ -8665,7 +8692,7 @@ const mathDays90=()=>Object.values(S.days).filter(d=>d.stg&&d.stg.math&&d.stg.ma
 const GOAL_AUTO={
  '2026-10|1':()=>SJL.every(s=>S.diag[s]&&S.diag[s].done),
  '2026-10|4':()=>S.best>=7,
- '2026-11|1':()=>masteredBy('EW')>=10,
+ '2026-11|1':()=>bankStats('EW').seen>=40,
  '2026-11|2':()=>mathDays90()>=3,
  '2026-11|3':()=>{const m=mistakeStats();return m.all>=10&&m.dead>=5},
  '2027-02|2':()=>{const q=qaStat();return q.n>=800&&q.acc>=.8},
@@ -8910,7 +8937,8 @@ function tierNote(date,tier){
  const T=TIERS[tier],base=baseTier(date);
  if(S.light[date])return'きょうは「ミニ」でOK。やった日は ぬられる。';
  if(S.tier&&S.tier!=='auto')return'段階は保護者が決めています。';
- if(tier<base)return'おやすみが多かったので、量を へらしたよ。';
+ if(tier<base||easeF(date)<1)return'おやすみが多かったので、量を へらしたよ。やった日ごとに もどすよ。';
+ if(breakInfo(date).n<99)return'おやすみ明けなので、少なめから。1日ごとに もどすよ。';
  if(tier===1){const d=Math.max(0,14-doneDays(date));return d>0?'まずは短く。あと'+d+'日で「ふつう」へ。':'つづけると「ふつう」へ。'}
  if(tier===2){const d=Math.max(0,28-doneDays(date));return d>0?'あと'+d+'日で「しっかり」へ。':'もうすぐ「しっかり」へ。'}
  return T.note;
@@ -8960,7 +8988,7 @@ function renderHome(){
  ${todo.length?`<details class="fold later"><summary><span class="lb sm y">このあと</span><span class="lt">${todo.length}つ</span></summary><div class="stages">${todo.map(stageCard).join('')}</div></details>`:''}
  ${done.length?`<details class="fold cleared-list"><summary>クリアしたステージ（${done.length}）</summary><div class="stages">${done.map(stageCard).join('')}</div></details>`:''}
 ${intro}${diagTip}${pinAsk}
- <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。3分のドリルだけでOK）</span></div>`;
+ <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。3分のドリルだけでOK）${S.pinOn&&S.pin?'':`<small class="mini"> 週2回まで（今週あと${Math.max(0,2-lightUsed(date))}回）</small>`}</span></div>`;
  const R=`
  <div class="card"><div class="rowh"><h2>今週の流れ</h2></div>${weekStrip(date)}
   <div class="tomorrow"><span class="lb sm o">あした</span><span><b>${esc(tm.t)}</b><br><span class="mini">数学のテーマ：${esc(tm.theme)}</span></span></div></div>
@@ -9612,7 +9640,7 @@ const ACT={
   const st=routeFor().find(x=>x.id==='hw');let used=0;
   if(hwTimer){used=Math.round((Date.now()-hwTimer.t0)/60000);clearInterval(hwTimer.iv);hwTimer=null}
   const res=completeStage(today(),'hw',{n:0,min:used>0?used:st.min});
-  closeSheet();FX.confetti(50);Snd.ok();afterSimple(res,res.first?'宿題クリア！ +'+res.xp+'XP':'');
+  closeSheet();FX.confetti(50);Snd.ok();afterSimple(res,res.first?(res.held?'宿題クリア！ XPは、ドリルで4割以上とれたら入るよ':'宿題クリア！ +'+res.xp+'XP'):'');
  },
  refStar(i){
   refSelf=+i;$$('#refStars button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a<=refSelf)));
@@ -9627,7 +9655,7 @@ const ACT={
   const res=completeStage(today(),'ref',{n:0,note:t,min:2});
   let bonus=null;if(res.first&&Math.abs(refSelf-data)<=1){bonus=addXP(5);res.xp+=5}
   closeSheet();FX.confetti(40);Snd.ok();
-  afterSimple(res,res.first?(bonus?'ふりかえり完了！ めききボーナス +5XP':'ふりかえり完了 +'+res.xp+'XP'):'');
+  afterSimple(res,res.first?(bonus?'ふりかえり完了！ めききボーナス +5XP':res.held?'ふりかえり完了！ XPは、ドリルで4割以上とれたら入るよ':'ふりかえり完了 +'+res.xp+'XP'):'');
   if(bonus&&!res.lv)setTimeout(()=>levelUp(bonus.to),700);
  },
  tsukkomi(){
@@ -9641,7 +9669,7 @@ const ACT={
   openSheet(`<h2>やる時間を決めよう</h2><p class="mini">「何時に始めるか」を先に決めておくと、始めやすい。時間がきても通知は出ないので、ホームを開いたときに思い出せるよ。</p><div class="seg">${['16:00','17:00','18:00','19:00','20:00','21:00'].map(t=>`<button data-act="vowSet" data-a="${t}" aria-pressed="${at===t}">${t}</button>`).join('')}<button data-act="vowSet" data-a="none" aria-pressed="${!at}">きめない</button></div>`);
  },
  vowSet(t){S.at=t==='none'?'':t;save();closeSheet();renderHome();toast(S.at?'やくそく：'+S.at+' にスタート！':'やくそくを消した')},
- light(){const d=today(),set=()=>{S.light[d]=1;save();refresh();toast('いそがしい日モード：量をへらしたよ')};if(S.light[d]){delete S.light[d];save();refresh();toast('ふつうのルートにもどしたよ')}else needPin('きょうを「ミニの日」にします（量をへらす）。',set)},
+ light(){const d=today(),set=()=>{S.light[d]=1;save();refresh();toast('いそがしい日モード：量をへらしたよ')};if(S.light[d]){delete S.light[d];save();refresh();toast('ふつうのルートにもどしたよ')}else if(!canLight(d))toast('ミニの日は 週2回まで。おうちの人と暗証番号を決めると、相談して使えるよ');else needPin('きょうを「ミニの日」にします（量をへらす）。',set)},
  nickSet(){const v=($('#nickIn').value||'').trim().slice(0,12);if(!v){toast('なまえを入れてね');return}S.nick=v;save();toast(v+'、よろしく！');FX.confetti(50);refresh()},
  /* ---- プレイヤー ---- */
  plGo(){plGo()},plQuit(){plQuit()},plClose(){closeOv();plClose()},plNext(){plNext()},
@@ -9735,7 +9763,7 @@ const ACT={
   if(!/^\d{4}$/.test(v)){toast('4けたの数字を入れてから、オンにしてね');return}
   S.pin=v;S.pinOn=1;save();initInputs();toast('保護者OKをオンにした。宿題のチェックに必要になります');
  },
- tierSet(v){needPin('1日の量の段階を変えます。',()=>{S.tier=v==='auto'?'auto':+v;S.rt=null;save();initInputs();toast(v==='auto'?'段階：おまかせ（だんだん増える）':'段階を「'+TIERS[+v].name+'」にした')})},
+ tierSet(v){if(!(S.pinOn&&S.pin)&&v!=='auto'&&+v<baseTier(today())){toast('量をへらすのは、おうちの人と暗証番号を決めてからにしよう');return}needPin('1日の量の段階を変えます。',()=>{S.tier=v==='auto'?'auto':+v;S.rt=null;save();initInputs();toast(v==='auto'?'段階：おまかせ（だんだん増える）':'段階を「'+TIERS[+v].name+'」にした')})},
  async report(){const t=reportText();$('#rpt').value=t;const ok=await copyText(t);toast(ok?'週報をコピーした':'下の文を長押しでコピーしてね')},
  bkMake(){$('#bk').value=btoa(unescape(encodeURIComponent(JSON.stringify(S))))},
  async bkCopy(){if(!$('#bk').value)ACT.bkMake();const ok=await copyText($('#bk').value);toast(ok?'バックアップをコピーした。メモアプリなどに保存してね':'長押しでコピーしてね')},

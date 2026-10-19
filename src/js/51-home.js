@@ -42,7 +42,8 @@ function tierNote(date,tier){
  const T=TIERS[tier],base=baseTier(date);
  if(S.light[date])return'きょうは「ミニ」でOK。やった日は ぬられる。';
  if(S.tier&&S.tier!=='auto')return'段階は保護者が決めています。';
- if(tier<base)return'おやすみが多かったので、量を へらしたよ。';
+ if(tier<base||easeF(date)<1)return'おやすみが多かったので、量を へらしたよ。やった日ごとに もどすよ。';
+ if(breakInfo(date).n<99)return'おやすみ明けなので、少なめから。1日ごとに もどすよ。';
  if(tier===1){const d=Math.max(0,14-doneDays(date));return d>0?'まずは短く。あと'+d+'日で「ふつう」へ。':'つづけると「ふつう」へ。'}
  if(tier===2){const d=Math.max(0,28-doneDays(date));return d>0?'あと'+d+'日で「しっかり」へ。':'もうすぐ「しっかり」へ。'}
  return T.note;
@@ -92,7 +93,7 @@ function renderHome(){
  ${todo.length?`<details class="fold later"><summary><span class="lb sm y">このあと</span><span class="lt">${todo.length}つ</span></summary><div class="stages">${todo.map(stageCard).join('')}</div></details>`:''}
  ${done.length?`<details class="fold cleared-list"><summary>クリアしたステージ（${done.length}）</summary><div class="stages">${done.map(stageCard).join('')}</div></details>`:''}
 ${intro}${diagTip}${pinAsk}
- <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。3分のドリルだけでOK）</span></div>`;
+ <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。3分のドリルだけでOK）${S.pinOn&&S.pin?'':`<small class="mini"> 週2回まで（今週あと${Math.max(0,2-lightUsed(date))}回）</small>`}</span></div>`;
  const R=`
  <div class="card"><div class="rowh"><h2>今週の流れ</h2></div>${weekStrip(date)}
   <div class="tomorrow"><span class="lb sm o">あした</span><span><b>${esc(tm.t)}</b><br><span class="mini">数学のテーマ：${esc(tm.theme)}</span></span></div></div>

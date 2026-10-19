@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { loadCore } from '../scripts/headless.mjs';
 
 const NAMES = ['S', 'setToday', 'routeFor', 'present', 'judge', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'dayOK', 'dayNeed', 'peekDay',
-  'BK', 'restoreGx', 'syncAutoGoals', 'isAutoGoal', 'SJL', 'PASS', 'ITEMS', 'dochira', 'stageXP', 'tierFor', 'doneDays', 'masteredBy', 'qaStat', 'mathDays90', 'mistakeStats', 'GOAL_AUTO'];
+  'BK', 'restoreGx', 'syncAutoGoals', 'isAutoGoal', 'SJL', 'PASS', 'ITEMS', 'dochira', 'stageXP', 'tierFor', 'doneDays', 'masteredBy', 'bankStats', 'qaStat', 'mathDays90', 'mistakeStats', 'GOAL_AUTO'];
 const START = '2026-10-19';
 const rng = (seed) => { let r = seed; return () => { r = (r * 1664525 + 1013904223) >>> 0; return r / 4294967296; }; };
 
@@ -245,7 +245,7 @@ test('長文の選択肢：正解が最長に偏らない（どの順位も4割�
 
 test('受験前の3か月：高い箱（5〜6）のふくしゅうも出る／どの教科も1割以上ある', () => {
   const C = loadCore(NAMES), rand = rng(42);
-  let high = 0, late = 0; const bySubj = {};
+  let high = 0, late = 0, mid = 0; const bySubj = {};
   for (let i = 0; i < 500; i++) {
     const date = C.addDays(START, i);
     C.setToday(date); C.restoreGx();
@@ -256,6 +256,7 @@ test('受験前の3か月：高い箱（5〜6）のふくしゅうも出る／�
         for (const it of st.items) {
           const s = C.S.srs[it.id];
           if (i >= 400 && s && s.b >= 5 && it.k !== 'gen') high++;
+          if (i >= 150 && i < 350 && s && s.b >= 5 && it.k !== 'gen') mid++;   // 受験前でない時期（ふだん）
           if (i >= 410) { late++; bySubj[it.subj || '?'] = (bySubj[it.subj || '?'] || 0) + 1; }
           const g = rand() < 0.9; C.recordAnswer(it, g); C.noteAnswer(g); if (g) ok++;
         }
@@ -264,6 +265,7 @@ test('受験前の3か月：高い箱（5〜6）のふくしゅうも出る／�
     }
   }
   assert.ok(high >= 400, `箱5〜6のふくしゅう ${high} 回（最後の100日）`);
+  assert.ok(mid >= 150, `箱5〜6のふくしゅう ${mid} 回（150〜350日め。受験前でなくても、期限をすぎたら回ってくる）`);
   for (const sj of ['英', '国', '数', '理', '社']) assert.ok((bySubj[sj] || 0) / late >= 0.1, `${sj} の割合 ${Math.round((bySubj[sj] || 0) / late * 100)}%（最後の90日）`);
 });
 
@@ -320,12 +322,69 @@ test('月の目標：自動で付く目標は、ふつうのペース（月〜�
     if (marks[date]) {
       C.setToday(date);
       const q = C.qaStat(), m = C.mistakeStats();
-      at[marks[date]] = { ew: C.masteredBy('EW'), m90: C.mathDays90(), qn: q.n, qa: q.acc, dead: m.dead };
+      at[marks[date]] = { ew: C.bankStats('EW').seen, m90: C.mathDays90(), qn: q.n, qa: q.acc, dead: m.dead };
     }
   }
-  assert.ok(at.nov.ew >= 10 && at.nov.m90 >= 3, `11月末：英単語 ${at.nov.ew}語、数学90%の日 ${at.nov.m90}`);
+  assert.ok(at.nov.ew >= 40 && at.nov.m90 >= 3, `11月末：英単語 ${at.nov.ew}語（出題ずみ）、数学90%の日 ${at.nov.m90}`);
   assert.ok(at.feb.qn >= 800 && at.feb.qa >= 0.8, `2月末：理社 ${at.feb.qn}問 正答率 ${at.feb.qa.toFixed(2)}`);
   assert.ok(at.feb.dead >= 100, `2月末：たおした ${at.feb.dead}`);
   assert.ok(at.may.dead >= 250, `5月末：たおした ${at.may.dead}`);
   for (const key of ['2026-11|1', '2026-11|2', '2027-02|2', '2027-02|3', '2027-05|3']) assert.ok(C.GOAL_AUTO[key], `${key} は自動の目標`);
+});
+
+test('英単語：群3（中3）・群4（英検準2級）は、開く日になったら、群1・2をやりきる前にも出はじめる', () => {
+  const C = loadCore([...NAMES, 'BK']);
+  const rand = rng(21);
+  for (let i = 0; i <= 225; i++) {
+    const date = C.addDays(START, i), wd = new Date(date + 'T00:00:00').getDay();
+    if (wd >= 1 && wd <= 5) doDay(C, date, rand, 0.85);
+  }
+  const by = {};
+  for (const it of C.BK.EW.items) if (C.S.srs[it.id]) by[it.grp] = (by[it.grp] || 0) + 1;
+  assert.ok((by[3] || 0) >= 15, `群3 ${by[3] || 0}語`);
+  assert.ok((by[4] || 0) >= 5, `群4 ${by[4] || 0}語`);
+  const g12 = C.BK.EW.items.filter((it) => +it.grp <= 2).length;
+  assert.ok(((by[1] || 0) + (by[2] || 0)) < g12, '群1・2は、まだやりきっていない（それでも群3・4に入る）');
+});
+
+test('ミス退治：説明の「◯体」と、実際の問題の数が、どの日もそろっている（上限で外したあとも）', () => {
+  const C = loadCore(NAMES), rand = rng(3);
+  const bad = [];
+  for (let i = 0; i < 160; i++) {
+    const date = C.addDays(START, i), route = doDay(C, date, rand, 0.8);
+    const mis = route.find((s) => s.id === 'mis');
+    const m = mis && /(\d+)体/.exec(mis.desc);
+    if (m && +m[1] !== mis.items.length) bad.push(`${date}: 説明${m[1]}体／問題${mis.items.length}`);
+  }
+  assert.deepEqual(bad.slice(0, 5), [], `${bad.length} 日ずれている`);
+});
+
+test('XP：宿題・ふりかえり・全クリのXPは、正答4割以上のドリルがある日だけ（ない日は預かって、あとで入る）', () => {
+  const C = loadCore(NAMES);
+  // 1日ぜんぶ不正解：XPは1つも入らない
+  C.setToday(START); C.restoreGx();
+  const xp0 = C.S.xp;
+  doDay(C, START, rng(1), 0);
+  assert.equal(C.S.xp, xp0, '全部まちがえた日は XP 0');
+  // 先に宿題・ふりかえり、あとでドリルが4割以上 → 預かっていた分が入る
+  const d2 = C.addDays(START, 1);
+  C.setToday(d2);
+  const x1 = C.S.xp;
+  assert.equal(C.completeStage(d2, 'hw', { n: 0, min: 1 }).xp, 0);
+  assert.equal(C.completeStage(d2, 'ref', { n: 0, note: 'x', min: 2 }).xp, 0);
+  assert.equal(C.S.xp, x1);
+  const r = C.completeStage(d2, 'mem', { ok: 8, n: 10, sec: 100 });
+  assert.ok(r.xp >= 15 + 10, `預かっていた15XPも入る：${r.xp}`);
+});
+
+test('ミニの日：暗証番号を決めていないときは、1週間に2回まで', () => {
+  const C = loadCore([...NAMES, 'canLight', 'lightUsed']);
+  const mon = '2026-10-19';   // 月曜
+  assert.equal(C.canLight(mon), true);
+  C.S.light[mon] = 1; C.S.light[C.addDays(mon, 2)] = 1;
+  assert.equal(C.lightUsed(C.addDays(mon, 4)), 2);
+  assert.equal(C.canLight(C.addDays(mon, 4)), false, '同じ週の3回めはできない');
+  assert.equal(C.canLight(C.addDays(mon, 7)), true, '来週はまた使える');
+  C.S.pin = '1234'; C.S.pinOn = 1;
+  assert.equal(C.canLight(C.addDays(mon, 4)), true, '暗証番号があるときは、おうちの人が決める');
 });
