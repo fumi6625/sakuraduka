@@ -338,17 +338,20 @@ test('月の目標：自動で付く目標は、ふつうのペース（月〜�
   for (const key of ['2026-11|1', '2026-11|2', '2027-02|2', '2027-02|3', '2027-05|3']) assert.ok(C.GOAL_AUTO[key], `${key} は自動の目標`);
 });
 
-test('英単語：群3（中3）・群4（英検準2級）は、開く日になったら、群1・2をやりきる前にも出はじめる', () => {
+test('英単語：群1（中1）・群2（中2）は並行して出て、群3（中3）・群4（英検準2級）は、開く日になったら、群1・2をやりきる前にも出はじめる', () => {
   const C = loadCore([...NAMES, 'BK']);
   const rand = rng(21);
-  for (let i = 0; i <= 225; i++) {
+  let g2early = 0;
+  for (let i = 0; i <= 300; i++) {
     const date = C.addDays(START, i), wd = new Date(date + 'T00:00:00').getDay();
     if (wd >= 1 && wd <= 5) doDay(C, date, rand, 0.85);
+    if (i === 100) g2early = C.BK.EW.items.filter((it) => +it.grp === 2 && C.S.srs[it.id]).length;
   }
   const by = {};
   for (const it of C.BK.EW.items) if (C.S.srs[it.id]) by[it.grp] = (by[it.grp] || 0) + 1;
-  assert.ok((by[3] || 0) >= 15, `群3 ${by[3] || 0}語`);
-  assert.ok((by[4] || 0) >= 5, `群4 ${by[4] || 0}語`);
+  assert.ok(g2early >= 30, `100日めまでに、群2（中2の語）が ${g2early}語`);
+  assert.ok((by[3] || 0) >= 20, `群3 ${by[3] || 0}語`);
+  assert.ok((by[4] || 0) >= 8, `群4 ${by[4] || 0}語`);
   const g12 = C.BK.EW.items.filter((it) => +it.grp <= 2).length;
   assert.ok(((by[1] || 0) + (by[2] || 0)) < g12, '群1・2は、まだやりきっていない（それでも群3・4に入る）');
 });

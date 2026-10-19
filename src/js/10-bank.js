@@ -58,15 +58,28 @@ const QGROUP=[['year',/年$/],['person',/(人物|だれ|誰|人々|人|者|僧|�
  ['org',/(組織|機関|政党|幕府|藩|院|省|庁|裁判所|国会|内閣|議会|団体|軍|党)$/],['place',/(国|地域|地方|県|都市|川|山|山脈|湖|海|島|半島|平野|盆地|高原|海流|暖流|寒流|造山帯|州|大陸|洋|線|海峡|港|都)$/],
  ['culture',/(文化|様式|歌集|書物|作品|建築|寺|神社|仏像|絵|物語|日記|思想|宗教|学問)$/],['econ',/(農業|産業|工業|漁業|林業|貿易|経済|通貨|税|景気|燃料|資源)$/],['climate',/気候$/],
  ['gas',/気体$/],['matter',/(物質|金属|液体|薬品|試薬|溶液|化合物|元素|酸|塩基|塩|溶媒|溶質|混合物)$/],['organ',/(器官|組織|細胞|臓器|部分|つくり|はたらき|器)$/],
- ['phys',/(力|単位|法則|圧力|電流|電圧|抵抗|エネルギー|仕事|量|電力|速さ|密度|質量|熱)$/],['living',/(動物|植物|生物|なかま|種|類)$/],['astro',/(天体|星|惑星|月|太陽|銀河|星座)$/],
+ ['unit',/単位$/],['rule',/(法則|原理|定理)$/],['phys',/(力|圧力|電流|電圧|抵抗|エネルギー|仕事|量|電力|速さ|密度|質量|熱)$/],['living',/(動物|植物|生物|なかま|種|類)$/],['astro',/(天体|星|惑星|月|太陽|銀河|星座)$/],
  ['earth',/(岩|岩石|鉱物|地層|火山|地震|雲|前線|気団|風)$/],['phenom',/(現象|反応|変化|運動|作用)$/]];
 const qHead=it=>{const m=String(it.q).replace(/[（(][^）)]*[）)]/g,'').match(/([一-龥々ァ-ヶー]{1,8})(は|が)?[？?]\s*$/);return m?m[1]:''};
+/* 答えのかたち：数・カタカナ・記号・「増える／減る」のような変化・短い漢字語・長い漢字語・かな交じりの語・文のような答え */
+function ansShape(a){
+ a=String(a).trim();
+ if(/\d/.test(a))return'num';
+ if(/^[ァ-ヶー・]+$/.test(a))return'kata';
+ if(/^[A-Za-z .+\-×÷=²³⁺⁻()→/]+$/.test(a))return'latin';
+ if(/^(増える|減る|変わらない|大きくなる|小さくなる|長くなる|短くなる|高くなる|低くなる|上がる|下がる|等しい|比例|反比例|急|ゆるやか|強くなる|弱くなる|速くなる|遅くなる)$/.test(a))return'chg';
+ if(/[ぁ-ん]/.test(a)&&a.length>=5&&/[はがをにでとへのもるいう]/.test(a.slice(1)))return'phrase';
+ if(/^[一-龥々]+$/.test(a))return a.length<=3?'k3':'k4';
+ return'mix';
+}
+/* 「増える」と「大きくなる」のように、同じ向きの変化は同じ意味なので、まちがいの選択肢に並べない */
+const chgDir=a=>/^(増える|大きくなる|長くなる|高くなる|上がる|強くなる|速くなる)$/.test(a)?'up':/^(減る|小さくなる|短くなる|低くなる|下がる|弱くなる|遅くなる)$/.test(a)?'down':'';
 function qGroup(it){
  if(it._qg!==undefined)return it._qg;
  let g='';
  if(it.k==='qa'){
   const h=qHead(it),hit=QGROUP.find(x=>x[1].test(h));
-  g=hit?hit[0]:/^[\d０-９]+年$/.test(String(it.a))?'year':h.length>=2&&!/^(もの|こと|場合|ところ|とき|方法|理由|特徴|目的|ようす|結果|原因|はたらき|ちがい|関係)$/.test(h)?'h:'+h:'';   // 型の一覧にない名詞は、その名詞どうし（「…血管は？」）
+  g=hit?hit[0]:/^[\d０-９]+年$/.test(String(it.a))?'year':h.length>=2&&!/^(もの|こと|場合|ところ|とき|方法|理由|特徴|目的|ようす|結果|原因|はたらき|ちがい|関係)$/.test(h)?'h:'+h:'s:'+ansShape(it.a);   // 型の一覧にない名詞は、その名詞どうし（「…血管は？」）。それもなければ、答えのかたちで
  }
  return it._qg=g;
 }
@@ -88,6 +101,7 @@ function distractQA(it,f,n=3){
     if(c.id===it.id||seen.has(c[f])||nested(c[f],ans))continue;
     if(f==='w'&&c.m===it.m)continue;
     if(it.k==='syn'&&(c.w===it.w||shareKanji(c[f],it.w)||shareKanji(c[f],ans)||(jsC(c[f])>=0&&(jsC(c[f])===jsC(ans)||jsC(c[f])===jsC(it.w)))))continue;   // 類義語・対義語：おなじ見出しのもうひとつの答えや、見出し・正解と同じ漢字をふくむ語（意味が近いかもしれない）は、まちがいに使わない
+    if(g==='s:chg'&&chgDir(c[f])&&chgDir(c[f])===chgDir(ans))continue;
     if(pass<=1&&qGroup(c)!==g)continue;
     if((pass===0||pass===2)&&!lenOK(c[f],ans))continue;
     seen.add(c[f]);out.push(c[f]);

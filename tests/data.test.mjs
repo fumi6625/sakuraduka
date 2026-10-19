@@ -73,3 +73,25 @@ test('類義語・対義語：まちがいの選択肢に、正解や見出し�
   }
   assert.deepEqual(bad.slice(0, 3), [], `${bad.length} 件`);
 });
+
+test('一問一答：型が決まらない問いも、まちがいの選択肢は、答えと同じかたち（数・カタカナ・変化・短い漢字語・文のような答え…）', () => {
+  const C = loadCore(['BK', 'distractQA', 'qGroup', 'ansShape']);
+  const bad = []; let n = 0;
+  for (const b of ['SQ', 'OQ']) for (const it of C.BK[b].items) {
+    if (!C.qGroup(it).startsWith('s:')) continue;
+    for (let k = 0; k < 2; k++) for (const d of C.distractQA(it, 'a')) { n++; if (C.ansShape(d) !== C.ansShape(it.a)) bad.push(`${it.q.slice(0, 24)}｜答え「${it.a}」×「${d}」`); }
+  }
+  assert.ok(n > 300, `調べた選択肢 ${n}`);
+  assert.ok(bad.length / n < 0.12, `かたちのちがう選択肢 ${bad.length}/${n}：${bad.slice(0, 3).join(' ／ ')}`);
+});
+
+test('一問一答：「増える」と「大きくなる」のような、同じ向きの変化（同じ意味）を、まちがいの選択肢に並べない', () => {
+  const C = loadCore(['BK', 'present', 'chgDir']);
+  const bad = [];
+  for (const b of ['SQ', 'OQ']) for (const it of C.BK[b].items) {
+    const d0 = C.chgDir(it.a);
+    if (!d0) continue;
+    for (let k = 0; k < 4; k++) for (const c of C.present(it).choices) if (!c.ok && C.chgDir(c.t) === d0) bad.push(`${it.q.slice(0, 24)}｜答え「${it.a}」×「${c.t}」`);
+  }
+  assert.deepEqual(bad.slice(0, 3), [], `${bad.length} 件`);
+});

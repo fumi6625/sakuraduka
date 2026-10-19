@@ -6,13 +6,15 @@
 const curOf=date=>{const k=date.slice(0,7);let c=CUR[0];for(const x of CUR)if(x.from<=k)c=x;return c};
 const MEMB=['EW','EV','JK','JI','JS','SQ','OQ'];
 const ewOpen=it=>+it.grp<=2||(+it.grp===3&&today()>='2027-03-01')||(+it.grp===4&&today()>='2027-05-01');
-/* 新しい英単語を n 語えらぶ。群3（中3）・群4（英検準2級）は、開く日（2027-03・05）になったら、群1・2をやりきる前にも
-   新しい語の4割ぶん混ぜる（入試・英検で要る語に、はやく触れる）。通し番号は日ごとにずらして、まんべんなく回す */
+/* 新しい英単語を n 語えらぶ。群1（中1）・群2（中2）・群3（中3・2027-03〜）・群4（英検準2級・2027-05〜）を、4：3：2：1 の割合で並行して出す
+   （中2の子には、群2がいちばん「いま」の語。群1をやりきるまで待たない）。足りない群は、ほかの群でおぎなう。通し番号は日ごとにずらして、まんべんなく回す */
+const EWG={1:4,2:3,3:2,4:1};
 function ewNew(n,ex,date=today()){
- const out=[],hi=[...(date>='2027-03-01'?[3]:[]),...(date>='2027-05-01'?[4]:[])];
+ const out=[],open=[1,2,...(date>='2027-03-01'?[3]:[]),...(date>='2027-05-01'?[4]:[])],tot=open.reduce((a,g)=>a+EWG[g],0);
  for(let i=0;i<n;i++){
-  const sx=exSet(ex,out),g=hi.length&&(dn(date)*3+i)%10<4?hi[(dn(date)+i)%hi.length]:0;
-  let a=g?newItems('EW',1,{pred:it=>+it.grp===g,ex:sx}):[];
+  const sx=exSet(ex,out);let r=(dn(date)*3+i)%tot,g=open[0];
+  for(const x of open){if(r<EWG[x]){g=x;break}r-=EWG[x]}
+  let a=newItems('EW',1,{pred:it=>+it.grp===g,ex:sx});
   if(!a.length)a=newItems('EW',1,{pred:ewOpen,ex:sx});
   if(!a.length)break;
   out.push(a[0]);
@@ -186,7 +188,7 @@ function bMem(date,tier,cur,ex){
  const old2=oldDue(exSet(x1,young),slots-old1.length-young.length,date,late>0);   // わかい復習が足りない日は、古い復習でうめる
  const due=[...young,...old1,...old2];
  const newN=Math.max(minNew,Math.round((total-due.length)*th));
- const PAT=tier>=2?['EW','SQ','EW','OQ','JG','EW','OQ','EW','SQ','JK','EW','OQ','EW','JG','SQ','EW','OQ','EW','JI','JS']:effD(date)>=7?['EW','JK','EW','SQ','JK','OQ','EW']:['EW','JK','EW','EW','JK'];   // 新しい問題の配分（20回で：英単語8・社会4・理科3・国語の文法2・漢字1・ことわざ1・類義語1）。日ごとに先頭をずらして、まんべんなく回す
+ const PAT=tier>=2?['EW','SQ','EW','OQ','JG','EW','OQ','JK','SQ','EW','JI','OQ','EW','JG','SQ','EW','JK','EW','JI','JS']:effD(date)>=7?['EW','JK','EW','SQ','JK','OQ','EW']:['EW','JK','EW','EW','JK'];   // 新しい問題の配分（20回で：英単語7・社会3・理科3・国語の文法2・漢字2・ことわざ2・類義語1）。日ごとに先頭をずらして、まんべんなく回す
  const cnt={EW:0,JK:0,SQ:0,OQ:0,JG:0,JI:0,JS:0};for(let j=0;j<newN;j++)cnt[PAT[(dn(date)*3+j)%PAT.length]]++;
  const sx=exSet(ex,due);
  const ews=ewNew(cnt.EW,sx,date),jks=newItems('JK',cnt.JK,{prefs:cur.jk,ex:sx});
