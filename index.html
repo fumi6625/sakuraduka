@@ -7528,17 +7528,45 @@ function dochira(q){
  const i=ms[ms.length-1].index,A=head.slice(0,i).split(/[、，]|では|は/).pop(),B=head.slice(i+1).split(/では|で|の|、|，/)[0];
  return A&&B&&A!==B&&A.length<=12&&B.length<=12?[A,B]:null;
 }
+/* 一問一答の答えの「型」：問いの終わりの名詞（「…僧は？」「…年は？」「…気体は？」）で、人物・年・できごと・きまり・組織・場所・文化・理科の型に分ける。
+   まちがいの選択肢は、同じ型の答えから選ぶ（正解だけが人物、のように、型で消去できないようにする）。同じ名詞の問いの答えは、さらに先に選ぶ。見分けられない問いは、型なし */
+const QGROUP=[['year',/年$/],['person',/(人物|だれ|誰|人々|人|者|僧|宣教師|皇帝|天皇|将軍|学者|政治家|大統領|首相|王|女王|画家|武将|大名|大臣|作家|医師)$/],
+ ['event',/(乱|戦争|戦い|戦|一揆|事件|変|革命|運動|改革|災害|出来事|できごと|会議|大会)$/],['law',/(法|条約|宣言|令|憲法|条例|同盟|協定|原則|権利|義務|制度|政策|条規|規則)$/],
+ ['org',/(組織|機関|政党|幕府|藩|院|省|庁|裁判所|国会|内閣|議会|団体|軍|党)$/],['place',/(国|地域|地方|県|都市|川|山|山脈|湖|海|島|半島|平野|盆地|高原|海流|暖流|寒流|造山帯|州|大陸|洋|線|海峡|港|都)$/],
+ ['culture',/(文化|様式|歌集|書物|作品|建築|寺|神社|仏像|絵|物語|日記|思想|宗教|学問)$/],['econ',/(農業|産業|工業|漁業|林業|貿易|経済|通貨|税|景気|燃料|資源)$/],['climate',/気候$/],
+ ['gas',/気体$/],['matter',/(物質|金属|液体|薬品|試薬|溶液|化合物|元素|酸|塩基|塩|溶媒|溶質|混合物)$/],['organ',/(器官|組織|細胞|臓器|部分|つくり|はたらき|器)$/],
+ ['phys',/(力|単位|法則|圧力|電流|電圧|抵抗|エネルギー|仕事|量|電力|速さ|密度|質量|熱)$/],['living',/(動物|植物|生物|なかま|種|類)$/],['astro',/(天体|星|惑星|月|太陽|銀河|星座)$/],
+ ['earth',/(岩|岩石|鉱物|地層|火山|地震|雲|前線|気団|風)$/],['phenom',/(現象|反応|変化|運動|作用)$/]];
+const qHead=it=>{const m=String(it.q).replace(/[（(][^）)]*[）)]/g,'').match(/([一-龥々ァ-ヶー]{1,8})(は|が)?[？?]\s*$/);return m?m[1]:''};
+function qGroup(it){
+ if(it._qg!==undefined)return it._qg;
+ let g='';
+ if(it.k==='qa'){
+  const h=qHead(it),hit=QGROUP.find(x=>x[1].test(h));
+  g=hit?hit[0]:/^[\d０-９]+年$/.test(String(it.a))?'year':h.length>=2&&!/^(もの|こと|場合|ところ|とき|方法|理由|特徴|目的|ようす|結果|原因|はたらき|ちがい|関係)$/.test(h)?'h:'+h:'';   // 型の一覧にない名詞は、その名詞どうし（「…血管は？」）
+ }
+ return it._qg=g;
+}
+/* 意味が近い言葉のグループ（類義語・対義語）。まちがいの選択肢に、正解や見出しと同じグループの語を入れない（どちらも正しく見えるため） */
+const JSCL=[['注意','用心','慎重','用心深い','丁寧','入念','軽率'],['努力','精進','必死','懸命','一生懸命','ひたむき','苦労','苦心','真剣','本気'],['心配','不安','失望','落胆'],
+ ['協力','提携','援助','支援','参加','加入','賛成','同意'],['正直','誠実','尊敬','敬意','思いやり','いたわり'],['経験','体験','熟練','熟達','利口','賢い','勉強','学習','成長','発育'],
+ ['順調','好調','立派','見事','長所','美点','確実','確か','大切','重要','活発','活気'],['方法','手段','目的','目標','準備','用意','実行','実施','勇気','度胸'],['将来','未来','最近','このごろ','以前','かつて','突然','不意','偶然','たまたま']];
+const jsC=w=>JSCL.findIndex(l=>l.includes(w));
+const shareKanji=(a,b)=>{const A=new Set(String(a).match(/[一-龥]/g)||[]);return (String(b).match(/[一-龥]/g)||[]).some(x=>A.has(x))};
 function distractQA(it,f,n=3){
- const ans=it[f],seen=new Set([ans]),out=[],keys=tagKeys(it);
- for(const pass of [0,1]){
+ const ans=it[f],seen=new Set([ans]),out=[],keys=tagKeys(it),g=f==='a'?qGroup(it):'';
+ for(const pass of g?[0,1,2,3]:[2,3]){   // 0：同じ型＋長さが近い／1：同じ型／2：長さが近い／3：なんでも
   for(const k of keys){
    const pool=POOL[k]||[];
    if(pool.length<n+2&&k!==keys[keys.length-1])continue;
-   for(const c of shuffle(pool)){
+   const h=g?qHead(it):'';
+   for(const c of g&&pass<=1?shuffle(pool).sort((x,y)=>(qHead(y)===h)-(qHead(x)===h)):shuffle(pool)){   // 同じ名詞の問い（「…気体は？」どうし）の答えを先に
     if(out.length>=n)break;
     if(c.id===it.id||seen.has(c[f])||nested(c[f],ans))continue;
     if(f==='w'&&c.m===it.m)continue;
-    if(pass===0&&!lenOK(c[f],ans))continue;
+    if(it.k==='syn'&&(c.w===it.w||shareKanji(c[f],it.w)||shareKanji(c[f],ans)||(jsC(c[f])>=0&&(jsC(c[f])===jsC(ans)||jsC(c[f])===jsC(it.w)))))continue;   // 類義語・対義語：おなじ見出しのもうひとつの答えや、見出し・正解と同じ漢字をふくむ語（意味が近いかもしれない）は、まちがいに使わない
+    if(pass<=1&&qGroup(c)!==g)continue;
+    if((pass===0||pass===2)&&!lenOK(c[f],ans))continue;
     seen.add(c[f]);out.push(c[f]);
    }
    if(out.length>=n)break;
@@ -7666,7 +7694,7 @@ GEN.pn_add={name:'正負の数の加減',f(r,lv){
  const a=rnz(r,-lim,lim),sc=[a];let q=sg(a);
  for(let i=1;i<n;i++){const b=rnz(r,-lim,lim),plus=r()<.5;q+=(plus?' + ':' − ')+pr(b);sc.push(plus?b:-b)}
  const val=sum(sc),P=sum(sc.filter(x=>x>0)),N=-sum(sc.filter(x=>x<0));
- return{q:q+' ＝ ？',a:[String(val)],disp:sg(val),exp:['ひき算は、符号を変えてたし算に直す：'+sc.map(pr).join(' + '),'正の数の和 '+P+'、負の数の和 '+MI+N+' なので '+P+' − '+N+' ＝ '+sg(val)],v:()=>val===sum(sc)};
+ return{q:q+' ＝ ？',a:[String(val)],disp:sg(val),exp:['ひき算は、符号を変えてたし算に直す：'+sc.map(pr).join(' + '),N===0?'負の数はないので、正の数の和 '+P+' がそのまま答え ＝ '+sg(val):P===0?'正の数はないので、負の数の和 '+MI+N+' がそのまま答え ＝ '+sg(val):'正の数の和 '+P+'、負の数の和 '+MI+N+' なので '+P+' − '+N+' ＝ '+sg(val)],v:()=>val===sum(sc)};
 }};
 GEN.pn_mul={name:'正負の数の乗除・累乗',f(r,lv){
  if(lv===1){

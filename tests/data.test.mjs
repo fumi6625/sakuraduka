@@ -43,3 +43,33 @@ test('しっかり期：国語の日に作文の問題、数学ドリルに「�
   assert.ok(jc >= 2, `作文が出た日: ${jc}`);
   assert.ok(ms >= 10, `考え方が出た日: ${ms}`);
 });
+
+test('一問一答：答えが人物・年・できごと・きまり・組織の問いは、まちがいの選択肢も同じ型（型で消去できない）', () => {
+  const C = loadCore(['BK', 'distractQA', 'qGroup']);
+  const ans = {};
+  for (const b of ['SQ', 'OQ']) for (const it of C.BK[b].items) { const g = C.qGroup(it); if (g) (ans[g] = ans[g] || new Set()).add(it.a); }
+  const bad = []; let n = 0;
+  for (const b of ['SQ', 'OQ']) for (const it of C.BK[b].items) {
+    const g = C.qGroup(it);
+    if (!['year', 'person', 'event', 'law', 'org', 'culture', 'gas'].includes(g)) continue;
+    for (let k = 0; k < 2; k++) for (const d of C.distractQA(it, 'a')) { n++; if (!ans[g].has(d)) bad.push(`${it.q.slice(0, 24)}｜答え「${it.a}」×「${d}」`); }
+  }
+  assert.ok(n > 600, `調べた選択肢 ${n}`);
+  assert.ok(bad.length / n < 0.02, `型ちがい ${bad.length}/${n}：${bad.slice(0, 3).join(' ／ ')}`);
+});
+
+test('類義語・対義語：まちがいの選択肢に、正解や見出しと意味が近い語（同じグループ）を入れない', () => {
+  const C = loadCore(['BK', 'present', 'jsC']);
+  const bad = [];
+  for (const it of C.BK.JS.items) for (let k = 0; k < 6; k++) {
+    const V = C.present(it);
+    if (V.kind !== 'mc') continue;
+    const ok = V.choices.find((c) => c.ok).t, g1 = C.jsC(ok), g2 = C.jsC(it.w);
+    for (const c of V.choices) {
+      if (c.ok) continue;
+      const g = C.jsC(c.t);
+      if (g >= 0 && (g === g1 || g === g2)) bad.push(`${it.w}：正解「${ok}」×「${c.t}」`);
+    }
+  }
+  assert.deepEqual(bad.slice(0, 3), [], `${bad.length} 件`);
+});

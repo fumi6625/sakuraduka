@@ -75,3 +75,15 @@ test('式や解説の表示に、「1√」「1π」「×−3」「＋ −」「
   }
   assert.equal(hit.length, 0, `${hit.length}件\n` + [...new Set(hit)].slice(0, 5).join('\n'));
 });
+
+test('自動生成：「−0」「+0」のような符号つきのゼロを、問題・答え・解説に出さない', () => {
+  const C = loadCore(['GEN', 'makeGen']);
+  const bad = [];
+  for (const id of Object.keys(C.GEN)) for (const lv of [1, 2, 3]) for (let s = 1; s <= 200; s++) {
+    const g = C.makeGen(id, lv, s * 7919 + 13);
+    for (const t of [g.q, g.disp, ...(g.accept || []), ...(g.ch || []), g.exp].map((x) => String(x || ''))) {
+      if (/(^|[^\d.])[−\-+＋]0(?![\d.])/.test(t)) { bad.push(`${id} Lv${lv}: ${t.slice(0, 50)}`); break; }
+    }
+  }
+  assert.deepEqual(bad.slice(0, 3), [], `${bad.length} 件`);
+});

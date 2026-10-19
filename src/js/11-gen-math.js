@@ -22,7 +22,7 @@ GEN.pn_add={name:'正負の数の加減',f(r,lv){
  const a=rnz(r,-lim,lim),sc=[a];let q=sg(a);
  for(let i=1;i<n;i++){const b=rnz(r,-lim,lim),plus=r()<.5;q+=(plus?' + ':' − ')+pr(b);sc.push(plus?b:-b)}
  const val=sum(sc),P=sum(sc.filter(x=>x>0)),N=-sum(sc.filter(x=>x<0));
- return{q:q+' ＝ ？',a:[String(val)],disp:sg(val),exp:['ひき算は、符号を変えてたし算に直す：'+sc.map(pr).join(' + '),'正の数の和 '+P+'、負の数の和 '+MI+N+' なので '+P+' − '+N+' ＝ '+sg(val)],v:()=>val===sum(sc)};
+ return{q:q+' ＝ ？',a:[String(val)],disp:sg(val),exp:['ひき算は、符号を変えてたし算に直す：'+sc.map(pr).join(' + '),N===0?'負の数はないので、正の数の和 '+P+' がそのまま答え ＝ '+sg(val):P===0?'正の数はないので、負の数の和 '+MI+N+' がそのまま答え ＝ '+sg(val):'正の数の和 '+P+'、負の数の和 '+MI+N+' なので '+P+' − '+N+' ＝ '+sg(val)],v:()=>val===sum(sc)};
 }};
 GEN.pn_mul={name:'正負の数の乗除・累乗',f(r,lv){
  if(lv===1){
