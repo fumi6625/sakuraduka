@@ -1,11 +1,11 @@
 /* ===== メニューとサブページ（桜塚高校・診断・教科ガイド・AI先生・ミス図鑑・おうちの人） ===== */
 const MENU=[
- ['school','桜塚高校','学校の情報・入試のしくみ・目標ライン','school','#ff5fa8'],
- ['diag','診断・内申シミュレーター','いまの実力と、目標までのきょり','chart','#1ee6ff'],
- ['subj','教科ガイド','教科ごとの作戦・お手本ドリル','book','#ffe81a'],
- ['ai','AI先生チーム','相談・練習・作戦会議の相手（9人）','chat','#b8ff00'],
- ['mist','ミス図鑑','まちがえた問題の一覧と再戦','splat','#ff8f1f'],
- ['family','おうちの人・設定','週報・バックアップ・チームカラー','user','#a98bff']];
+ ['school','桜塚高校','学校の情報・入試のしくみ・目標ライン','school','var(--pink)'],
+ ['diag','診断・内申シミュレーター','いまの実力と、目標までのきょり','chart','var(--cyan)'],
+ ['subj','教科ガイド','教科ごとの作戦・お手本ドリル','book','var(--yellow)'],
+ ['ai','AI先生チーム','相談・練習・作戦会議の相手（9人）','chat','var(--lime)'],
+ ['mist','ミス図鑑','まちがえた問題の一覧と再戦','splat','var(--orange)'],
+ ['family','おうちの人・設定','週報・バックアップ・チームカラー','user','var(--sou)']];
 function renderMenu(){
  $('#v-menu').innerHTML=`<div class="card"><span class="lb">メニュー</span><div class="mtiles">${MENU.map(m=>`<button class="mtile" data-page="${m[0]}" style="--mc:${m[4]}"><span class="mi">${ico(m[3])}</span><b>${m[1]}</b><span>${m[2]}</span></button>`).join('')}</div></div>
  <div class="card"><h2>このアプリの使いかた</h2><ol class="steps">
@@ -65,7 +65,7 @@ function radar(v){
  const cx=150,cy=140,R=100,pt=(i,k)=>{const a=-Math.PI/2+i*2*Math.PI/5;return[cx+Math.cos(a)*R*k,cy+Math.sin(a)*R*k]};
  const poly=k=>SJL.map((_,i)=>pt(i,k).map(x=>x.toFixed(1)).join(',')).join(' ');
  const me=SJL.map((_,i)=>pt(i,Math.max(v[i],.04)).map(x=>x.toFixed(1)).join(',')).join(' ');
- return `<svg class="radar" viewBox="0 0 300 290" role="img" aria-label="5教科の診断レーダー">${[.33,.66,1].map(k=>`<polygon points="${poly(k)}" fill="none" stroke="rgba(255,255,255,.25)"/>`).join('')}${SJL.map((_,i)=>{const p=pt(i,1);return `<line x1="${cx}" y1="${cy}" x2="${p[0].toFixed(1)}" y2="${p[1].toFixed(1)}" stroke="rgba(255,255,255,.2)"/>`}).join('')}<polygon points="${poly(5/6)}" fill="none" stroke="#ffe81a" stroke-dasharray="5 4" stroke-width="2"/><polygon points="${me}" fill="var(--team)" fill-opacity=".35" stroke="var(--team)" stroke-width="3"/>${SJL.map((s,i)=>{const p=pt(i,1.2);return `<text x="${p[0].toFixed(1)}" y="${(p[1]+5).toFixed(1)}" text-anchor="middle" font-size="14" font-weight="900" style="fill:#fff">${SJN[s]}</text>`}).join('')}<text x="150" y="284" text-anchor="middle" font-size="11" style="fill:#c4bdf2">点線＝桜塚レベルの入口（6問中5問）</text></svg>`;
+ return `<svg class="radar" viewBox="0 0 300 290" role="img" aria-label="5教科の診断レーダー">${[.33,.66,1].map(k=>`<polygon points="${poly(k)}" fill="none" style="stroke:rgba(var(--line-rgb),.25)"/>`).join('')}${SJL.map((_,i)=>{const p=pt(i,1);return `<line x1="${cx}" y1="${cy}" x2="${p[0].toFixed(1)}" y2="${p[1].toFixed(1)}" style="stroke:rgba(var(--line-rgb),.2)"/>`}).join('')}<polygon points="${poly(5/6)}" fill="none" stroke="var(--hl-line)" stroke-dasharray="5 4" stroke-width="2.5"/><polygon points="${me}" fill="var(--team)" fill-opacity=".4" stroke="var(--ring-arc)" stroke-width="3"/>${SJL.map((s,i)=>{const p=pt(i,1.2);return `<text x="${p[0].toFixed(1)}" y="${(p[1]+5).toFixed(1)}" text-anchor="middle" font-size="14" font-weight="900" style="fill:var(--tx)">${SJN[s]}</text>`}).join('')}<text x="150" y="284" text-anchor="middle" font-size="11" style="fill:var(--tx2)">点線＝桜塚レベルの入口（6問中5問）</text></svg>`;
 }
 function renderDiagOut(){
  if(!SJL.some(s=>S.diag[s]&&S.diag[s].done)){$('#diagOut').innerHTML='<p class="mini">ミニ診断を受けると、ここにレーダーチャートと「最初にやること」が出ます。</p>';return}
@@ -106,7 +106,7 @@ function renderSubj(){
 
 /* ----- AI先生 ----- */
 function renderAgents(){
- $('#agents').innerHTML=AGENTS.map((a,i)=>`<div class="card ag" style="margin:0"><div class="rowh"><span class="disk" style="--c:${a.c}">${a.mark}</span><div style="min-width:0"><h3>${a.name}</h3><div class="mini">${a.role}</div></div></div>
+ $('#agents').innerHTML=AGENTS.map((a,i)=>`<div class="card ag" style="margin:0"><div class="rowh"><span class="disk" style="--c:${a.c};--cs:${soft(a.c)}">${a.mark}</span><div style="min-width:0"><h3>${a.name}</h3><div class="mini">${a.role}</div></div></div>
  <p class="mini"><b>呼ぶとき：</b>${a.when}</p>
  <div><b class="mini">最初の一言の例</b>${a.starter.map(x=>`<div class="say">${esc(x)}</div>`).join('')}</div>
  <div class="row" style="align-items:center"><button class="bt pri sm" data-act="cpAg" data-a="${i}">設定をコピー</button><span class="mini" id="cpm${i}"></span></div>
@@ -116,12 +116,13 @@ function renderAgents(){
 /* ----- 設定・バックアップ ----- */
 function initInputs(){
  $('#setNick').value=S.nick;$('#setExam').value=S.exam;
- $('#setTeam').innerHTML=Object.keys(TEAMS).map(k=>`<button data-act="team" data-a="${k}" aria-pressed="${S.team===k}"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${TEAMS[k][0]};border:2px solid #000;vertical-align:-2px;margin-right:6px"></span>${TEAMS[k][1]}</button>`).join('');
+ $('#setTeam').innerHTML=Object.keys(TEAMS).map(k=>`<button data-act="team" data-a="${k}" aria-pressed="${S.team===k}"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${TEAMS[k][0]};border:2px solid var(--ink);vertical-align:-2px;margin-right:6px"></span>${TEAMS[k][1]}</button>`).join('');
+ $('#setTheme').innerHTML=THEMES.map(t=>`<button class="thm" data-act="theme" data-a="${t[0]}" aria-pressed="${themeOf(S.theme)[0]===t[0]}" style="--tb:${t[3]};--tc:${t[4]};--ta:${t[5]};--tk:${t[6]}"><span class="tsw"><i></i><u></u></span><span><b>${t[1]}</b><small>${t[2]}</small></span></button>`).join('');
  $('#setSound').setAttribute('aria-pressed',String(!!S.sound));
  $('#setTier').innerHTML=[['auto','おまかせ'],[1,'ならし'],[2,'ふつう'],[3,'しっかり']].map(x=>`<button data-act="tierSet" data-a="${x[0]}" aria-pressed="${String(S.tier)===String(x[0])}">${x[1]}</button>`).join('');
  $('#setPin').value=S.pin||'';$('#setPinOn').setAttribute('aria-pressed',String(!!(S.pinOn&&S.pin)));
  $$('[data-memo]').forEach(i=>i.value=S.memo[i.dataset.memo]||'');
 }
 function reloadAll(){
- restoreGx();applyTeam();paintBg();renderHud();initInputs();
+ restoreGx();applyTeam();applyTheme();paintBg();renderHud();initInputs();
 }

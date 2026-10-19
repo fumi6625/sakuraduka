@@ -182,6 +182,7 @@ const ACT={
  async cpAg(i){const a=AGENTS[+i],ok=await copyText(COMMON+'\n\n'+a.body);$('#cpm'+i).textContent=ok?'コピーした！ Claudeのプロジェクトの指示に貼ろう':'コピーできなかった。「設定の中身を見る」から長押しでコピーしてね'},
  /* ---- 設定 ---- */
  team(k){if(!TEAMS[k])return;S.team=k;applyTeam();paintBg();save();initInputs();renderHud()},
+ theme(k){if(!THEMES.some(t=>t[0]===k))return;S.theme=k;applyTheme();paintBg();save();initInputs();renderHud();refresh();toast('画面の色を「'+themeOf(k)[1]+'」にした')},
  sound(){S.sound=S.sound?0:1;save();initInputs();if(S.sound)Snd.ok()},
  pinToggle(){
   if(S.pinOn){needPin('保護者OKをオフにします。',()=>{S.pinOn=0;save();initInputs();toast('保護者OKをオフにした')});return}
@@ -249,7 +250,7 @@ if(/[?&]debug/.test(location.search))window.__sq={get S(){return S},get PL(){ret
 
 /* ---- 初期化 ---- */
 (function init(){
- applyTeam();paintBg();
- try{const c=document.createElement('canvas');c.width=c.height=180;const x=c.getContext('2d');x.fillStyle='#16103f';x.fillRect(0,0,180,180);x.fillStyle='#ff3d9a';[[90,46],[134,78],[117,130],[63,130],[46,78]].forEach(p=>{x.beginPath();x.arc(p[0],p[1],30,0,7);x.fill()});x.fillStyle='#ffe81a';x.beginPath();x.arc(90,90,17,0,7);x.fill();const l=document.createElement('link');l.rel='apple-touch-icon';l.href=c.toDataURL('image/png');document.head.appendChild(l)}catch(e){}
+ applyTeam();applyTheme();paintBg();
+ try{const c=document.createElement('canvas');c.width=c.height=180;const x=c.getContext('2d');x.fillStyle='#fff0f5';x.fillRect(0,0,180,180);x.fillStyle='#f7a3c0';[[90,46],[134,78],[117,130],[63,130],[46,78]].forEach(p=>{x.beginPath();x.arc(p[0],p[1],30,0,7);x.fill()});x.fillStyle='#ffe27a';x.beginPath();x.arc(90,90,17,0,7);x.fill();const l=document.createElement('link');l.rel='apple-touch-icon';l.href=c.toDataURL('image/png');document.head.appendChild(l)}catch(e){}
  show(VIEWS.includes(S.tab)?S.tab:'home');
 })();

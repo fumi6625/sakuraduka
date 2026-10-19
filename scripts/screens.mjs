@@ -1,5 +1,5 @@
 // 画面の見た目を確認するためのスクリーンショットを、まとめて撮る（評価エージェント用）。
-//   node scripts/screens.mjs [出力フォルダ] [--nofonts]
+//   node scripts/screens.mjs [出力フォルダ] [--nofonts] [--theme=normal|soft|neon|night|pop]
 // ?debug を付けた index.html をブラウザで開き、デバッグ用の入り口(__sq)で状態をつくって撮影する。
 // Playwright が必要（/opt/node-tools/node_modules/playwright か、npm の playwright）。
 import fs from 'node:fs';
@@ -14,6 +14,7 @@ try { ({ chromium } = require('playwright')); } catch { ({ chromium } = require(
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.resolve(process.argv[2] && !process.argv[2].startsWith('--') ? process.argv[2] : path.join(root, 'screens'));
 const useFonts = !process.argv.includes('--nofonts');
+const THEME = (process.argv.find((a) => a.startsWith('--theme=')) || '').slice(8);   // 画面の色（テーマ）。省くと、はじめの設定（ふつう）
 fs.mkdirSync(out, { recursive: true });
 const URL = 'file://' + path.join(root, 'index.html') + '?debug';
 
@@ -22,6 +23,7 @@ async function launch({ w, h, date = '2026-10-19T10:00:00', dpr = 1 }) {
   const browser = await chromium.launch(useFonts && u ? { proxy: { server: `${u.protocol}//${u.host}`, username: decodeURIComponent(u.username || ''), password: decodeURIComponent(u.password || '') } } : {});
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, ignoreHTTPSErrors: true, deviceScaleFactor: dpr, hasTouch: true });
   const page = await ctx.newPage();
+  if (THEME) await page.addInitScript((t) => { try { localStorage.setItem('sakuraQuest.v1', JSON.stringify({ theme: t })); } catch (e) {} }, THEME);
   const errs = [];
   page.on('pageerror', (e) => errs.push('pageerror: ' + e.message));
   page.on('console', (m) => { if (m.type() === 'error' && !/fonts\.g|ERR_|Failed to load resource|net::/.test(m.text())) errs.push('console: ' + m.text()); });

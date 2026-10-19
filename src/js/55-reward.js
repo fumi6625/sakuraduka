@@ -9,7 +9,7 @@ function renderReward(){
   <div class="res"><div><b>${S.coin}</b><span>コイン</span></div><div><b>${S.xp}</b><span>XP（ずっと残る）</span></div><div><b>${S.freeze}</b><span>お休みトークン</span></div></div>
   <p class="mini">XPは消えない経験値。コインはXPと同時にたまり、下の「ごほうび」と交換できる。1日クリアで およそ100コイン。</p></div>
  <div class="grid">
-  <div class="card"><h2>ごほうびリスト</h2><p class="mini">コインで交換。中身は「時間・権利・いっしょの体験・ことば」。買い物はしない。</p><div id="shop">${S.shop.map((s,i)=>`<div class="shop"><span>${esc(s.n)}</span><b class="px" style="color:var(--yellow)">${s.c}</b><button class="bt sm" data-act="shBuy" data-a="${i}" ${S.coin<s.c?'disabled':''}>こうかん</button><button class="bt sm gh del editonly" data-act="shDel" data-a="${i}" aria-label="削除">×</button></div>`).join('')}</div>
+  <div class="card"><h2>ごほうびリスト</h2><p class="mini">コインで交換。中身は「時間・権利・いっしょの体験・ことば」。買い物はしない。</p><div id="shop">${S.shop.map((s,i)=>`<div class="shop"><span>${esc(s.n)}</span><b class="px" style="color:var(--yellow-t)">${s.c}</b><button class="bt sm" data-act="shBuy" data-a="${i}" ${S.coin<s.c?'disabled':''}>こうかん</button><button class="bt sm gh del editonly" data-act="shDel" data-a="${i}" aria-label="削除">×</button></div>`).join('')}</div>
    <div class="row editonly" style="margin-top:10px"><input id="shN" type="text" placeholder="ごほうびの名前" style="flex:1;min-width:150px"><input id="shC" type="number" min="10" step="10" value="100" style="width:96px"><button class="bt sm" data-act="shAdd">追加</button></div>
    <p class="mini">中身は親子で決める。ゲームや動画の時間は「事前に決めた長さ」だけ。</p>
    ${rl.length?`<h4>こうかんの記録</h4>${rl.map(x=>`<div class="mini">${dateJa(x.d)}　${esc(x.n)}</div>`).join('')}`:''}</div>

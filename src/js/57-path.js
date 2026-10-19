@@ -5,7 +5,7 @@ function sparkSVG(){
  const me=ks.map(k=>S.kh[k]),pl=ks.map(k=>planFracN(dn(k)+6)),mx=Math.max(.12,...me,...pl)*1.12;
  const w=600,h=120,px=i=>12+i*(w-24)/(ks.length-1),py=v=>h-10-clamp(v,0,mx)*(h-20)/mx;
  const pts=a=>a.map((v,i)=>px(i).toFixed(1)+','+py(v).toFixed(1)).join(' ');
- return `<svg class="spark" viewBox="0 0 ${w} ${h}" role="img" aria-label="道のりの変化（週ごと）"><line x1="12" y1="${h-10}" x2="${w-12}" y2="${h-10}" stroke="rgba(255,255,255,.25)" stroke-width="2"/><polyline points="${pts(pl)}" fill="none" stroke="var(--yellow)" stroke-width="4" stroke-dasharray="10 8" opacity=".95"/><polyline points="${pts(me)}" fill="none" stroke="var(--team)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${px(ks.length-1).toFixed(1)}" cy="${py(me[me.length-1]).toFixed(1)}" r="9" fill="var(--team)" stroke="#000" stroke-width="3"/></svg><p class="mini" style="margin:0">折れ線：あなた（${ks.length}週間）／黄色のてんせん：予定</p>`;
+ return `<svg class="spark" viewBox="0 0 ${w} ${h}" role="img" aria-label="道のりの変化（週ごと）"><line x1="12" y1="${h-10}" x2="${w-12}" y2="${h-10}" style="stroke:rgba(var(--line-rgb),.25)" stroke-width="2"/><polyline points="${pts(pl)}" fill="none" stroke="var(--hl-line)" stroke-width="4" stroke-dasharray="10 8" opacity=".95"/><polyline points="${pts(me)}" fill="none" stroke="var(--ring-arc)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${px(ks.length-1).toFixed(1)}" cy="${py(me[me.length-1]).toFixed(1)}" r="9" fill="var(--team)" stroke="var(--ink)" stroke-width="3"/></svg><p class="mini" style="margin:0">折れ線：あなた（${ks.length}週間）／黄色のてんせん：予定</p>`;
 }
 function pathCard(){
  const P=pathNow(),m=pathMsg(P),pc=P.pace,pw=Math.round(pc.perWeek*10)/10;

@@ -59,7 +59,7 @@ function nowCard(next,tier,okDay,rec){
  const T=TIERS[tier],isS=next.kind==='session';
  const need=dayNeed(rec,tier);
  const goal=okDay?`<span class="chp ok">✓ きょうの合格ライン達成！</span> れんぞく ${curStreak()}日`:`<span class="chp w">合格ライン</span> ${tier===1?'どれか1つクリアでOK！':'あと'+Math.max(1,need)+'つクリアでOK！'}`;
- return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'#ffe81a',{drops:7,stroke:'#000',sw:5})}</div>
+ return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'var(--yellow)',{drops:7,stroke:'var(--ink)',sw:5})}</div>
   <span class="lb">いま やること</span>
   <div class="nrow"><div class="nico">${ico(stageIcon(next))}</div><div class="ntx"><h2>${esc(next.t)}</h2><p>${esc(briefDesc(next.desc))}</p></div></div>
   <div class="chips">${isS?`<span class="chp">約${Math.max(1,next.min)}分</span><span class="chp">${next.items.length}問</span>`:next.xp?'':`<span class="chp">約${next.min||3}分</span>`}${next.xp||isS?`<span class="chp xp">+${next.xp}XP</span>`:''}</div>
@@ -67,7 +67,7 @@ function nowCard(next,tier,okDay,rec){
   <p class="goal">${goal}</p><p class="tnote">${esc(tierNote(today(),tier))}</p>${vowChip(okDay)}</div>`;
 }
 function clearedCard(){
- return `<div class="nowc cleared"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'#000',sw:5})}</div><span class="lb y">ぜんぶクリア！</span>
+ return `<div class="nowc cleared"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'var(--ink)',sw:5})}</div><span class="lb y">ぜんぶクリア！</span>
   <h2 style="margin:12px 0 4px;font-size:30px">きょうは、もうバッチリ！</h2>
   <p>まだ元気なら「おかわり」。好きな教材を、好きなだけ。（1日60XPまで）</p>
   <div class="row"><button class="bt pri xl" data-tab="drill">おかわりドリル</button><button class="bt cy xl" data-act="tsukkomi">ツッコミバトル</button></div></div>`;
@@ -84,7 +84,7 @@ function renderHome(){
  const diagTip=(!SJL.every(s=>S.diag[s]&&S.diag[s].done)&&S.tot.n<40)?`<div class="tomorrow"><span class="lb sm c">おすすめ</span><span>ミニ診断（約10分）で、いまの実力を知ろう。</span><button class="bt sm sp" data-page="diag">診断へ</button></div>`:'';
  const L=`
  <div class="hero cmp" data-s="${W.subj}">
-  <div class="sp1">${splatSVG(5,'var(--team)',{stroke:'#000',sw:4})}</div>
+  <div class="sp1">${splatSVG(5,'var(--team)',{stroke:'var(--ink)',sw:4})}</div>
   <div class="t1"><span class="lb sm">きょうのミッション</span><span class="date">${dateJa(date)}</span><span class="chp t">${T.name}モード</span></div>
   <div class="gp"><div class="tank"><i style="--w:${Math.round(done.length/real.length*100)}%"></i></div><b>${done.length}/${real.length}</b>${appMin?`<span class="mini left-min">のこり約${appMin}分</span>`:''}</div>
  </div>

@@ -1,6 +1,8 @@
 /* ===== 画面の共通部品：アイコン・インクの飛沫・音・読み上げ・演出 ===== */
-const SJC={国:'#ff5fa8',数:'#1ee6ff',英:'#ffe81a',理:'#b8ff00',社:'#ff8f1f',総:'#a98bff'};
-const TEAMS={pink:['#ff3d9a','ピンク'],lime:['#b8ff00','ライム'],cyan:['#1ee6ff','シアン'],orange:['#ff8f1f','オレンジ'],purple:['#9b6bff','パープル']};
+/* 色を白とまぜてやわらかくする（先生ごとのこい色を、明るいテーマの画面にあわせて使う） */
+const soft=(hex,k=.55)=>{const n=parseInt(String(hex).replace('#',''),16);if(isNaN(n))return hex;const m=c=>Math.round(c+(255-c)*k);return 'rgb('+m(n>>16&255)+','+m(n>>8&255)+','+m(n&255)+')'};
+const THEMES=[['normal','ふつう','白っぽい地・ほどよい色','#f3f2f8','#ffffff','#f4679d','#2b2540',0],['soft','やさしい','クリーム地のパステル','#fdf3ec','#ffffff','#f7a3c0','#5a4664',0],['neon','ネオン','暗い地にあざやかな光（前の版）','#0c0920','#2d2380','#ff3d9a','#000000',1],['night','よる','落ち着いた暗い色','#171b2b','#2a3150','#e8799f','#080b16',1],['pop','くっきり','白地に黒い線・あざやか','#f6f7fb','#ffffff','#ff5aa5','#14111f',0]];   // [キー, 名前, ひとこと, 地の色, カードの色, アクセント, 線の色, 暗い地か]  色の中身は style.css の html[data-theme=…]
+const TEAMS={pink:['var(--t-pink)','ピンク'],lime:['var(--t-lime)','ライム'],cyan:['var(--t-cyan)','シアン'],orange:['var(--t-orange)','オレンジ'],purple:['var(--t-purple)','パープル']};
 const ICO={
  home:'M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10',bolt:'M13 2L4 14h7l-1 8 9-12h-7z',flag:'M5 3v18M5 4h11l-2 4 2 4H5',
  gift:'M4 10h16v10H4zM3 7h18v3H3zM12 7v13M12 7C10 3 6 4 7.5 7M12 7c2-4 6-3 4.5 0',menu:'M4 6h16M4 12h16M4 18h16',
@@ -46,14 +48,14 @@ function splatSVG(seed,col,o={}){
  }
  return `<svg viewBox="-200 -200 400 400" aria-hidden="true"${o.cls?` class="${o.cls}"`:''}><g fill="${col}"${o.stroke?` stroke="${o.stroke}" stroke-width="${o.sw||6}" stroke-linejoin="round"`:''}><path d="${splatPath(seed)}"/>${dr}</g></svg>`;
 }
-const sakura=(r=1)=>`<g transform="scale(${r})"><g fill="#fff" stroke="#16001f" stroke-width="5" stroke-linejoin="round">${[0,1,2,3,4].map(k=>`<ellipse cx="0" cy="-30" rx="19" ry="27" transform="rotate(${k*72})"/>`).join('')}</g><circle r="10" fill="#ffd400" stroke="#16001f" stroke-width="4"/></g>`;
+const sakura=(r=1)=>`<g transform="scale(${r})"><g fill="#fff" stroke="var(--on)" stroke-width="5" stroke-linejoin="round">${[0,1,2,3,4].map(k=>`<ellipse cx="0" cy="-30" rx="19" ry="27" transform="rotate(${k*72})"/>`).join('')}</g><circle r="10" fill="var(--yellow)" stroke="var(--on)" stroke-width="4"/></g>`;
 function avatarSVG(){
- return `<svg viewBox="-130 -130 260 260" aria-hidden="true"><g fill="var(--team)" stroke="#000" stroke-width="9" stroke-linejoin="round"><path d="${splatPath(11,12,96)}"/></g>${sakura(1.02)}</svg>`;
+ return `<svg viewBox="-130 -130 260 260" aria-hidden="true"><g fill="var(--team)" stroke="var(--ink)" stroke-width="9" stroke-linejoin="round"><path d="${splatPath(11,12,96)}"/></g>${sakura(1.02)}</svg>`;
 }
-const lvHex=(lv,w=54)=>`<svg class="lvh" style="width:${w}px;height:${Math.round(w*1.1)}px" viewBox="0 0 60 66" aria-label="レベル${lv}"><polygon points="30,3 57,17 57,49 30,63 3,49 3,17" fill="#ffe81a" stroke="#000" stroke-width="4" stroke-linejoin="round"/><polygon points="30,9 52,20 52,46 30,57 8,46 8,20" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2"/><text x="30" y="26" text-anchor="middle" font-size="11" font-weight="900" fill="#16001f" font-family="var(--f-d)">Lv</text><text x="30" y="49" text-anchor="middle" font-size="${lv>=10?22:26}" fill="#16001f" font-family="var(--f-d)">${lv}</text></svg>`;
+const lvHex=(lv,w=54)=>`<svg class="lvh" style="width:${w}px;height:${Math.round(w*1.1)}px" viewBox="0 0 60 66" aria-label="レベル${lv}"><polygon points="30,3 57,17 57,49 30,63 3,49 3,17" fill="var(--yellow)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/><polygon points="30,9 52,20 52,46 30,57 8,46 8,20" fill="none" style="stroke:rgba(var(--ink-rgb),.25)" stroke-width="2"/><text x="30" y="26" text-anchor="middle" font-size="11" font-weight="900" fill="var(--on)" font-family="var(--f-d)">Lv</text><text x="30" y="49" text-anchor="middle" font-size="${lv>=10?22:26}" fill="var(--on)" font-family="var(--f-d)">${lv}</text></svg>`;
 function paintBg(){
  const b=$('#bg');if(!b)return;
- b.innerHTML=[[3,'var(--team)',.30,'right:-130px;top:60px;width:440px'],[8,'#1ee6ff',.22,'left:-160px;top:46%;width:400px'],[21,'#b8ff00',.20,'right:-90px;bottom:-70px;width:360px'],[30,'#ffe81a',.16,'left:-100px;top:-90px;width:300px']].map(s=>`<div style="position:absolute;opacity:${s[2]};${s[3]}">${splatSVG(s[0],s[1],{drops:10,stroke:'#000',sw:5})}</div>`).join('');
+ b.innerHTML=[[3,'var(--team)','var(--spl1)','right:-130px;top:60px;width:440px'],[8,'var(--cyan)','var(--spl2)','left:-160px;top:46%;width:400px'],[21,'var(--lime)','var(--spl3)','right:-90px;bottom:-70px;width:360px'],[30,'var(--yellow)','var(--spl4)','left:-100px;top:-90px;width:300px']].map(s=>`<div style="position:absolute;opacity:${s[2]};${s[3]}">${splatSVG(s[0],s[1],{drops:10,stroke:'var(--ink)',sw:5})}</div>`).join('');
 }
 
 /* ----- 音（効果音）と英語の読み上げ ----- */
@@ -89,7 +91,7 @@ const FX=(()=>{
   P=P.filter(p=>p.life>0);
   P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.992;p.life--;p.rot+=p.vr;
    const a=Math.min(1,p.life/18);cx.save();cx.globalAlpha=a;cx.translate(p.x,p.y);cx.rotate(p.rot);
-   cx.fillStyle=p.c;cx.strokeStyle='#000';cx.lineWidth=2.5;
+   cx.fillStyle=p.c;cx.strokeStyle=INK;cx.lineWidth=2.5;
    if(p.sq){cx.fillRect(-p.r,-p.r*.55,p.r*2,p.r*1.1);cx.strokeRect(-p.r,-p.r*.55,p.r*2,p.r*1.1)}
    else if(SPL[p.pi]){const k=p.r/60;cx.scale(k,k);cx.lineWidth=2.5/k;cx.fill(SPL[p.pi]);cx.stroke(SPL[p.pi])}
    else{cx.beginPath();cx.ellipse(0,0,p.r,p.r*(p.el||1),0,0,7);cx.fill();cx.stroke()}
@@ -97,7 +99,8 @@ const FX=(()=>{
   if(P.length)requestAnimationFrame(loop);else{run=false;cx.clearRect(0,0,W,H)}
  }
  const go=()=>{if(!run){run=true;requestAnimationFrame(loop)}};
- const cols=()=>{const t=getComputedStyle(document.documentElement).getPropertyValue('--team').trim()||'#ff3d9a';return[t,'#ffe81a','#1ee6ff','#b8ff00','#ffffff','#ff8f1f']};
+ let INK='#000';
+ const cols=()=>{const cs=getComputedStyle(document.documentElement),g=(k,d)=>cs.getPropertyValue(k).trim()||d;INK=g('--ink','#000');return[g('--team','#ff3d9a'),g('--yellow','#ffe81a'),g('--cyan','#1ee6ff'),g('--lime','#b8ff00'),'#ffffff',g('--orange','#ff8f1f')]};
  return{
   burst(x,y,n,spread){
    if(reduce()||!init())return;const C=cols();
@@ -126,6 +129,9 @@ async function copyText(t){
  try{const ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;left:0;top:0;opacity:0;font-size:16px';document.body.appendChild(ta);ta.focus();ta.select();ta.setSelectionRange(0,t.length);const ok=document.execCommand('copy');ta.remove();return ok}catch(e){return false}
 }
 const applyTeam=()=>document.documentElement.setAttribute('data-team',S.team||'pink');
+const themeOf=k=>THEMES.find(t=>t[0]===k)||THEMES[0];
+/* 画面の色（テーマ）。起動前にも head のスクリプトが同じことをする（ちらつかないように） */
+const applyTheme=()=>{const t=themeOf(S.theme),q=n=>document.querySelector('meta[name='+n+']');document.documentElement.setAttribute('data-theme',t[0]);if(q('theme-color'))q('theme-color').setAttribute('content',t[3]);if(q('color-scheme'))q('color-scheme').setAttribute('content',t[7]?'dark':'light');if(q('apple-mobile-web-app-status-bar-style'))q('apple-mobile-web-app-status-bar-style').setAttribute('content',t[7]?'black-translucent':'default')};
 const sjName=s=>SJN[s]||s;
 const dateJa=d=>{const x=dt(d);return(x.getMonth()+1)+'/'+x.getDate()+'（'+'日月火水木金土'[x.getDay()]+'）'};
 const fmtMin=m=>m>=60?Math.floor(m/60)+'時間'+(m%60?m%60+'分':''):m+'分';

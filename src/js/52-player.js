@@ -213,7 +213,7 @@ function renderResult(R){
  const rank=rankOfAcc(acc);
  const head=o.boss?(win?'BOSS DOWN!':'おしい！'):acc>=.5||n===0?'CLEAR!':'おつかれ！';
  plRoot().innerHTML=`<div class="plb mid"><div class="rs2" data-rank="${rank}">
-  <div class="splw">${splatSVG(hashStr(o.title)%97,'var(--team)',{drops:7,stroke:'#000',sw:5})}</div>
+  <div class="splw">${splatSVG(hashStr(o.title)%97,'var(--team)',{drops:7,stroke:'var(--ink)',sw:5})}</div>
   <div class="clear">${head}</div>
   <div class="rk"><i>${rank}</i><span>ランク</span></div>
   <p class="rt">${esc(o.title)}${o.boss?(win?'　ボスをたおした！':'　あと'+(8-ok)+'問でたおせた…'):''}</p>
