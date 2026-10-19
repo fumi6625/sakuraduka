@@ -61,13 +61,19 @@ const ACT={
   if(!F.ready){toast(F.all?'せいかいが 4わりに とどいた ドリルが ひつようだよ（もう一度 やってみよう）':'あと'+F.left+'つ おわったら おせるよ');return}
   contactSheet();
  },
- async mailCopy(){const F=flowState();if(!F.ready)return;const ok=await copyText(mailText(F).text);if(ok)contactMark('文を コピーした。メールやLINEに はりつけて、おくってね');else toast('コピーできなかった。「おくる文を見る」から 長押しでコピーしてね')},
+ async mailCopy(){
+  const F=flowState();if(!F.ready)return;
+  const ok=await copyText(mailText(F).text);
+  if(!ok){toast('コピーできなかった。「おくる文を見る」から 長押しでコピーしてね');return}
+  const m='文を コピーした。メールやLINEに はりつけて、おくってね';
+  if(mailAddrs().length)contactMark(m);else toast(m);   // 宛先がないときは、コピーだけでは「押した」にしない
+ },
  async mailShare(){const F=flowState();if(!F.ready||!navigator.share)return;const M=mailText(F);try{await navigator.share({title:M.subject,text:M.body});contactMark()}catch(e){}},
  mailSetup(){closeSheet();openPage('family');setTimeout(()=>{const e=$('#setMailF');if(e&&e.scrollIntoView)e.scrollIntoView({block:'center'})},250)},
  mailSave(){
   const f=cleanMail($('#setMailF').value),m=cleanMail($('#setMailM').value);
   if((f&&!validMail(f))||(m&&!validMail(m))){toast('メールアドレスの かたちが ちがうみたい。もう一度 見てね');return}
-  needPin('れんらく先のメールアドレスを 保存します。',()=>{S.mail={f,m};['#setMailF','#setMailM'].forEach(k=>{const e=$(k);if(e)delete e.dataset.dirty});save();initInputs();toast(f||m?'メールアドレスを 保存した':'メールアドレスを 消した')});
+  needPin('れんらく先のメールアドレスを 保存します。',()=>{S.mail={f,m};['#setMailF','#setMailM'].forEach(k=>{const e=$(k);if(e)delete e.dataset.dirty});save();initInputs();toast(!(f||m)?'メールアドレスを 消した':PINON()?'メールアドレスを 保存した':'メールアドレスを 保存した。暗証番号（保護者OK）を決めると、子どもが宛先を変えられなくなります')});
  },
  mailTest(){
   const typed=[cleanMail($('#setMailF').value),cleanMail($('#setMailM').value)].filter(validMail),to=[...new Set(typed.length?typed:mailAddrs())];
@@ -217,9 +223,9 @@ const ACT={
  },
  tierSet(v){if(!(S.pinOn&&S.pin)&&v!=='auto'){toast('量を決めるのは、おうちの人と暗証番号を決めてからにしよう（いまは「おまかせ」）');return}needPin('1日の量の段階を変えます。',()=>{S.tier=v==='auto'?'auto':+v;S.rt=null;save();initInputs();toast(v==='auto'?'段階：おまかせ（だんだん増える）':'段階を「'+TIERS[+v].name+'」にした')})},
  async report(){const t=reportText();$('#rpt').value=t;const ok=await copyText(t);toast(ok?'週報をコピーした':'下の文を長押しでコピーしてね')},
- bkMake(){$('#bk').value=btoa(unescape(encodeURIComponent(JSON.stringify(S))))},
+ bkMake(){$('#bk').value=btoa(unescape(encodeURIComponent(JSON.stringify(backupObj()))))},   // 暗証番号は入れない
  async bkCopy(){if(!$('#bk').value)ACT.bkMake();const ok=await copyText($('#bk').value);toast(ok?'バックアップをコピーした。メモアプリなどに保存してね':'長押しでコピーしてね')},
- bkLoad(){let o;try{o=JSON.parse(decodeURIComponent(escape(atob($('#bk').value.trim()))));if(!o||typeof o.xp!=='number')throw 0}catch(e){toast('復元できなかった。文字列をもう一度たしかめてね');return}needPin('バックアップから復元します。いまの記録は置きかわります。',()=>{S=norm(o);save();reloadAll();show(VIEWS.includes(S.tab)?S.tab:'home');toast('復元した')})},
+ bkLoad(){let o;try{o=JSON.parse(decodeURIComponent(escape(atob($('#bk').value.trim()))));if(!o||typeof o.xp!=='number')throw 0}catch(e){toast('復元できなかった。文字列をもう一度たしかめてね');return}needPin('バックアップから復元します。いまの記録は置きかわります（暗証番号は、いまのまま）。',()=>{restoreFrom(o);save();reloadAll();show(VIEWS.includes(S.tab)?S.tab:'home');toast('復元した')})},
  reroute(){S.rt=null;save();refresh();toast('きょうのルートを作り直した')},
  reset(){
   const b=$('#rstBtn');
@@ -228,7 +234,7 @@ const ACT={
  }
 };
 document.addEventListener('click',e=>{
- if(FCD&&!e.target.closest('[data-act="flowGo"]'))flowCdStop(true);   // さわったら、自動でつぎへ進むのを止める
+ if(FCD&&!e.target.closest('[data-act="flowGo"]')&&!e.target.closest('#ov'))flowCdStop(true);   // さわったら、自動でつぎへ進むのを止める（レベルアップの表示を閉じるだけなら止めない）
  if(e.target.closest('a[data-mailsent]')){contactMark();return}   // メールを開くリンク：ふつうに開かせて、「押した」を記録する
  const t=e.target.closest('[data-act],[data-tab],[data-page]');
  if(!t){
@@ -280,5 +286,5 @@ if(/[?&]debug/.test(location.search))window.__sq={get S(){return S},get PL(){ret
 (function init(){
  applyTeam();applyTheme();paintBg();
  try{const c=document.createElement('canvas');c.width=c.height=180;const x=c.getContext('2d');x.fillStyle='#fff0f5';x.fillRect(0,0,180,180);x.fillStyle='#f7a3c0';[[90,46],[134,78],[117,130],[63,130],[46,78]].forEach(p=>{x.beginPath();x.arc(p[0],p[1],30,0,7);x.fill()});x.fillStyle='#ffe27a';x.beginPath();x.arc(90,90,17,0,7);x.fill();const l=document.createElement('link');l.rel='apple-touch-icon';l.href=c.toDataURL('image/png');document.head.appendChild(l)}catch(e){}
- show(VIEWS.includes(S.tab)?S.tab:'home');
+ show('home');   // 起動は、いつもホーム（前に開いていたタブから始めると、きょうのミッションを見落とす）
 })();

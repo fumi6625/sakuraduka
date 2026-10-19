@@ -308,10 +308,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;heigh
 .hero .gp .tank{flex:1}
 .hero .gp b{font-family:var(--f-d);font-weight:900;font-size:18px;white-space:nowrap;text-shadow:2px 2px 0 var(--tsh)}
 .hero .busy{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;font-weight:700;color:var(--tx2)}
-.sw{position:relative;flex:none;width:58px;height:34px;padding:0;background:var(--track);border:3px solid var(--ink);border-radius:99px;box-shadow:0 0 0 2px var(--track-ring)}
-.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--mu);border:2px solid var(--ink);transition:left .15s,background .15s}
+.sw{position:relative;flex:none;width:72px;height:44px;padding:0;background:var(--track);border:3px solid var(--ink);border-radius:99px;box-shadow:0 0 0 2px var(--track-ring)}
+.sw::after{content:"";position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;background:var(--mu);border:2px solid var(--ink);transition:left .15s,background .15s}
 .sw[aria-pressed=true]{background:var(--team)}
-.sw[aria-pressed=true]::after{left:27px;background:#fff}
+.sw[aria-pressed=true]::after{left:32px;background:#fff}
 
 /* ルートのバー（一目でわかる） */
 .route{display:flex;align-items:flex-start;margin:4px 2px 14px;padding:0}
@@ -606,7 +606,7 @@ ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:38
 .bfi i{font-style:normal;font-size:12px;color:var(--lime-t);font-weight:900}
 .bfi b{font-family:var(--f-d);font-weight:900;font-size:20px;color:var(--yellow-t)}
 .bfi small{font-size:12px;color:var(--tx2)}
-.rule{margin:10px 0 16px;font-size:14px;color:var(--tx2);font-weight:500}
+.rule{margin:10px 0 16px;font-size:14px;color:var(--tx);font-weight:500}
 .rs2{position:relative;text-align:center;padding-top:10px}
 .rs2 .splw{position:absolute;left:50%;top:-6px;width:min(430px,86%);transform:translateX(-50%);opacity:.9;pointer-events:none}
 .rs2>*:not(.splw){position:relative}
@@ -1002,7 +1002,7 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 @keyframes nudge{50%{transform:scale(1.025)}}
 .nxt{margin:16px 0 4px;text-align:center}
 .nxb{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:84px;margin-top:10px;padding:10px 22px;text-align:left}
-.cdb{position:absolute;left:0;bottom:0;height:9px;width:0;background:var(--ink);opacity:.4;transition:width .25s linear;pointer-events:none}
+.cdb{position:absolute;left:0;bottom:0;height:12px;width:0;background:var(--ink);opacity:.55;transition:width .25s linear;pointer-events:none}
 .nxb b{display:block;font-size:26px;line-height:1.2}
 .nxb small{display:block;margin-top:2px;font-family:var(--f-b,inherit);font-size:14px;font-weight:700;line-height:1.35}
 .nxb svg.ic{flex:none;width:38px;height:38px}
@@ -1024,3 +1024,18 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 .cto .chp{white-space:normal;word-break:break-all}
 .csheet .cbtn{min-height:78px;font-size:23px;margin:4px 0 8px}
 .csheet .cbtn svg{width:32px;height:32px}
+/* つぎのボタンと「ひとやすみ」の間（影が重ならないように）／押したあとのれんらくボタンは控えめ／語の途中で折り返さない */
+.nxt .nxb+.bt,.nxt .nxc+.bt{margin-top:16px}
+.nowc.goalc .bt.cbtn.sent{min-height:56px;padding:0 18px;font-size:17px}
+.nowc.goalc .hwn{margin:4px 0 10px;font-weight:900;color:var(--on)}
+.csheet .cbtn.sent{min-height:56px;font-size:17px}
+.nowc h2,.nowc.goalc p,.nxc,.csheet h2,.csheet>div>p,.nxb b,.nxb small,.cbar b,.nowc.goalc .bt.cbtn,.nowc.goalc .row .bt{word-break:keep-all;overflow-wrap:break-word}
+@media (max-width:560px){
+ .nowc.goalc .bt.cbtn:not(.sent){min-height:76px;font-size:19px}
+ .nowc.goalc .row{gap:8px}
+ .nowc.goalc .row .bt{flex:1 1 44%;min-width:0;padding:0 10px;font-size:16px}
+ .nxb{padding:10px 16px}
+ .nxb b{font-size:22px}
+ .nxc{font-size:13px}
+ .csheet h2{font-size:20px}
+}

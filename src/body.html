@@ -171,13 +171,13 @@
   <p class="mini">オンにすると、ホームの「宿題・提出物」を終えるとき、月の目標をつけるとき、「ミニの日」にするとき、段階を変えるとき、リセット・復元・保護者OKをオフにするときに、4けたの暗証番号が必要になります（自己申告でごまかせないように）。暗証番号は子どもに教えない。</p>
   <div class="row"><div><label for="setPin">暗証番号（4けた）</label><input id="setPin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" style="width:130px"></div><div><label for="setPinOn">保護者OK</label><button class="sw" id="setPinOn" data-act="pinToggle" aria-pressed="false" aria-label="保護者OK"></button></div></div>
   <h4>おうちの人へ「完了れんらく」のメール</h4>
-  <p class="mini">ホームの「完了れんらく」ボタン（きょうのミッションがぜんぶ終わったときだけ押せる）を押すと、ここの宛先あてのメール作成画面が開きます。<b>自動では送りません</b>（子どもが自分で押し、メールアプリの「送信」まで押します）。どちらか1人だけでもOKです。アドレスはこのiPadの中だけに保存され、暗証番号をオンにすると、変えるときに暗証番号がいります。</p>
-  <div class="row"><div><label for="setMailF">おとうさんのメール</label><input id="setMailF" type="email" inputmode="email" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="例：otosan@example.com" style="width:280px;max-width:100%"></div>
-   <div><label for="setMailM">おかあさんのメール</label><input id="setMailM" type="email" inputmode="email" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="例：okasan@example.com" style="width:280px;max-width:100%"></div></div>
+  <p class="mini">ホームの「完了れんらく」ボタン（ミッションがぜんぶ終わると押せる）で、ここの宛先あてのメール作成画面が開きます。<b>自動では送りません</b>（子どもが自分で押し、メールの「送信」まで押します）。どちらか1人だけでもOK。アドレスはこのiPadの中だけに保存され、暗証番号をオンにすると、変えるときに暗証番号がいります。</p>
+  <div class="row"><div><label for="setMailM">おかあさんのメール</label><input id="setMailM" type="email" inputmode="email" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="例：okasan@example.com" style="width:280px;max-width:100%"></div>
+   <div><label for="setMailF">おとうさんのメール</label><input id="setMailF" type="email" inputmode="email" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="例：otosan@example.com" style="width:280px;max-width:100%"></div></div>
   <div class="row" style="margin-top:8px"><button class="bt pri sm" data-act="mailSave">保存</button><button class="bt sm" data-act="mailTest">テストメールを作る</button></div>
   <p class="mini" id="mailNote" style="margin-top:6px"></p>
   <h4>バックアップ</h4>
-  <p class="mini">バックアップの文字列には、記録のほか、暗証番号とメールアドレスもふくまれます。人に見せたり、ほかの人がさわれる場所に置いたりしないでください。</p>
+  <p class="mini">バックアップの文字列には、記録とメールアドレスがふくまれます（暗証番号はふくまれません。復元しても、いまの暗証番号のままです）。ほかの人がさわれる場所には置かないでください。</p>
   <textarea id="bk" aria-label="バックアップ" placeholder="「バックアップを作る」を押すと、ここに文字列が出ます。復元するときはここに貼って「復元」。"></textarea>
   <div class="row" style="margin-top:8px"><button class="bt sm" data-act="bkMake">バックアップを作る</button><button class="bt sm" data-act="bkCopy">コピー</button><button class="bt sm" data-act="bkLoad">復元</button><button class="bt sm" data-act="reroute">きょうのルートを作り直す</button><button class="bt sm ng" data-act="reset" id="rstBtn">すべてリセット</button></div></div>
  <div class="card"><h2>この資料について</h2>

@@ -323,10 +323,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:34px;heigh
 .hero .gp .tank{flex:1}
 .hero .gp b{font-family:var(--f-d);font-weight:900;font-size:18px;white-space:nowrap;text-shadow:2px 2px 0 var(--tsh)}
 .hero .busy{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:13px;font-weight:700;color:var(--tx2)}
-.sw{position:relative;flex:none;width:58px;height:34px;padding:0;background:var(--track);border:3px solid var(--ink);border-radius:99px;box-shadow:0 0 0 2px var(--track-ring)}
-.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--mu);border:2px solid var(--ink);transition:left .15s,background .15s}
+.sw{position:relative;flex:none;width:72px;height:44px;padding:0;background:var(--track);border:3px solid var(--ink);border-radius:99px;box-shadow:0 0 0 2px var(--track-ring)}
+.sw::after{content:"";position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;background:var(--mu);border:2px solid var(--ink);transition:left .15s,background .15s}
 .sw[aria-pressed=true]{background:var(--team)}
-.sw[aria-pressed=true]::after{left:27px;background:#fff}
+.sw[aria-pressed=true]::after{left:32px;background:#fff}
 
 /* ルートのバー（一目でわかる） */
 .route{display:flex;align-items:flex-start;margin:4px 2px 14px;padding:0}
@@ -621,7 +621,7 @@ ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:38
 .bfi i{font-style:normal;font-size:12px;color:var(--lime-t);font-weight:900}
 .bfi b{font-family:var(--f-d);font-weight:900;font-size:20px;color:var(--yellow-t)}
 .bfi small{font-size:12px;color:var(--tx2)}
-.rule{margin:10px 0 16px;font-size:14px;color:var(--tx2);font-weight:500}
+.rule{margin:10px 0 16px;font-size:14px;color:var(--tx);font-weight:500}
 .rs2{position:relative;text-align:center;padding-top:10px}
 .rs2 .splw{position:absolute;left:50%;top:-6px;width:min(430px,86%);transform:translateX(-50%);opacity:.9;pointer-events:none}
 .rs2>*:not(.splw){position:relative}
@@ -1017,7 +1017,7 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 @keyframes nudge{50%{transform:scale(1.025)}}
 .nxt{margin:16px 0 4px;text-align:center}
 .nxb{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:84px;margin-top:10px;padding:10px 22px;text-align:left}
-.cdb{position:absolute;left:0;bottom:0;height:9px;width:0;background:var(--ink);opacity:.4;transition:width .25s linear;pointer-events:none}
+.cdb{position:absolute;left:0;bottom:0;height:12px;width:0;background:var(--ink);opacity:.55;transition:width .25s linear;pointer-events:none}
 .nxb b{display:block;font-size:26px;line-height:1.2}
 .nxb small{display:block;margin-top:2px;font-family:var(--f-b,inherit);font-size:14px;font-weight:700;line-height:1.35}
 .nxb svg.ic{flex:none;width:38px;height:38px}
@@ -1039,6 +1039,21 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 .cto .chp{white-space:normal;word-break:break-all}
 .csheet .cbtn{min-height:78px;font-size:23px;margin:4px 0 8px}
 .csheet .cbtn svg{width:32px;height:32px}
+/* つぎのボタンと「ひとやすみ」の間（影が重ならないように）／押したあとのれんらくボタンは控えめ／語の途中で折り返さない */
+.nxt .nxb+.bt,.nxt .nxc+.bt{margin-top:16px}
+.nowc.goalc .bt.cbtn.sent{min-height:56px;padding:0 18px;font-size:17px}
+.nowc.goalc .hwn{margin:4px 0 10px;font-weight:900;color:var(--on)}
+.csheet .cbtn.sent{min-height:56px;font-size:17px}
+.nowc h2,.nowc.goalc p,.nxc,.csheet h2,.csheet>div>p,.nxb b,.nxb small,.cbar b,.nowc.goalc .bt.cbtn,.nowc.goalc .row .bt{word-break:keep-all;overflow-wrap:break-word}
+@media (max-width:560px){
+ .nowc.goalc .bt.cbtn:not(.sent){min-height:76px;font-size:19px}
+ .nowc.goalc .row{gap:8px}
+ .nowc.goalc .row .bt{flex:1 1 44%;min-width:0;padding:0 10px;font-size:16px}
+ .nxb{padding:10px 16px}
+ .nxb b{font-size:22px}
+ .nxc{font-size:13px}
+ .csheet h2{font-size:20px}
+}
 </style>
 <div id="bg" aria-hidden="true"></div>
 <div class="app">
@@ -1212,13 +1227,13 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
   <p class="mini">オンにすると、ホームの「宿題・提出物」を終えるとき、月の目標をつけるとき、「ミニの日」にするとき、段階を変えるとき、リセット・復元・保護者OKをオフにするときに、4けたの暗証番号が必要になります（自己申告でごまかせないように）。暗証番号は子どもに教えない。</p>
   <div class="row"><div><label for="setPin">暗証番号（4けた）</label><input id="setPin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" style="width:130px"></div><div><label for="setPinOn">保護者OK</label><button class="sw" id="setPinOn" data-act="pinToggle" aria-pressed="false" aria-label="保護者OK"></button></div></div>
   <h4>おうちの人へ「完了れんらく」のメール</h4>
-  <p class="mini">ホームの「完了れんらく」ボタン（きょうのミッションがぜんぶ終わったときだけ押せる）を押すと、ここの宛先あてのメール作成画面が開きます。<b>自動では送りません</b>（子どもが自分で押し、メールアプリの「送信」まで押します）。どちらか1人だけでもOKです。アドレスはこのiPadの中だけに保存され、暗証番号をオンにすると、変えるときに暗証番号がいります。</p>
-  <div class="row"><div><label for="setMailF">おとうさんのメール</label><input id="setMailF" type="email" inputmode="email" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="例：otosan@example.com" style="width:280px;max-width:100%"></div>
-   <div><label for="setMailM">おかあさんのメール</label><input id="setMailM" type="email" inputmode="email" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="例：okasan@example.com" style="width:280px;max-width:100%"></div></div>
+  <p class="mini">ホームの「完了れんらく」ボタン（ミッションがぜんぶ終わると押せる）で、ここの宛先あてのメール作成画面が開きます。<b>自動では送りません</b>（子どもが自分で押し、メールの「送信」まで押します）。どちらか1人だけでもOK。アドレスはこのiPadの中だけに保存され、暗証番号をオンにすると、変えるときに暗証番号がいります。</p>
+  <div class="row"><div><label for="setMailM">おかあさんのメール</label><input id="setMailM" type="email" inputmode="email" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="例：okasan@example.com" style="width:280px;max-width:100%"></div>
+   <div><label for="setMailF">おとうさんのメール</label><input id="setMailF" type="email" inputmode="email" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="例：otosan@example.com" style="width:280px;max-width:100%"></div></div>
   <div class="row" style="margin-top:8px"><button class="bt pri sm" data-act="mailSave">保存</button><button class="bt sm" data-act="mailTest">テストメールを作る</button></div>
   <p class="mini" id="mailNote" style="margin-top:6px"></p>
   <h4>バックアップ</h4>
-  <p class="mini">バックアップの文字列には、記録のほか、暗証番号とメールアドレスもふくまれます。人に見せたり、ほかの人がさわれる場所に置いたりしないでください。</p>
+  <p class="mini">バックアップの文字列には、記録とメールアドレスがふくまれます（暗証番号はふくまれません。復元しても、いまの暗証番号のままです）。ほかの人がさわれる場所には置かないでください。</p>
   <textarea id="bk" aria-label="バックアップ" placeholder="「バックアップを作る」を押すと、ここに文字列が出ます。復元するときはここに貼って「復元」。"></textarea>
   <div class="row" style="margin-top:8px"><button class="bt sm" data-act="bkMake">バックアップを作る</button><button class="bt sm" data-act="bkCopy">コピー</button><button class="bt sm" data-act="bkLoad">復元</button><button class="bt sm" data-act="reroute">きょうのルートを作り直す</button><button class="bt sm ng" data-act="reset" id="rstBtn">すべてリセット</button></div></div>
  <div class="card"><h2>この資料について</h2>
@@ -7965,6 +7980,9 @@ const norm=o=>{o=o||{};const r=Object.assign(fresh(),o);r.nai=Object.assign({},D
 let S;
 try{S=norm(JSON.parse(ls.get()||'{}'))}catch(e){S=fresh()}
 const save=()=>ls.set(JSON.stringify(S));
+/* バックアップには、暗証番号（pin・pinOn・pinSkip）を入れない（文字列を読まれて、暗証番号がわかってしまわないように）。復元しても、いまの端末の暗証番号はそのまま */
+const backupObj=()=>{const o=JSON.parse(JSON.stringify(S));delete o.pin;delete o.pinOn;delete o.pinSkip;return o};
+const restoreFrom=o=>{const k={pin:S.pin,pinOn:S.pinOn,pinSkip:S.pinSkip};S=norm(Object.assign({},o,k));return S};
 let saveT=null;
 const saveSoon=()=>{clearTimeout(saveT);saveT=setTimeout(save,300)};
 const flushSave=()=>{if(saveT){clearTimeout(saveT);saveT=null}save()};
@@ -9188,7 +9206,7 @@ function completeStage(date,id,r){
  if((r.n||0)>=5&&(r.ok||0)/r.n<.4)out.low=true;
  const st=(S.rt&&S.rt.d===date?S.rt.stg.find(x=>x.id===id):null)||{};
  const mins=r.min!=null?r.min:Math.max(1,Math.round((r.sec||0)/60)),sj=st.subj||'総';
- d.stg[id]={ok:r.ok||0,n:r.n||0,xp:out.xp+was,sec:(redo?old.sec||0:0)+(r.sec||0),cb:Math.max(r.combo||0,redo?old.cb||0:0),at:Date.now(),note:r.note||''};
+ d.stg[id]=Object.assign({ok:r.ok||0,n:r.n||0,xp:out.xp+was,sec:(redo?old.sec||0:0)+(r.sec||0),cb:Math.max(r.combo||0,redo?old.cb||0:0),at:Date.now(),note:r.note||''},redo?{f:old.f||{ok:old.ok,n:old.n}}:{});   // f＝やりなおす前の「1回目」の結果（れんらくのメールにも載せる）
  d.min[sj]=(d.min[sj]||0)+mins;
  const good=goodOf(d).sess>=1;
  /* 宿題・ふりかえり・全クリのXPは、その日に「正答4割以上のドリル」が1つあるときだけ。ない日の宿題・ふりかえりのXPは預かって、あとでドリルがとれたら入る */
@@ -9455,13 +9473,21 @@ function flowState(date=today()){
 /* ----- メールアドレス（このiPadの中だけに保存。コードや資料には入れない） ----- */
 const cleanMail=v=>String(v||'').normalize('NFKC').replace(/\s+/g,'');
 const validMail=v=>/^[A-Za-z0-9._+\-]+@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)+$/.test(v)&&v.length<=100;
-const mailAddrs=()=>{const m=S.mail||{};return[...new Set([cleanMail(m.f),cleanMail(m.m)].filter(validMail))]};
+const mailAddrs=()=>{const m=S.mail||{};return[...new Set([cleanMail(m.m),cleanMail(m.f)].filter(validMail))]};   // おかあさん・おとうさんの順
 const mailWho=()=>{const m=S.mail||{},f=validMail(cleanMail(m.f)),o=validMail(cleanMail(m.m));return f&&!o?'おとうさん':o&&!f?'おかあさん':'おかあさん・おとうさん'};
 const mdw=d=>{const x=dt(d);return(x.getMonth()+1)+'/'+x.getDate()+'（'+'日月火水木金土'[x.getDay()]+'）'};
 /* 送る文（子どもの言葉で、短く）。subject＝件名、body＝本文、text＝コピー・共有用 */
 function mailText(F,date=today()){
  const rec=peekDay(date),nick=S.nick;
- const rows=F.must.map(s=>'・'+flowName(s)+(s.kind==='session'&&s.res&&s.res.n?'　'+s.res.ok+'/'+s.res.n:''));
+ const rf=S.refl&&S.refl[date];
+ /* 数のあるドリルは、せいかいの数。やりなおしたときは、1回目も書く。自分でつけるもの（宿題・ふりかえり）は、そう分かるように */
+ const rows=F.must.map(s=>{
+  const r=s.res;let t='・'+flowName(s);
+  if(s.kind==='session'&&r&&r.n)t+='　'+r.ok+'/'+r.n+(r.f?'（1回目 '+r.f.ok+'/'+r.f.n+'→やりなおし）':'');
+  else if(s.id==='hw')t+='（じぶんでチェック）';
+  else if(s.id==='ref'&&rf&&rf.s)t+='　自分'+rf.s+'点'+(rf.d!=null?'／データ'+rf.d+'点':'');
+  return t;
+ });
  const ss=F.must.filter(s=>s.kind==='session'&&s.res&&s.res.n),n=sum(ss.map(s=>s.res.n)),ok=sum(ss.map(s=>s.res.ok)),min=sum(Object.values(rec.min||{}));
  const L=[mailWho()+'へ','','きょう（'+mdw(date)+'）の ノルマ、ぜんぶ おわったよ！','','■ やったこと',...rows,'','■ きょうの まとめ'];
  if(n)L.push('・せいかい '+ok+'/'+n+'（'+Math.round(ok/n*100)+'%）');
@@ -9589,9 +9615,9 @@ const FX=(()=>{
     P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-2.5,g:.2,r:12+Math.random()*14,pi:Math.random()*6|0,el:.55+Math.random()*.45,rot:Math.random()*6,vr:(Math.random()-.5)*.3,c:C[Math.random()*C.length|0],life:44+Math.random()*30})}
    go();
   },
-  confetti(n){
-   if(reduce()||!init())return;const C=cols();
-   for(let i=0;i<(n||90);i++){P.push({x:Math.random()*innerWidth,y:-20-Math.random()*220,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,g:.06,r:6+Math.random()*6,sq:1,rot:Math.random()*6,vr:(Math.random()-.5)*.35,c:C[Math.random()*C.length|0],life:150+Math.random()*80})}
+  confetti(n,o){
+   if(reduce()||!init())return;const C=cols(),sm=o&&o.small;   // small：小さい粒を少し（文字や「つぎ」のボタンにかぶらないように）
+   for(let i=0;i<(n||90);i++){P.push({x:Math.random()*innerWidth,y:-20-Math.random()*220,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,g:.06,r:sm?3.5+Math.random()*3:6+Math.random()*6,sq:1,rot:Math.random()*6,vr:(Math.random()-.5)*.35,c:C[Math.random()*C.length|0],life:sm?100+Math.random()*30:150+Math.random()*80})}
    go();
   },
   at(el,n){if(!el)return;const b=el.getBoundingClientRect();this.burst(b.left+b.width/2,b.top+b.height/2,n||14)}
@@ -9891,8 +9917,10 @@ function answerQ(resp){
  let lvTxt='';
  if(e.rep===0){
   const before=boxOf(it);
-  if(V.kind==='tf'){if(!ok)recordAnswer(it,false);S.tf.n++;if(ok)S.tf.ok++}else lvTxt=recordAnswer(it,ok);
-  noteAnswer(ok);
+  if(!PL.o.redo){   // やりなおしは、見たばかりの答えをもう一度答えるだけ。おぼえ具合（箱）や答えた数には、数えない
+   if(V.kind==='tf'){if(!ok)recordAnswer(it,false);S.tf.n++;if(ok)S.tf.ok++}else lvTxt=recordAnswer(it,ok);
+   noteAnswer(ok);
+  }
   const after=boxOf(it);if(after>=4&&before<4)PL.newMast++;
   PL.segs[e.idx]=ok?1:2;if(ok)PL.ok++;
   const ans=PL.segs.filter(x=>x).length;if(ans%5===0&&ans<PL.total){PL.roundFlag=true;PL.rn=ans/5}
@@ -9993,7 +10021,7 @@ ${fold}</div></div>`;
  if(cdOn)flowCdStart(6);
  /* XPカウントアップと演出 */
  const el=$('#xpV');let t=0;const iv=setInterval(()=>{t++;const v=Math.round(xp*Math.min(1,t/18));if(el)el.textContent='+'+v;if(t>=18)clearInterval(iv)},40);
- Snd.clear();FX.confetti(nx?45:win?110:40);
+ Snd.clear();if(nx)FX.confetti(24,{small:true});else FX.confetti(win?110:40);
  const msgs=[];
  nb.forEach(b=>msgs.push('バッジ獲得：'+b[1]));
  if(res&&res.streak&&res.streak.freeze)msgs.push('お休みトークンで連続記録を守った！');
@@ -10368,7 +10396,7 @@ function startStage(s){
  const redo=s.done&&lowRes(s.res),count=!s.done||redo;   // 正答4割未満だったドリルは、やりなおして4割以上とれたら数える
  startSession({title:s.t,subj:s.subj,items:s.items,skipBrief:!s.boss,stageId:count?s.id:null,boss:s.boss,
   desc:redo?'ゆっくり読んで、もう一度！ 4割以上とれたら、きょうの合格ラインに数えるよ':s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,
-  brk:s.brk,min:s.min,xp:count?s.xp:0});
+  brk:s.brk,min:s.min,xp:count?s.xp:0,redo:redo});
 }
 
 /* 一本道のバー（ホームはボタン／結果画面は見るだけ）。さいごの「れんらく」は、押せるまで鍵 */
@@ -10385,13 +10413,17 @@ function lockBar(F){
  const why=F.all?'せいかい4わり いじょうの ドリルが ひつよう':'あと'+F.left+'つ';
  return `<button class="cbar" data-act="contact" aria-disabled="true">${ico('lock')}<b>おかあさん・おとうさんに 完了れんらく</b><small>${why}</small></button>`;
 }
-/* マストがぜんぶ終わったときのカード（れんらくボタン＋おかわり） */
+/* マストがぜんぶ終わったときのカード（れんらくボタン＋おかわり）。ボタンを押したあとは、「れんらくずみ」の達成感を主役にして、ボタンは控えめに */
 function goalCard(F){
- const due=sum(Object.values(dueByBank()));
- return `<div class="nowc cleared goalc"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'var(--ink)',sw:5})}</div><span class="lb y">ぜんぶクリア！</span>
-  <h2>きょうの ノルマ、おわった！</h2>
-  <p>${F.sent?`${ico('check')} れんらくボタンを おしたよ（${hmOf(F.sentAt)}）`:'あとは、おうちの人に つたえるだけ。<b>じぶんで ボタンを おして</b>、メールを おくろう！'}</p>
-  <button class="bt pri xl w100 cbtn${F.sent?' sent':''}" data-act="contact">${ico('mail')}${F.sent?'もう一度 れんらくする':'おかあさん・おとうさんに 完了れんらく'}</button>
+ const due=sum(Object.values(dueByBank())),hw=F.hwWait?'<p class="mini hwn">宿題は、おうちの人に見せて OK をもらってね。</p>':'';
+ const top=F.sent
+  ?`<span class="lb y">れんらく ずみ！</span><h2>きょうは、もうバッチリ！</h2>
+  <p><span class="chp ok">${ico('check')} れんらくボタンを おしたよ（${hmOf(F.sentAt)}）</span></p>${hw}
+  <button class="bt gh w100 cbtn sent" data-act="contact">${ico('mail')}もう一度 れんらくする</button>`
+  :`<span class="lb y">ぜんぶクリア！</span><h2>きょうの ノルマ、おわった！</h2>
+  <p>あとは、おうちの人に つたえるだけ。<b>じぶんで ボタンを おして</b>、メールを おくろう！</p>${hw}
+  <button class="bt pri xl w100 cbtn" data-act="contact">${ico('mail')}おかあさん・おとうさんに 完了れんらく</button>`;
+ return `<div class="nowc cleared goalc${F.sent?' sentc':''}"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'var(--ink)',sw:5})}</div>${top}
   <p class="mini oka">まだ元気なら「おかわり」。好きな教材を、好きなだけ。（1日60XPまで）</p>
   <div class="row">${due?`<button class="bt cy" data-act="drillDue">ふくしゅう ${Math.min(10,due)}問</button>`:''}<button class="bt" data-tab="drill">おかわりドリル</button><button class="bt cy" data-act="tsukkomi">ツッコミバトル</button></div></div>`;
 }
@@ -10422,6 +10454,7 @@ function flowCdTick(){
  const el=$('#nxc');
  if(!el){flowCdStop();return}
  if(!$('#ov').hidden){FCD.end+=250;return}   // レベルアップなどの表示中は待つ
+ if(Date.now()-FCD.end>1500){flowCdStop(true);return}   // 画面を離れて、あとで戻ったとき：いきなり始めない
  const left=Math.ceil((FCD.end-Date.now())/1000),bar=$('#cdb');
  if(bar)bar.style.width=Math.min(100,Math.max(0,(1-(FCD.end-Date.now())/FCD.total)*100))+'%';   // ボタンの下の帯が、6秒でのびる
  if(left>0){el.textContent='つぎが '+left+'びょうで はじまるよ（どこかをタップで とまる）';return}
@@ -10447,18 +10480,18 @@ function flowBridge(id){
  },900);
 }
 
-/* ----- 完了れんらく：シート ----- */
+/* ----- 完了れんらく：シート（押したあとは、「ひらいたよ・送信まで押してね」の表示にかわる） ----- */
 function contactSheet(){
  const F=flowState();
  if(!F.ready){toast(F.all?'せいかい4わり いじょうの ドリルが ひつようだよ':'あと'+F.left+'つ おわったら おせるよ');return}
- const to=mailAddrs(),M=mailText(F),url=mailtoURL(to,M),share=typeof navigator!=='undefined'&&!!navigator.share;
- const who=mailWho();
- openSheet(`<h2>${ico('mail')} ${who}に 完了れんらく</h2>
-  <p>ぜんぶ おわったね！ <b>じぶんで ボタンを おして</b>、メールで つたえよう。</p>
+ const to=mailAddrs(),M=mailText(F),url=mailtoURL(to,M),share=typeof navigator!=='undefined'&&!!navigator.share,sent=F.sent;
+ openSheet(`<h2>${ico(sent?'check':'mail')} ${sent?'れんらくボタンを おしたよ！':mailWho()+'に 完了れんらく'}</h2>
+  <p>${sent?'メールアプリで、<b>右上の「送信」</b>を おしたかな？ まだなら、もう一度 ひらけるよ。':'ぜんぶ おわったね！ <b>じぶんで ボタンを おして</b>、メールで つたえよう。'}</p>
   <ul class="csum">${F.must.map(s=>`<li>${ico('check')}${esc(flowName(s))}${s.kind==='session'&&s.res&&s.res.n?`<b>${s.res.ok}/${s.res.n}</b>`:''}</li>`).join('')}</ul>
+  ${F.hwWait?'<p class="mini">宿題は、おうちの人に見せて OK をもらってね。</p>':''}
   ${to.length?`<p class="mini cto">宛先：${to.map(a=>`<span class="chp">${esc(a)}</span>`).join(' ')}</p>
-   <a class="bt pri xl w100 cbtn" data-mailsent href="${esc(url)}">${ico('mail')}メールを つくる</a>
-   <p class="mini">おすと メールアプリが ひらくよ。<b>右上の「送信」まで おして</b>、はじめて とどくよ。${F.sent?`<br>（${hmOf(F.sentAt)} に ボタンを おしたよ）`:''}</p>`
+   <a class="bt ${sent?'gh':'pri xl'} w100 cbtn${sent?' sent':''}" data-mailsent href="${esc(url)}">${ico('mail')}${sent?'もう一度 メールを ひらく':'メールを つくる'}</a>
+   <p class="mini">${sent?`（${hmOf(F.sentAt)} に ボタンを おしたよ）`:'おすと メールアプリが ひらくよ。<b>右上の「送信」まで おして</b>、はじめて とどくよ。'}</p>`
   :`<div class="pinbox"><b>メールアドレスが まだ入っていないよ</b><p class="mini" style="margin:4px 0 10px">おうちの人に、「おうちの人・設定」で入れてもらってね。</p><button class="bt" data-act="mailSetup">せっていを ひらく</button></div>`}
   <div class="row" style="justify-content:center;margin-top:10px"><button class="bt sm" data-act="mailCopy">文を コピー</button>${share?'<button class="bt sm" data-act="mailShare">ほかのアプリで おくる</button>':''}</div>
   <details class="fold"><summary>おくる文を見る</summary><pre class="code">${esc(M.text)}</pre></details>`,'csheet');
@@ -10467,7 +10500,10 @@ function contactSheet(){
 function contactMark(msg){
  if(!markContact())return false;
  save();Snd.ok();FX.confetti(70);toast(msg||'れんらくボタンを おしたよ！ メールの「送信」まで わすれずに');
- setTimeout(()=>{if(!PL&&!PG)refresh()},400);
+ setTimeout(()=>{   // メールアプリから戻ったとき、「押した」の表示になっているように（リンクを押した直後に作りなおさない）
+  if(!PL&&!PG)refresh();
+  if(!$('#sheet').hidden&&$('#sheet .csheet'))contactSheet();
+ },400);
  return true;
 }
 
@@ -10549,13 +10585,19 @@ const ACT={
   if(!F.ready){toast(F.all?'せいかいが 4わりに とどいた ドリルが ひつようだよ（もう一度 やってみよう）':'あと'+F.left+'つ おわったら おせるよ');return}
   contactSheet();
  },
- async mailCopy(){const F=flowState();if(!F.ready)return;const ok=await copyText(mailText(F).text);if(ok)contactMark('文を コピーした。メールやLINEに はりつけて、おくってね');else toast('コピーできなかった。「おくる文を見る」から 長押しでコピーしてね')},
+ async mailCopy(){
+  const F=flowState();if(!F.ready)return;
+  const ok=await copyText(mailText(F).text);
+  if(!ok){toast('コピーできなかった。「おくる文を見る」から 長押しでコピーしてね');return}
+  const m='文を コピーした。メールやLINEに はりつけて、おくってね';
+  if(mailAddrs().length)contactMark(m);else toast(m);   // 宛先がないときは、コピーだけでは「押した」にしない
+ },
  async mailShare(){const F=flowState();if(!F.ready||!navigator.share)return;const M=mailText(F);try{await navigator.share({title:M.subject,text:M.body});contactMark()}catch(e){}},
  mailSetup(){closeSheet();openPage('family');setTimeout(()=>{const e=$('#setMailF');if(e&&e.scrollIntoView)e.scrollIntoView({block:'center'})},250)},
  mailSave(){
   const f=cleanMail($('#setMailF').value),m=cleanMail($('#setMailM').value);
   if((f&&!validMail(f))||(m&&!validMail(m))){toast('メールアドレスの かたちが ちがうみたい。もう一度 見てね');return}
-  needPin('れんらく先のメールアドレスを 保存します。',()=>{S.mail={f,m};['#setMailF','#setMailM'].forEach(k=>{const e=$(k);if(e)delete e.dataset.dirty});save();initInputs();toast(f||m?'メールアドレスを 保存した':'メールアドレスを 消した')});
+  needPin('れんらく先のメールアドレスを 保存します。',()=>{S.mail={f,m};['#setMailF','#setMailM'].forEach(k=>{const e=$(k);if(e)delete e.dataset.dirty});save();initInputs();toast(!(f||m)?'メールアドレスを 消した':PINON()?'メールアドレスを 保存した':'メールアドレスを 保存した。暗証番号（保護者OK）を決めると、子どもが宛先を変えられなくなります')});
  },
  mailTest(){
   const typed=[cleanMail($('#setMailF').value),cleanMail($('#setMailM').value)].filter(validMail),to=[...new Set(typed.length?typed:mailAddrs())];
@@ -10705,9 +10747,9 @@ const ACT={
  },
  tierSet(v){if(!(S.pinOn&&S.pin)&&v!=='auto'){toast('量を決めるのは、おうちの人と暗証番号を決めてからにしよう（いまは「おまかせ」）');return}needPin('1日の量の段階を変えます。',()=>{S.tier=v==='auto'?'auto':+v;S.rt=null;save();initInputs();toast(v==='auto'?'段階：おまかせ（だんだん増える）':'段階を「'+TIERS[+v].name+'」にした')})},
  async report(){const t=reportText();$('#rpt').value=t;const ok=await copyText(t);toast(ok?'週報をコピーした':'下の文を長押しでコピーしてね')},
- bkMake(){$('#bk').value=btoa(unescape(encodeURIComponent(JSON.stringify(S))))},
+ bkMake(){$('#bk').value=btoa(unescape(encodeURIComponent(JSON.stringify(backupObj()))))},   // 暗証番号は入れない
  async bkCopy(){if(!$('#bk').value)ACT.bkMake();const ok=await copyText($('#bk').value);toast(ok?'バックアップをコピーした。メモアプリなどに保存してね':'長押しでコピーしてね')},
- bkLoad(){let o;try{o=JSON.parse(decodeURIComponent(escape(atob($('#bk').value.trim()))));if(!o||typeof o.xp!=='number')throw 0}catch(e){toast('復元できなかった。文字列をもう一度たしかめてね');return}needPin('バックアップから復元します。いまの記録は置きかわります。',()=>{S=norm(o);save();reloadAll();show(VIEWS.includes(S.tab)?S.tab:'home');toast('復元した')})},
+ bkLoad(){let o;try{o=JSON.parse(decodeURIComponent(escape(atob($('#bk').value.trim()))));if(!o||typeof o.xp!=='number')throw 0}catch(e){toast('復元できなかった。文字列をもう一度たしかめてね');return}needPin('バックアップから復元します。いまの記録は置きかわります（暗証番号は、いまのまま）。',()=>{restoreFrom(o);save();reloadAll();show(VIEWS.includes(S.tab)?S.tab:'home');toast('復元した')})},
  reroute(){S.rt=null;save();refresh();toast('きょうのルートを作り直した')},
  reset(){
   const b=$('#rstBtn');
@@ -10716,7 +10758,7 @@ const ACT={
  }
 };
 document.addEventListener('click',e=>{
- if(FCD&&!e.target.closest('[data-act="flowGo"]'))flowCdStop(true);   // さわったら、自動でつぎへ進むのを止める
+ if(FCD&&!e.target.closest('[data-act="flowGo"]')&&!e.target.closest('#ov'))flowCdStop(true);   // さわったら、自動でつぎへ進むのを止める（レベルアップの表示を閉じるだけなら止めない）
  if(e.target.closest('a[data-mailsent]')){contactMark();return}   // メールを開くリンク：ふつうに開かせて、「押した」を記録する
  const t=e.target.closest('[data-act],[data-tab],[data-page]');
  if(!t){
@@ -10768,7 +10810,7 @@ if(/[?&]debug/.test(location.search))window.__sq={get S(){return S},get PL(){ret
 (function init(){
  applyTeam();applyTheme();paintBg();
  try{const c=document.createElement('canvas');c.width=c.height=180;const x=c.getContext('2d');x.fillStyle='#fff0f5';x.fillRect(0,0,180,180);x.fillStyle='#f7a3c0';[[90,46],[134,78],[117,130],[63,130],[46,78]].forEach(p=>{x.beginPath();x.arc(p[0],p[1],30,0,7);x.fill()});x.fillStyle='#ffe27a';x.beginPath();x.arc(90,90,17,0,7);x.fill();const l=document.createElement('link');l.rel='apple-touch-icon';l.href=c.toDataURL('image/png');document.head.appendChild(l)}catch(e){}
- show(VIEWS.includes(S.tab)?S.tab:'home');
+ show('home');   // 起動は、いつもホーム（前に開いていたタブから始めると、きょうのミッションを見落とす）
 })();
 })();
 </script>

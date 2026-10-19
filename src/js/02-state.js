@@ -10,6 +10,9 @@ const norm=o=>{o=o||{};const r=Object.assign(fresh(),o);r.nai=Object.assign({},D
 let S;
 try{S=norm(JSON.parse(ls.get()||'{}'))}catch(e){S=fresh()}
 const save=()=>ls.set(JSON.stringify(S));
+/* バックアップには、暗証番号（pin・pinOn・pinSkip）を入れない（文字列を読まれて、暗証番号がわかってしまわないように）。復元しても、いまの端末の暗証番号はそのまま */
+const backupObj=()=>{const o=JSON.parse(JSON.stringify(S));delete o.pin;delete o.pinOn;delete o.pinSkip;return o};
+const restoreFrom=o=>{const k={pin:S.pin,pinOn:S.pinOn,pinSkip:S.pinSkip};S=norm(Object.assign({},o,k));return S};
 let saveT=null;
 const saveSoon=()=>{clearTimeout(saveT);saveT=setTimeout(save,300)};
 const flushSave=()=>{if(saveT){clearTimeout(saveT);saveT=null}save()};

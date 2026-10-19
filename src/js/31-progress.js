@@ -63,7 +63,7 @@ function completeStage(date,id,r){
  if((r.n||0)>=5&&(r.ok||0)/r.n<.4)out.low=true;
  const st=(S.rt&&S.rt.d===date?S.rt.stg.find(x=>x.id===id):null)||{};
  const mins=r.min!=null?r.min:Math.max(1,Math.round((r.sec||0)/60)),sj=st.subj||'総';
- d.stg[id]={ok:r.ok||0,n:r.n||0,xp:out.xp+was,sec:(redo?old.sec||0:0)+(r.sec||0),cb:Math.max(r.combo||0,redo?old.cb||0:0),at:Date.now(),note:r.note||''};
+ d.stg[id]=Object.assign({ok:r.ok||0,n:r.n||0,xp:out.xp+was,sec:(redo?old.sec||0:0)+(r.sec||0),cb:Math.max(r.combo||0,redo?old.cb||0:0),at:Date.now(),note:r.note||''},redo?{f:old.f||{ok:old.ok,n:old.n}}:{});   // f＝やりなおす前の「1回目」の結果（れんらくのメールにも載せる）
  d.min[sj]=(d.min[sj]||0)+mins;
  const good=goodOf(d).sess>=1;
  /* 宿題・ふりかえり・全クリのXPは、その日に「正答4割以上のドリル」が1つあるときだけ。ない日の宿題・ふりかえりのXPは預かって、あとでドリルがとれたら入る */

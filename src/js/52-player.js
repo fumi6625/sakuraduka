@@ -127,8 +127,10 @@ function answerQ(resp){
  let lvTxt='';
  if(e.rep===0){
   const before=boxOf(it);
-  if(V.kind==='tf'){if(!ok)recordAnswer(it,false);S.tf.n++;if(ok)S.tf.ok++}else lvTxt=recordAnswer(it,ok);
-  noteAnswer(ok);
+  if(!PL.o.redo){   // やりなおしは、見たばかりの答えをもう一度答えるだけ。おぼえ具合（箱）や答えた数には、数えない
+   if(V.kind==='tf'){if(!ok)recordAnswer(it,false);S.tf.n++;if(ok)S.tf.ok++}else lvTxt=recordAnswer(it,ok);
+   noteAnswer(ok);
+  }
   const after=boxOf(it);if(after>=4&&before<4)PL.newMast++;
   PL.segs[e.idx]=ok?1:2;if(ok)PL.ok++;
   const ans=PL.segs.filter(x=>x).length;if(ans%5===0&&ans<PL.total){PL.roundFlag=true;PL.rn=ans/5}
@@ -229,7 +231,7 @@ ${fold}</div></div>`;
  if(cdOn)flowCdStart(6);
  /* XPカウントアップと演出 */
  const el=$('#xpV');let t=0;const iv=setInterval(()=>{t++;const v=Math.round(xp*Math.min(1,t/18));if(el)el.textContent='+'+v;if(t>=18)clearInterval(iv)},40);
- Snd.clear();FX.confetti(nx?45:win?110:40);
+ Snd.clear();if(nx)FX.confetti(24,{small:true});else FX.confetti(win?110:40);
  const msgs=[];
  nb.forEach(b=>msgs.push('バッジ獲得：'+b[1]));
  if(res&&res.streak&&res.streak.freeze)msgs.push('お休みトークンで連続記録を守った！');

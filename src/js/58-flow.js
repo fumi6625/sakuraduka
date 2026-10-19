@@ -13,7 +13,7 @@ function startStage(s){
  const redo=s.done&&lowRes(s.res),count=!s.done||redo;   // 正答4割未満だったドリルは、やりなおして4割以上とれたら数える
  startSession({title:s.t,subj:s.subj,items:s.items,skipBrief:!s.boss,stageId:count?s.id:null,boss:s.boss,
   desc:redo?'ゆっくり読んで、もう一度！ 4割以上とれたら、きょうの合格ラインに数えるよ':s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,
-  brk:s.brk,min:s.min,xp:count?s.xp:0});
+  brk:s.brk,min:s.min,xp:count?s.xp:0,redo:redo});
 }
 
 /* 一本道のバー（ホームはボタン／結果画面は見るだけ）。さいごの「れんらく」は、押せるまで鍵 */
@@ -30,13 +30,17 @@ function lockBar(F){
  const why=F.all?'せいかい4わり いじょうの ドリルが ひつよう':'あと'+F.left+'つ';
  return `<button class="cbar" data-act="contact" aria-disabled="true">${ico('lock')}<b>おかあさん・おとうさんに 完了れんらく</b><small>${why}</small></button>`;
 }
-/* マストがぜんぶ終わったときのカード（れんらくボタン＋おかわり） */
+/* マストがぜんぶ終わったときのカード（れんらくボタン＋おかわり）。ボタンを押したあとは、「れんらくずみ」の達成感を主役にして、ボタンは控えめに */
 function goalCard(F){
- const due=sum(Object.values(dueByBank()));
- return `<div class="nowc cleared goalc"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'var(--ink)',sw:5})}</div><span class="lb y">ぜんぶクリア！</span>
-  <h2>きょうの ノルマ、おわった！</h2>
-  <p>${F.sent?`${ico('check')} れんらくボタンを おしたよ（${hmOf(F.sentAt)}）`:'あとは、おうちの人に つたえるだけ。<b>じぶんで ボタンを おして</b>、メールを おくろう！'}</p>
-  <button class="bt pri xl w100 cbtn${F.sent?' sent':''}" data-act="contact">${ico('mail')}${F.sent?'もう一度 れんらくする':'おかあさん・おとうさんに 完了れんらく'}</button>
+ const due=sum(Object.values(dueByBank())),hw=F.hwWait?'<p class="mini hwn">宿題は、おうちの人に見せて OK をもらってね。</p>':'';
+ const top=F.sent
+  ?`<span class="lb y">れんらく ずみ！</span><h2>きょうは、もうバッチリ！</h2>
+  <p><span class="chp ok">${ico('check')} れんらくボタンを おしたよ（${hmOf(F.sentAt)}）</span></p>${hw}
+  <button class="bt gh w100 cbtn sent" data-act="contact">${ico('mail')}もう一度 れんらくする</button>`
+  :`<span class="lb y">ぜんぶクリア！</span><h2>きょうの ノルマ、おわった！</h2>
+  <p>あとは、おうちの人に つたえるだけ。<b>じぶんで ボタンを おして</b>、メールを おくろう！</p>${hw}
+  <button class="bt pri xl w100 cbtn" data-act="contact">${ico('mail')}おかあさん・おとうさんに 完了れんらく</button>`;
+ return `<div class="nowc cleared goalc${F.sent?' sentc':''}"><div class="sp1">${splatSVG(14,'#fff',{drops:9,stroke:'var(--ink)',sw:5})}</div>${top}
   <p class="mini oka">まだ元気なら「おかわり」。好きな教材を、好きなだけ。（1日60XPまで）</p>
   <div class="row">${due?`<button class="bt cy" data-act="drillDue">ふくしゅう ${Math.min(10,due)}問</button>`:''}<button class="bt" data-tab="drill">おかわりドリル</button><button class="bt cy" data-act="tsukkomi">ツッコミバトル</button></div></div>`;
 }
@@ -67,6 +71,7 @@ function flowCdTick(){
  const el=$('#nxc');
  if(!el){flowCdStop();return}
  if(!$('#ov').hidden){FCD.end+=250;return}   // レベルアップなどの表示中は待つ
+ if(Date.now()-FCD.end>1500){flowCdStop(true);return}   // 画面を離れて、あとで戻ったとき：いきなり始めない
  const left=Math.ceil((FCD.end-Date.now())/1000),bar=$('#cdb');
  if(bar)bar.style.width=Math.min(100,Math.max(0,(1-(FCD.end-Date.now())/FCD.total)*100))+'%';   // ボタンの下の帯が、6秒でのびる
  if(left>0){el.textContent='つぎが '+left+'びょうで はじまるよ（どこかをタップで とまる）';return}
@@ -92,18 +97,18 @@ function flowBridge(id){
  },900);
 }
 
-/* ----- 完了れんらく：シート ----- */
+/* ----- 完了れんらく：シート（押したあとは、「ひらいたよ・送信まで押してね」の表示にかわる） ----- */
 function contactSheet(){
  const F=flowState();
  if(!F.ready){toast(F.all?'せいかい4わり いじょうの ドリルが ひつようだよ':'あと'+F.left+'つ おわったら おせるよ');return}
- const to=mailAddrs(),M=mailText(F),url=mailtoURL(to,M),share=typeof navigator!=='undefined'&&!!navigator.share;
- const who=mailWho();
- openSheet(`<h2>${ico('mail')} ${who}に 完了れんらく</h2>
-  <p>ぜんぶ おわったね！ <b>じぶんで ボタンを おして</b>、メールで つたえよう。</p>
+ const to=mailAddrs(),M=mailText(F),url=mailtoURL(to,M),share=typeof navigator!=='undefined'&&!!navigator.share,sent=F.sent;
+ openSheet(`<h2>${ico(sent?'check':'mail')} ${sent?'れんらくボタンを おしたよ！':mailWho()+'に 完了れんらく'}</h2>
+  <p>${sent?'メールアプリで、<b>右上の「送信」</b>を おしたかな？ まだなら、もう一度 ひらけるよ。':'ぜんぶ おわったね！ <b>じぶんで ボタンを おして</b>、メールで つたえよう。'}</p>
   <ul class="csum">${F.must.map(s=>`<li>${ico('check')}${esc(flowName(s))}${s.kind==='session'&&s.res&&s.res.n?`<b>${s.res.ok}/${s.res.n}</b>`:''}</li>`).join('')}</ul>
+  ${F.hwWait?'<p class="mini">宿題は、おうちの人に見せて OK をもらってね。</p>':''}
   ${to.length?`<p class="mini cto">宛先：${to.map(a=>`<span class="chp">${esc(a)}</span>`).join(' ')}</p>
-   <a class="bt pri xl w100 cbtn" data-mailsent href="${esc(url)}">${ico('mail')}メールを つくる</a>
-   <p class="mini">おすと メールアプリが ひらくよ。<b>右上の「送信」まで おして</b>、はじめて とどくよ。${F.sent?`<br>（${hmOf(F.sentAt)} に ボタンを おしたよ）`:''}</p>`
+   <a class="bt ${sent?'gh':'pri xl'} w100 cbtn${sent?' sent':''}" data-mailsent href="${esc(url)}">${ico('mail')}${sent?'もう一度 メールを ひらく':'メールを つくる'}</a>
+   <p class="mini">${sent?`（${hmOf(F.sentAt)} に ボタンを おしたよ）`:'おすと メールアプリが ひらくよ。<b>右上の「送信」まで おして</b>、はじめて とどくよ。'}</p>`
   :`<div class="pinbox"><b>メールアドレスが まだ入っていないよ</b><p class="mini" style="margin:4px 0 10px">おうちの人に、「おうちの人・設定」で入れてもらってね。</p><button class="bt" data-act="mailSetup">せっていを ひらく</button></div>`}
   <div class="row" style="justify-content:center;margin-top:10px"><button class="bt sm" data-act="mailCopy">文を コピー</button>${share?'<button class="bt sm" data-act="mailShare">ほかのアプリで おくる</button>':''}</div>
   <details class="fold"><summary>おくる文を見る</summary><pre class="code">${esc(M.text)}</pre></details>`,'csheet');
@@ -112,7 +117,10 @@ function contactSheet(){
 function contactMark(msg){
  if(!markContact())return false;
  save();Snd.ok();FX.confetti(70);toast(msg||'れんらくボタンを おしたよ！ メールの「送信」まで わすれずに');
- setTimeout(()=>{if(!PL&&!PG)refresh()},400);
+ setTimeout(()=>{   // メールアプリから戻ったとき、「押した」の表示になっているように（リンクを押した直後に作りなおさない）
+  if(!PL&&!PG)refresh();
+  if(!$('#sheet').hidden&&$('#sheet .csheet'))contactSheet();
+ },400);
  return true;
 }
 

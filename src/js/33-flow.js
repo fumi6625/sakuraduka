@@ -26,13 +26,21 @@ function flowState(date=today()){
 /* ----- メールアドレス（このiPadの中だけに保存。コードや資料には入れない） ----- */
 const cleanMail=v=>String(v||'').normalize('NFKC').replace(/\s+/g,'');
 const validMail=v=>/^[A-Za-z0-9._+\-]+@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)+$/.test(v)&&v.length<=100;
-const mailAddrs=()=>{const m=S.mail||{};return[...new Set([cleanMail(m.f),cleanMail(m.m)].filter(validMail))]};
+const mailAddrs=()=>{const m=S.mail||{};return[...new Set([cleanMail(m.m),cleanMail(m.f)].filter(validMail))]};   // おかあさん・おとうさんの順
 const mailWho=()=>{const m=S.mail||{},f=validMail(cleanMail(m.f)),o=validMail(cleanMail(m.m));return f&&!o?'おとうさん':o&&!f?'おかあさん':'おかあさん・おとうさん'};
 const mdw=d=>{const x=dt(d);return(x.getMonth()+1)+'/'+x.getDate()+'（'+'日月火水木金土'[x.getDay()]+'）'};
 /* 送る文（子どもの言葉で、短く）。subject＝件名、body＝本文、text＝コピー・共有用 */
 function mailText(F,date=today()){
  const rec=peekDay(date),nick=S.nick;
- const rows=F.must.map(s=>'・'+flowName(s)+(s.kind==='session'&&s.res&&s.res.n?'　'+s.res.ok+'/'+s.res.n:''));
+ const rf=S.refl&&S.refl[date];
+ /* 数のあるドリルは、せいかいの数。やりなおしたときは、1回目も書く。自分でつけるもの（宿題・ふりかえり）は、そう分かるように */
+ const rows=F.must.map(s=>{
+  const r=s.res;let t='・'+flowName(s);
+  if(s.kind==='session'&&r&&r.n)t+='　'+r.ok+'/'+r.n+(r.f?'（1回目 '+r.f.ok+'/'+r.f.n+'→やりなおし）':'');
+  else if(s.id==='hw')t+='（じぶんでチェック）';
+  else if(s.id==='ref'&&rf&&rf.s)t+='　自分'+rf.s+'点'+(rf.d!=null?'／データ'+rf.d+'点':'');
+  return t;
+ });
  const ss=F.must.filter(s=>s.kind==='session'&&s.res&&s.res.n),n=sum(ss.map(s=>s.res.n)),ok=sum(ss.map(s=>s.res.ok)),min=sum(Object.values(rec.min||{}));
  const L=[mailWho()+'へ','','きょう（'+mdw(date)+'）の ノルマ、ぜんぶ おわったよ！','','■ やったこと',...rows,'','■ きょうの まとめ'];
  if(n)L.push('・せいかい '+ok+'/'+n+'（'+Math.round(ok/n*100)+'%）');

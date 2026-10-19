@@ -108,9 +108,9 @@ const FX=(()=>{
     P.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-2.5,g:.2,r:12+Math.random()*14,pi:Math.random()*6|0,el:.55+Math.random()*.45,rot:Math.random()*6,vr:(Math.random()-.5)*.3,c:C[Math.random()*C.length|0],life:44+Math.random()*30})}
    go();
   },
-  confetti(n){
-   if(reduce()||!init())return;const C=cols();
-   for(let i=0;i<(n||90);i++){P.push({x:Math.random()*innerWidth,y:-20-Math.random()*220,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,g:.06,r:6+Math.random()*6,sq:1,rot:Math.random()*6,vr:(Math.random()-.5)*.35,c:C[Math.random()*C.length|0],life:150+Math.random()*80})}
+  confetti(n,o){
+   if(reduce()||!init())return;const C=cols(),sm=o&&o.small;   // small：小さい粒を少し（文字や「つぎ」のボタンにかぶらないように）
+   for(let i=0;i<(n||90);i++){P.push({x:Math.random()*innerWidth,y:-20-Math.random()*220,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,g:.06,r:sm?3.5+Math.random()*3:6+Math.random()*6,sq:1,rot:Math.random()*6,vr:(Math.random()-.5)*.35,c:C[Math.random()*C.length|0],life:sm?100+Math.random()*30:150+Math.random()*80})}
    go();
   },
   at(el,n){if(!el)return;const b=el.getBoundingClientRect();this.burst(b.left+b.width/2,b.top+b.height/2,n||14)}
