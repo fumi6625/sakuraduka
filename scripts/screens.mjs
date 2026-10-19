@@ -156,8 +156,14 @@ await run('ipad-flow-goal', { w: 820, h: 1180 }, async ({ page: P, shot }) => {
   await P.click('[data-act="stageGo"][data-a="mem"] >> nth=0'); await P.waitForTimeout(500);
   await solveAll(P, 0.9); await P.waitForTimeout(1800); await shot('68-flow-result-goal');
   await P.click('.rs2 .nxb'); await P.waitForTimeout(600);
-  await P.click('#sheet a[data-mailsent]'); await P.waitForTimeout(600); await closeAny(P);
+  await P.click('#sheet a[data-mailsent]'); await P.waitForTimeout(700); await shot('70-flow-contact-sheet-sent'); await closeAny(P);
   await P.waitForTimeout(400); await shot('69-flow-home-sent');
+});
+/* ①の4 自動でつなぐをオフにした日の結果画面（「つぎへ」だけ。カウントダウンなし） */
+await run('ipad-flow-manual', { w: 820, h: 1180 }, async ({ page: P, shot }) => {
+  await P.evaluate(() => { __sq.S.nick = 'さくら'; __sq.S.flowAuto = 0; __sq.refresh(); });
+  await P.click('[data-act="stageGo"][data-a="mem"] >> nth=0'); await P.waitForTimeout(500);
+  await solveAll(P, 0.9); await P.waitForTimeout(1800); await shot('71-flow-result-manual');
 });
 /* ② iPad よこ */
 await run('ipad-landscape', { w: 1180, h: 820 }, async ({ page: P, shot }) => {

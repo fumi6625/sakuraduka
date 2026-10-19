@@ -11,7 +11,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadCore } from '../scripts/headless.mjs';
 
-const NAMES = ['S', 'XPST', 'backupObj', 'restoreFrom', 'setToday', 'routeFor', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'peekDay', 'dayOK', 'lowRes', 'norm', 'fresh',
+const NAMES = ['S', 'XPST', 'backupObj', 'restoreFrom', 'pinTry', 'pinLockMin', 'mistakeXP', 'setToday', 'routeFor', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'peekDay', 'dayOK', 'lowRes', 'norm', 'fresh',
   'flowState', 'mustStages', 'markContact', 'mailText', 'mailtoURL', 'mailAddrs', 'mailWho', 'cleanMail', 'validMail', 'flowName', 'reportText', 'curStreak'];
 const START = '2026-10-19';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -193,7 +193,7 @@ test('mailto：宛先は , でつなぎ、件名・本文は1つずつ正しく�
   assert.equal(params.length, 2, 'subject と body だけ（本文の & で枝分かれしない）');
   assert.equal(decodeURIComponent(params[0].slice('subject='.length)), M.subject);
   assert.equal(decodeURIComponent(params[1].slice('body='.length)), M.body.replace(/\n/g, '\r\n'), '本文の改行は CRLF');
-  assert.ok(url.length < 1800, 'メールアプリに渡せる長さ');
+  assert.ok(url.length < 2300, 'メールアプリに渡せる長さ');
   assert.ok(M.subject.includes('さくら'), '件名に呼び名');
   for (const s of F.must) assert.ok(M.body.includes(C.flowName(s)), C.flowName(s) + ' が本文に入っている');
   assert.ok(/せいかい \d+\/\d+（\d+%）/.test(M.body), '正答の数と率が入っている（自己申告ではなく、記録から）');
@@ -250,7 +250,7 @@ test('バックアップに暗証番号は入らない。復元しても、い�
   C.S.pin = '4321'; C.S.pinOn = 1; C.S.pinSkip = '2026-10-01'; C.S.xp = 777; C.S.mail = { f: 'a@example.com', m: '' };
   const text = JSON.stringify(C.backupObj());
   assert.ok(!text.includes('4321'), 'pin の値が文字列に入っていない');
-  assert.ok(!/"pin(On|Skip)?"/.test(text), 'pin・pinOn・pinSkip のキー自体が入っていない');
+  assert.ok(!/"pin(On|Skip|Fail)?"/.test(text), 'pin・pinOn・pinSkip・pinFail のキー自体が入っていない');
   assert.ok(text.includes('"xp":777') && text.includes('a@example.com'), '記録と宛先は入る');
   // 古いバックアップ（暗証番号が入っているもの）を復元しても、いまの端末の設定が残る
   const old = JSON.parse(text); old.pin = '0000'; old.pinOn = 0; old.xp = 5;
@@ -289,4 +289,52 @@ test('やりなおしのセッションは、おぼえ具合（箱）・答え�
   assert.ok(f.includes('PL.o.redo') && f.includes('recordAnswer(') && f.includes('noteAnswer('));
   assert.ok(f.indexOf('PL.o.redo') < f.indexOf('recordAnswer('), 'redo の判定が、記録より前にある');
   assert.ok(fs.readFileSync(path.join(root, 'src/js/58-flow.js'), 'utf8').includes('redo:redo'), 'startStage が redo を渡している');
+});
+
+test('暗証番号：5回まちがえたら10分ロック。ロック中は正しい番号でも通らない。時間がたつか、成功すれば回数がもどる', () => {
+  const C = fresh(); C.S.pin = '4321'; C.S.pinOn = 1;
+  for (let i = 0; i < 4; i++) assert.equal(C.pinTry('0000'), 'ng');
+  assert.equal(C.pinTry('4321'), 'ok', '4回まちがえたあとでも、正しければ通り、回数はもどる');
+  for (let i = 0; i < 4; i++) assert.equal(C.pinTry('1111'), 'ng');
+  assert.equal(C.pinTry('2222'), 'lock', '5回目のまちがいでロック');
+  assert.equal(C.pinTry('4321'), 'lock', 'ロック中は、正しい番号でも通らない');
+  assert.ok(C.pinLockMin() >= 9 && C.pinLockMin() <= 10, 'のこりは約10分');
+  C.S.pinFail.until = Date.now() - 1;   // 時間がたった
+  assert.equal(C.pinTry('4321'), 'ok');
+  assert.equal(C.pinLockMin(), 0);
+});
+
+test('学校のテストのミスの登録：XPは1日1回だけ（何回登録しても、かせげない）', () => {
+  const C = fresh();
+  const a = C.mistakeXP(START), xp1 = C.S.xp;
+  assert.equal(a.xp, 5); assert.equal(xp1, 5);
+  for (let i = 0; i < 30; i++) assert.equal(C.mistakeXP(START).xp, 0);
+  assert.equal(C.S.xp, 5, '30回登録しても、XPはふえない');
+  assert.equal(C.mistakeXP(C.addDays(START, 1)).xp, 5, 'つぎの日は、また1回');
+  assert.equal(C.S.xp, 10);
+});
+
+test('メール文：きょうの量（ならし／ふつう／しっかり）と、ミニの日を書く', () => {
+  const C = fresh();
+  const route = C.routeFor(START);
+  C.mustStages(route).forEach((s) => play(C, START, s));
+  assert.ok(/・きょうの量：ならし\n/.test(C.mailText(C.flowState()).body) || /・きょうの量：ならし$/m.test(C.mailText(C.flowState()).body));
+  const D = fresh();
+  D.S.light[START] = 1;
+  D.mustStages(D.routeFor(START)).forEach((s) => play(D, START, s));
+  assert.ok(/・きょうの量：ならし（ミニの日）/.test(D.mailText(D.flowState()).body), 'ミニの日と分かる');
+});
+
+test('メール文は、ならし・ふつう・しっかりのどの日でも短い（mailto が長くなりすぎない）。日付は「10/19 月」の形', () => {
+  const C = fresh();
+  C.S.nick = 'さくらさくら'; C.S.mail = { f: 'otosan@example.com', m: 'okasan@example.com' }; C.S.pin = '1234'; C.S.pinOn = 1;
+  let max = 0;
+  for (let i = 0; i < 45; i++) {
+    const d = C.addDays(START, i); C.setToday(d);
+    for (const st of C.routeFor(d)) play(C, d, st, i % 3 === 0 ? 0.2 : 0.85);
+    const F = C.flowState(d), M = C.mailText(F, d), u = C.mailtoURL(C.mailAddrs(), M);
+    max = Math.max(max, u.length);
+    assert.ok(/きょう（\d+\/\d+ [日月火水木金土]）の ノルマ/.test(M.body), M.body.split('\n')[2]);
+  }
+  assert.ok(max < 2300, `45日のうち最長のURLが ${max} 文字`);
 });

@@ -54,7 +54,10 @@ function vowChip(okDay){
  const at=S.at||'',late=at&&nowHM()>at;
  return `<button class="vowb${late?' late':''}" data-act="vow">${ico('timer')}${late?'やくそくの時間をすぎたよ。3分だけ！':at?'やくそく '+at+' にスタート':'やくそくの時間を決める'}</button>`;
 }
-const briefDesc=(d,n=22)=>{let out='';for(const p of String(d||'').split('／')){const nx=out?out+'／'+p:p;if(nx.length>n&&out)break;out=nx}return out.length>n?out.slice(0,n-1)+'…':out};
+const briefDesc=(d,n=22)=>{
+ d=String(d||'');
+ if(!d.includes('／')){const k=d.indexOf('。');return k>=0&&k<d.length-1?d.slice(0,k+1):d.length>40?d.slice(0,39)+'…':d}   // 「／」がない説明は、文の途中で切らない
+ let out='';for(const p of String(d||'').split('／')){const nx=out?out+'／'+p:p;if(nx.length>n&&out)break;out=nx}return out.length>n?out.slice(0,n-1)+'…':out};
 function nowCard(next,tier,okDay,rec){
  const T=TIERS[tier],isS=next.kind==='session';
  const need=dayNeed(rec,tier);
@@ -88,7 +91,7 @@ function renderHome(){
  ${todo.length?`<details class="fold later"><summary><span class="lb sm y">このあと</span><span class="lt">${todo.length}つ</span></summary><div class="stages">${todo.map(stageCard).join('')}</div></details>`:''}
  ${done.length?`<details class="fold cleared-list"><summary>クリアしたステージ（${done.length}）</summary><div class="stages">${done.map(stageCard).join('')}</div></details>`:''}
 ${intro}${diagTip}${pinAsk}
- <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。3分のドリルだけでOK）${S.pinOn&&S.pin?'':`<small class="mini"> 週2回まで（今週あと${Math.max(0,2-lightUsed(date))}回）</small>`}</span></div>`;
+ <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。量をへらす。ドリル1つで れんぞく記録はセーフ）${S.pinOn&&S.pin?'':`<small class="mini"> 週2回まで（今週あと${Math.max(0,2-lightUsed(date))}回）</small>`}</span></div>`;
  const R=`
  ${pathMini()}
  <div class="card"><div class="rowh"><h2>今週の流れ</h2></div>${weekStrip(date)}

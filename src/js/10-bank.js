@@ -90,6 +90,9 @@ const JSCL=[['注意','用心','慎重','用心深い','丁寧','入念','軽率
  ['順調','好調','立派','見事','長所','美点','確実','確か','大切','重要','活発','活気'],['方法','手段','目的','目標','準備','用意','実行','実施','勇気','度胸'],['将来','未来','最近','このごろ','以前','かつて','突然','不意','偶然','たまたま']];
 const jsC=w=>JSCL.findIndex(l=>l.includes(w));
 const shareKanji=(a,b)=>{const A=new Set(String(a).match(/[一-龥]/g)||[]);return (String(b).match(/[一-龥]/g)||[]).some(x=>A.has(x))};
+/* 同じものをさす別の言い方（一問一答）。まちがいの選択肢に、正解の別名を並べない（正解が2つに見えるため）。答えの書き方は、なるべく1つにそろえる */
+const QALIAS=[['ソ連','ソビエト連邦','ソビエト'],['中国','中華人民共和国'],['アメリカ','アメリカ合衆国','米国'],['イギリス','英国'],['国連','国際連合'],['首相','内閣総理大臣','総理大臣']];
+const aliasKey=s=>{const g=QALIAS.find(l=>l.includes(String(s)));return g?g[0]:String(s)};
 function distractQA(it,f,n=3){
  const ans=it[f],seen=new Set([ans]),out=[],keys=tagKeys(it),g=f==='a'?qGroup(it):'';
  for(const pass of g?[0,1,4,2,3]:[2,3]){   // 0：同じ型＋長さが近い／1：同じ型／4：答えのかたちが同じ（型が小さいグループ・単独の名詞の問いも、数やカタカナの答えと並ばないように）／2：長さが近い／3：なんでも
@@ -99,7 +102,7 @@ function distractQA(it,f,n=3){
    const h=g?qHead(it):'',sf=String(ans).slice(-2),sc=c=>(qHead(c)===h)*2+(String(c[f]).slice(-2)===sf);
    for(const c of g&&pass<=1?shuffle(pool).sort((x,y)=>sc(y)-sc(x)):shuffle(pool)){   // 同じ名詞の問い（「…気体は？」どうし）の答えを先に。つぎに、おわりの2字が同じ答え（「…の乱」「…一揆」どうし）
     if(out.length>=n)break;
-    if(c.id===it.id||seen.has(c[f])||nested(c[f],ans))continue;
+    if(c.id===it.id||seen.has(c[f])||nested(c[f],ans)||aliasKey(c[f])===aliasKey(ans))continue;
     if(f==='w'&&c.m===it.m)continue;
     if(it.k==='syn'&&(c.w===it.w||shareKanji(c[f],it.w)||shareKanji(c[f],ans)||(jsC(c[f])>=0&&(jsC(c[f])===jsC(ans)||jsC(c[f])===jsC(it.w)))))continue;   // 類義語・対義語：おなじ見出しのもうひとつの答えや、見出し・正解と同じ漢字をふくむ語（意味が近いかもしれない）は、まちがいに使わない
     if(chgDir(c[f])&&chgDir(c[f])===chgDir(ans))continue;   // 同じ向きの変化（増える／大きくなる）は同じ意味。どの型の問いでも、まちがいに並べない

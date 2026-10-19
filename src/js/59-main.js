@@ -89,7 +89,7 @@ const ACT={
   Snd.unlock();hwTimer={end:Date.now()+hwLenM*60000,t0:Date.now()};hwTimer.iv=setInterval(()=>hwTick(),500);btn.textContent='ストップ';hwTick();
  },
  hwDone(){
-  if(S.pinOn&&S.pin&&(($('#pinIn')||{}).value||'')!==S.pin){toast('暗証番号がちがうよ。おうちの人に見せてね');return}
+  if(S.pinOn&&S.pin){const r=pinTry(($('#pinIn')||{}).value||'');save();if(r==='lock'){toast('まちがいが つづいたので、'+pinLockMin()+'分ほど あとで もう一度');return}if(r!=='ok'){toast('暗証番号がちがうよ。おうちの人に見せてね');return}}
   const st=routeFor().find(x=>x.id==='hw');let used=0;
   if(hwTimer){used=Math.round((Date.now()-hwTimer.t0)/60000);clearInterval(hwTimer.iv);hwTimer=null}
   const res=completeStage(today(),'hw',{n:0,min:used>0?used:st.min});
@@ -97,7 +97,8 @@ const ACT={
   flowBridge('hw');
  },
  refStar(i){
-  refSelf=+i;$$('#refStars button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a<=refSelf)));
+  if(refSelf)return;   // 自分の点は、さいしょの星で決まり（データの点を見てから、つけなおせないように）
+  refSelf=+i;$$('#refStars button').forEach(b=>{b.setAttribute('aria-pressed',String(+b.dataset.a<=refSelf));b.disabled=true});
   const data=dayScore(),c=calibNote(refSelf,data);
   $('#refCmp').innerHTML=`<div class="cbx ${c.k}"><div class="cs"><span>自分</span><b>${refSelf}</b></div><div class="cs"><span>データ</span><b>${data}</b></div><p>${esc(c.t)}</p></div>`;
   $('#refGo').disabled=false;Snd.tap();
@@ -168,7 +169,9 @@ const ACT={
   else needPin('この目標は、おうちの人が確かめてから つけよう。',()=>ACT.goalDo(a));
  },
  pinGo(){
-  if((($('#gpIn')||{}).value||'')!==S.pin){toast('暗証番号がちがうよ');return}
+  const r=pinTry(($('#gpIn')||{}).value||'');save();
+  if(r==='lock'){toast('まちがいが つづいたので、'+pinLockMin()+'分ほど あとで もう一度');return}
+  if(r!=='ok'){toast('暗証番号がちがうよ');return}
   const f=PIN_NEXT;PIN_NEXT=null;closeSheet();if(f)f();
  },
  pinLater(){S.pinSkip=today();save();refresh()},
@@ -182,7 +185,7 @@ const ACT={
  },
  tile(ds){toast(tileInfo(ds))},
  /* ---- ごほうび ---- */
- rwEdit(){rwEdit=!rwEdit;renderReward()},
+ rwEdit(){if(rwEdit){rwEdit=false;renderReward();return}needPin('ごほうびのリストを編集します（保護者用）。',()=>{rwEdit=true;renderReward()})},
  shBuy(i){const s=S.shop[+i];if(!s||S.coin<s.c)return;S.coin-=s.c;logReward(s.n,s.c);save();toast('こうかんした：'+s.n+'（保護者に見せよう）');FX.confetti(60);Snd.clear();refresh()},
  shDel(i){S.shop.splice(+i,1);save();renderReward()},
  shAdd(){const n=$('#shN').value.trim(),c=Math.max(10,+$('#shC').value||100);if(!n)return;S.shop.push({n,c});save();renderReward()},
@@ -205,7 +208,15 @@ const ACT={
  mistDrill(){const items=weakItems(20).map(freshen);if(!items.length){toast('いまミスはありません');return}closePage();startSession({title:'ミス退治（自由練習）',subj:'総',items,skipBrief:true})},
  naiLog(){const c=naiCalc(),label=($('#naiLabel')||{}).value||'学校のテスト';needPin('テストの結果を記録します（目標の点ではなく、実際の点を入れてあるか確かめてから）。',()=>{S.tl.push({d:today(),tot:Math.round(c.tot),nn:Math.round(c.nn),gk:c.g,label});S.tl=S.tl.slice(-40);save();renderNaiLog();toast('記録した（めやす）')})},
  naiUndo(){if(!S.tl.length)return;needPin('いちばん新しい記録を消します。',()=>{S.tl.pop();save();renderNaiLog();toast('消した')})},
- msAdd(){const memo=$('#msMemo').value.trim();addManualMistake($('#msSub').value,$('#msKind').value,memo);const r=addXP(5);$('#msMemo').value='';save();toast('ミスを登録した。あした再戦だ！ +5XP');renderMistPage();renderHud();if(r)levelUp(r.to)},
+ msAdd(){
+  const memo=$('#msMemo').value.trim();
+  if(memo.length<2){toast('どんな問題か、ひとこと書いてね');return}
+  addManualMistake($('#msSub').value,$('#msKind').value,memo);
+  const r=mistakeXP();   // XPは、1日1回だけ（何回も登録してXPをかせげないように）
+  $('#msMemo').value='';save();
+  toast(r.xp?'ミスを登録した。あした再戦だ！ +'+r.xp+'XP':'ミスを登録した。あした再戦だ！（XPは1日1回）');
+  renderMistPage();renderHud();if(r.lv)levelUp(r.lv.to)
+ },
  /* ---- 診断・教科・AI先生 ---- */
  dgTab(s){S.dg=s;dgFb=false;save();renderDg()},dgNext(){dgFb=false;renderDg()},
  dgAgain(){S.diag[S.dg]={ans:[],sc:0,paid:1};dgFb=false;save();renderDg();renderDiagOut()},dgPick(j){dgPick(+j)},

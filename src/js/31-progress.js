@@ -89,6 +89,8 @@ function noteAnswer(ok,date=today()){
  S.tot.n++;if(ok)S.tot.ok++;
  const d=dayRec(date);d.n=(d.n||0)+1;if(ok)d.c=(d.c||0)+1;
 }
+/* 学校のテストのミスを登録したときのXP：1日1回だけ（何回も登録してXPをかせげないように） */
+function mistakeXP(date=today()){const d=dayRec(date);if(d.mx)return{xp:0,lv:null};d.mx=1;return{xp:5,lv:addXP(5)}}
 function addMinutes(sj,m,date=today()){const d=dayRec(date);d.min[sj]=(d.min[sj]||0)+m}
 
 /* ----- マスター数（おぼえた問題） ----- */

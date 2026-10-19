@@ -1029,7 +1029,8 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 .nowc.goalc .bt.cbtn.sent{min-height:56px;padding:0 18px;font-size:17px}
 .nowc.goalc .hwn{margin:4px 0 10px;font-weight:900;color:var(--on)}
 .csheet .cbtn.sent{min-height:56px;font-size:17px}
-.nowc h2,.nowc.goalc p,.nxc,.csheet h2,.csheet>div>p,.nxb b,.nxb small,.cbar b,.nowc.goalc .bt.cbtn,.nowc.goalc .row .bt{word-break:keep-all;overflow-wrap:break-word}
+.nowc h2,.nowc.goalc p,.nxc,.csheet h2,.csheet>p,.csheet .mini,.nxb b,.nxb small,.cbar b,.nowc.goalc .bt.cbtn,.nowc.goalc .row .bt,.toast{word-break:keep-all;overflow-wrap:break-word}
+:where(#v-home,#v-drill,#v-menu,#v-map,#v-reward) :is(p,li,.mini){word-break:keep-all;overflow-wrap:break-word}
 @media (max-width:560px){
  .nowc.goalc .bt.cbtn:not(.sent){min-height:76px;font-size:19px}
  .nowc.goalc .row{gap:8px}
@@ -1039,3 +1040,10 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
  .nxc{font-size:13px}
  .csheet h2{font-size:20px}
 }
+/* つぎのボタン：帯が字にかからないよう、高さと下の余白をとる（.bt.xl に負けないように） */
+.nxt .nxb{min-height:88px;padding:10px 22px 20px}
+.toast{width:max-content}
+.pmt .lb{align-self:flex-start}
+.stars5 button:disabled{opacity:.5}.stars5 button[aria-pressed=true]:disabled{opacity:1}
+.nm #nmR .rn{display:inline}
+@media (max-width:430px){.nm #nmR .rn{display:none}}

@@ -140,7 +140,7 @@ const fmtMin=m=>m>=60?Math.floor(m/60)+'時間'+(m%60?m%60+'分':''):m+'分';
 function renderHud(){
  const L=lvInfo(S.xp),d=diff(today(),S.exam);
  $('#nmN').textContent=S.nick||'ゲスト';
- $('#nmR').textContent='Lv.'+L.lv+'　'+L.name;
+ $('#nmR').innerHTML='Lv.'+L.lv+'<span class="rn">　'+esc(L.name)+'</span>';
  $('#av').innerHTML=avatarSVG();
  $('#hud').innerHTML=`<div class="pl cd"><small>入試まで</small><b>${Math.max(0,d)}</b><i>日</i></div><div class="pl fl"><small>れんぞく</small><b>${curStreak()}</b><i>日</i></div><div class="pl"><small>コイン</small><b>${S.coin}</b></div>`;
 }

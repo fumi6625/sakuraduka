@@ -4,7 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { loadCore } from '../scripts/headless.mjs';
 
-const NAMES = ['S', 'setToday', 'routeFor', 'present', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'BK'];
+const NAMES = ['S', 'setToday', 'routeFor', 'present', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'BK', 'aliasKey', 'QALIAS'];
 const START = '2026-10-19';
 const nested = (a, b) => { a = String(a); b = String(b); const s = a.length <= b.length ? a : b, l = s === a ? b : a; return s.length >= 2 && l.includes(s); };
 
@@ -19,6 +19,28 @@ test('まちがいの選択肢に、正解をふくむ（またはふくまれ�
     for (const c of V.choices) if (!c.ok && nested(c.t, ok)) bad.push(`${it.id}: 「${ok}」と「${c.t}」`);
   }
   assert.deepEqual(bad.slice(0, 5), [], `まぎらわしい選択肢が ${bad.length} 件`);
+});
+
+test('一問一答：正解の別名（ソ連とソビエト連邦、中国と中華人民共和国など）を、まちがいの選択肢に並べない（正解が2つに見えるため）', () => {
+  const C = loadCore(NAMES);
+  const bad = [];
+  for (const b of Object.keys(C.BK)) for (const it of C.BK[b].items) {
+    if (it.k !== 'qa') continue;
+    for (let t = 0; t < 8; t++) {   // 選択肢は毎回ちがうので、何回かずつ見る
+      const V = C.present(it);
+      if (V.kind !== 'mc') break;
+      const keys = V.choices.map((c) => C.aliasKey(c.t));
+      if (new Set(keys).size !== keys.length) { bad.push(`${it.id}: ${V.choices.map((c) => c.t).join(' / ')}`); break; }
+    }
+  }
+  assert.deepEqual(bad.slice(0, 5), [], `別名がならんだ選択肢が ${bad.length} 件`);
+  // 別名の組は、答えのかたちを1つにそろえる（データの答えに、同じ別名の組の2つ以上が混ざらない）
+  const ans = new Map();
+  for (const b of Object.keys(C.BK)) for (const it of C.BK[b].items) if (it.k === 'qa') ans.set(String(it.a), 1);
+  for (const g of C.QALIAS) {
+    if (g[0] === '中国') continue;   // 「中国」（首都が北京の国）と「中華人民共和国」（1949年に成立した国）は、問いが別。選択肢には並ばない（上の検査）
+    assert.ok(g.filter((x) => ans.has(x)).length <= 1, `${g.join('・')} が、答えに混ざっている`);
+  }
 });
 
 test('しっかり期：国語の日に作文の問題、数学ドリルに「考え方」の問題が入る', () => {

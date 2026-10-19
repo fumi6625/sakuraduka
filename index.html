@@ -1044,7 +1044,8 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 .nowc.goalc .bt.cbtn.sent{min-height:56px;padding:0 18px;font-size:17px}
 .nowc.goalc .hwn{margin:4px 0 10px;font-weight:900;color:var(--on)}
 .csheet .cbtn.sent{min-height:56px;font-size:17px}
-.nowc h2,.nowc.goalc p,.nxc,.csheet h2,.csheet>div>p,.nxb b,.nxb small,.cbar b,.nowc.goalc .bt.cbtn,.nowc.goalc .row .bt{word-break:keep-all;overflow-wrap:break-word}
+.nowc h2,.nowc.goalc p,.nxc,.csheet h2,.csheet>p,.csheet .mini,.nxb b,.nxb small,.cbar b,.nowc.goalc .bt.cbtn,.nowc.goalc .row .bt,.toast{word-break:keep-all;overflow-wrap:break-word}
+:where(#v-home,#v-drill,#v-menu,#v-map,#v-reward) :is(p,li,.mini){word-break:keep-all;overflow-wrap:break-word}
 @media (max-width:560px){
  .nowc.goalc .bt.cbtn:not(.sent){min-height:76px;font-size:19px}
  .nowc.goalc .row{gap:8px}
@@ -1054,6 +1055,13 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
  .nxc{font-size:13px}
  .csheet h2{font-size:20px}
 }
+/* つぎのボタン：帯が字にかからないよう、高さと下の余白をとる（.bt.xl に負けないように） */
+.nxt .nxb{min-height:88px;padding:10px 22px 20px}
+.toast{width:max-content}
+.pmt .lb{align-self:flex-start}
+.stars5 button:disabled{opacity:.5}.stars5 button[aria-pressed=true]:disabled{opacity:1}
+.nm #nmR .rn{display:inline}
+@media (max-width:430px){.nm #nmR .rn{display:none}}
 </style>
 <div id="bg" aria-hidden="true"></div>
 <div class="app">
@@ -7227,7 +7235,7 @@ RAW_OQ+=`
 1945年7月に、日本に降伏をすすめた、アメリカ・イギリス・中国の宣言は？|ポツダム宣言|
 1945年8月6日に、原子爆弾が投下された都市は？|広島|
 1945年8月9日に、原子爆弾が投下された都市は？|長崎|
-1945年8月8日に、日本に宣戦布告した国は？|ソ連|
+1945年8月8日に、日本に宣戦布告した国は？|ソビエト連邦|
 1945年8月15日に、ポツダム宣言の受け入れが国民に知らされた放送は？|玉音放送|
 #歴史/近代/人物
 国際連盟の設立を提唱した、アメリカの大統領は？|ウィルソン|
@@ -7974,15 +7982,15 @@ let memStore=null;
 const ls={get(){try{return localStorage.getItem(KEY)}catch(e){return memStore}},set(v){memStore=v;try{localStorage.setItem(KEY,v)}catch(e){}}};
 const DEF={nick:'',team:'pink',sound:1,exam:'2028-03-01',xp:0,coin:0,streak:0,best:0,last:'',freeze:1,
  days:{},ms:{},mc:{},got:{},mrw:{},nai:{a:{},b:{},t3:39,gk:315,set:0},diag:{},badges:{},shop:null,gacha:null,
- wk:{},memo:['','',''],tab:'home',sj:'数',dg:'国',srs:{},gx:{},gs:{},light:{},refl:{},rt:null,tot:{n:0,ok:0},rlog:[],tier:'auto',start:'',pin:'',pinOn:0,pinSkip:'',tf:{n:0,ok:0},at:'',subLast:{},sw:{},kh:{},tl:[],theme:'normal',mail:{f:'',m:''},flowAuto:1};
+ wk:{},memo:['','',''],tab:'home',sj:'数',dg:'国',srs:{},gx:{},gs:{},light:{},refl:{},rt:null,tot:{n:0,ok:0},rlog:[],tier:'auto',start:'',pin:'',pinOn:0,pinSkip:'',tf:{n:0,ok:0},at:'',subLast:{},sw:{},kh:{},tl:[],theme:'normal',mail:{f:'',m:''},flowAuto:1,pinFail:{n:0,until:0}};
 const fresh=()=>{const o=JSON.parse(JSON.stringify(DEF));o.shop=SHOP0.map(x=>({n:x[0],c:x[1]}));o.gacha=GACHA0.slice();return o};
-const norm=o=>{o=o||{};const r=Object.assign(fresh(),o);r.nai=Object.assign({},DEF.nai,o.nai);r.tot=Object.assign({n:0,ok:0},o.tot);r.tf=Object.assign({n:0,ok:0},o.tf);r.mail=Object.assign({f:'',m:''},o.mail);if(!r.shop)r.shop=fresh().shop;if(!r.gacha)r.gacha=fresh().gacha;return r};
+const norm=o=>{o=o||{};const r=Object.assign(fresh(),o);r.nai=Object.assign({},DEF.nai,o.nai);r.tot=Object.assign({n:0,ok:0},o.tot);r.tf=Object.assign({n:0,ok:0},o.tf);r.mail=Object.assign({f:'',m:''},o.mail);r.pinFail=Object.assign({n:0,until:0},o.pinFail);if(!r.shop)r.shop=fresh().shop;if(!r.gacha)r.gacha=fresh().gacha;return r};
 let S;
 try{S=norm(JSON.parse(ls.get()||'{}'))}catch(e){S=fresh()}
 const save=()=>ls.set(JSON.stringify(S));
 /* バックアップには、暗証番号（pin・pinOn・pinSkip）を入れない（文字列を読まれて、暗証番号がわかってしまわないように）。復元しても、いまの端末の暗証番号はそのまま */
-const backupObj=()=>{const o=JSON.parse(JSON.stringify(S));delete o.pin;delete o.pinOn;delete o.pinSkip;return o};
-const restoreFrom=o=>{const k={pin:S.pin,pinOn:S.pinOn,pinSkip:S.pinSkip};S=norm(Object.assign({},o,k));return S};
+const backupObj=()=>{const o=JSON.parse(JSON.stringify(S));delete o.pin;delete o.pinOn;delete o.pinSkip;delete o.pinFail;return o};
+const restoreFrom=o=>{const k={pin:S.pin,pinOn:S.pinOn,pinSkip:S.pinSkip,pinFail:S.pinFail};S=norm(Object.assign({},o,k));return S};
 let saveT=null;
 const saveSoon=()=>{clearTimeout(saveT);saveT=setTimeout(save,300)};
 const flushSave=()=>{if(saveT){clearTimeout(saveT);saveT=null}save()};
@@ -8081,6 +8089,9 @@ const JSCL=[['注意','用心','慎重','用心深い','丁寧','入念','軽率
  ['順調','好調','立派','見事','長所','美点','確実','確か','大切','重要','活発','活気'],['方法','手段','目的','目標','準備','用意','実行','実施','勇気','度胸'],['将来','未来','最近','このごろ','以前','かつて','突然','不意','偶然','たまたま']];
 const jsC=w=>JSCL.findIndex(l=>l.includes(w));
 const shareKanji=(a,b)=>{const A=new Set(String(a).match(/[一-龥]/g)||[]);return (String(b).match(/[一-龥]/g)||[]).some(x=>A.has(x))};
+/* 同じものをさす別の言い方（一問一答）。まちがいの選択肢に、正解の別名を並べない（正解が2つに見えるため）。答えの書き方は、なるべく1つにそろえる */
+const QALIAS=[['ソ連','ソビエト連邦','ソビエト'],['中国','中華人民共和国'],['アメリカ','アメリカ合衆国','米国'],['イギリス','英国'],['国連','国際連合'],['首相','内閣総理大臣','総理大臣']];
+const aliasKey=s=>{const g=QALIAS.find(l=>l.includes(String(s)));return g?g[0]:String(s)};
 function distractQA(it,f,n=3){
  const ans=it[f],seen=new Set([ans]),out=[],keys=tagKeys(it),g=f==='a'?qGroup(it):'';
  for(const pass of g?[0,1,4,2,3]:[2,3]){   // 0：同じ型＋長さが近い／1：同じ型／4：答えのかたちが同じ（型が小さいグループ・単独の名詞の問いも、数やカタカナの答えと並ばないように）／2：長さが近い／3：なんでも
@@ -8090,7 +8101,7 @@ function distractQA(it,f,n=3){
    const h=g?qHead(it):'',sf=String(ans).slice(-2),sc=c=>(qHead(c)===h)*2+(String(c[f]).slice(-2)===sf);
    for(const c of g&&pass<=1?shuffle(pool).sort((x,y)=>sc(y)-sc(x)):shuffle(pool)){   // 同じ名詞の問い（「…気体は？」どうし）の答えを先に。つぎに、おわりの2字が同じ答え（「…の乱」「…一揆」どうし）
     if(out.length>=n)break;
-    if(c.id===it.id||seen.has(c[f])||nested(c[f],ans))continue;
+    if(c.id===it.id||seen.has(c[f])||nested(c[f],ans)||aliasKey(c[f])===aliasKey(ans))continue;
     if(f==='w'&&c.m===it.m)continue;
     if(it.k==='syn'&&(c.w===it.w||shareKanji(c[f],it.w)||shareKanji(c[f],ans)||(jsC(c[f])>=0&&(jsC(c[f])===jsC(ans)||jsC(c[f])===jsC(it.w)))))continue;   // 類義語・対義語：おなじ見出しのもうひとつの答えや、見出し・正解と同じ漢字をふくむ語（意味が近いかもしれない）は、まちがいに使わない
     if(chgDir(c[f])&&chgDir(c[f])===chgDir(ans))continue;   // 同じ向きの変化（増える／大きくなる）は同じ意味。どの型の問いでも、まちがいに並べない
@@ -9232,6 +9243,8 @@ function noteAnswer(ok,date=today()){
  S.tot.n++;if(ok)S.tot.ok++;
  const d=dayRec(date);d.n=(d.n||0)+1;if(ok)d.c=(d.c||0)+1;
 }
+/* 学校のテストのミスを登録したときのXP：1日1回だけ（何回も登録してXPをかせげないように） */
+function mistakeXP(date=today()){const d=dayRec(date);if(d.mx)return{xp:0,lv:null};d.mx=1;return{xp:5,lv:addXP(5)}}
 function addMinutes(sj,m,date=today()){const d=dayRec(date);d.min[sj]=(d.min[sj]||0)+m}
 
 /* ----- マスター数（おぼえた問題） ----- */
@@ -9454,6 +9467,17 @@ function pathReportLine(date=today()){
 const FLOW_NAME={hw:'宿題・提出物',mem:'暗記バトル',math:'数学ドリル',mis:'ミス退治',ref:'ふりかえり'};
 const flowName=s=>s.id==='diag'?'ミニ診断（'+(SJN[s.subj]||s.subj)+'）':s.id==='sub'?String(s.t).split('：')[0]:(FLOW_NAME[s.id]||s.t);
 const PINON=()=>!!(S.pinOn&&S.pin);
+/* 暗証番号の確かめ。5回まちがえたら10分ロック（かたっぱしから試して、暗証番号をさぐられないように）。戻り値：'ok'｜'ng'｜'lock' */
+const PIN_MAX=5,PIN_LOCK_MS=10*60000;
+function pinTry(v){
+ const f=S.pinFail||(S.pinFail={n:0,until:0}),now=Date.now();
+ if(f.until>now)return'lock';
+ if(String(v)===S.pin){f.n=0;f.until=0;return'ok'}
+ f.n=(f.n||0)+1;
+ if(f.n>=PIN_MAX){f.n=0;f.until=now+PIN_LOCK_MS}
+ return f.until>now?'lock':'ng';
+}
+const pinLockMin=()=>{const f=S.pinFail;return f&&f.until>Date.now()?Math.ceil((f.until-Date.now())/60000):0};
 const mustStages=route=>route.filter(s=>!s.auto&&!(s.id==='hw'&&PINON()));
 
 /* きょうの一本道の状態。next＝次のマスト／redo＝すべて終わったのに合格ラインに届かないとき、やりなおす（正答4割未満の）ドリル
@@ -9466,7 +9490,7 @@ function flowState(date=today()){
  const hw=route.find(s=>s.id==='hw');
  const left=must.filter(s=>!s.done).length,sent=!!rec.ct;
  return{route,must,next,redo,target:next||redo,all,ok,ready,left,sent,sentAt:rec.ct||0,
-  hwWait:!!(hw&&!hw.done&&PINON()),
+  hwWait:!!(hw&&!hw.done&&PINON()),tier,
   steps:left+(redo?1:0)+(ready&&!sent?1:0)};   // 道にのこっている数（れんらくをふくむ）
 }
 
@@ -9475,7 +9499,7 @@ const cleanMail=v=>String(v||'').normalize('NFKC').replace(/\s+/g,'');
 const validMail=v=>/^[A-Za-z0-9._+\-]+@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)+$/.test(v)&&v.length<=100;
 const mailAddrs=()=>{const m=S.mail||{};return[...new Set([cleanMail(m.m),cleanMail(m.f)].filter(validMail))]};   // おかあさん・おとうさんの順
 const mailWho=()=>{const m=S.mail||{},f=validMail(cleanMail(m.f)),o=validMail(cleanMail(m.m));return f&&!o?'おとうさん':o&&!f?'おかあさん':'おかあさん・おとうさん'};
-const mdw=d=>{const x=dt(d);return(x.getMonth()+1)+'/'+x.getDate()+'（'+'日月火水木金土'[x.getDay()]+'）'};
+const mdw=d=>{const x=dt(d);return(x.getMonth()+1)+'/'+x.getDate()+' '+'日月火水木金土'[x.getDay()]};
 /* 送る文（子どもの言葉で、短く）。subject＝件名、body＝本文、text＝コピー・共有用 */
 function mailText(F,date=today()){
  const rec=peekDay(date),nick=S.nick;
@@ -9492,9 +9516,10 @@ function mailText(F,date=today()){
  const L=[mailWho()+'へ','','きょう（'+mdw(date)+'）の ノルマ、ぜんぶ おわったよ！','','■ やったこと',...rows,'','■ きょうの まとめ'];
  if(n)L.push('・せいかい '+ok+'/'+n+'（'+Math.round(ok/n*100)+'%）');
  if(min)L.push('・べんきょうした時間 約'+min+'分');
+ L.push('・きょうの量：'+(TIERS[F.tier]?TIERS[F.tier].name:'')+(S.light&&S.light[date]?'（ミニの日）':''));
  if(curStreak())L.push('・れんぞく '+curStreak()+'日');
  if(F.hwWait)L.push('','宿題は、おうちの人の OK が まだです。見てね！');
- L.push('','さくらクエストから（'+(nick||'子ども')+'が じぶんで ボタンを おして つくった れんらくです）');
+ L.push('','（さくらクエスト：'+(nick||'子ども')+'が じぶんで ボタンを おして つくった れんらく）');
  const subject='【さくらクエスト】きょうの ノルマ、おわったよ！'+(nick?'（'+nick+'）':''),body=L.join('\n');
  return{subject,body,text:subject+'\n\n'+body};
 }
@@ -9647,7 +9672,7 @@ const fmtMin=m=>m>=60?Math.floor(m/60)+'時間'+(m%60?m%60+'分':''):m+'分';
 function renderHud(){
  const L=lvInfo(S.xp),d=diff(today(),S.exam);
  $('#nmN').textContent=S.nick||'ゲスト';
- $('#nmR').textContent='Lv.'+L.lv+'　'+L.name;
+ $('#nmR').innerHTML='Lv.'+L.lv+'<span class="rn">　'+esc(L.name)+'</span>';
  $('#av').innerHTML=avatarSVG();
  $('#hud').innerHTML=`<div class="pl cd"><small>入試まで</small><b>${Math.max(0,d)}</b><i>日</i></div><div class="pl fl"><small>れんぞく</small><b>${curStreak()}</b><i>日</i></div><div class="pl"><small>コイン</small><b>${S.coin}</b></div>`;
 }
@@ -9707,7 +9732,10 @@ function vowChip(okDay){
  const at=S.at||'',late=at&&nowHM()>at;
  return `<button class="vowb${late?' late':''}" data-act="vow">${ico('timer')}${late?'やくそくの時間をすぎたよ。3分だけ！':at?'やくそく '+at+' にスタート':'やくそくの時間を決める'}</button>`;
 }
-const briefDesc=(d,n=22)=>{let out='';for(const p of String(d||'').split('／')){const nx=out?out+'／'+p:p;if(nx.length>n&&out)break;out=nx}return out.length>n?out.slice(0,n-1)+'…':out};
+const briefDesc=(d,n=22)=>{
+ d=String(d||'');
+ if(!d.includes('／')){const k=d.indexOf('。');return k>=0&&k<d.length-1?d.slice(0,k+1):d.length>40?d.slice(0,39)+'…':d}   // 「／」がない説明は、文の途中で切らない
+ let out='';for(const p of String(d||'').split('／')){const nx=out?out+'／'+p:p;if(nx.length>n&&out)break;out=nx}return out.length>n?out.slice(0,n-1)+'…':out};
 function nowCard(next,tier,okDay,rec){
  const T=TIERS[tier],isS=next.kind==='session';
  const need=dayNeed(rec,tier);
@@ -9741,7 +9769,7 @@ function renderHome(){
  ${todo.length?`<details class="fold later"><summary><span class="lb sm y">このあと</span><span class="lt">${todo.length}つ</span></summary><div class="stages">${todo.map(stageCard).join('')}</div></details>`:''}
  ${done.length?`<details class="fold cleared-list"><summary>クリアしたステージ（${done.length}）</summary><div class="stages">${done.map(stageCard).join('')}</div></details>`:''}
 ${intro}${diagTip}${pinAsk}
- <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。3分のドリルだけでOK）${S.pinOn&&S.pin?'':`<small class="mini"> 週2回まで（今週あと${Math.max(0,2-lightUsed(date))}回）</small>`}</span></div>`;
+ <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。量をへらす。ドリル1つで れんぞく記録はセーフ）${S.pinOn&&S.pin?'':`<small class="mini"> 週2回まで（今週あと${Math.max(0,2-lightUsed(date))}回）</small>`}</span></div>`;
  const R=`
  ${pathMini()}
  <div class="card"><div class="rowh"><h2>今週の流れ</h2></div>${weekStrip(date)}
@@ -10613,7 +10641,7 @@ const ACT={
   Snd.unlock();hwTimer={end:Date.now()+hwLenM*60000,t0:Date.now()};hwTimer.iv=setInterval(()=>hwTick(),500);btn.textContent='ストップ';hwTick();
  },
  hwDone(){
-  if(S.pinOn&&S.pin&&(($('#pinIn')||{}).value||'')!==S.pin){toast('暗証番号がちがうよ。おうちの人に見せてね');return}
+  if(S.pinOn&&S.pin){const r=pinTry(($('#pinIn')||{}).value||'');save();if(r==='lock'){toast('まちがいが つづいたので、'+pinLockMin()+'分ほど あとで もう一度');return}if(r!=='ok'){toast('暗証番号がちがうよ。おうちの人に見せてね');return}}
   const st=routeFor().find(x=>x.id==='hw');let used=0;
   if(hwTimer){used=Math.round((Date.now()-hwTimer.t0)/60000);clearInterval(hwTimer.iv);hwTimer=null}
   const res=completeStage(today(),'hw',{n:0,min:used>0?used:st.min});
@@ -10621,7 +10649,8 @@ const ACT={
   flowBridge('hw');
  },
  refStar(i){
-  refSelf=+i;$$('#refStars button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.a<=refSelf)));
+  if(refSelf)return;   // 自分の点は、さいしょの星で決まり（データの点を見てから、つけなおせないように）
+  refSelf=+i;$$('#refStars button').forEach(b=>{b.setAttribute('aria-pressed',String(+b.dataset.a<=refSelf));b.disabled=true});
   const data=dayScore(),c=calibNote(refSelf,data);
   $('#refCmp').innerHTML=`<div class="cbx ${c.k}"><div class="cs"><span>自分</span><b>${refSelf}</b></div><div class="cs"><span>データ</span><b>${data}</b></div><p>${esc(c.t)}</p></div>`;
   $('#refGo').disabled=false;Snd.tap();
@@ -10692,7 +10721,9 @@ const ACT={
   else needPin('この目標は、おうちの人が確かめてから つけよう。',()=>ACT.goalDo(a));
  },
  pinGo(){
-  if((($('#gpIn')||{}).value||'')!==S.pin){toast('暗証番号がちがうよ');return}
+  const r=pinTry(($('#gpIn')||{}).value||'');save();
+  if(r==='lock'){toast('まちがいが つづいたので、'+pinLockMin()+'分ほど あとで もう一度');return}
+  if(r!=='ok'){toast('暗証番号がちがうよ');return}
   const f=PIN_NEXT;PIN_NEXT=null;closeSheet();if(f)f();
  },
  pinLater(){S.pinSkip=today();save();refresh()},
@@ -10706,7 +10737,7 @@ const ACT={
  },
  tile(ds){toast(tileInfo(ds))},
  /* ---- ごほうび ---- */
- rwEdit(){rwEdit=!rwEdit;renderReward()},
+ rwEdit(){if(rwEdit){rwEdit=false;renderReward();return}needPin('ごほうびのリストを編集します（保護者用）。',()=>{rwEdit=true;renderReward()})},
  shBuy(i){const s=S.shop[+i];if(!s||S.coin<s.c)return;S.coin-=s.c;logReward(s.n,s.c);save();toast('こうかんした：'+s.n+'（保護者に見せよう）');FX.confetti(60);Snd.clear();refresh()},
  shDel(i){S.shop.splice(+i,1);save();renderReward()},
  shAdd(){const n=$('#shN').value.trim(),c=Math.max(10,+$('#shC').value||100);if(!n)return;S.shop.push({n,c});save();renderReward()},
@@ -10729,7 +10760,15 @@ const ACT={
  mistDrill(){const items=weakItems(20).map(freshen);if(!items.length){toast('いまミスはありません');return}closePage();startSession({title:'ミス退治（自由練習）',subj:'総',items,skipBrief:true})},
  naiLog(){const c=naiCalc(),label=($('#naiLabel')||{}).value||'学校のテスト';needPin('テストの結果を記録します（目標の点ではなく、実際の点を入れてあるか確かめてから）。',()=>{S.tl.push({d:today(),tot:Math.round(c.tot),nn:Math.round(c.nn),gk:c.g,label});S.tl=S.tl.slice(-40);save();renderNaiLog();toast('記録した（めやす）')})},
  naiUndo(){if(!S.tl.length)return;needPin('いちばん新しい記録を消します。',()=>{S.tl.pop();save();renderNaiLog();toast('消した')})},
- msAdd(){const memo=$('#msMemo').value.trim();addManualMistake($('#msSub').value,$('#msKind').value,memo);const r=addXP(5);$('#msMemo').value='';save();toast('ミスを登録した。あした再戦だ！ +5XP');renderMistPage();renderHud();if(r)levelUp(r.to)},
+ msAdd(){
+  const memo=$('#msMemo').value.trim();
+  if(memo.length<2){toast('どんな問題か、ひとこと書いてね');return}
+  addManualMistake($('#msSub').value,$('#msKind').value,memo);
+  const r=mistakeXP();   // XPは、1日1回だけ（何回も登録してXPをかせげないように）
+  $('#msMemo').value='';save();
+  toast(r.xp?'ミスを登録した。あした再戦だ！ +'+r.xp+'XP':'ミスを登録した。あした再戦だ！（XPは1日1回）');
+  renderMistPage();renderHud();if(r.lv)levelUp(r.lv.to)
+ },
  /* ---- 診断・教科・AI先生 ---- */
  dgTab(s){S.dg=s;dgFb=false;save();renderDg()},dgNext(){dgFb=false;renderDg()},
  dgAgain(){S.diag[S.dg]={ans:[],sc:0,paid:1};dgFb=false;save();renderDg();renderDiagOut()},dgPick(j){dgPick(+j)},
