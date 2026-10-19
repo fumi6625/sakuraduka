@@ -35,18 +35,24 @@ const lvl=(sc,n)=>sc>=n-1?'A':sc>=Math.ceil(n/2)?'B':'C';
 function renderNai(){
  const sel=(g,s)=>`<select data-nai="${g}|${s}" aria-label="${s}の${g==='a'?'中1':'中2'}の評定"><option value="">－</option>${[5,4,3,2,1].map(v=>`<option value="${v}" ${+S.nai[g][s]===v?'selected':''}>${v}</option>`).join('')}</select>`;
  $('#naiBox').innerHTML='<b></b><b>中1（確定）</b><b>中2（最新）</b>'+NAI_SUBJ.map(s=>`<span>${s}</span>${sel('a',s)}${sel('b',s)}`).join('');
- $('#naiT3').value=S.nai.t3;$('#naiGk').value=S.nai.gk;naiOut();
+ $('#naiT3').value=S.nai.t3;$('#naiGk').value=S.nai.gk;naiOut();renderNaiLog();
 }
-function naiOut(){
+/* 内申・学力検査の点から、総合点を計算する（通常枠＝学力検査×1.4＋内申点×0.6） */
+function naiCalc(){
  const est=o=>{const v=NAI_SUBJ.map(s=>+o[s]).filter(Boolean);return v.length?sum(v)/v.length*9:0};
  let a=est(S.nai.a),b=est(S.nai.b);const c=+S.nai.t3,g=+S.nai.gk;
  const na=NAI_SUBJ.filter(s=>+S.nai.a[s]).length,nb=NAI_SUBJ.filter(s=>+S.nai.b[s]).length;
  if(!a)a=27;if(!b)b=27;
+ const nn=a*2+b*2+c*6;
+ return{c,g,na,nb,nn,tot:g*1.4+nn*.6,tk:g*.6+nn*1.4};
+}
+function naiOut(){
+ const {c,g,na,nb,nn,tot,tk}=naiCalc(),line=NAI_LINE,safe=NAI_SAFE;
  $('#naiT3v').textContent=c+'/45（平均'+(c/9).toFixed(1)+'）';$('#naiGkv').textContent=g+'/450（'+Math.round(g/4.5)+'%）';
- const nn=a*2+b*2+c*6,tot=g*1.4+nn*.6,tk=g*.6+nn*1.4,line=640,safe=700;
- const msg=tot>=safe?'安全圏の目安（約700点）をこえています。この目標を落とさないことが大事。':tot>=line?`合格圏の目安（約640点）に届いています。あと${Math.ceil(safe-tot)}点で安全圏。`:`合格圏の目安（約640点）まで、あと${Math.ceil(line-tot)}点。学力検査をあと${Math.ceil((line-tot)/1.4)}点、または中3の評定合計をあと${Math.ceil((line-tot)/3.6)}点のばす計算。`;
+ const msg=tot>=safe?`安全圏の目安（約${safe}点）をこえています。この目標を落とさないことが大事。`:tot>=line?`合格圏の目安（約${line}点）に届いています。あと${Math.ceil(safe-tot)}点で安全圏。`:`合格圏の目安（約${line}点）まで、あと${Math.ceil(line-tot)}点。学力検査をあと${Math.ceil((line-tot)/1.4)}点、または中3の評定合計をあと${Math.ceil((line-tot)/3.6)}点のばす計算。`;
  $('#naiOut').innerHTML=`<div class="res"><div><b>${nn.toFixed(0)}</b><span>内申点<i>450点満点</i></span></div><div><b>${tot.toFixed(0)}</b><span>総合点（通常枠）<i>900点満点・タイプⅠ</i></span></div><div><b>${tk.toFixed(0)}</b><span>特色枠の点（参考）<i>900点満点</i></span></div></div><p>${msg}</p><p class="mini">${na<9||nb<9?`入力した評定は中1が${na}/9教科、中2が${nb}/9教科。未入力ぶんは、入力した教科の平均（ゼロのときは3.0）で補って計算しています。`:''}通常枠＝学力検査×1.4＋内申点×0.6。特色枠は上位10%だけが先に合格するので、点数は参考です。</p>`;
 }
+const renderNaiLog=()=>{const el=$('#naiLog');if(!el)return;const v=($('#naiLabel')||{}).value;el.innerHTML=naiLogHTML();if(v)$('#naiLabel').value=v};
 let dgFb=false;
 function renderDg(){
  $('#dgTabs').innerHTML=SJL.map(s=>`<button class="bt sm" data-act="dgTab" data-a="${s}" aria-pressed="${S.dg===s}">${SJN[s]}${S.diag[s]&&S.diag[s].done?' ✓':''}</button>`).join('');

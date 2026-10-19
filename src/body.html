@@ -81,8 +81,8 @@
   <p class="mini">中1は学年末、中2は最新の評定を選ぶ。中3は目標の合計を決める。</p>
   <div class="nai" id="naiBox"></div>
   <div class="row" style="margin-top:12px"><div style="flex:1;min-width:220px"><label for="naiT3">中3の評定・目標の合計（45点満点）：<b id="naiT3v"></b></label><input id="naiT3" type="range" min="27" max="45" step="1" style="width:100%"></div>
-   <div style="flex:1;min-width:220px"><label for="naiGk">学力検査・目標の得点（450点満点）：<b id="naiGkv"></b></label><input id="naiGk" type="range" min="150" max="450" step="5" style="width:100%"></div></div>
-  <div id="naiOut"></div></div>
+   <div style="flex:1;min-width:220px"><label for="naiGk">学力検査の得点（450点満点。目標、または模試の結果）：<b id="naiGkv"></b></label><input id="naiGk" type="range" min="150" max="450" step="5" style="width:100%"></div></div>
+  <div id="naiOut"></div><div id="naiLog"></div></div>
  <div class="card"><h2>STEP2　ミニ診断テスト（5教科×6問）</h2>
   <p class="mini">中1〜中2前半の範囲。基礎2問・標準3問・応用1問。わからなければ飛ばさず、いちばん近いものを選ぼう。</p>
   <div class="tabs" id="dgTabs"></div><div id="quizBox"></div></div>
@@ -130,6 +130,14 @@
    <li><b>集中は短く区切る。</b>5問ごとにラウンド、1ステージ3〜5分。終わったら立って休む。ゲーム・動画は別の部屋に置き、タイマーは1つだけ。</li>
    <li><b>叱らない・取りあげない。</b>できなかった日は、お休みトークンとミニモードで続ける。「できなかった」より「3分だけやった」を認める。</li>
    <li><b>見直しのサイン：</b>ミニモードでも3日以上できない／「どうせ無理」が増える → 量をさらに減らして、先に話を聞く。</li></ul></div>
+ <div class="card"><span class="eyebrow px">PATH</span><h2>「合格への道のり」の見かた（めやす）</h2>
+  <ul>
+   <li><b>何を表しているか：</b>アプリの問題を どれだけ身につけたか（おぼえ具合）を点にして、「週5日・正答率85%で入試の日まで続けた場合」を100%としたものです。マップとホームに出ます。</li>
+   <li><b>「予定より◯日分 先」「予定まであと◯日分」：</b>いまの身につき具合が、予定の線のどこにあたるか。おくれていても、1日やるごとに追いつきます。責めずに「きょうの1つ目だけ」を一緒に。</li>
+   <li><b>入試の日の見こみ：</b>最近4週間のペースで続けた場合の計算です。週に何日やるか・正答率で変わります。当たるとは限りません。</li>
+   <li><b>入っていないもの：</b>応用問題・過去問・作文・内申点。本当の実力は、学校のテストや模試の点で確かめてください。</li>
+   <li><b>テスト・模試の記録：</b>「診断・内申シミュレーター」に、返ってきた点を記録できます（暗証番号をオンにしていると、おうちの人のOKが要ります）。合格圏のめやす（約640点）までの距離が出ます。</li></ul>
+  <p class="mini">どの数字も推定のめやすで、<b>合格をほしょうするものではありません</b>。公式の合格ラインでもありません。</p></div>
  <div class="grid">
   <div class="card"><h2>週1回、日曜の10分</h2><ol><li>週報（下のボタンでコピー）を見る</li><li>ほめるポイントを<b>2つ</b>、行動で伝える（例：「毎日続けたね」「ミスを直したね」）</li><li>質問を<b>1つ</b>だけ（「いま、いちばん困っていることは？」）</li><li>来週のごほうびの約束を確認</li></ol>
    <button class="bt pri sm" data-act="report">週報をコピー</button><textarea id="rpt" readonly style="margin-top:8px" placeholder="ここに週報が出ます" aria-label="週報"></textarea></div>

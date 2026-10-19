@@ -13,6 +13,7 @@ const snap=it=>({id:it.id,subj:it.subj,k:it.k,gid:it.gid,lv:it.lv,tag:it.tag,q:i
 /* 自動生成問題・学校のテストのミスは、まちがえたときだけ保存して再戦に回す */
 function recordAnswer(it,ok){
  let lv='';
+ logSw(it.subj,ok);   // 教科ごとの正答率の記録（伸びを見せるため）
  if(it.k==='gen'){
   lv=genResult(it.gid,ok);
   if(!ok){S.gx[it.id]=snap(it);ITEMS[it.id]=Object.assign({bank:'MG',k:'gen'},S.gx[it.id]);srsAnswer(it,false)}   // その場で復習の対象に（ページを開きっぱなしでも、あしたの再戦に出る）

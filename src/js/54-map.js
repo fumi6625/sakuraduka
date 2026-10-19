@@ -1,7 +1,7 @@
 /* ===== マップ：ナワバリマップ（500日をぬりつぶす）とロードマップ ===== */
 const START_DAY='2026-10-18';
 const openM=new Set();let mapInit=false;
-const ring=p=>`<svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="6"/><circle cx="22" cy="22" r="18" fill="none" stroke="var(--team)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${(113.1*p).toFixed(1)} 113.1" transform="rotate(-90 22 22)"/><text x="22" y="26.5" text-anchor="middle" font-size="12" font-weight="900" style="fill:#fff">${Math.round(p*100)}</text></svg>`;
+const ring=(p,lab)=>`<svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="6"/><circle cx="22" cy="22" r="18" fill="none" stroke="var(--team)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${(113.1*p).toFixed(1)} 113.1" transform="rotate(-90 22 22)"/><text x="22" y="26.5" text-anchor="middle" font-size="12" font-weight="900" style="fill:#fff">${lab!=null?lab:Math.round(p*100)}</text></svg>`;
 const goalsHTML=m=>m.g.map((g,i)=>{const on=!!S.ms[gid(m.k,i)],auto=isAutoGoal(m.k,i),mark=auto?'<small class="chp t">記録で自動'+(goalN(gid(m.k,i))&&paceF()<1?'・あなたのペース':'')+'</small>':S.pinOn&&S.pin&&!on?'<small class="chp">おうちの人OK</small>':'';return `<button class="q" data-act="goal" data-a="${m.k}|${i}" aria-pressed="${on}"><span class="box">${on?'✓':''}</span><span><b>${esc(goalText(m,i))}</b> ${mark}</span><span class="xp">+${g[1]}</span></button>`}).join('');
 function turfHTML(){
  const t=today(),exam=S.exam,months=[];
@@ -26,7 +26,7 @@ function renderMap(){
  const T=totals(),t=today(),base=S.start&&S.start>START_DAY?S.start:START_DAY,el=Math.max(1,diff(base,t)+1),total=diff(START_DAY,S.exam)+1;
  const okSince=Object.keys(S.days).filter(d=>d>=base&&S.days[d].ok).length,rate=Math.min(100,Math.round(okSince/el*100));
  if(!mapInit){openM.add(curMonth());mapInit=true}
- $('#v-map').innerHTML=`<div class="card"><span class="lb">ナワバリマップ</span>
+ $('#v-map').innerHTML=pathCard()+`<div class="card"><span class="lb">ナワバリマップ</span>
   <h2 style="margin-top:10px">500日を、ぜんぶ ぬりつぶせ！</h2>
   <p class="mini">1マス＝1日。合格ライン（2ステージ以上）をこえた日が、あなたの色にぬられていく。入試の日（黄色）まで、${Math.max(0,diff(t,S.exam))}日。</p>
   <div class="res"><div><b>${T.ok}<small>/${total}日</small></b><span>ぬった日</span></div><div><b>${rate}<small>%</small></b><span>ぬった率</span></div><div><b>${T.full}<small>日</small></b><span>ぜんぶクリア</span></div><div><b>${S.streak}<small>日</small></b><span>れんぞく（最高${S.best}）</span></div></div>

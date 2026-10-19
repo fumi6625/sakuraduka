@@ -770,3 +770,22 @@ details.later .st:first-child{margin-top:6px}
 .rbn{position:fixed;z-index:120}
 /* ホームの上の「のこり約○分」（進み具合の横に、ひかえめに） */
 .hero .gp .left-min{white-space:nowrap;font-weight:800;color:#fff;opacity:.9;text-shadow:1px 1px 0 #000}
+
+/* ===== 合格への道のり（めやす） ===== */
+.path .ptop{display:flex;gap:14px;align-items:center;margin:10px 0}
+.path .ptop .ring{width:96px;height:96px;flex:none}
+.path .ptop b{display:block;font-size:20px;line-height:1.35}
+.prow{display:grid;grid-template-columns:3.8em 1fr 3.6em;gap:10px;align-items:center;margin:11px 0}
+.prow .pl{font-weight:900}.prow .pv{font-weight:900;text-align:right}
+.pb,.tb{overflow:visible}
+.pb::after{content:"";position:absolute;top:-6px;bottom:-6px;left:var(--p,0%);width:5px;margin-left:-2px;background:var(--yellow);border:1px solid #000;border-radius:3px}
+.tb::before,.tb::after{content:"";position:absolute;top:-4px;bottom:-4px;width:4px;margin-left:-2px;background:var(--yellow);border:1px solid #000;border-radius:3px}
+.tb::before{left:var(--p1,0%)}.tb::after{left:var(--p2,0%);background:var(--green)}
+.ptick{display:inline-block;width:5px;height:14px;margin:0 6px -2px 0;background:var(--yellow);border:1px solid #000;border-radius:3px}
+.spark{display:block;width:100%;height:auto;margin:8px 0 2px}
+.pm{display:flex;gap:12px;align-items:center;width:100%;text-align:left;cursor:pointer;color:var(--tx);min-height:72px}
+.pm .ring{width:64px;height:64px;flex:none}
+.pmt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pmt b{font-size:17px;line-height:1.3}
+.trow{display:grid;grid-template-columns:5.6em 1fr 3.2em;gap:10px;align-items:center;margin:10px 0}
+.trow b{text-align:right}

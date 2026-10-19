@@ -4,7 +4,7 @@ let memStore=null;
 const ls={get(){try{return localStorage.getItem(KEY)}catch(e){return memStore}},set(v){memStore=v;try{localStorage.setItem(KEY,v)}catch(e){}}};
 const DEF={nick:'',team:'pink',sound:1,exam:'2028-03-01',xp:0,coin:0,streak:0,best:0,last:'',freeze:1,
  days:{},ms:{},mc:{},got:{},mrw:{},nai:{a:{},b:{},t3:39,gk:315,set:0},diag:{},badges:{},shop:null,gacha:null,
- wk:{},memo:['','',''],tab:'home',sj:'数',dg:'国',srs:{},gx:{},gs:{},light:{},refl:{},rt:null,tot:{n:0,ok:0},rlog:[],tier:'auto',start:'',pin:'',pinOn:0,pinSkip:'',tf:{n:0,ok:0},at:'',subLast:{}};
+ wk:{},memo:['','',''],tab:'home',sj:'数',dg:'国',srs:{},gx:{},gs:{},light:{},refl:{},rt:null,tot:{n:0,ok:0},rlog:[],tier:'auto',start:'',pin:'',pinOn:0,pinSkip:'',tf:{n:0,ok:0},at:'',subLast:{},sw:{},kh:{},tl:[]};
 const fresh=()=>{const o=JSON.parse(JSON.stringify(DEF));o.shop=SHOP0.map(x=>({n:x[0],c:x[1]}));o.gacha=GACHA0.slice();return o};
 const norm=o=>{o=o||{};const r=Object.assign(fresh(),o);r.nai=Object.assign({},DEF.nai,o.nai);r.tot=Object.assign({n:0,ok:0},o.tot);r.tf=Object.assign({n:0,ok:0},o.tf);if(!r.shop)r.shop=fresh().shop;if(!r.gacha)r.gacha=fresh().gacha;return r};
 let S;

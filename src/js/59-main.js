@@ -172,6 +172,8 @@ const ACT={
  dsMode(m){DS.mode=m;drillSheet(DS.key)},dsN(n){DS.n=+n;drillSheet(DS.key)},dsLv(l){DS.lv=+l;drillSheet(DS.key)},
  drillGo(){drillGo()},
  mistDrill(){const items=weakItems(20).map(freshen);if(!items.length){toast('いまミスはありません');return}closePage();startSession({title:'ミス退治（自由練習）',subj:'総',items,skipBrief:true})},
+ naiLog(){const c=naiCalc(),label=($('#naiLabel')||{}).value||'学校のテスト';needPin('テストの結果を記録します（目標の点ではなく、実際の点を入れてあるか確かめてから）。',()=>{S.tl.push({d:today(),tot:Math.round(c.tot),nn:Math.round(c.nn),gk:c.g,label});S.tl=S.tl.slice(-40);save();renderNaiLog();toast('記録した（めやす）')})},
+ naiUndo(){if(!S.tl.length)return;needPin('いちばん新しい記録を消します。',()=>{S.tl.pop();save();renderNaiLog();toast('消した')})},
  msAdd(){const memo=$('#msMemo').value.trim();addManualMistake($('#msSub').value,$('#msKind').value,memo);const r=addXP(5);$('#msMemo').value='';save();toast('ミスを登録した。あした再戦だ！ +5XP');renderMistPage();renderHud();if(r)levelUp(r.to)},
  /* ---- 診断・教科・AI先生 ---- */
  dgTab(s){S.dg=s;dgFb=false;save();renderDg()},dgNext(){dgFb=false;renderDg()},

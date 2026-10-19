@@ -95,6 +95,7 @@ function renderHome(){
 ${intro}${diagTip}${pinAsk}
  <div class="busy"><button class="sw" data-act="light" aria-pressed="${light}" aria-label="ミニモード"></button><span>きょうは ミニでいく（いそがしい・つかれた日。3分のドリルだけでOK）${S.pinOn&&S.pin?'':`<small class="mini"> 週2回まで（今週あと${Math.max(0,2-lightUsed(date))}回）</small>`}</span></div>`;
  const R=`
+ ${pathMini()}
  <div class="card"><div class="rowh"><h2>今週の流れ</h2></div>${weekStrip(date)}
   <div class="tomorrow"><span class="lb sm o">あした</span><span><b>${esc(tm.t)}</b><br><span class="mini">数学のテーマ：${esc(tm.theme)}</span></span></div></div>
  ${monthMini()}`;
