@@ -11,7 +11,7 @@
  --team:var(--t-pink);--team2:var(--t-pink2);--teamd:var(--t-pinkd);--team-rgb:var(--t-pink-rgb);--team-t:var(--t-pink-t);
  color-scheme:light;
  /* 地・カード・パネル・文字 */
- --bg:#faf6ea;--bg0:rgba(250,246,234,0);--pn:#fefdfb;--pn2:#ffffff;--pa:#f7f3e8;--pa2:#fcfbf7;--tx:#254033;--tx2:#445f52;--mu:#4d675a;--tx-hi:#1a3327;
+ --bg:#fde3e0;--bg0:rgba(253,227,224,0);--pn:#fefdfb;--pn2:#ffffff;--pa:#f7f3e8;--pa2:#fcfbf7;--tx:#254033;--tx2:#445f52;--mu:#4d675a;--tx-hi:#1a3327;
  /* 線・影・うすい重ね・入力欄・ゲージの溝 */
  --ink:#254033;--ink-rgb:37,64,51;--on:#11221a;--line-rgb:37,64,51;--bd-hi:var(--ink);--sunk-a:rgba(255,255,255,.88);--sunk-b:rgba(255,255,255,.78);
  --sunk-c:rgba(255,255,255,.65);--sunk-d:rgba(255,255,255,.78);--say-bg:rgba(var(--team-rgb),.14);--exp-bg:rgba(255,210,63,.24);
@@ -53,7 +53,7 @@
 }
 /* ---- やさしい（クリーム地のパステル） ---- */
 html[data-theme=soft]{color-scheme:light;
- --bg:#fdf3ec;--bg0:rgba(253,243,236,0);--pn:#fffaf6;--pn2:#ffffff;--pa:#f9f5ed;--pa2:#fdfcfa;--tx:#3a5246;--tx2:#4e6559;--mu:#4e6158;--tx-hi:#2c473a;
+ --bg:#fde9e6;--bg0:rgba(253,233,230,0);--pn:#fffaf6;--pn2:#ffffff;--pa:#f9f5ed;--pa2:#fdfcfa;--tx:#3a5246;--tx2:#4e6559;--mu:#4e6158;--tx-hi:#2c473a;
  --ink:#466455;--ink-rgb:70,100,85;--on:#2c473a;--line-rgb:70,100,85;--bd-hi:var(--ink);--sunk-a:rgba(255,255,255,.82);--sunk-b:rgba(255,255,255,.72);
  --sunk-c:rgba(255,255,255,.6);--sunk-d:rgba(255,255,255,.72);--say-bg:rgba(var(--team-rgb),.14);--exp-bg:rgba(255,226,122,.28);
  --in-hl:rgba(255,255,255,.8);--in-ring:rgba(var(--team-rgb),.25);--track:#f5e7e7;--track-ring:rgba(255,255,255,.9);
@@ -87,7 +87,7 @@ html[data-theme=soft]{color-scheme:light;
 }
 /* ---- ネオン（暗い地にあざやかな光。はじめの版） ---- */
 html[data-theme=neon]{color-scheme:dark;
- --bg:#0a1714;--bg0:rgba(10,23,20,0);--pn:#1f453c;--pn2:#2f534a;--pa:#1f453c;--pa2:#2e5249;--tx:#ffffff;--tx2:#e2f5f0;--mu:#abd0c7;--tx-hi:#ffffff;
+ --bg:#1e0a0e;--bg0:rgba(30,10,14,0);--pn:#4a1d26;--pn2:#5a2832;--pa:#4a1d26;--pa2:#592731;--tx:#ffffff;--tx2:#e2f5f0;--mu:#abd0c7;--tx-hi:#ffffff;
  --ink:#000000;--ink-rgb:0,0,0;--on:#08110f;--line-rgb:255,255,255;--bd-hi:#ffffff;--sunk-a:rgba(0,0,0,.35);--sunk-b:rgba(0,0,0,.3);
  --sunk-c:rgba(0,0,0,.22);--sunk-d:rgba(11,25,22,.7);--say-bg:rgba(0,0,0,.3);--exp-bg:rgba(0,0,0,.35);--in-hl:rgba(255,255,255,.12);
  --in-ring:rgba(255,255,255,.18);--track:#07110e;--track-ring:rgba(255,255,255,.18);--tank-in:inset 0 3px 6px rgba(0,0,0,.7);--field:#0b1814;
@@ -120,7 +120,7 @@ html[data-theme=neon]{color-scheme:dark;
 }
 /* ---- よる（落ち着いた暗い色） ---- */
 html[data-theme=night]{color-scheme:dark;
- --bg:#17372a;--bg0:rgba(23,55,42,0);--pn:#1f4636;--pn2:#25523f;--pa:#1f4535;--pa2:#265140;--tx:#ffffff;--tx2:#d2e6dc;--mu:#b7d2c4;--tx-hi:#ffffff;
+ --bg:#3b1418;--bg0:rgba(59,20,24,0);--pn:#4c1c21;--pn2:#5a252b;--pa:#4b1c21;--pa2:#59262c;--tx:#ffffff;--tx2:#d2e6dc;--mu:#b7d2c4;--tx-hi:#ffffff;
  --ink:#07110c;--ink-rgb:7,17,12;--on:#060e0a;--line-rgb:255,255,255;--bd-hi:#dfe5f7;--sunk-a:rgba(0,0,0,.32);--sunk-b:rgba(0,0,0,.27);
  --sunk-c:rgba(0,0,0,.2);--sunk-d:rgba(9,21,15,.7);--say-bg:rgba(0,0,0,.27);--exp-bg:rgba(0,0,0,.32);--in-hl:rgba(255,255,255,.1);
  --in-ring:rgba(255,255,255,.16);--track:#0e2017;--track-ring:rgba(255,255,255,.16);--tank-in:inset 0 3px 6px rgba(0,0,0,.6);--field:#10231a;
@@ -153,7 +153,7 @@ html[data-theme=night]{color-scheme:dark;
 }
 /* ---- くっきり（白地・黒い線・あざやかな色） ---- */
 html[data-theme=pop]{color-scheme:light;
- --bg:#fbfaf6;--bg0:rgba(251,250,246,0);--pn:#ffffff;--pn2:#ffffff;--pa:#faf7ee;--pa2:#fdfcfa;--tx:#111f18;--tx2:#375647;--mu:#445e52;--tx-hi:#111f18;
+ --bg:#fdeae8;--bg0:rgba(253,234,232,0);--pn:#ffffff;--pn2:#ffffff;--pa:#faf7ee;--pa2:#fdfcfa;--tx:#111f18;--tx2:#375647;--mu:#445e52;--tx-hi:#111f18;
  --ink:#111f18;--ink-rgb:17,31,24;--on:#111f18;--line-rgb:17,31,24;--bd-hi:var(--ink);--sunk-a:rgba(255,255,255,.9);--sunk-b:rgba(255,255,255,.82);
  --sunk-c:rgba(255,255,255,.7);--sunk-d:rgba(255,255,255,.82);--say-bg:rgba(var(--team-rgb),.16);--exp-bg:rgba(255,217,31,.26);
  --in-hl:rgba(255,255,255,.9);--in-ring:rgba(var(--team-rgb),.3);--track:#f2efe6;--track-ring:rgba(255,255,255,.95);
