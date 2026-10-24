@@ -1,0 +1,21 @@
+/* ===== ユーティリティ ===== */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+let FAKE_TODAY=null;
+const today=()=>FAKE_TODAY||ymd(new Date());
+const setToday=d=>{FAKE_TODAY=d};
+const dt=s=>new Date(s+'T00:00:00');
+const addDays=(s,n)=>{const d=dt(s);d.setDate(d.getDate()+n);return ymd(d)};
+const diff=(a,b)=>Math.round((dt(b)-dt(a))/864e5);
+const monday=s=>{const d=dt(s);d.setDate(d.getDate()-((d.getDay()+6)%7));return ymd(d)};
+const dn=s=>{const d=dt(s);return Math.round((d.getTime()-d.getTimezoneOffset()*60000)/864e5)};
+const mulberry=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const hashStr=s=>{let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0};
+const hid=s=>hashStr(s).toString(36);
+const shuffle=(a,r=Math.random)=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const pick=(a,r=Math.random)=>a[Math.floor(r()*a.length)];
+const sum=a=>a.reduce((x,y)=>x+y,0);
+const clamp=(x,lo,hi)=>Math.max(lo,Math.min(hi,x));
