@@ -35,8 +35,15 @@ test('数学・理科ジェネレータ：落ちない／答えが成り立つ�
   assert.equal(fails.length, 0, `${fails.length}件\n` + fails.slice(0, 15).join('\n'));
 });
 
-test('ジェネレータが十分な種類ある', () => {
-  assert.ok(Object.keys(C.GEN).length >= 38, 'ジェネレータ数 ' + Object.keys(C.GEN).length);
+const IDS = ['dec_mul', 'dec_div', 'vol', 'angle', 'multiple', 'frac_add', 'frac_dec', 'avg', 'per_unit', 'speed', 'area', 'percent', 'circle_len',
+  'frac_mul', 'frac_div', 'frac_mix', 'letter_x', 'ratio', 'circle_area', 'prism_vol', 'prop_inv', 'comb', 'scale', 'stat6',
+  'pendulum', 'dissolve', 'lever'];
+
+test('ジェネレータは 27種（算数24・理科3）で、id がそろっている', () => {
+  const ids = Object.keys(C.GEN);
+  assert.equal(ids.length, 27, 'ジェネレータ数 ' + ids.length);
+  assert.deepEqual([...ids].sort(), [...IDS].sort());
+  for (const id of IDS) assert.equal(C.GEN[id].subj, ['pendulum', 'dissolve', 'lever'].includes(id) ? '理' : '数', id);
 });
 
 /** 「a√b」「√b」「n」「a/b」「nπ」の値（4択の誤答が、正解と同じ値になっていないか確かめる） */
