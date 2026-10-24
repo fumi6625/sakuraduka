@@ -3,7 +3,7 @@ const MENU=[
  ['school','5・6年の学びの旅','学ぶこと・1年半の流れ・自分のめあて','school','var(--pink)'],
  ['diag','診断・テストの記録','いまの実力と、学校のテストの点の記録','chart','var(--cyan)'],
  ['subj','教科ガイド','教科ごとの作戦・お手本ドリル','book','var(--yellow)'],
- ['ai','AI先生チーム','相談・練習・作戦会議の相手（9人）','chat','var(--lime)'],
+ ['ai','AI先生チーム','相談・練習・作戦会議の相手（8人）','chat','var(--lime)'],
  ['mist','ミス図鑑','まちがえた問題の一覧と再戦','splat','var(--orange)'],
  ['family','おうちの人・設定','週報・バックアップ・チームカラー','user','var(--sou)']];
 function renderMenu(){

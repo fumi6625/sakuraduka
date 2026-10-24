@@ -14,7 +14,7 @@ const outDir = path.join(root, '.claude', 'agents');
 fs.mkdirSync(outDir, { recursive: true });
 
 for (const a of AGENTS) {
-  const description = `桜塚高校をめざす中2のAI先生。${a.name}（${a.role}）。呼ぶとき：${a.when}`;
+  const description = `小学5・6年の子のAI先生。${a.name}（${a.role}）。呼ぶとき：${a.when}`;
   const md = [
     '---',
     `name: ${a.id}`,
