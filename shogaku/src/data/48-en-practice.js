@@ -1,183 +1,267 @@
 /* 英文の並べかえ  書式：日本語|English[/別の正解]  （単語をタップして正しい順にならべる） */
 let RAW_EO=`
-#中1
-私は毎日英語を勉強します。|I study English every day./Every day I study English.
-彼女は犬を飼っています。|She has a dog.
-あなたは何を食べたいですか。|What do you want to eat?
-トムは図書館にいます。|Tom is in the library.
-私の兄はサッカーが好きです。|My brother likes soccer.
-私たちは昨日、公園へ行きました。|We went to the park yesterday./Yesterday we went to the park.
-あなたはピアノを弾けますか。|Can you play the piano?
-この本はとてもおもしろいです。|This book is very interesting.
-彼は毎朝6時に起きます。|He gets up at six every morning.
-私は明日、友だちに会います。|I will meet my friend tomorrow./Tomorrow I will meet my friend.
+#小5
+わたしはサッカーが好きです。|I like soccer.
+わたしは犬が好きです。|I like dogs.
+わたしは音楽が好きです。|I like music.
+わたしはバナナが好きではありません。|I don't like bananas.
+あなたは何のスポーツが好きですか。|What sport do you like?
+あなたは何の色が好きですか。|What color do you like?
+あなたは何の食べ物が好きですか。|What food do you like?
+あなたは何の教科が好きですか。|What subject do you like?
+わたしはピアノがひけます。|I can play the piano.
+わたしはじょうずに泳げます。|I can swim well.
+わたしは速く走れます。|I can run fast.
+わたしはギターがひけません。|I can't play the guitar.
+あなたは自転車に乗れますか。|Can you ride a bike?
+あなたは歌えますか。|Can you sing?
+はい、できます。|Yes, I can.
+いいえ、できません。|No, I can't.
+わたしの誕生日は5月3日です。|My birthday is May third.
 あなたの誕生日はいつですか。|When is your birthday?
-あそこに大きな木があります。|There is a big tree over there.
-私は今、テレビを見ています。|I am watching TV now./Now I am watching TV.
-彼女は歌うのが上手です。|She is good at singing.
-窓を開けてください。|Please open the window.
-ここで走ってはいけません。|You must not run here./Don't run here.
-私は音楽に興味があります。|I am interested in music.
-机の上に何がありますか。|What is on the desk?
-私の母は夕食を作っています。|My mother is cooking dinner.
-あなたはどこに住んでいますか。|Where do you live?
-彼はバスで学校に行きます。|He goes to school by bus.
-私は昨夜、宿題をしました。|I did my homework last night./Last night I did my homework.
-これはだれのかばんですか。|Whose bag is this?
-彼らは野球をしていません。|They are not playing baseball.
-あなたの学校には何人の生徒がいますか。|How many students are there in your school?
-私は犬が3匹います。|I have three dogs.
-今日は天気がいいですね。|It is a nice day today./It's a nice day today.
-私は毎週日曜日に買い物に行きます。|I go shopping every Sunday.
-彼は私のクラスでいちばん背が高い。|He is the tallest in my class.
-一緒に昼食を食べましょう。|Let's have lunch together.
-#中2
-私は医者になりたいです。|I want to be a doctor.
-彼女は本を読むのが好きです。|She likes reading books./She likes to read books.
-私は先生に手伝ってほしい。|I want my teacher to help me.
-トムはケンより背が高い。|Tom is taller than Ken.
-これは3つの中でいちばん大きい。|This is the biggest of the three.
-この歌は日本で人気があります。|This song is popular in Japan.
-英語は多くの国で話されています。|English is spoken in many countries.
-この部屋は毎日そうじされます。|This room is cleaned every day.
-私は駅まで歩きました。|I walked to the station.
-彼は疲れていたので、早く寝ました。|He was tired, so he went to bed early.
-雨が降ったら、家にいます。|If it rains, I will stay at home./I will stay at home if it rains.
-私は彼が親切だと思います。|I think that he is kind./I think he is kind.
-写真を撮ってもいいですか。|May I take a picture?
-私は友だちと話して楽しかった。|I enjoyed talking with my friends.
-宿題を終えるまで待ってください。|Please wait until I finish my homework.
-私は何か飲むものがほしい。|I want something to drink.
-彼女はケーキを作るために卵を買いました。|She bought eggs to make a cake.
-あなたは犬とねこ、どちらが好きですか。|Which do you like, dogs or cats?
-私は朝食を食べずに家を出ました。|I left home without eating breakfast.
-私の夢は世界中を旅行することです。|My dream is to travel around the world.
-彼は私たちに数学を教えてくれます。|He teaches us math.
-この橋は100年前に建てられました。|This bridge was built 100 years ago.
-彼女は去年、京都を訪れました。|She visited Kyoto last year./Last year she visited Kyoto.
-私は数学より理科のほうが好きです。|I like science better than math.
-この問題はあの問題より難しい。|This question is more difficult than that one.
-駅への行き方を教えてください。|Please tell me how to get to the station.
-私たちは長い間、待ちました。|We waited for a long time.
-この時計は私の兄のものです。|This watch is my brother's.
-私はその話を聞いて驚きました。|I was surprised to hear the story./I was surprised to hear that story.
-#中3
-私は京都に3回行ったことがあります。|I have been to Kyoto three times.
-彼女は10年間ここに住んでいます。|She has lived here for ten years.
-私はもう宿題を終えました。|I have already finished my homework.
-あそこで走っている男の子は私の弟です。|The boy who is running over there is my brother./The boy running over there is my brother.
-これは私が昨日買った本です。|This is the book that I bought yesterday./This is the book I bought yesterday.
-彼は私が尊敬する先生です。|He is a teacher that I respect./He is a teacher I respect.
-英語を話す人がたくさんいます。|There are many people who speak English.
-彼がどこに住んでいるか知っていますか。|Do you know where he lives?
-私は彼が何を言ったのか分かりません。|I don't know what he said.
-この箱はとても重くて、私は運べません。|This box is so heavy that I can't carry it.
-彼は若すぎて、車を運転できません。|He is too young to drive a car.
-私は鳥だったらいいのに。|I wish I were a bird.
-私たちは彼をトムと呼びます。|We call him Tom.
-その知らせは私たちを悲しませました。|The news made us sad.
-私は母に部屋をそうじさせられました。|My mother made me clean my room.
-向こうに立っている少女はだれですか。|Who is the girl standing over there?
-これは私の父によって書かれた本です。|This is a book written by my father.
-私は昨日から忙しいです。|I have been busy since yesterday.
-あなたは今までにすしを食べたことがありますか。|Have you ever eaten sushi?
-私は彼女に会うのを楽しみにしています。|I am looking forward to seeing her.
-もっと一生懸命に勉強したほうがいいよ。|You should study harder.
-私はそれを聞いてうれしかった。|I was glad to hear that.
-私にとってこの本を読むのは簡単です。|It is easy for me to read this book.
-彼は父親と同じくらい背が高い。|He is as tall as his father.
-私は彼に電話をくれるように頼みました。|I asked him to call me.
-先生は私たちに宿題をするように言いました。|The teacher told us to do our homework.
-彼は私に京都への行き方を教えてくれました。|He told me how to go to Kyoto.
-私は雨がやむまで待ちます。|I will wait until the rain stops.
-彼女がどこで生まれたのか教えてください。|Please tell me where she was born.
-私はその映画を見たことがありません。|I have never seen the movie./I have never seen that movie.
-彼女は私に何か食べるものをくれました。|She gave me something to eat.
-その少年は寝ていたので、電話に出ませんでした。|The boy was sleeping, so he didn't answer the phone.
-私が到着したとき、電車はもう出発していました。|The train had already left when I arrived.
-彼が来るかどうか分かりません。|I don't know if he will come.
+わたしの誕生日は10月です。|My birthday is in October.
+子どもの日は5月5日です。|Children's Day is May fifth.
+わたしは6時に起きます。|I get up at six.
+わたしは7時に朝ごはんを食べます。|I eat breakfast at seven.
+わたしは8時に学校へ行きます。|I go to school at eight.
+わたしは9時にねます。|I go to bed at nine.
+あなたは何時に起きますか。|What time do you get up?
+あなたは何時に夕食を食べますか。|What time do you have dinner?
+わたしは毎日宿題をします。|I do my homework every day.
+わたしは日曜日にテニスをします。|I play tennis on Sundays.
+わたしは動物園へ行きたいです。|I want to go to the zoo.
+わたしは海へ行きたいです。|I want to go to the sea.
+わたしはイタリアへ行きたいです。|I want to go to Italy.
+わたしはオーストラリアへ行きたいです。|I want to go to Australia.
+あなたはどこへ行きたいですか。|Where do you want to go?
+わたしは図書館へ行きたいです。|I want to go to the library.
+まっすぐ行ってください。|Go straight.
+右に曲がってください。|Turn right.
+左に曲がってください。|Turn left.
+2つ目の角で左に曲がってください。|Turn left at the second corner.
+駅はどこですか。|Where is the station?
+郵便局は公園の近くにあります。|The post office is near the park.
+病院は銀行のとなりにあります。|The hospital is next to the bank.
+ようこそ、日本へ。|Welcome to Japan.
+ピザをください。|Pizza, please.
+わたしはカレーライスがほしいです。|I want curry and rice.
+あなたは何がほしいですか。|What would you like?
+サラダとジュースをください。|Salad and juice, please.
+これはいくらですか。|How much is this?
+それは300円です。|It's three hundred yen.
+このぼうしはいくらですか。|How much is this cap?
+わたしはイチゴが大好きです。|I love strawberries.
+わたしの姉は歌がじょうずです。|My sister is good at singing./My sister is a good singer.
+こちらはわたしの友だちです。|This is my friend.
+彼は親切です。|He is kind.
+彼女はやさしいです。|She is gentle.
+彼は走るのが速いです。|He can run fast.
+わたしの町には大きな公園があります。|We have a big park in my town./My town has a big park.
+わたしの町には図書館があります。|We have a library in my town.
+わたしの好きな季節は夏です。|My favorite season is summer.
+わたしの好きな教科は算数です。|My favorite subject is math.
+わたしの好きな動物はネコです。|My favorite animal is the cat.
+わたしの好きな色は青です。|My favorite color is blue.
+わたしの名前はミキです。|My name is Miki.
+わたしは10才です。|I am ten years old.
+わたしはお年寄りにやさしくしたいです。|I want to be kind to old people.
+わたしは理科が得意です。|I am good at science.
+わたしは家族と住んでいます。|I live with my family.
+わたしは朝、犬を散歩させます。|I walk my dog in the morning.
+わたしは夜、本を読みます。|I read books at night.
+#小6
+わたしは夏休みに海へ行きました。|I went to the sea in summer vacation./In summer vacation, I went to the sea.
+わたしは海で泳ぎました。|I swam in the sea.
+わたしは花火を見ました。|I saw fireworks.
+わたしは祭りを楽しみました。|I enjoyed the festival.
+わたしは友だちとサッカーを楽しみました。|I enjoyed playing soccer with my friends.
+わたしはスイカを食べました。|I ate watermelon.
+それはとてもおいしかったです。|It was very delicious.
+それはとても楽しかったです。|It was a lot of fun./It was very fun.
+わたしは京都を訪れました。|I visited Kyoto.
+わたしは家族と奈良へ行きました。|I went to Nara with my family.
+わたしたちは大仏を見ました。|We saw the Great Buddha.
+わたしたちは電車で行きました。|We went there by train.
+わたしはたくさん写真をとりました。|I took many pictures.
+わたしは昨日、図書館へ行きました。|I went to the library yesterday.
+わたしは宿題をしました。|I did my homework.
+わたしはテレビを見ました。|I watched TV.
+わたしは昨日、本を読みました。|I read a book yesterday.
+わたしは祖母に会いました。|I met my grandmother.
+わたしは日曜日に公園で遊びました。|I played in the park on Sunday.
+わたしはカレーを作りました。|I made curry.
+昨日は雨でした。|It was rainy yesterday.
+昨日はいそがしかったです。|I was busy yesterday.
+わたしの夢は医者になることです。|My dream is to be a doctor.
+わたしの夢は先生になることです。|My dream is to be a teacher.
+わたしの夢は消防士になることです。|My dream is to be a firefighter.
+わたしの夢は野球選手になることです。|My dream is to be a baseball player.
+わたしはパイロットになりたいです。|I want to be a pilot.
+わたしはパン屋さんになりたいです。|I want to be a baker.
+あなたは何になりたいですか。|What do you want to be?
+わたしは人を助けたいです。|I want to help people.
+わたしは動物が好きなので、獣医になりたいです。|I like animals, so I want to be a vet.
+わたしは中学校で吹奏楽部に入りたいです。|I want to join the brass band in junior high school.
+わたしは中学校でバスケットボールをしたいです。|I want to play basketball in junior high school.
+わたしは中学校で英語を勉強したいです。|I want to study English in junior high school.
+わたしは中学校でたくさんの友だちを作りたいです。|I want to make many friends in junior high school.
+あなたは中学校で何をしたいですか。|What do you want to do in junior high school?
+わたしは中学校の部活動を楽しみたいです。|I want to enjoy club activities in junior high school.
+わたしは中学校の文化祭が楽しみです。|I'm looking forward to the school festival in junior high school.
+わたしたちの学校には大きな体育館があります。|We have a big gym in our school./Our school has a big gym.
+わたしたちの学校には図書室があります。|We have a library in our school.
+わたしたちは運動会がありました。|We had a sports day.
+わたしは運動会でリレーを走りました。|I ran in the relay on sports day.
+わたしたちは10月に音楽会がありました。|We had a music festival in October.
+わたしは合唱コンクールでがんばりました。|I did my best in the chorus contest.
+修学旅行はとても楽しかったです。|The school trip was a lot of fun./The school trip was very fun.
+わたしの一番の思い出は修学旅行です。|My best memory is the school trip.
+わたしの一番の思い出は運動会です。|My best memory is the sports day.
+わたしは友だちと遠足に行きました。|I went on a school trip with my friends.
+あなたの一番の思い出は何ですか。|What is your best memory?
+わたしの町には有名なお城があります。|We have a famous castle in my town./My town has a famous castle.
+わたしの町は海の近くにあります。|My town is near the sea.
+わたしの町にはおいしいレストランがあります。|We have a nice restaurant in my town.
+駅から海が見えます。|You can see the sea from the station.
+その公園で桜を見られます。|You can see cherry blossoms in the park.
+わたしの町は自然がゆたかです。|My town has beautiful nature./My town is rich in nature.
+わたしはイタリアへ行ってピザを食べたいです。|I want to go to Italy and eat pizza.
+わたしはカナダへ行って山を見たいです。|I want to go to Canada and see the mountains.
+わたしはブラジルへ行ってサッカーを見たいです。|I want to go to Brazil and watch soccer.
+わたしはフランスへ行きたいです。|I want to go to France.
+わたしはエジプトでピラミッドを見たいです。|I want to see the pyramids in Egypt.
+あなたはなぜその国へ行きたいのですか。|Why do you want to go to that country?
+わたしは世界中を旅行したいです。|I want to travel around the world.
+わたしはえいごを話せるようになりたいです。|I want to speak English well.
+わたしはもっと上手に歌いたいです。|I want to sing better.
+わたしは毎日走って、体力をつけたいです。|I run every day to get strong.
+先生、ありがとうございました。|Thank you, teacher./Thank you, Mr. Sato.
+わたしを教えてくれてありがとう。|Thank you for teaching me.
+わたしはこの学校が大好きです。|I love this school.
+わたしは自分の学校をほこりに思います。|I am proud of my school.
+わたしは6年生です。|I am a sixth grader.
+わたしは3月に卒業します。|I will graduate in March.
+わたしは来年、中学生になります。|I will be a junior high school student next year.
+卒業式が楽しみです。|I'm looking forward to the graduation ceremony.
+わたしたちはクラスで花を植えました。|We planted flowers in our class.
+わたしは昨日、友だちと遊びました。|I played with my friend yesterday.
+わたしは先週、動物園へ行きました。|I went to the zoo last week.
+わたしは動物園でパンダを見ました。|I saw pandas at the zoo.
+わたしはその映画を見て、とても楽しかったです。|I watched the movie and enjoyed it.
+わたしの好きな行事は夏祭りです。|My favorite event is the summer festival.
+わたしの好きな行事はクリスマスです。|My favorite event is Christmas.
 `;
 /* 英作文（自分で書いて、お手本と見くらべる）  書式：お題|お手本|ポイント */
 let RAW_EC=`
-#中1
-自己紹介を3文で書こう。（名前・年れい・好きなもの）|I'm Ken. I'm fourteen years old. I like soccer.|I'm ～. / I like ～. の型を使う。
-あなたの好きな教科とその理由を英語で書こう。|I like English. It is fun to learn new words.|I like ～. ＋ 理由（It is ～.）。
-毎日の朝のすごし方を3文で書こう。|I get up at six. I eat breakfast with my family. I go to school by bike.|主語 ＋ 動詞を時刻順に。
-あなたの家族を紹介しよう。（3文）|I have a father, a mother and a sister. My father is a teacher. My sister likes music.|I have ～. / My ～ is ～. / ～ likes ～.
-昨日したことを3文で書こう。|I got up at seven yesterday. I studied math. I played games with my brother.|過去形（動詞の ed / 不規則動詞）に注意。
-あなたの町にあるものを紹介しよう。（There is / There are）|There is a big park in my town. There are many trees in it.|There is ＋ 単数 / There are ＋ 複数。
-明日の予定を英語で書こう。（I'm going to ～）|I'm going to play soccer tomorrow. I'm going to visit my grandmother.|be going to ＋ 原形。
-あなたのペット（または飼いたい動物）を紹介しよう。|I want a dog. It is white and small. I want to play with it every day.|I want ～. / It is ～.
-#中2
-あなたが将来したい仕事とその理由を書こう。|I want to be a doctor because I want to help sick people.|I want to be ～ because ～.
-あなたの好きなスポーツについて3文で書こう。|I like tennis. I practice it after school. It is exciting to play with my friends.|It is ～ to ... の形も使える。
-夏休みにしたいことを英語で書こう。|I want to go to the sea with my family. I want to swim and eat ice cream.|I want to ～. を2つ。
-犬とねこ、どちらが好きか理由とともに書こう。|I like cats better than dogs. Cats are quiet and cute.|like A better than B。
-あなたの町の好きなところを書こう。|I like my town because it has a lot of green. I often walk in the park.|because で理由を言う。
-昨日の天気と、そのとき何をしたか書こう。|It was rainy yesterday, so I stayed at home. I read a book.|so ～（だから）で2文をつなぐ。
-友だちを誘う英文を書こう。（映画に行く）|Let's go to the movies this Sunday. Will you come with me?|Let's ～. / Will you ～?
-英語を勉強する理由を書こう。|I study English to talk with people around the world.|to ＋ 原形（目的）。
-学校でいちばん楽しい行事とその理由を書こう。|The school festival is the most fun. We can work together with our classmates.|the most ～ で最上級。
-あなたの宝物とその理由を書こう。|My treasure is a watch from my grandfather. It was given to me on my birthday.|受け身（was given）も使える。
-#中3
-最近読んだ本（見た映画）を紹介しよう。|I recently read a book that was written by a famous scientist. It was very interesting.|関係代名詞 that / who を使う。
-今までに行ったことがある場所を書こう。|I have been to Kyoto three times. I like the temples there.|have been to ～。
-10年後の自分を想像して書こう。|In ten years, I will be a teacher. I want to teach English to children.|will ＋ 原形で未来。
-環境のためにあなたができることを書こう。|I can reduce plastic bags. I bring my own bag when I go shopping.|I can ～.（できること）。
-スマートフォンの良い点を1つ書こう。|Smartphones are useful because we can get information quickly.|because ＋ 理由。
-あなたの尊敬する人とその理由を書こう。|I respect my mother because she always tries her best.|I respect ～ because ～.
-学校の制服に賛成か反対か理由とともに書こう。|I think school uniforms are good because we don't have to choose clothes every morning.|I think (that) ～. ＋ because。
-友だちにすすめたい本を紹介しよう。（2〜3文）|I want you to read this book. It is a story about a boy who never gives up.|want ＋ 人 ＋ to ～。
-ボランティア活動に参加したことを書こう。|I joined a clean-up activity at the beach. I learned that small actions can change the world.|learned that ～（～ということを学んだ）。
-中学校生活でがんばったことを書こう。|I worked hard in the tennis club. I have practiced every day for two years.|現在完了（have practiced）。
+#小5
+好きな食べ物を英語で1文書こう。|I like pizza.|I like ～. の型。～に好きな物を入れる。
+できることを英語で1文書こう。|I can play the piano.|I can ～. のあとに動作のことばを入れる。
+自分の名前と好きなスポーツを2文で書こう。|I'm Ken. I like tennis.|I'm ～. で名前、I like ～. で好きなもの。
+誕生日を英語で書こう。|My birthday is June fifth.|月の名前と、日づけは「序数（fifth など）」で書く。
+朝起きる時刻を英語で書こう。|I get up at six thirty.|I get up at ～. の～に時刻を入れる。
+行ってみたい国を英語で1文書こう。|I want to go to Brazil.|I want to go to ～. の～に国や場所を入れる。
+好きな教科を英語で書こう。|I like science.|I like ～. 教科の名前を入れる。
+自分の町にあるものを1文で書こう。|We have a big park in my town.|We have ～. 場所の名前を入れる。
+できないことを英語で1文書こう。|I can't swim fast.|I can't ～.（can't は cannot の短い形）。
+好きな動物とその理由を2文で書こう。|I like cats. They are cute.|1文目で好きなもの、2文目で They are ～.（理由）。
+友だちを1人しょうかいしよう。（2文）|This is Aki. She is kind.|This is ～. で紹介、He / She is ～. で人がらを言う。
+夏休みに行った場所を1文で書こう。|I went to the sea.|行った＝went。I went to ～.
+#小6
+夏休みの思い出を2文で書こう。|I went to the sea. I enjoyed swimming.|I went to ～. / I enjoyed ～ing.
+夏休みに食べたものを2文で書こう。|I ate watermelon. It was delicious.|ate は eat の過去形。It was ～. で感想。
+将来の夢を英語で書こう。|I want to be a doctor.|I want to be ～. で夢。my dream is to be ～. でもよい。
+夢と、そのわけを2文で書こう。|My dream is to be a teacher. I like children.|My dream is to be ～. のあとに理由を1文。
+一番の思い出を英語で書こう。|My best memory is our school trip. We saw many temples.|My best memory is ～. のあとに説明を1文。
+中学校でしたいことを書こう。|I want to join the brass band.|I want to join ～. / I want to enjoy ～.
+中学校で楽しみたい行事を書こう。|I want to enjoy the school festival.|I want to enjoy ～.
+学校行事の思い出を2文で書こう。|We had a sports day. I ran in the relay.|We had ～. / I ～（過去形）で書く。
+自分の町のおすすめを2文で書こう。|We have a nice castle. You can see it from the station.|We have ～. / You can ～.
+行きたい国とやりたいことを2文で書こう。|I want to go to Canada. I want to see the mountains.|I want to go to ～. I want to ～.
+先生に感謝を伝える1文を書こう。|Thank you for teaching me.|Thank you for ～ing.（～してくれてありがとう）。
+卒業するまでにがんばりたいことを書こう。|I want to do my best in the chorus contest.|I want to do my best in ～.（～をがんばりたい）。
 `;
 /* リスニング（TTSで読み上げ）  書式：英文|問い|正解|誤1|誤2|誤3|日本語訳 */
 let RAW_EL=`
-#会話・説明
-What time do you get up, Mary? I get up at six thirty.|メアリーは何時に起きますか。|6時30分|6時|7時|7時30分|「何時に起きる？」「6時30分に起きるよ」。
-I have two brothers and one sister. My sister is ten years old.|話し手の姉（妹）は何歳ですか。|10歳|2歳|1歳|12歳|兄弟が2人、姉妹が1人。姉妹は10歳。
-It is rainy today, so I will take an umbrella.|話し手は何を持っていきますか。|かさ|ぼうし|地図|カメラ|雨なのでかさを持っていく。
-The library opens at nine and closes at five.|図書館は何時に閉まりますか。|5時|9時|4時|6時|9時に開いて5時に閉まる。
-I went to the zoo with my family last Sunday. We saw pandas.|話し手は何を見ましたか。|パンダ|ライオン|ぞう|さる|先週の日曜に動物園でパンダを見た。
-My birthday is on March tenth. I will have a party at home.|誕生日はいつですか。|3月10日|3月1日|10月3日|1月10日|3月10日。家でパーティー。
-Excuse me. Where is the post office? Go straight and turn left at the bank.|郵便局へはどう行きますか。|まっすぐ行って銀行で左に曲がる|まっすぐ行って銀行で右に曲がる|左に曲がって銀行まで行く|右に曲がってまっすぐ行く|まっすぐ行き、銀行で左に曲がる。
-I usually walk to school, but today I came by bus because it was raining.|今日、話し手はどうやって学校に来ましたか。|バスで|歩いて|自転車で|電車で|いつもは歩くが、今日は雨なのでバス。
-How much is this T-shirt? It is fifteen hundred yen.|Tシャツはいくらですか。|1500円|1050円|5000円|500円|fifteen hundred は1500。
-I'm hungry. Let's have lunch. How about pizza? OK, let's go.|2人は何を食べますか。|ピザ|ラーメン|カレー|すし|ピザを食べることにした。
-Tom is taller than Ken, but Ken is faster than Tom.|走るのが速いのはだれですか。|ケン|トム|2人とも同じ|分からない|ケンのほうが速い。
-My father works at a hospital. He is a doctor.|話し手の父の職業は何ですか。|医者|先生|料理人|運転手|病院で働く医者。
-The concert starts at seven. Please come ten minutes early.|何時までに来ればよいですか。|6時50分|7時|7時10分|6時|7時の10分前。
-Last night I studied math for two hours and English for one hour.|数学を何時間勉強しましたか。|2時間|1時間|3時間|30分|数学は2時間、英語は1時間。
-There are three apples and two oranges on the table.|オレンジはいくつありますか。|2つ|3つ|5つ|1つ|りんご3つ、オレンジ2つ。
-Next week we will have a test. I must study hard this weekend.|話し手は今週末に何をしますか。|一生懸命勉強する|旅行に行く|友だちと遊ぶ|映画を見る|来週テストがあるので勉強する。
-My sister is playing the piano in the living room now.|姉（妹）は今、どこで何をしていますか。|居間でピアノを弾いている|台所で料理している|部屋で勉強している|庭で遊んでいる|居間でピアノを弾いている。
-I was reading a book when my friend called me.|友だちが電話をかけてきたとき、話し手は何をしていましたか。|本を読んでいた|テレビを見ていた|寝ていた|食事をしていた|過去進行形。本を読んでいた。
-It's very hot today. Can I open the window? Sure, go ahead.|何について話していますか。|窓を開けること|エアコンを買うこと|宿題のこと|昼食のこと|窓を開けてもよいか。
-I don't have any pens. Can I use yours? Of course. Here you are.|話し手は何を借りますか。|ペン|かばん|消しゴム|ノート|ペンを借りたい。
-We have a school trip next month. We will visit Kyoto for two days.|修学旅行は何日間ですか。|2日間|1日間|3日間|1週間|京都を2日間訪れる。
-My brother cooks dinner on Wednesdays. My mother cooks on the other days.|兄が夕食を作るのは何曜日ですか。|水曜日|月曜日|金曜日|日曜日|Wednesdays は水曜日。
-I have lived in Osaka for five years. Before that, I lived in Tokyo.|話し手は今、どこに住んでいますか。|大阪|東京|京都|名古屋|5年間大阪に住んでいる。
-This bag is cheaper than that one, but that one is bigger.|大きいのはどちらですか。|あのかばん|このかばん|両方同じ|分からない|あのかばんのほうが大きい。
-Please be quiet in the library. You must not eat or drink here.|図書館でしてはいけないことは何ですか。|飲食|読書|勉強|宿題|飲食は禁止。
-The train for Kobe leaves from platform three at ten fifteen.|神戸行きの電車は何番ホームから出ますか。|3番ホーム|1番ホーム|5番ホーム|10番ホーム|3番ホームから10時15分。
-I wanted to play soccer, but it rained all day. So I stayed home and watched a movie.|話し手は何をしましたか。|家で映画を見た|サッカーをした|買い物に行った|勉強した|雨だったので家で映画。
-Tomorrow will be sunny in the morning, but it will rain in the afternoon.|明日の午後の天気はどうですか。|雨|晴れ|くもり|雪|午前は晴れ、午後は雨。
-My dream is to become a teacher. I like to help people learn new things.|話し手の夢は何ですか。|先生になること|医者になること|歌手になること|パイロットになること|先生になりたい。
-Ken has never been to Hokkaido. He wants to go there in winter.|ケンが北海道へ行きたいのはいつですか。|冬|夏|春|秋|まだ行ったことがなく、冬に行きたい。
-I'm sorry I'm late. The bus was late because of the snow.|遅れた理由は何ですか。|雪でバスが遅れた|寝坊した|道に迷った|電車が止まった|バスが雪で遅れた。
-My mother told me to clean my room before dinner.|母は話し手に何をするように言いましたか。|夕食前に部屋をそうじする|夕食を作る|犬を散歩させる|宿題をする|夕食前に部屋をそうじするよう言われた。
-I think English is difficult, but it is also a lot of fun.|話し手は英語をどう思っていますか。|難しいが、とても楽しい|やさしくて楽しい|つまらない|好きではない|難しいが楽しい。
-Mr. Brown is our new teacher. He comes from Canada and teaches English.|ブラウン先生は何を教えますか。|英語|数学|音楽|理科|カナダ出身の英語の先生。
-Do you know the boy who is playing the guitar? He is my cousin.|ギターを弾いている男の子はだれですか。|話し手のいとこ|話し手の兄|先生|友だち|my cousin（いとこ）。
-We are going to have a picnic if the weather is good on Sunday.|ピクニックをするのは、どんな場合ですか。|日曜日の天気がよいとき|日曜日が休みのとき|雨が降ったとき|友だちが来たとき|if ～（もし天気がよければ）。
-She has been studying English since she was ten.|彼女はいつから英語を勉強していますか。|10歳のとき|今年から|先月から|5歳のとき|since she was ten（10歳のときから）。
-Please turn off your phone during the concert.|コンサート中にしてはいけないことは何ですか。|電話をつけておくこと|写真を撮ること|話すこと|歌うこと|turn off ～（～を消す）。電源を切るよう求められている。
-I bought a book at the station, and I read it on the train.|話し手は本をどこで買いましたか。|駅|図書館|学校|本屋|at the station（駅で）。
-My grandmother lives alone, so I call her every Sunday.|話し手はいつ祖母に電話しますか。|毎週日曜日|毎日|毎週土曜日|毎月1日|every Sunday（毎週日曜日）。
-The movie was so long that I fell asleep.|映画はどうでしたか。|長くて、眠ってしまった|短くておもしろかった|こわかった|悲しかった|so long that ～（とても長いので～）。
-I couldn't find my key, so I asked my brother to help me.|話し手は何をなくしましたか。|かぎ|財布|かさ|本|key（かぎ）が見つからなかった。
-This is the best restaurant in town. Everything here is delicious.|このレストランについて正しいものはどれですか。|町でいちばんで、料理がおいしい|新しいが高い|小さくて静か|町で2番目に有名|the best ～（いちばんよい）。
-If you have any questions, please ask me after class.|質問があるとき、いつ聞けばよいですか。|授業のあと|授業の前|昼休み|明日の朝|after class（授業のあと）。
-My uncle took a lot of pictures during his trip to Canada.|おじは旅行中に何をしましたか。|たくさん写真を撮った|買い物ばかりした|ずっと寝ていた|勉強した|took a lot of pictures（たくさん写真を撮った）。
-Our team won the game, so we were very happy.|チームはどうなりましたか。|試合に勝った|試合に負けた|引き分けた|試合が中止になった|won the game（試合に勝った）。
+#小5
+I like soccer. I play it every Sunday.|話し手はいつサッカーをしますか。|毎週日曜日|毎週土曜日|毎日|毎週月曜日|every Sunday は毎週日曜日。
+My birthday is in May. I am eleven years old.|話し手の誕生日は何月ですか。|5月|3月|7月|9月|in May は5月。
+I can play the piano, but I can't play the guitar.|話し手がひけない楽器は何ですか。|ギター|バイオリン|ドラム|フルート|can't play the guitar はギターはひけない。
+I get up at six. I eat breakfast at seven.|話し手は何時に朝ごはんを食べますか。|7時|6時|8時|9時|breakfast at seven は7時に朝食。
+I want to go to Italy. I want to eat pizza there.|話し手は何をしたいですか。|イタリアでピザを食べる|イタリアでピザを作る|フランスでパンを食べる|イタリアで絵を見る|eat pizza there はそこでピザを食べる。
+What do you want, Ken? Spaghetti, please.|ケンは何がほしいですか。|スパゲッティ|ピザ|サラダ|カレー|Spaghetti, please. でスパゲッティを注文。
+How much is this cap? It's eight hundred yen.|ぼうしはいくらですか。|800円|80円|1800円|400円|eight hundred は800。
+Go straight and turn right at the second corner.|どう行けばよいですか。|まっすぐ行って2つ目の角を右に曲がる|まっすぐ行って1つ目の角を右に曲がる|まっすぐ行って2つ目の角を左に曲がる|右に曲がってまっすぐ行く|turn right at the second corner は2つ目の角で右。
+The library is next to the park.|図書館はどこにありますか。|公園のとなり|公園の前|駅のとなり|学校のうしろ|next to the park は公園のとなり。
+My favorite color is blue. My bag is blue, too.|話し手の好きな色は何ですか。|青|赤|緑|黄色|favorite color is blue は青。
+I have two dogs and one cat.|話し手は犬を何びき飼っていますか。|2ひき|1ぴき|3びき|4ひき|two dogs は犬2ひき。
+My sister is good at swimming. She swims every day.|話し手の姉（妹）は何が得意ですか。|水泳|ダンス|歌|絵|good at swimming は水泳が得意。
+Today is Monday. We have math and music.|今日の授業は何と何ですか。|算数と音楽|国語と音楽|算数と体育|理科と音楽|math and music は算数と音楽。
+I like apples, but I don't like grapes.|話し手が好きではない果物は何ですか。|ぶどう|りんご|もも|みかん|don't like grapes はぶどうが好きでない。
+I go to school at eight. I go home at three.|話し手は何時に家に帰りますか。|3時|8時|4時|2時|go home at three は3時に帰る。
+My town has a big station and a small library.|町にあるのはどれですか。|大きな駅と小さな図書館|小さな駅と大きな図書館|大きな駅と大きな公園|小さな駅と小さな店|a big station and a small library。
+Do you like cats, Mari? No, I don't. I like dogs.|マリは何が好きですか。|犬|ネコ|うさぎ|鳥|No, I don't. I like dogs. で犬が好き。
+I eat lunch at school. I usually have rice and fish.|話し手は昼食に何を食べますか。|ごはんと魚|パンと魚|ごはんと肉|パンと卵|rice and fish はごはんと魚。
+It is cold today. I wear a coat and gloves.|話し手は何を着ていますか。|コートと手ぶくろ|セーターとぼうし|コートとマフラー|ジャケットとくつ|coat and gloves はコートと手ぶくろ。
+Hello, I'm Aya. I'm from Kyoto. Nice to meet you.|アヤはどこの出身ですか。|京都|大阪|奈良|神戸|from Kyoto は京都出身。
+I have a math test on Friday.|テストはいつありますか。|金曜日|木曜日|水曜日|月曜日|on Friday は金曜日。
+I can cook curry. My mother helps me.|話し手が作れる料理は何ですか。|カレー|ハンバーグ|スープ|サラダ|cook curry はカレーを作れる。
+I clean my room every Saturday.|話し手はいつ部屋をそうじしますか。|毎週土曜日|毎週日曜日|毎日|毎週金曜日|every Saturday は毎週土曜日。
+What day is it today? It's Wednesday.|今日は何曜日ですか。|水曜日|火曜日|木曜日|金曜日|It's Wednesday は水曜日。
+My mother is a nurse. My father is a bus driver.|話し手の父の仕事は何ですか。|バスの運転手|看護師|先生|料理人|father is a bus driver。
+I want a new bike. It's red and cool.|話し手がほしいものは何ですか。|赤い自転車|青い自転車|赤いかばん|新しいくつ|a new bike. It's red。
+There are twenty children in my class.|クラスの人数は何人ですか。|20人|12人|30人|2人|twenty は20。
+I'm hungry. Let's have some sandwiches.|話し手は何を食べようと言っていますか。|サンドイッチ|ケーキ|アイスクリーム|ピザ|sandwiches はサンドイッチ。
+I like winter because I can ski.|話し手が冬を好きなのはなぜですか。|スキーができるから|雪が降るから|休みが長いから|あたたかい物が食べられるから|because I can ski はスキーができるから。
+My grandfather lives in Nara. I visit him in August.|話し手はいつ祖父を訪ねますか。|8月|7月|9月|12月|in August は8月。
+Look at that tall building. It's a hotel.|高い建物は何ですか。|ホテル|学校|病院|駅|It's a hotel はホテル。
+#小6
+I went to the sea last summer. I enjoyed swimming.|話し手は夏に何をしましたか。|海で泳いだ|山に登った|川で釣りをした|プールで遊んだ|went to the sea, enjoyed swimming。
+Yesterday I watched a soccer game. It was exciting.|話し手は昨日何をしましたか。|サッカーの試合を見た|サッカーをした|野球を見た|テレビを見た|watched a soccer game。
+My dream is to be a doctor. I want to help sick people.|話し手の夢は何ですか。|医者になること|先生になること|歌手になること|パイロットになること|to be a doctor は医者。
+I want to join the brass band in junior high school.|話し手は中学校で何をしたいですか。|吹奏楽部に入る|サッカー部に入る|美術部に入る|合唱部に入る|join the brass band は吹奏楽部に入る。
+We had a sports day in October. I ran in the relay.|話し手は運動会で何をしましたか。|リレーで走った|玉入れをした|綱引きをした|ダンスをした|ran in the relay はリレーで走った。
+I visited my grandmother in Hokkaido. We ate fresh crab.|話し手は祖母の家で何を食べましたか。|新鮮なカニ|新鮮な魚|新鮮な肉|新鮮な果物|ate fresh crab はカニを食べた。
+Last weekend, I went to the library. I borrowed two books.|話し手は何を借りましたか。|本を2冊|本を3冊|CDを2枚|雑誌を2冊|borrowed two books は本2冊。
+I was busy last week. I had a piano concert on Saturday.|先週土曜日に何がありましたか。|ピアノの発表会|ダンスの発表会|サッカーの試合|水泳の大会|piano concert on Saturday。
+Our school trip was to Nara. We saw a big Buddha.|修学旅行で何を見ましたか。|大仏|五重塔|お城|大きな橋|a big Buddha は大仏。
+My best memory is the chorus contest. We practiced very hard.|一番の思い出は何ですか。|合唱コンクール|運動会|遠足|音楽会|chorus contest は合唱コンクール。
+I went to the park and played badminton with my friends.|話し手は公園で何をしましたか。|バドミントンをした|バスケットボールをした|なわとびをした|おにごっこをした|played badminton はバドミントン。
+Thank you for your help. I enjoyed this class very much.|話し手は何について話していますか。|授業が楽しかったこと|宿題が多かったこと|学校が遠いこと|テストが難しかったこと|enjoyed this class very much。
+I am going to study English hard in junior high school.|話し手は中学校で何をがんばりたいですか。|英語の勉強|数学の勉強|運動|音楽|study English hard は英語をがんばる。
+Our town has a famous castle. You can see it from the station.|お城はどこから見えますか。|駅|公園|学校|橋|from the station は駅から見える。
+I want to go to France. I want to see the Eiffel Tower.|話し手が見たいものは何ですか。|エッフェル塔|自由の女神|万里の長城|ピラミッド|Eiffel Tower はエッフェル塔。
+I went to Tokyo with my family. We took the Shinkansen.|話し手は何で東京へ行きましたか。|新幹線|飛行機|バス|車|took the Shinkansen は新幹線に乗った。
+My brother was sick yesterday. He stayed home all day.|昨日、兄はどうしましたか。|1日中家にいた|学校へ行った|病院で働いた|友だちと遊んだ|stayed home all day。
+I'm good at cooking. I made curry and rice for my family last night.|話し手は昨夜何を作りましたか。|カレーライス|ハンバーグ|スープ|ケーキ|made curry and rice。
+In the summer festival, we danced and ate shaved ice.|夏祭りで何を食べましたか。|かき氷|わたあめ|やきそば|たこ焼き|shaved ice はかき氷。
+My dream is to be a baker. I like making bread.|話し手は何を作るのが好きですか。|パン|ケーキ|クッキー|おかし|making bread はパンを作る。
+Our school is eighty years old. It has a big gym and a pool.|学校には何がありますか。|大きな体育館とプール|大きな図書館とプール|大きな体育館と畑|小さな体育館と庭|big gym and a pool。
+We went camping last summer. We saw many stars at night.|夜に何を見ましたか。|たくさんの星|大きな月|ほたる|花火|many stars はたくさんの星。
+When I was a child, I lived in Osaka. Now I live in Nagoya.|話し手は今どこに住んでいますか。|名古屋|大阪|京都|東京|Now I live in Nagoya。
+I am proud of my school. We have a lot of nice events.|話し手は学校についてどう思っていますか。|ほこりに思っている|はずかしい|つまらない|こわい|proud of は誇りに思う。
+Mr. Sato taught us music. He played the piano very well.|佐藤先生は何を教えましたか。|音楽|体育|算数|図工|taught us music は音楽を教えた。
+I practiced soccer every day for the tournament.|話し手は何のために練習しましたか。|大会|遠足|テスト|発表会|for the tournament は大会のため。
+Next year, I will be a junior high school student. I am excited.|話し手は来年どうなりますか。|中学生になる|高校生になる|大学生になる|6年生になる|junior high school student は中学生。
+I'd like to study abroad someday. I want to speak English well.|話し手がしたいことは何ですか。|留学すること|旅行すること|引っこすこと|働くこと|study abroad は留学する。
+My friend gave me a card on my birthday. I was very happy.|友だちは誕生日に何をくれましたか。|カード|本|花|ケーキ|gave me a card はカードをくれた。
+The Great Buddha in Nara is very big. Many people visit it.|奈良の何が大きいですか。|大仏|お城|橋|お寺の門|Great Buddha is 大仏。
+We cleaned the school yard and picked up trash.|生徒は校庭で何をしましたか。|そうじをしてごみを拾った|木を植えた|花に水をやった|ゲームをした|cleaned and picked up trash。
+I want to be a pilot. I like airplanes.|話し手の夢は何ですか。|パイロット|医者|警察官|消防士|be a pilot はパイロット。
+My father and I went fishing last Sunday. I caught two fish.|話し手は何びきの魚をつりましたか。|2ひき|1ぴき|3びき|5ひき|caught two fish は2ひき。
+On the weekend, we visited the science museum. We saw many robots.|博物館で何を見ましたか。|たくさんのロボット|大きな恐竜|宇宙船|古い車|many robots はロボット。
+I have a lot of homework. I'll do it after dinner.|話し手はいつ宿題をしますか。|夕食のあと|夕食の前|朝|学校で|after dinner は夕食のあと。
+Let's make a cake for Mom. Today is Mother's Day.|今日は何の日ですか。|母の日|父の日|子どもの日|誕生日|Mother's Day は母の日。
+I like Japanese food. Sushi is my favorite.|話し手の一番好きな日本食は何ですか。|すし|てんぷら|そば|うどん|Sushi is my favorite。
+I was nervous at the speech contest, but I did my best.|話し手は弁論大会でどうでしたか。|きんちょうしたが全力を出した|とても楽しかった|ねむかった|少しもきんちょうしなかった|nervous but did my best。
+I'm looking forward to the entrance ceremony of junior high school.|話し手が楽しみにしていることは何ですか。|中学校の入学式|小学校の運動会|修学旅行|音楽会|looking forward to は楽しみにしている。
+I went to the zoo with my sister. We saw a tiger.|話し手は動物園で何を見ましたか。|トラ|ライオン|ゾウ|キリン|saw a tiger はトラを見た。
+Last night, I did my homework and went to bed at ten.|話し手は何時にねましたか。|10時|9時|11時|8時|went to bed at ten は10時にねた。
+My uncle lives in Canada. I want to visit him.|話し手はだれを訪ねたいですか。|おじ|おば|祖父|いとこ|My uncle は おじ。
+I enjoyed the school festival. I played in a band.|話し手は学園祭で何をしましたか。|バンドで演奏した|劇に出た|店を開いた|絵をかざった|played in a band。
+This summer, I climbed Mt. Fuji with my father.|話し手はだれと富士山に登りましたか。|父|母|兄|友だち|with my father は父と。
+I want to go to Brazil because I like soccer.|話し手がブラジルへ行きたいのはなぜですか。|サッカーが好きだから|海が好きだから|音楽が好きだから|料理が好きだから|because I like soccer。
+Our class sold cookies at the school festival.|クラスは学園祭で何を売りましたか。|クッキー|ケーキ|ジュース|パン|sold cookies はクッキーを売った。
+I'm going to study math and science in junior high school.|話し手が中学校で勉強したい教科はどれですか。|算数（数学）と理科|国語と社会|英語と音楽|体育と図工|math and science。
+My mother made a birthday cake for me. It was strawberry cake.|どんなケーキでしたか。|イチゴのケーキ|チョコレートケーキ|チーズケーキ|バナナケーキ|strawberry cake はイチゴのケーキ。
+We saw many deer in Nara Park.|奈良公園で何を見ましたか。|たくさんのシカ|たくさんのサル|たくさんの鳥|たくさんのウサギ|many deer はシカ。
 `;
