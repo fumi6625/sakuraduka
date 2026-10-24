@@ -28,10 +28,8 @@ soccer player|サッカー選手|n
 baseball player|野球選手|n
 designer|デザイナー|n
 programmer|プログラマー|n
-engineer|技術者|n
 fashion designer|ファッションデザイナー|n
 cartoonist|漫画家|n
-announcer|アナウンサー|n
 flight attendant|客室乗務員|n
 zookeeper|動物園の飼育員|n
 dream|夢|n
@@ -41,7 +39,6 @@ trip|旅行|n
 school trip|修学旅行|n
 field trip|遠足|n
 sports day|運動会|n
-sports festival|体育祭|n
 school festival|文化祭；学芸会|n
 music festival|音楽会|n
 summer vacation|夏休み|n
@@ -89,7 +86,6 @@ Africa|アフリカ|n
 Asia|アジア|n
 Europe|ヨーロッパ|n
 language|言語|n
-culture|文化|n
 food|食べ物|n
 sushi|すし|n
 tempura|てんぷら|n
@@ -110,12 +106,11 @@ sour|すっぱい|adj
 salty|しょっぱい|adj
 spicy|からい|adj
 bitter|にがい|adj
-fresh|新鮮な|adj
 good|よい|adj
 great|すばらしい|adj
 nice|すてきな|adj
 beautiful|美しい|adj
-pretty|かわいい|adj
+pretty|きれいな|adj
 cute|かわいい|adj
 kind|親切な|adj
 funny|おもしろい|adj
@@ -161,11 +156,8 @@ and|そして|conj
 but|しかし|conj
 or|または|conj
 because|なぜなら|conj
-if|もし～なら|conj
 want to|～したい|aux
 can|～できる|aux
-will|～するつもり|aux
-must|～しなければならない|aux
 let's|～しましょう|aux
 wow|わあ|int
 oh|おお|int

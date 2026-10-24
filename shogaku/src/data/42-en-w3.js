@@ -101,7 +101,7 @@ come|来る|v
 get up|起きる|v
 go to bed|ねる|v
 go home|帰宅する|v
-take|取る；(おふろに)入る|v
+take|取る；（おふろに）入る|v
 buy|買う|v
 sell|売る|v
 visit|訪ねる|v
@@ -142,7 +142,6 @@ when|いつ|pron
 which|どちら；どれ|pron
 how|どう；どのように|adv
 why|なぜ|adv
-whose|だれの|pron
 how many|いくつ|adv
 how much|いくら|adv
 yen|円|n
