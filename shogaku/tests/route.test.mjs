@@ -45,9 +45,9 @@ test('おやすみが多い週のあとは、段階はそのままで、量を�
     const route = doDay(C, C.addDays(START, i), 1);
     mem.push(route.find((s) => s.id === 'mem').items.length);
   }
-  assert.ok(mem[0] <= 16, `戻った日は少なめ：${mem[0]}問`);
-  assert.equal(mem[mem.length - 1], 36, `しばらくして、いつもの量：${mem.join(',')}`);
-  for (let i = 1; i < mem.length; i++) assert.ok(mem[i] - mem[i - 1] <= 12, `1日で急にふえない：${mem.join(',')}`);
+  assert.ok(mem[0] <= 24, `戻った日は少なめ：${mem[0]}問`);
+  assert.ok(mem[mem.length - 1] >= 54 && mem[mem.length - 1] <= 60, `しばらくして、いつもの量（54問＋新しい漢字・英単語）：${mem.join(',')}`);
+  for (let i = 1; i < mem.length; i++) assert.ok(mem[i] - mem[i - 1] <= 20, `1日で急にふえない：${mem.join(',')}`);
 });
 
 test('ならし期は、短くて、宿題とふりかえり以外は暗記と算数だけ', () => {

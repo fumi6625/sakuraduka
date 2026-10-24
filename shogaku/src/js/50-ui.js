@@ -1,7 +1,7 @@
 /* ===== 画面の共通部品：アイコン・インクの飛沫・音・読み上げ・演出 ===== */
 /* 色を白とまぜてやわらかくする（先生ごとのこい色を、明るいテーマの画面にあわせて使う） */
 const soft=(hex,k=.55)=>{const n=parseInt(String(hex).replace('#',''),16);if(isNaN(n))return hex;const m=c=>Math.round(c+(255-c)*k);return 'rgb('+m(n>>16&255)+','+m(n>>8&255)+','+m(n&255)+')'};
-const THEMES=[['normal','ふつう','白っぽい地・ほどよい色','#f3f2f8','#ffffff','#f4679d','#2b2540',0],['soft','やさしい','クリーム地のパステル','#fdf3ec','#ffffff','#f7a3c0','#5a4664',0],['neon','ネオン','暗い地にあざやかな光（前の版）','#0c0920','#2d2380','#ff3d9a','#000000',1],['night','よる','落ち着いた暗い色','#171b2b','#2a3150','#e8799f','#080b16',1],['pop','くっきり','白地に黒い線・あざやか','#f6f7fb','#ffffff','#ff5aa5','#14111f',0]];   // [キー, 名前, ひとこと, 地の色, カードの色, アクセント, 線の色, 暗い地か]  色の中身は style.css の html[data-theme=…]
+const THEMES=[['normal','ふつう','白っぽい地・ほどよい色','#faf6ea','#ffffff','#f46e67','#254033',0],['soft','やさしい','クリーム地のパステル','#fdf3ec','#ffffff','#f7a9a3','#466455',0],['neon','ネオン','暗い地にあざやかな光（前の版）','#0a1714','#2f534a','#ff3f3d','#000000',1],['night','よる','落ち着いた暗い色','#17372a','#25523f','#e88179','#07110c',1],['pop','くっきり','白地に黒い線・あざやか','#fbfaf6','#ffffff','#ff5d5a','#111f18',0]];   // [キー, 名前, ひとこと, 地の色, カードの色, アクセント, 線の色, 暗い地か]  色の中身は style.css の html[data-theme=…]
 const TEAMS={pink:['var(--t-pink)','ピンク'],lime:['var(--t-lime)','ライム'],cyan:['var(--t-cyan)','シアン'],orange:['var(--t-orange)','オレンジ'],purple:['var(--t-purple)','パープル']};
 const ICO={
  home:'M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10',bolt:'M13 2L4 14h7l-1 8 9-12h-7z',flag:'M5 3v18M5 4h11l-2 4 2 4H5',
@@ -25,28 +25,25 @@ const SJIC={国:'jp',数:'math',英:'eng',理:'sci',社:'soc',総:'all'};
 const sjTag=s=>`<span class="sj" data-s="${s}">${SJN[s]||s}</span>`;
 const f1=x=>Math.round(x*10)/10;
 
-/* ----- インクの飛沫（SVG）：シードで形が決まる。とげ12本＋しずく（ぬりつぶし・不透明） ----- */
-function splatPath(seed,N=12,R=100){
- const r=mulberry(seed),pts=[],n=N*2;
- for(let i=0;i<n;i++){
-  const a=i/n*Math.PI*2+(r()-.5)*.16,spike=i%2===0;
-  const k=spike?(r()<.45?1.42+r()*.36:.98+r()*.26):.68+r()*.14;
-  pts.push([Math.cos(a)*R*k,Math.sin(a)*R*k]);
- }
- const mid=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2];
- let d='M'+mid(pts[n-1],pts[0]).map(f1).join(',');
- for(let i=0;i<n;i++){const p=pts[i],m=mid(p,pts[(i+1)%n]);d+=`Q${f1(p[0])},${f1(p[1])} ${f1(m[0])},${f1(m[1])}`}
+/* ----- はなまる（SVG）：シードで花びらの数・向きが決まる。花びらの丸＋まわりの星（関数名は飛沫のころのまま） ----- */
+function splatPath(seed,N,R=100){
+ const r=mulberry(seed),n=N&&N<12?N:6+Math.floor(r()*3),rot=r()*6.28,rv=R*1.02;
+ const ch=2*rv*Math.sin(Math.PI/n),ar=f1(ch*.52);
+ const pt=i=>{const a=rot+i/n*Math.PI*2;return[f1(Math.cos(a)*rv),f1(Math.sin(a)*rv)]};
+ let d='M'+pt(0).join(',');
+ for(let i=1;i<=n;i++){const p=pt(i%n);d+=`A${ar},${ar} 0 0 1 ${p[0]},${p[1]}`}
  return d+'Z';
 }
+const starPath=(x,y,s)=>`M${f1(x)},${f1(y-s)}Q${f1(x)},${f1(y)} ${f1(x+s)},${f1(y)}Q${f1(x)},${f1(y)} ${f1(x)},${f1(y+s)}Q${f1(x)},${f1(y)} ${f1(x-s)},${f1(y)}Q${f1(x)},${f1(y)} ${f1(x)},${f1(y-s)}Z`;
 function splatSVG(seed,col,o={}){
  const r=mulberry(seed+7),R=100;let dr='';
  const K=Math.min(o.drops==null?6:o.drops,7);
  for(let i=0;i<K;i++){
-  const a=r()*Math.PI*2,dist=R*(1.4+r()*.5),rad=Math.max(7,R*(.09+r()*.1)*(1.35-dist/R*.3));
-  dr+=`<circle cx="${f1(Math.cos(a)*dist)}" cy="${f1(Math.sin(a)*dist)}" r="${f1(rad)}"/>`;
-  if(r()<.55)dr+=`<circle cx="${f1(Math.cos(a)*dist*.8)}" cy="${f1(Math.sin(a)*dist*.8)}" r="${f1(Math.max(5,rad*.5))}"/>`;
+  const a=(i/K+r()*.1)*Math.PI*2,dist=R*(1.5+r()*.35),s=R*(.14+r()*.1);
+  dr+=`<path d="${starPath(Math.cos(a)*dist,Math.sin(a)*dist,s)}"/>`;
  }
- return `<svg viewBox="-200 -200 400 400" aria-hidden="true"${o.cls?` class="${o.cls}"`:''}><g fill="${col}"${o.stroke?` stroke="${o.stroke}" stroke-width="${o.sw||6}" stroke-linejoin="round"`:''}><path d="${splatPath(seed)}"/>${dr}</g></svg>`;
+ const ring=o.stroke?`<circle r="${R*.5}" fill="none" stroke-width="${(o.sw||6)*1.3}" style="stroke:rgba(var(--ink-rgb),.55)"/><circle r="${R*.2}" fill="${o.stroke}" stroke="none" opacity=".35"/>`:'';
+ return `<svg viewBox="-200 -200 400 400" aria-hidden="true"${o.cls?` class="${o.cls}"`:''}><g fill="${col}"${o.stroke?` stroke="${o.stroke}" stroke-width="${o.sw||6}" stroke-linejoin="round"`:''}><path d="${splatPath(seed)}"/>${dr}</g>${ring}</svg>`;
 }
 const sakura=(r=1)=>`<g transform="scale(${r})"><g fill="#fff" stroke="var(--on)" stroke-width="5" stroke-linejoin="round">${[0,1,2,3,4].map(k=>`<ellipse cx="0" cy="-30" rx="19" ry="27" transform="rotate(${k*72})"/>`).join('')}</g><circle r="10" fill="var(--yellow)" stroke="var(--on)" stroke-width="4"/></g>`;
 function avatarSVG(){

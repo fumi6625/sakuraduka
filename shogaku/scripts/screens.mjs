@@ -23,7 +23,7 @@ async function launch({ w, h, date = '2026-10-19T10:00:00', dpr = 1 }) {
   const browser = await chromium.launch(useFonts && u ? { proxy: { server: `${u.protocol}//${u.host}`, username: decodeURIComponent(u.username || ''), password: decodeURIComponent(u.password || '') } } : {});
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, ignoreHTTPSErrors: true, deviceScaleFactor: dpr, hasTouch: true });
   const page = await ctx.newPage();
-  if (THEME) await page.addInitScript((t) => { try { localStorage.setItem('sakuraQuest.v1', JSON.stringify({ theme: t })); } catch (e) {} }, THEME);
+  if (THEME) await page.addInitScript((t) => { try { localStorage.setItem('manabiQuest.v1', JSON.stringify({ theme: t })); } catch (e) {} }, THEME);
   const errs = [];
   page.on('pageerror', (e) => errs.push('pageerror: ' + e.message));
   page.on('console', (m) => { if (m.type() === 'error' && !/fonts\.g|ERR_|Failed to load resource|net::/.test(m.text())) errs.push('console: ' + m.text()); });

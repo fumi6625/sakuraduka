@@ -190,9 +190,9 @@ test('1日の時間の見積りは、段階ごとの上限をこえない', () =
   const C = loadCore(NAMES);
   const days = simulate(C, 120, 0.8);
   const worst = Math.max(...days.map((d) => minutesOf(d.route)));
-  assert.ok(worst <= 39, `いちばん長い日の見積り ${worst} 分`);
+  assert.ok(worst <= 58, `いちばん長い日の見積り ${worst} 分`);
   const early = Math.max(...days.slice(0, 14).map((d) => minutesOf(d.route)));
-  assert.ok(early <= 15, `ならし期の見積り ${early} 分`);
+  assert.ok(early <= 20, `ならし期の見積り ${early} 分`);
 });
 
 test('7日以上休んだあとは、量をもどして、少しずつ戻す', () => {
@@ -200,10 +200,10 @@ test('7日以上休んだあとは、量をもどして、少しずつ戻す', (
   const days = simulate(C, 100, 0.85, null, 3, (i) => i >= 60 && i < 74);
   const before = days.filter((d) => d.i >= 53 && d.i < 60).map((d) => minutesOf(d.route));
   const back = days.filter((d) => d.i >= 74).slice(0, 8).map((d) => minutesOf(d.route));
-  assert.ok(Math.max(...before) >= 25, '休む前は、しっかり期の量');
-  assert.ok(back[0] <= 15, `休み明け初日は短く：${back[0]}分`);
-  assert.ok(back[2] <= 20, `3日目もまだ短い：${back[2]}分`);
-  assert.ok(back[7] > back[0] + 8, `すこしずつ戻る：${back.join(',')}`);
+  assert.ok(Math.max(...before) >= 35, '休む前は、しっかり期の量');
+  assert.ok(back[0] <= 22, `休み明け初日は短く：${back[0]}分`);
+  assert.ok(back[2] <= 30, `3日目もまだ短い：${back[2]}分`);
+  assert.ok(back[7] > back[0] + 6, `すこしずつ戻る：${back.join(',')}`);
 });
 
 test('正答が4割に届かないドリルでは、クリアライン・連続記録に数えない', () => {
