@@ -7,7 +7,7 @@ const MENU=[
  ['mist','ミス図鑑','まちがえた問題の一覧と再戦','splat','var(--orange)'],
  ['family','おうちの人・設定','週報・バックアップ・チームカラー','user','var(--sou)']];
 function renderMenu(){
- $('#v-menu').innerHTML=`<div class="card"><span class="lb">メニュー</span><div class="mtiles">${MENU.map(m=>`<button class="mtile" data-page="${m[0]}" style="--mc:${m[4]}"><span class="mi">${ico(m[3])}</span><b>${m[1]}</b><span>${m[2]}</span></button>`).join('')}</div></div>
+ $('#v-menu').innerHTML=`<p class="mini" style="text-align:right;margin:0 4px 6px;opacity:.75">${esc(APP_VER)}</p><div class="card"><span class="lb">メニュー</span><div class="mtiles">${MENU.map(m=>`<button class="mtile" data-page="${m[0]}" style="--mc:${m[4]}"><span class="mi">${ico(m[3])}</span><b>${m[1]}</b><span>${m[2]}</span></button>`).join('')}</div></div>
  <div class="card"><h2>このアプリの使いかた</h2><ol class="steps">
   <li><b>ホーム</b>を開く。「いま やること」のカードの<b>スタート！</b>を押すだけ。</li>
   <li>問題に答える。まちがえた問題は、すぐ もう一度出る。<b>5問ごとにラウンドクリア</b>。あしたも「ミス退治」で再戦。</li>

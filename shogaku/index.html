@@ -1222,6 +1222,8 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <canvas id="fx" aria-hidden="true"></canvas>
 <script id="data">
+/* アプリのバージョン。直したら、ここの数字と日付を上げる（ホームの右上とメニューの下に出る） */
+const APP_VER='まなびクエスト v1.1（10/24・赤い背景）';
 const SJL=['国','数','英','理','社'];
 const SJN={国:'国語',数:'算数',英:'英語',理:'理科',社:'社会',総:'総合'};
 const WK=[
@@ -9561,7 +9563,7 @@ ${intro}${diagTip}${pinAsk}
  <div class="card"><div class="rowh"><h2>今週の流れ</h2></div>${weekStrip(date)}
   <div class="tomorrow"><span class="lb sm o">あした</span><span><b>${esc(tm.t)}</b><br><span class="mini">算数のテーマ：${esc(tm.theme)}</span></span></div></div>
  ${monthMini()}`;
- $('#v-home').innerHTML=`<p class="mini" style="margin:2px 4px 6px">${esc(GREET[dt(date).getDate()%GREET.length])}</p><div class="home2"><div>${L}</div><div>${R}</div></div>`;
+ $('#v-home').innerHTML=`<p class="mini" style="margin:2px 4px 6px">${esc(GREET[dt(date).getDate()%GREET.length])}<span style="display:block;text-align:right;opacity:.75;font-size:12px">${esc(APP_VER)}</span></p><div class="home2"><div>${L}</div><div>${R}</div></div>`;
 }
 
 /* ----- 宿題チェック（保護者OKつき）・ふりかえり（自己採点とデータの比較） ----- */
@@ -10036,7 +10038,7 @@ const MENU=[
  ['mist','ミス図鑑','まちがえた問題の一覧と再戦','splat','var(--orange)'],
  ['family','おうちの人・設定','週報・バックアップ・チームカラー','user','var(--sou)']];
 function renderMenu(){
- $('#v-menu').innerHTML=`<div class="card"><span class="lb">メニュー</span><div class="mtiles">${MENU.map(m=>`<button class="mtile" data-page="${m[0]}" style="--mc:${m[4]}"><span class="mi">${ico(m[3])}</span><b>${m[1]}</b><span>${m[2]}</span></button>`).join('')}</div></div>
+ $('#v-menu').innerHTML=`<p class="mini" style="text-align:right;margin:0 4px 6px;opacity:.75">${esc(APP_VER)}</p><div class="card"><span class="lb">メニュー</span><div class="mtiles">${MENU.map(m=>`<button class="mtile" data-page="${m[0]}" style="--mc:${m[4]}"><span class="mi">${ico(m[3])}</span><b>${m[1]}</b><span>${m[2]}</span></button>`).join('')}</div></div>
  <div class="card"><h2>このアプリの使いかた</h2><ol class="steps">
   <li><b>ホーム</b>を開く。「いま やること」のカードの<b>スタート！</b>を押すだけ。</li>
   <li>問題に答える。まちがえた問題は、すぐ もう一度出る。<b>5問ごとにラウンドクリア</b>。あしたも「ミス退治」で再戦。</li>

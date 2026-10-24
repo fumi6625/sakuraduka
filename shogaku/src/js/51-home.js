@@ -96,7 +96,7 @@ ${intro}${diagTip}${pinAsk}
  <div class="card"><div class="rowh"><h2>今週の流れ</h2></div>${weekStrip(date)}
   <div class="tomorrow"><span class="lb sm o">あした</span><span><b>${esc(tm.t)}</b><br><span class="mini">算数のテーマ：${esc(tm.theme)}</span></span></div></div>
  ${monthMini()}`;
- $('#v-home').innerHTML=`<p class="mini" style="margin:2px 4px 6px">${esc(GREET[dt(date).getDate()%GREET.length])}</p><div class="home2"><div>${L}</div><div>${R}</div></div>`;
+ $('#v-home').innerHTML=`<p class="mini" style="margin:2px 4px 6px">${esc(GREET[dt(date).getDate()%GREET.length])}<span style="display:block;text-align:right;opacity:.75;font-size:12px">${esc(APP_VER)}</span></p><div class="home2"><div>${L}</div><div>${R}</div></div>`;
 }
 
 /* ----- 宿題チェック（保護者OKつき）・ふりかえり（自己採点とデータの比較） ----- */
