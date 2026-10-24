@@ -133,8 +133,7 @@ What would you like? — I'd like ( ) ice cream, please.|an|a|two|many|ice は�
 ( ) would you like? — I'd like spaghetti.|What|Where|Who|When|注文をたずねるのは What would you like?。
 I'd like a steak, ( ).|please|thanks|sorry|hello|注文のあとに please をつける。
 Anything ( )? — No, thank you.|else|of|each|most|「ほかに何か？」は Anything else?。
-Here you ( ). — Thank you.|are|do|see|can|
-ものを渡すときは Here you are.。
+Here you ( ). — Thank you.|are|do|see|can|ものを渡すときは Here you are.。
 How ( ) apples do you want? — Two, please.|many|much|old|long|数をたずねるのは How many。
 Two ( ), please.|sandwiches|sandwich|a sandwich|one sandwich|2つ以上は es をつけて sandwiches。
 I'd like a ( ) of juice.|glass|pair|bag|piece|ジュースは glass（コップ）に入れる。

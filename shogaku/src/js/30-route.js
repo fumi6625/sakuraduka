@@ -51,13 +51,13 @@ const genOne=(id,n,date,salt,ex)=>Array.from({length:n},(_,i)=>pickGen(id,date,s
 const genMix=(ids,n,date,salt,ex)=>Array.from({length:n},(_,i)=>pickGen(ids[(hashStr(date+salt)+i)%ids.length],date,salt,i,ex)).filter(Boolean);
 const exSet=(ex,items)=>new Set([...ex,...items.map(i=>i.id)]);
 const jn=a=>a.filter(Boolean).join('／');
-/* 長文を出す順：短いもの2題につき、長いもの（ふつうの2倍以上の長さの読解）を1題ずつ混ぜる。長いものが、データの最後に回って届かないのを防ぐ */
+/* 長文を出す順：短いもの2題につき、長いもの（ふつうの2倍以上、または800字以上の読解）を1題ずつ混ぜる。長いものが、データの最後に回って届かないのを防ぐ */
 const PASS_ORD={};
 function passOrder(bank){
  if(PASS_ORD[bank])return PASS_ORD[bank];
  const items=BK[bank].items,pids=[...new Set(items.map(i=>i.pid))],len={};
  items.forEach(i=>{if(!(i.pid in len))len[i.pid]=String(i.text||'').length});
- const med=pids.map(p=>len[p]).sort((a,b)=>a-b)[pids.length>>1]||0,L=pids.filter(p=>len[p]>=med*2),Sh=pids.filter(p=>len[p]<med*2);
+ const med=pids.map(p=>len[p]).sort((a,b)=>a-b)[pids.length>>1]||0,th=Math.min(med*2,800),L=pids.filter(p=>len[p]>=th),Sh=pids.filter(p=>len[p]<th);
  if(!L.length||!Sh.length)return PASS_ORD[bank]=pids;
  const out=[];let a=0,b=0;
  while(a<Sh.length||b<L.length){for(let k=0;k<2&&a<Sh.length;k++)out.push(Sh[a++]);if(b<L.length)out.push(L[b++])}

@@ -107,7 +107,7 @@ await run('ipad-portrait', { w: 820, h: 1180 }, async ({ page: P, shot }) => {
   await seed(P); await P.waitForTimeout(300); await shot('09-home-with-progress');
   await P.click('[data-act="stageGo"][data-a="math"] >> nth=0'); await P.waitForTimeout(500); await shot('10-question-number-keypad');
   await closeAny(P);
-  const gens = await P.evaluate(() => [__sq.makeGen('sim_add', 2, 55)]);
+  const gens = await P.evaluate(() => [__sq.makeGen('dec_mul', 2, 55)]);
   await P.evaluate((g) => __sq.startSession({ title: 'テスト', subj: '数', items: [g], skipBrief: true }), gens[0]); await P.waitForTimeout(400); await shot('11-question-number-alpha'); await closeAny(P);
   const ids = await P.evaluate(() => ({ typ: __sq.BK.EW.items[40].id, order: __sq.BK.EO.items[3].id, read: __sq.BK.ER.items[0].id, self: __sq.BK.EC.items[1].id }));
   await P.evaluate((id) => { __sq.S.srs[id] = { b: 5, n: 3, w: 0, d: 0 }; __sq.startSession({ title: 'テスト', subj: '英', items: [__sq.ITEMS[id]], skipBrief: true }); }, ids.typ); await P.waitForTimeout(400); for (const c of 'abc') await P.click(`[data-act="plLet"][data-a="${c}"]`); await shot('12-question-typing'); await closeAny(P);

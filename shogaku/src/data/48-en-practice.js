@@ -35,15 +35,11 @@ let RAW_EO=`
 わたしはオーストラリアへ行きたいです。|I want to go to Australia.
 あなたはどこへ行きたいですか。|Where do you want to go?
 わたしは図書館へ行きたいです。|I want to go to the library.
-まっすぐ行ってください。|Go straight.
-右に曲がってください。|Turn right.
-左に曲がってください。|Turn left.
 2つ目の角で左に曲がってください。|Turn left at the second corner.
 駅はどこですか。|Where is the station?
 郵便局は公園の近くにあります。|The post office is near the park.
 病院は銀行のとなりにあります。|The hospital is next to the bank.
 ようこそ、日本へ。|Welcome to Japan.
-ピザをください。|Pizza, please.
 わたしはカレーライスがほしいです。|I want curry and rice.
 あなたは何がほしいですか。|What would you like?/What do you want?
 サラダとジュースをください。|Salad and juice, please.

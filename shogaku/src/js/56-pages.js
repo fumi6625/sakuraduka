@@ -64,7 +64,7 @@ function radar(v){
 function renderDiagOut(){
  if(!SJL.some(s=>S.diag[s]&&S.diag[s].done)){$('#diagOut').innerHTML='<p class="mini">ミニ診断を受けると、ここにレーダーチャートと「最初にやること」が出ます。</p>';return}
  const v=SJL.map(s=>S.diag[s]&&S.diag[s].done?S.diag[s].sc/DIAG[s].length:0);
- $('#diagOut').innerHTML=radar(v)+`<div class="tw"><table><tr><th>教科</th><th>得点</th><th>レベル</th><th>最初にやること</th></tr>${SJL.map(s=>{const r=S.diag[s];if(!r||!r.done)return `<tr><th>${SJN[s]}</th><td colspan="3" class="mini">未受験</td></tr>`;const L=lvl(r.sc,DIAG[s].length);return `<tr><th>${SJN[s]}</th><td>${r.sc}/${DIAG[s].length}</td><td><span class="chp ${L==='A'?'ok':L==='B'?'':'w'}">${L}</span> ${ADV[L].s}</td><td>${ADV[L].t}</td></tr>`}).join('')}</table></div><p class="mini">A＝桜塚レベルの入口／B＝標準の力／C＝基礎からやり直し。6問のミニ診断なので、目安として使ってください。</p>`;
+ $('#diagOut').innerHTML=radar(v)+`<div class="tw"><table><tr><th>教科</th><th>得点</th><th>レベル</th><th>最初にやること</th></tr>${SJL.map(s=>{const r=S.diag[s];if(!r||!r.done)return `<tr><th>${SJN[s]}</th><td colspan="3" class="mini">まだ</td></tr>`;const L=lvl(r.sc,DIAG[s].length);return `<tr><th>${SJN[s]}</th><td>${r.sc}/${DIAG[s].length}</td><td><span class="chp ${L==='A'?'ok':L==='B'?'':'w'}">${L}</span> ${ADV[L].s}</td><td>${ADV[L].t}</td></tr>`}).join('')}</table></div><p class="mini">A＝よくできている／B＝標準の力／C＝基礎からもう一度。6問のミニ診断なので、目安として使ってください。</p>`;
 }
 function dgPick(j){
  const r=S.diag[S.dg],list=DIAG[S.dg];if(dgFb||r.done)return;
@@ -85,7 +85,7 @@ function renderSubj(){
  $('#sjTabs').innerHTML=SJL.map(s=>`<button class="bt sm" data-act="sjTab" data-a="${s}" aria-pressed="${S.sj===s}">${SJN[s]}</button>`).join('');
  const a=SJ.find(x=>x.id===S.sj),dg=S.diag[a.id],L=dg&&dg.done?lvl(dg.sc,DIAG[a.id].length):null;
  const li=arr=>arr.map(x=>`<li>${x}</li>`).join('');
- $('#sjBody').innerHTML=`<div class="card"><div class="rowh"><h2 style="margin:0">${SJN[a.id]}の作戦</h2>${L?`<span class="chp ${L==='A'?'ok':L==='B'?'':'w'}">診断：${L}（${ADV[L].s}）</span>`:'<span class="chp">診断：未受験</span>'}</div>
+ $('#sjBody').innerHTML=`<div class="card"><div class="rowh"><h2 style="margin:0">${SJN[a.id]}の作戦</h2>${L?`<span class="chp ${L==='A'?'ok':L==='B'?'':'w'}">診断：${L}（${ADV[L].s}）</span>`:'<span class="chp">診断：まだ</span>'}</div>
  <p><b>目標：</b>${a.goal}</p>
  <div class="grid"><div><h4>1週間のリズム</h4><ul>${li(a.rhythm)}</ul></div><div><h4>ドリルの型</h4><ul>${li(a.kata)}</ul></div></div>
  <h4>つまずきTOP3と直し方</h4><div class="tw"><table class="k">${a.traps.map(t=>`<tr><th>${t[0]}</th><td>${t[1]}</td></tr>`).join('')}</table></div>

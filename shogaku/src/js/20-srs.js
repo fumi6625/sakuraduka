@@ -67,5 +67,5 @@ const mistakeStats=()=>{let all=0,dead=0;for(const id in S.srs){const s=S.srs[id
 const totalItems=()=>Object.values(BK).reduce((t,b)=>t+b.items.length,0);
 const SEC={word:8,verb:10,mc:14,listen:22,read:30,yomi:8,term:9,syn:9,qa:9,order:35,seq:30,self:45,gen:32,mist:40};
 /* 長文を読む時間（1題の最初の問いにだけ足す）：国語は1秒に約0.14字（800字で約115秒）、英語は1語0.6秒（150語で90秒） */
-const readSec=it=>{const x=String(it.text||'');return Math.min(150,Math.max(40,it.subj==='英'?x.split(/\s+/).length*.6:x.length/7))};
+const readSec=it=>{const x=String(it.text||'');return Math.min(150,Math.max(it.subj==='英'?20:40,it.subj==='英'?x.split(/\s+/).length*.6:x.length/7))};
 const estMin=items=>Math.max(1,Math.ceil(sum(items.map(it=>(SEC[it.k]||12)+(it.k==='read'&&items.indexOf(it)===items.findIndex(x=>x.pid===it.pid)?readSec(it):0)))*1.5/60));   // 1.5倍＝まちがえた問題のやりなおし・読み直し・タップのおくれを見こむ

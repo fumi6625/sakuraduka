@@ -102,7 +102,7 @@ test('ミニ診断のステージ自体にはXPが付かない（+10XPは診断�
 test('英単語のつづり：同じ意味・同じ品詞のことばは、どちらを書いても正解', () => {
   const C = loadCore(NAMES);
   const by = (en) => C.BK.EW.items.find((i) => i.en === en);
-  for (const [a, b] of [['shop', 'store'], ['bike', 'bicycle'], ['start', 'begin'], ['huge', 'enormous'], ['sea', 'ocean']]) {
+  for (const [a, b] of [['home', 'house'], ['house', 'home'], ['delicious', 'tasty'], ['tasty', 'delicious'], ['eat', 'have']]) {
     const it = by(a);
     assert.ok(it, `${a} がない`);
     C.S.srs[it.id] = { b: 4, d: '2020-01-01', n: 5, ok: 5 };
@@ -343,10 +343,11 @@ test('月の目標：自動で付く目標は、ふつうのペース（月〜�
 test('英単語：群1（5年前半）・群2（5年後半）は並行して出て、群3（6年前半）・群4（6年後半）は、開く日になったら、群1・2をやりきる前にも出はじめる', () => {
   const C = loadCore([...NAMES, 'BK']);
   const rand = rng(21);
-  let g2early = 0;
+  let g2early = 0, at0331 = 0;
   for (let i = 0; i <= 420; i++) {
     const date = C.addDays(START, i), wd = new Date(date + 'T00:00:00').getDay();
     if (wd >= 1 && wd <= 5) doDay(C, date, rand, 0.85);
+    if (date === '2027-03-31') at0331 = C.BK.EW.items.filter((it) => +it.grp <= 2 && C.S.srs[it.id]).length;
     if (i === 100) g2early = C.BK.EW.items.filter((it) => +it.grp === 2 && C.S.srs[it.id]).length;
   }
   const by = {};
@@ -355,7 +356,7 @@ test('英単語：群1（5年前半）・群2（5年後半）は並行して出�
   assert.ok((by[3] || 0) >= 20, `群3 ${by[3] || 0}語`);
   assert.ok((by[4] || 0) >= 8, `群4 ${by[4] || 0}語`);
   const g12 = C.BK.EW.items.filter((it) => +it.grp <= 2).length;
-  assert.ok(((by[1] || 0) + (by[2] || 0)) < g12, '群1・2は、まだやりきっていない（それでも群3・4に入る）');
+  assert.ok(at0331 < g12, `群3が開く前日（2027-03-31）に、群1・2はまだやりきっていない（${at0331}/${g12}語）`);
 });
 
 test('ミス退治：説明の「◯体」と、実際の問題の数が、どの日もそろっている（上限で外したあとも）', () => {

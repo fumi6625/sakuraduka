@@ -10,7 +10,7 @@ tomorrow|明日|n
 yesterday|昨日|n
 week|週|n
 weekend|週末|n
-month|月|n
+month|月（1か月）|n
 year|年|n
 day|日|n
 birthday|誕生日|n
@@ -71,7 +71,7 @@ tree|木|n
 flower|花|n
 sky|空|n
 sun|太陽|n
-moon|月|n
+moon|月（夜空の）|n
 star|星|n
 rain|雨|n
 snow|雪|n

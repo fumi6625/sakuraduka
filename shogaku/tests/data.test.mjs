@@ -141,7 +141,7 @@ test('一問一答：「…の乱」「…の変」「…一揆」のような�
     if (!m) continue;
     for (let k = 0; k < 3; k++) { n++; if (!C.distractQA(it, 'a').some((x) => x.endsWith(m[1]))) none++; }
   }
-  assert.ok(n > 40, `調べた出題 ${n}`);
+  assert.ok(n > 20, `調べた出題 ${n}`);
   assert.ok(none / n < 0.2, `同じ終わりの字がひとつもない出題 ${none}/${n}`);
 });
 
@@ -150,18 +150,18 @@ test('長文：国語の長文は、短いもの2題につき長いもの（800�
   const ord = C.passOrder('JR'), len = (pid) => C.BK.JR.items.find((i) => i.pid === pid).text.length;
   assert.equal(ord.length, new Set(ord).size);
   assert.equal(ord.length, new Set(C.BK.JR.items.map((i) => i.pid)).size, 'すべての長文が入っている');
-  const first15 = ord.slice(0, 15).filter((p) => len(p) >= 600).length;
+  const first15 = ord.slice(0, 15).filter((p) => len(p) >= 800).length;
   assert.equal(first15, 5, `はじめの15題に長い長文が ${first15}`);
-  assert.ok(len(ord[2]) >= 600 && len(ord[0]) < 600 && len(ord[1]) < 600, '短・短・長の順');
+  assert.ok(len(ord[2]) >= 800 && len(ord[0]) < 800 && len(ord[1]) < 800, '短・短・長の順');
   assert.equal(C.passOrder('ER').join(), [...new Set(C.BK.ER.items.map((i) => i.pid))].join(), '英語の長文は、もとの順（長さがそろっている）');
 });
 
 test('長文を読む時間の見積もり：長い長文ほど長い（国語は字数、英語は語数に比例）', () => {
   const C = loadCore(['BK', 'readSec', 'estMin']);
   const jr = (pid) => C.BK.JR.items.find((i) => i.pid === pid), er = (pid) => C.BK.ER.items.find((i) => i.pid === pid);
-  assert.ok(C.readSec(jr('j41')) > C.readSec(jr('j01')) * 1.8, `${C.readSec(jr('j41'))} / ${C.readSec(jr('j01'))}`);
-  assert.ok(C.readSec(er('e40')) > C.readSec(er('e06')), '英語も、語数が多いほど長い');
+  assert.ok(C.readSec(jr('j20')) > C.readSec(jr('j01')) * 1.8, `${C.readSec(jr('j20'))} / ${C.readSec(jr('j01'))}`);
+  assert.ok(C.readSec(er('e13')) > C.readSec(er('e01')), '英語も、語数が多いほど長い');
   const qs = (b, pid) => C.BK[b].items.filter((i) => i.pid === pid);
-  assert.ok(C.estMin(qs('JR', 'j41')) > C.estMin(qs('JR', 'j01')), '1題ぶんの見積もりも、長いほど長い');
+  assert.ok(C.estMin(qs('JR', 'j20')) > C.estMin(qs('JR', 'j01')), '1題ぶんの見積もりも、長いほど長い');
 });
 

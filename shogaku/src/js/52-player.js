@@ -74,12 +74,12 @@ function renderQ(){
  }else if(V.kind==='num'){
   const A=V.accept.join(''),alpha=/[xy=π±()]/.test(A);
   const keys=['7','8','9','⌫','4','5','6','C','1','2','3'];
-  const ex=[];if(/\./.test(A))ex.push('.');if(/\//.test(A))ex.push('/');if(/,/.test(A))ex.push(',');
+  const ex=['/'];if(/,/.test(A)&&!V.accept.some(a=>/^[0-9./]+$/.test(a)))ex.push(',');   // 小学生用：小数点と分数の / はいつも出す（答えの形のヒントにしない）。負の数は出ないので − はなし
   if(alpha)['x','y','=','π','(',')','±','²'].forEach(c=>{if(c==='x'||c==='y'||c==='='||c==='('||c===')'||(c==='π'&&/π|pi/i.test(A))||(c==='±'&&/±/.test(A))||(c==='²'&&/²/.test(A)))ex.push(c)});
   const k=(c,cls)=>`<button class="key${/[0-9]/.test(c)?'':' fn'}${cls?' '+cls:''}" data-act="plKey" data-a="${c}"${c==='⌫'?' aria-label="1文字消す"':c==='C'?' aria-label="ぜんぶ消す"':''}>${c}</button>`;
   ans=`<div class="lcd"><span id="lcdV" class="v"></span><span class="u">${V.unit&&V.unit.length<=3?esc(V.unit):''}</span></div>${V.unit&&V.unit.length>3?`<div class="hint">${esc(V.unit)}</div>`:''}
   ${ex.length?`<div class="kx">${ex.map(c=>k(c)).join('')}</div>`:''}
-  <div class="kp">${keys.map(c=>k(c)).join('')}<button class="key go" data-act="plNum">こたえる</button>${k('0','w2')}${k('−')}</div>
+  <div class="kp">${keys.map(c=>k(c)).join('')}<button class="key go" data-act="plNum">こたえる</button>${k('0','w2')}${k('.')}</div>
   <div class="row act"><button class="bt sm gh" data-act="plSkip">わからない</button></div>`;
  }else if(V.kind==='typ'&&useKb){
   /* 英語のつづり：画面のキーボード（iPadの標準キーボードは出さない。自動修正・大文字化もなし） */

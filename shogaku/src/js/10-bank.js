@@ -45,7 +45,7 @@ const nested=(a,b)=>{a=String(a);b=String(b);const s=a.length<=b.length?a:b,l=s=
 /* 「AとBのどちら？」「A？B？」の問いから、AとBを取り出す（なければ null）。2択の問いに、関係のない別の答えが並ばないようにするため */
 function dochira(q){
  const w=q.match(/([^？]*)？([^、，？]{1,10})？$/);   // 「…は強い？弱い？」の形
- if(w){const A=w[1].split(/[、，]|では|は|が|を|に|の|より/).pop(),B=w[2];return A&&B&&A!==B&&A.length<=10?[A,B]:null}
+ if(w){const seg=w[1].split(/[、，]/),A=(seg.length>1?seg.pop():seg[0].split(/では|は|が|を|に|の|より/).pop()),B=w[2];return A&&B&&A!==B&&A.length<=10?[A,B]:null}
  const k=q.search(/どちら|どっち/);if(k<0)return null;
  const head=q.slice(0,k).replace(/[、，]\s*$/,''),ms=[...head.matchAll(/と(?![こきもおう])/g)];if(!ms.length)return null;
  const i=ms[ms.length-1].index,A=head.slice(0,i).split(/[、，]|では|は/).pop(),B=head.slice(i+1).split(/では|で|の|、|，/)[0];
