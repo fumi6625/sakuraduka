@@ -1,5 +1,5 @@
 /* 英単語（小学校） 書式：英語|日本語|品詞 */
-let RAW_EW=`
+RAW_EW+=`
 #3
 morning|朝|n
 afternoon|午後|n

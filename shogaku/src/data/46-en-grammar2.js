@@ -21,7 +21,6 @@ They ( ) my good friends.|are|is|am|be|They（複数）のあとは are。
 My mother is a ( ). She works at a hospital.|nurse|farmer|pilot|singer|病院で働く人は nurse。
 He is ( ) in our class.|new|news|newly|want|「新しい」は new。
 Who is he? — He's my ( ). He teaches us math.|teacher|doctor|baker|player|算数を教えるのは teacher。
-She is ( ) than me.|taller|tallest|more tall|tall|「より背が高い」は taller。
 #町・地域
 We have a ( ) in our town.|library|apple|Sunday|swim|町にあるものは library（図書館）。
 There ( ) a park in my town.|is|are|am|do|単数のときは There is ～。

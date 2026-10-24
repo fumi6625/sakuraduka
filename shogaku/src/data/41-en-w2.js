@@ -1,5 +1,5 @@
 /* 英単語（小学校） 書式：英語|日本語|品詞 */
-let RAW_EW=`
+RAW_EW+=`
 #2
 Japanese|日本語；日本人|n
 English|英語；英国の|n
