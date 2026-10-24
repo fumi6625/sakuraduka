@@ -180,7 +180,7 @@ const ACT={
  dsMode(m){DS.mode=m;drillSheet(DS.key)},dsN(n){DS.n=+n;drillSheet(DS.key)},dsLv(l){DS.lv=+l;drillSheet(DS.key)},
  drillGo(){drillGo()},
  mistDrill(){const items=weakItems(20).map(freshen);if(!items.length){toast('いまミスはありません');return}closePage();startSession({title:'ミス退治（自由練習）',subj:'総',items,skipBrief:true})},
- naiLog(){const c=naiCalc(),label=($('#naiLabel')||{}).value||'学校のテスト';needPin('テストの結果を記録します（目標の点ではなく、実際の点を入れてあるか確かめてから）。',()=>{S.tl.push({d:today(),tot:Math.round(c.tot),nn:Math.round(c.nn),gk:c.g,label});S.tl=S.tl.slice(-40);save();renderNaiLog();toast('記録した（めやす）')})},
+ naiLog(){const c=naiCalc(),label=($('#naiLabel')||{}).value||'学校のテスト';needPin('テストの結果を記録します（目標の点ではなく、実際の点を入れてあるか確かめてから）。',()=>{S.tl.push({d:today(),tot:Math.round(c.tot),gk:c.g,label});S.tl=S.tl.slice(-40);save();renderNaiLog();toast('記録した')})},
  naiUndo(){if(!S.tl.length)return;needPin('いちばん新しい記録を消します。',()=>{S.tl.pop();save();renderNaiLog();toast('消した')})},
  msAdd(){
   const memo=$('#msMemo').value.trim();
@@ -233,14 +233,12 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('change',e=>{
  const el=e.target;
- if(el.dataset.nai){const p=el.dataset.nai.split('|');if(el.value)S.nai[p[0]][p[1]]=+el.value;else delete S.nai[p[0]][p[1]];S.nai.set=1;checkBadges();save();naiOut()}
- else if(el.id==='setExam'&&el.value){S.exam=el.value;save();refresh()}
+ if(el.id==='setExam'&&el.value){S.exam=el.value;save();refresh()}
  else if(el.id==='vowIn'){S.at=el.value||'';save();toast(S.at?'やくそく：'+S.at+' に スタート！':'やくそくを消した');renderHome()}
 });
 document.addEventListener('input',e=>{
  const el=e.target;
- if(el.id==='naiT3'){S.nai.t3=+el.value;S.nai.set=1;save();naiOut()}
- else if(el.id==='naiGk'){S.nai.gk=+el.value;S.nai.set=1;save();naiOut()}
+ if(el.id==='naiGk'){S.nai.gk=+el.value;S.nai.set=1;save();naiOut()}
  else if(el.id==='setNick'){S.nick=el.value.slice(0,12);saveSoon();renderHud()}
  else if(el.id==='setPin'){el.value=el.value.replace(/\D/g,'').slice(0,4)}
  else if(el.dataset.memo!=null){S.memo[+el.dataset.memo]=el.value;saveSoon()}

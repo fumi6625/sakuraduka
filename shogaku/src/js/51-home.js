@@ -1,13 +1,13 @@
 /* ===== ホーム：「いま やること」が1つだけ大きく出る画面 =====
    習慣づくりの途中の子向け。
    → 迷わせない（次の1つだけを大きく）／短く区切る／すぐ勝てる／自己申告にたよらない */
-const STAGE_SHORT={hw:'宿題',mem:'暗記',math:'数学',mis:'ミス退治',ref:'ふりかえり',diag:'診断'};
+const STAGE_SHORT={hw:'宿題',mem:'暗記',math:'算数',mis:'ミス退治',ref:'ふりかえり',diag:'診断'};
 const stageShort=(s,wd)=>s.id==='sub'?(s.short||WDP[wd].short):STAGE_SHORT[s.id];
 const SUB_IC={英:'eng',国:'jp',理:'sci',社:'soc',総:'bolt'};
 const stageIcon=s=>s.id==='sub'?(s.boss?'trophy':SUB_IC[s.subj]||'star'):STAGE_IC[s.id];
 const starsOf=(ok,n)=>{if(!n)return'';const a=ok/n;return a>=.95?'★★★':a>=.8?'★★☆':'★☆☆'};
 const rankOfAcc=a=>a>=.95?'S':a>=.85?'A':a>=.7?'B':'C';
-const GREET=['今日の一歩が、500日後の合格につながる。','続けている人が、いちばん強い。','昨日の自分より、1ミリ前へ。','まちがいは伸びしろ。','3分でも、立派な前進。','ノートを開いた時点で、もう勝ってる。','焦らなくていい。止まらなければいい。','わからないを見つけた日は、大成長の日。','小さな「できた」を集めよう。','桜は、冬のあいだに力をためて咲く。','未来の自分が、今日の自分を見ている。','やるのは、目の前の1問だけ。'];
+const GREET=['今日の一歩が、500日後の「できた！」につながる。','続けている人が、いちばん強い。','昨日の自分より、1ミリ前へ。','まちがいは伸びしろ。','3分でも、立派な前進。','ノートを開いた時点で、もう勝ってる。','焦らなくていい。止まらなければいい。','わからないを見つけた日は、大成長の日。','小さな「できた」を集めよう。','桜は、冬のあいだに力をためて咲く。','未来の自分が、今日の自分を見ている。','やるのは、目の前の1問だけ。'];
 const stageMeta=s=>s.kind==='session'?`<span class="chp">約${Math.max(1,s.min)}分</span><span class="chp">${s.items.length}問</span><span class="chp xp">+${s.xp}XP</span>`:(s.xp?`<span class="chp xp">+${s.xp}XP</span>`:`<span class="chp">約${s.min||3}分</span>`);
 const goBtn=s=>s.id==='hw'?'チェックする':s.id==='ref'?'ふりかえる':'スタート！';
 
@@ -61,7 +61,7 @@ const briefDesc=(d,n=22)=>{
 function nowCard(next,tier,okDay,rec){
  const T=TIERS[tier],isS=next.kind==='session';
  const need=dayNeed(rec,tier);
- const goal=okDay?`<span class="chp ok">✓ きょうの合格ライン達成！</span> れんぞく ${curStreak()}日`:`<span class="chp w">合格ライン</span> ${tier===1?'どれか1つクリアでOK！':'あと'+Math.max(1,need)+'つクリアでOK！'}`;
+ const goal=okDay?`<span class="chp ok">✓ きょうのクリアライン達成！</span> れんぞく ${curStreak()}日`:`<span class="chp w">クリアライン</span> ${tier===1?'どれか1つクリアでOK！':'あと'+Math.max(1,need)+'つクリアでOK！'}`;
  return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'var(--yellow)',{drops:7,stroke:'var(--ink)',sw:5})}</div>
   <span class="lb">${next.redo?'もう一度 やること':'いま やること'}</span>
   <div class="nrow"><div class="nico">${ico(stageIcon(next))}</div><div class="ntx"><h2>${esc(next.t)}</h2><p>${esc(briefDesc(next.desc))}</p></div></div>
@@ -94,7 +94,7 @@ ${intro}${diagTip}${pinAsk}
  const R=`
  ${pathMini()}
  <div class="card"><div class="rowh"><h2>今週の流れ</h2></div>${weekStrip(date)}
-  <div class="tomorrow"><span class="lb sm o">あした</span><span><b>${esc(tm.t)}</b><br><span class="mini">数学のテーマ：${esc(tm.theme)}</span></span></div></div>
+  <div class="tomorrow"><span class="lb sm o">あした</span><span><b>${esc(tm.t)}</b><br><span class="mini">算数のテーマ：${esc(tm.theme)}</span></span></div></div>
  ${monthMini()}`;
  $('#v-home').innerHTML=`<p class="mini" style="margin:2px 4px 6px">${esc(GREET[dt(date).getDate()%GREET.length])}</p><div class="home2"><div>${L}</div><div>${R}</div></div>`;
 }
@@ -103,7 +103,7 @@ ${intro}${diagTip}${pinAsk}
 let hwTimer=null,hwLenM=25;
 function hwSheet(){
  const s=routeFor().find(x=>x.id==='hw'),done=!!s.res,pin=S.pinOn&&S.pin;
- openSheet(`<h2>宿題・提出物</h2><p>ぜんぶ終わらせよう。<b>提出物を落とさない</b>のが、内申にいちばん効く。</p>
+ openSheet(`<h2>宿題・提出物</h2><p>ぜんぶ終わらせよう。<b>提出物を忘れない</b>のが、いちばん大事。</p>
   <div class="timer" id="hwT">25:00</div>
   <div class="seg" id="hwLen">${[15,25,40].map(m=>`<button data-act="hwLen" data-a="${m}" aria-pressed="${m===25}">${m}分</button>`).join('')}</div>
   <div class="row" style="justify-content:center"><button class="bt cy" data-act="hwGo" id="hwBtn">集中タイマー スタート</button></div>

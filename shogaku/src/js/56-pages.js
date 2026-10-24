@@ -1,7 +1,7 @@
-/* ===== メニューとサブページ（桜塚高校・診断・教科ガイド・AI先生・ミス図鑑・おうちの人） ===== */
+/* ===== メニューとサブページ（学びの旅・診断・教科ガイド・AI先生・ミス図鑑・おうちの人） ===== */
 const MENU=[
- ['school','桜塚高校','学校の情報・入試のしくみ・目標ライン','school','var(--pink)'],
- ['diag','診断・内申シミュレーター','いまの実力と、目標までのきょり','chart','var(--cyan)'],
+ ['school','5・6年の学びの旅','学ぶこと・1年半の流れ・自分のめあて','school','var(--pink)'],
+ ['diag','診断・テストの記録','いまの実力と、学校のテストの点の記録','chart','var(--cyan)'],
  ['subj','教科ガイド','教科ごとの作戦・お手本ドリル','book','var(--yellow)'],
  ['ai','AI先生チーム','相談・練習・作戦会議の相手（9人）','chat','var(--lime)'],
  ['mist','ミス図鑑','まちがえた問題の一覧と再戦','splat','var(--orange)'],
@@ -11,7 +11,7 @@ function renderMenu(){
  <div class="card"><h2>このアプリの使いかた</h2><ol class="steps">
   <li><b>ホーム</b>を開く。「いま やること」のカードの<b>スタート！</b>を押すだけ。</li>
   <li>問題に答える。まちがえた問題は、すぐ もう一度出る。<b>5問ごとにラウンドクリア</b>。あしたも「ミス退治」で再戦。</li>
-  <li>ドリルを<b>1つクリアで合格ライン</b>（れんぞく記録セーフ。ふつう以上は2つ）。ぜんぶクリアで大ボーナス。</li>
+  <li>ドリルを<b>1つクリアでクリアライン</b>（れんぞく記録セーフ。ふつう以上は2つ）。ぜんぶクリアで大ボーナス。</li>
   <li>おわったら<b>「つぎへ」</b>で、そのまま つぎのステージへ（数秒でつながるよ。さわると とまる）。</li>
   <li>XPで<b>ランク</b>が上がり、コインで<b>ごほうび</b>と交換。やった日が<b>マップ</b>に ぬられていく。</li></ol>
   <p class="mini">iPadは Safari の共有ボタン →「ホーム画面に追加」で、アプリのように全画面で使えます。記録はこのiPadの中に保存されます（月1回、バックアップを）。</p></div>`;
@@ -31,27 +31,20 @@ function openPage(id){
 function closePage(){PG='';$$('.pg').forEach(p=>p.hidden=true);document.body.style.overflow='';refresh()}
 
 /* ----- 診断 ----- */
-const ADV={A:{s:'桜塚レベルの入口',t:'標準問題を確実に。B問題の過去問や応用問題に早めに挑戦しよう。'},B:{s:'標準の力',t:'教科書レベルを完璧にして、ミスの原因をつぶすのが近道。'},C:{s:'基礎からやり直し',t:'中1の内容から、短く毎日。基礎のぬけを埋めるチャンス。'}};
+const ADV={A:{s:'よくできています',t:'標準問題を確実に。ちょっとむずかしい問題にもチャレンジしてみよう。'},B:{s:'標準の力',t:'教科書の問題をかんぺきにして、ミスの原因をつぶすのが近道。'},C:{s:'基礎からやり直し',t:'前の学年の内容から、短く毎日。基礎のぬけを埋めるチャンス。'}};
 const lvl=(sc,n)=>sc>=n-1?'A':sc>=Math.ceil(n/2)?'B':'C';
 function renderNai(){
- const sel=(g,s)=>`<select data-nai="${g}|${s}" aria-label="${s}の${g==='a'?'中1':'中2'}の評定"><option value="">－</option>${[5,4,3,2,1].map(v=>`<option value="${v}" ${+S.nai[g][s]===v?'selected':''}>${v}</option>`).join('')}</select>`;
- $('#naiBox').innerHTML='<b></b><b>中1（確定）</b><b>中2（最新）</b>'+NAI_SUBJ.map(s=>`<span>${s}</span>${sel('a',s)}${sel('b',s)}`).join('');
- $('#naiT3').value=S.nai.t3;$('#naiGk').value=S.nai.gk;naiOut();renderNaiLog();
+ $('#naiGk').value=S.nai.gk;naiOut();renderNaiLog();
 }
-/* 内申・学力検査の点から、総合点を計算する（通常枠＝学力検査×1.4＋内申点×0.6） */
+/* 学校のテストの点（100点満点）。記録するのは、いま選んでいる点 */
 function naiCalc(){
- const est=o=>{const v=NAI_SUBJ.map(s=>+o[s]).filter(Boolean);return v.length?sum(v)/v.length*9:0};
- let a=est(S.nai.a),b=est(S.nai.b);const c=+S.nai.t3,g=+S.nai.gk;
- const na=NAI_SUBJ.filter(s=>+S.nai.a[s]).length,nb=NAI_SUBJ.filter(s=>+S.nai.b[s]).length;
- if(!a)a=27;if(!b)b=27;
- const nn=a*2+b*2+c*6;
- return{c,g,na,nb,nn,tot:g*1.4+nn*.6,tk:g*.6+nn*1.4};
+ const g=+S.nai.gk;
+ return{g,tot:g};
 }
 function naiOut(){
- const {c,g,na,nb,nn,tot,tk}=naiCalc(),line=NAI_LINE,safe=NAI_SAFE;
- $('#naiT3v').textContent=c+'/45（平均'+(c/9).toFixed(1)+'）';$('#naiGkv').textContent=g+'/450（'+Math.round(g/4.5)+'%）';
- const msg=tot>=safe?`安全圏の目安（約${safe}点）をこえています。この目標を落とさないことが大事。`:tot>=line?`合格圏の目安（約${line}点）に届いています。あと${Math.ceil(safe-tot)}点で安全圏。`:`合格圏の目安（約${line}点）まで、あと${Math.ceil(line-tot)}点。学力検査をあと${Math.ceil((line-tot)/1.4)}点、または中3の評定合計をあと${Math.ceil((line-tot)/3.6)}点のばす計算。`;
- $('#naiOut').innerHTML=`<div class="res"><div><b>${nn.toFixed(0)}</b><span>内申点<i>450点満点</i></span></div><div><b>${tot.toFixed(0)}</b><span>総合点（通常枠）<i>900点満点・タイプⅠ</i></span></div><div><b>${tk.toFixed(0)}</b><span>特色枠の点（参考）<i>900点満点</i></span></div></div><p>${msg}</p><p class="mini">${na<9||nb<9?`入力した評定は中1が${na}/9教科、中2が${nb}/9教科。未入力ぶんは、入力した教科の平均（ゼロのときは3.0）で補って計算しています。`:''}通常枠＝学力検査×1.4＋内申点×0.6。特色枠は上位10%だけが先に合格するので、点数は参考です。</p>`;
+ const {g}=naiCalc();
+ $('#naiGkv').textContent=g+'/100点';
+ $('#naiOut').innerHTML=`<p>${g>=90?'すばらしい！ この調子で、まちがえたところだけ見なおそう。':g>=70?'いいね。まちがえた問題を、ミス図鑑で1つずつ たおそう。':'点数はスタート地点。まちがえた問題が「のびしろ」だよ。いっしょに見なおそう。'}</p><p class="mini">学校のテストが返ってきたら、実際の点を入れて「記録する」を押そう。点数のめやすの線はありません。昨日の自分とくらべよう。</p>`;
 }
 const renderNaiLog=()=>{const el=$('#naiLog');if(!el)return;const v=($('#naiLabel')||{}).value;el.innerHTML=naiLogHTML();if(v)$('#naiLabel').value=v};
 let dgFb=false;
@@ -66,7 +59,7 @@ function radar(v){
  const cx=150,cy=140,R=100,pt=(i,k)=>{const a=-Math.PI/2+i*2*Math.PI/5;return[cx+Math.cos(a)*R*k,cy+Math.sin(a)*R*k]};
  const poly=k=>SJL.map((_,i)=>pt(i,k).map(x=>x.toFixed(1)).join(',')).join(' ');
  const me=SJL.map((_,i)=>pt(i,Math.max(v[i],.04)).map(x=>x.toFixed(1)).join(',')).join(' ');
- return `<svg class="radar" viewBox="0 0 300 290" role="img" aria-label="5教科の診断レーダー">${[.33,.66,1].map(k=>`<polygon points="${poly(k)}" fill="none" style="stroke:rgba(var(--line-rgb),.25)"/>`).join('')}${SJL.map((_,i)=>{const p=pt(i,1);return `<line x1="${cx}" y1="${cy}" x2="${p[0].toFixed(1)}" y2="${p[1].toFixed(1)}" style="stroke:rgba(var(--line-rgb),.2)"/>`}).join('')}<polygon points="${poly(5/6)}" fill="none" stroke="var(--hl-line)" stroke-dasharray="5 4" stroke-width="2.5"/><polygon points="${me}" fill="var(--team)" fill-opacity=".4" stroke="var(--ring-arc)" stroke-width="3"/>${SJL.map((s,i)=>{const p=pt(i,1.2);return `<text x="${p[0].toFixed(1)}" y="${(p[1]+5).toFixed(1)}" text-anchor="middle" font-size="14" font-weight="900" style="fill:var(--tx)">${SJN[s]}</text>`}).join('')}<text x="150" y="284" text-anchor="middle" font-size="11" style="fill:var(--tx2)">点線＝桜塚レベルの入口（6問中5問）</text></svg>`;
+ return `<svg class="radar" viewBox="0 0 300 290" role="img" aria-label="5教科の診断レーダー">${[.33,.66,1].map(k=>`<polygon points="${poly(k)}" fill="none" style="stroke:rgba(var(--line-rgb),.25)"/>`).join('')}${SJL.map((_,i)=>{const p=pt(i,1);return `<line x1="${cx}" y1="${cy}" x2="${p[0].toFixed(1)}" y2="${p[1].toFixed(1)}" style="stroke:rgba(var(--line-rgb),.2)"/>`}).join('')}<polygon points="${poly(5/6)}" fill="none" stroke="var(--hl-line)" stroke-dasharray="5 4" stroke-width="2.5"/><polygon points="${me}" fill="var(--team)" fill-opacity=".4" stroke="var(--ring-arc)" stroke-width="3"/>${SJL.map((s,i)=>{const p=pt(i,1.2);return `<text x="${p[0].toFixed(1)}" y="${(p[1]+5).toFixed(1)}" text-anchor="middle" font-size="14" font-weight="900" style="fill:var(--tx)">${SJN[s]}</text>`}).join('')}<text x="150" y="284" text-anchor="middle" font-size="11" style="fill:var(--tx2)">点線＝よくできている目安（6問中5問）</text></svg>`;
 }
 function renderDiagOut(){
  if(!SJL.some(s=>S.diag[s]&&S.diag[s].done)){$('#diagOut').innerHTML='<p class="mini">ミニ診断を受けると、ここにレーダーチャートと「最初にやること」が出ます。</p>';return}

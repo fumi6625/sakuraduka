@@ -142,5 +142,5 @@ function renderHud(){
  $('#nmN').textContent=S.nick||'ゲスト';
  $('#nmR').innerHTML='Lv.'+L.lv+'<span class="rn">　'+esc(L.name)+'</span>';
  $('#av').innerHTML=avatarSVG();
- $('#hud').innerHTML=`<div class="pl cd"><small>入試まで</small><b>${Math.max(0,d)}</b><i>日</i></div><div class="pl fl"><small>れんぞく</small><b>${curStreak()}</b><i>日</i></div><div class="pl"><small>コイン</small><b>${S.coin}</b></div>`;
+ $('#hud').innerHTML=`<div class="pl cd"><small>まとめの日まで</small><b>${Math.max(0,d)}</b><i>日</i></div><div class="pl fl"><small>れんぞく</small><b>${curStreak()}</b><i>日</i></div><div class="pl"><small>コイン</small><b>${S.coin}</b></div>`;
 }

@@ -1,8 +1,8 @@
-/* ===== 合格への近づき具合（推定）：いまの実力の見こみ・予定との差・入試の日の見こみ =====
+/* ===== 6年生のまとめへの近づき具合（推定）：いまの身につき具合・予定との差・まとめの日の見こみ =====
    K（実力の見こみ）＝おぼえ具合の部分点。見ていない問題は0点、見た問題は箱が高いほど高い点（箱0＝.08 … 箱6＝1）。
-   期限をすぎた復習は、少しだけ（最大3割）ひく。数学は、計算のテーマごとのレベルも点にする。
+   期限をすぎた復習は、少しだけ（最大3割）ひく。算数は、計算のテーマごとのレベルも点にする。
    予定＝「週5日・正答率85%で続けた子」のKの進み（15-plan-path.js。scripts/plan-curve.mjs が作る）。
-   ここで出すのは「予定に対して、いまどこにいるか」と「このペースだと、どこまで行けるか」のめやす。合格をほしょうするものではない。 */
+   ここで出すのは「予定に対して、いまどこにいるか」と「このペースだと、どこまで行けるか」のめやす。比べたり、あおったりするものではない。 */
 const KW=[.08,.2,.38,.58,.8,.92,1];
 const PSUBJ=['英','国','数','理','社'];
 const PBANKS={英:['EW','EV','EG','EO','EL','EC'],国:['JK','JW','JI','JS','JG','JC'],数:['MQ','MS'],理:['SQ'],社:['OQ','OT']};
@@ -27,15 +27,15 @@ function planAtN(s,x){
  return v[v.length-1];
 }
 const planFracN=x=>sum(PSUBJ.map(s=>planAtN(s,x)/planEnd(s)))/5;
-/* 直近4週間のペース：合格ラインの日の数（週あたり）と、正答率 */
+/* 直近4週間のペース：クリアラインの日の数（週あたり）と、正答率 */
 function paceNow(date=today()){
  const span=Math.min(28,Math.max(1,diff(S.start||date,date)+1));
  let ok=0,n=0,c=0;
  for(let i=0;i<span;i++){const d=S.days[addDays(date,-i)];if(d){if(d.ok)ok++;n+=d.n||0;c+=d.c||0}}
  return{perWeek:ok/span*7,acc:n>=40?c/n:null,span};
 }
-/* いまの位置。f＝5教科の道のり（入試の日の予定を1とした平均）、fp＝きょうの予定、off＝予定より何日分 先（＋）／おくれ（−）か、
-   proj＝いまの4週間のペースを入試の日まで続けたときの見こみ、proj5＝週5日にしたときの見こみ */
+/* いまの位置。f＝5教科の道のり（6年生のまとめの日の予定を1とした平均）、fp＝きょうの予定、off＝予定より何日分 先（＋）／おくれ（−）か、
+   proj＝いまの4週間のペースを6年生のまとめの日まで続けたときの見こみ、proj5＝週5日にしたときの見こみ */
 function pathNow(date=today()){
  const k=knowNow(date),per={},tNow=dn(date),lo=PLAN_X[0],hi=PLAN_X[PLAN_X.length-1];
  PSUBJ.forEach(s=>{per[s]={k:k[s],pct:k[s]/planEnd(s),plan:planAtN(s,tNow)/planEnd(s)}});
@@ -62,7 +62,6 @@ function logSw(sj,ok,date=today()){
  const w=monday(date),o=S.sw[w]||(S.sw[w]={}),x=o[sj]||(o[sj]=[0,0]);x[0]++;if(ok)x[1]++;
 }
 /* ----- 言い方（画面と週報で共通） ----- */
-const NAI_LINE=640,NAI_SAFE=700;   // 推定のめやす（公式の合格ラインではない）
 const pctN=x=>Math.round(clamp(x,0,1.6)*100);
 const pctTxt=x=>{const p=pctN(x);return p>=150?'150%以上':p+'%'};
 const ringTxt=x=>{const p=pctN(x);return p>=150?'150+':p+'%'};   // 輪の中の字（せまいので短く）
@@ -84,9 +83,9 @@ const trendTxt=()=>{
 /* 週報に入れる文（保護者向け）。推定であることを必ず添える */
 function pathReportLine(date=today()){
  const P=pathNow(date),m=pathMsg(P),pw=Math.round(P.pace.perWeek*10)/10,tl=S.tl.length?S.tl[S.tl.length-1]:null;
- const a=[`合格への道のり（めやす）：予定の${pctTxt(P.f)}・${m.head}`];
- if(P.state!=='early')a.push(`　いまの週${pw}日のペースで入試の日まで続けると、予定の約${pctTxt(P.proj)}（週5日なら約${pctTxt(P.proj5)}）`);
- if(tl)a.push(`　最近のテスト：${tl.tot}点（${tl.label}。合格圏のめやす約${NAI_LINE}点）`);
- a.push('　※推定のめやすです。合格をほしょうするものではありません');
+ const a=[`6年生のまとめへの道のり（めやす）：予定の${pctTxt(P.f)}・${m.head}`];
+ if(P.state!=='early')a.push(`　いまの週${pw}日のペースで6年生のまとめの日まで続けると、予定の約${pctTxt(P.proj)}（週5日なら約${pctTxt(P.proj5)}）`);
+ if(tl)a.push(`　最近のテスト：${tl.tot}点（${tl.label}）`);
+ a.push('　※推定のめやすです。くらべる材料ではなく、次の一歩を決めるために使ってください');
  return a.join('\n');
 }

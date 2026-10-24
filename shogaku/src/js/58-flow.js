@@ -12,7 +12,7 @@ function startStage(s){
  if(s.auto){toast('いまは再戦するミスがありません。ミスが出ると、ここに集まります');return}
  const redo=s.done&&lowRes(s.res),count=!s.done||redo;   // 正答4割未満だったドリルは、やりなおして4割以上とれたら数える
  startSession({title:s.t,subj:s.subj,items:s.items,skipBrief:!s.boss,stageId:count?s.id:null,boss:s.boss,
-  desc:redo?'ゆっくり読んで、もう一度！ 4割以上とれたら、きょうの合格ラインに数えるよ':s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,
+  desc:redo?'ゆっくり読んで、もう一度！ 4割以上とれたら、きょうのクリアラインに数えるよ':s.done?'クリア済みのステージです。もう一度やってもOK（XPは自由練習あつかい）':s.desc,
   brk:s.brk,min:s.min,xp:count?s.xp:0,redo:redo});
 }
 
@@ -39,7 +39,7 @@ function nextBlock(F,o={}){
  if(t){
   const redo=t===F.redo,m=t.kind==='session'?`約${Math.max(1,t.min)}分・${t.items.length}問`:t.id==='diag'?'約3分・6問':t.id==='ref'?'約2分':'',lab=t.id==='diag'?'ミニ診断（'+SJN[t.subj]+'）':flowName(t);
   return `<div class="nxt"><span class="lb sm y">${redo?'もう一度':'つぎ'}</span>
-   <button class="bt pri xl w100 nxb" data-act="flowGo"><span><b>${esc(lab)}</b><small>${redo?'4割以上とれたら、きょうの合格ラインに数えるよ':m}</small></span>${ico('play')}${o.cd?'<i class="cdb" id="cdb"></i>':''}</button>
+   <button class="bt pri xl w100 nxb" data-act="flowGo"><span><b>${esc(lab)}</b><small>${redo?'4割以上とれたら、きょうのクリアラインに数えるよ':m}</small></span>${ico('play')}${o.cd?'<i class="cdb" id="cdb"></i>':''}</button>
    ${o.cd?'<p class="nxc" id="nxc"></p>':''}${rest}</div>`;
  }
  return '';
@@ -78,7 +78,7 @@ function flowBridge(id){
   const F=flowState();
   if(id&&!F.must.some(s=>s.id===id))return;
   if(F.next&&S.flowAuto){openSheet(`<h2>ナイス！</h2>${nextBlock(F,{cd:true,rest:false})}`,'bridge');flowCdStart(6)}
-  else if(F.redo)openSheet(`<h2>あと一歩！</h2><p>せいかいが 4わりに とどいた ドリルが あると、きょうの合格ライン。もう一度 やってみよう。</p>${nextBlock(F,{rest:false})}`,'bridge');   // やりなおしは、自動では始めない
+  else if(F.redo)openSheet(`<h2>あと一歩！</h2><p>せいかいが 4わりに とどいた ドリルが あると、きょうのクリアライン。もう一度 やってみよう。</p>${nextBlock(F,{rest:false})}`,'bridge');   // やりなおしは、自動では始めない
  },900);
 }
 

@@ -21,7 +21,7 @@ See you ( ). — See you!|later|please|sorry|name|別れのあいさつは See y
 Thank you very much. — ( ).|You're welcome|Nice to meet you|Good night|I'm sorry|お礼には You're welcome.。
 #好きなもの
 I ( ) apples.|like|am|can|go|「好き」は like。
-Do you ( ) dogs?|like|are|can|have to|「好きですか」は Do you like ～?。
+Do you ( ) dogs?|like|are|can|go|「好きですか」は Do you like ～?。
 Do you like cats? — Yes, I ( ).|do|am|can|like|Do you ～? には do で答える。
 Do you like fish? — No, I ( ).|don't|can't|am not|isn't|否定の答えは No, I don't.。
 What ( ) do you like? — I like blue.|color|fruit|sport|animal|答えが blue（色）なので What color。
@@ -30,7 +30,7 @@ What fruit do you like? — I like ( ).|peaches|math|swimming|tigers|fruit（く
 What animal do you like? — I like ( ).|pandas|melons|piano|green|animal（動物）の答えを選ぶ。
 What subject do you like? — I like ( ).|science|oranges|baseball|yellow|subject（教科）の答えを選ぶ。
 I ( ) like spiders.|don't|am not|can't|isn't|「好きではない」は don't like。
-I ( ) like soccer very much.|really|every|yesterday|tomorrow|「本当に好き」は really like。
+I ( ) like soccer.|really|every|yesterday|tomorrow|「本当に好き」は really like。
 Do you like music? — Yes, I do. I like ( ) very much.|it|them|we|he|music は1つのものなので it。
 I like cats. ( ) you?|How about|What|Where|Who|「あなたはどう？」は How about you?。
 What food do you like? — I like ( ).|curry|tennis|rabbits|purple|food（食べ物）の答えを選ぶ。
@@ -49,11 +49,11 @@ Can you ( ) kendo?|do|go|am|have|kendo（剣道）は do を使う。
 Can you sing well? — Yes, I can. I'm a good ( ).|singer|sing|song|sings|「歌が上手な人」は singer。
 Can you speak English? — Yes, I ( ). I can speak a little.|can|do|am|like|can で聞かれたら can で答える。
 I can play soccer, ( ) I can't play tennis.|but|so|or|then|反対の内容は but。
-What ( ) you do? — I can play the guitar.|can|are|do|did|「何ができる？」は What can you do?。
+What ( ) you do? — I can play the guitar.|can|are|is|am|「何ができる？」は What can you do?。
 I can ( ) a letter in English.|write|writing|writes|wrote|can のあとは動詞の原形。
 Can you jump rope? — ( ). I can jump 50 times.|Yes, I can|No, I don't|Yes, I do|No, I am|can で聞かれたら Yes, I can. と答える。
 I can ( ) math very well.|do|make|go|have|算数をする、は do math。
-Can you dance? — Yes, I can. I like ( ).|dancing|dance|danced|to dances|「好き」のあとは ing 形。
+Can you dance? — Yes, I can. I like ( ) with my friends.|dancing|dance|danced|to dances|「好き」のあとは ing 形。
 #誕生日・月日
 When is your birthday? — ( ) birthday is April 3rd.|My|Me|I|Mine|「わたしの誕生日」は My birthday。
 When is your birthday? — It's ( ) May 5th.|on|in|at|to|日づけの前は on。
@@ -77,12 +77,12 @@ My birthday is in ( ). It's cold.|December|August|July|June|寒いのは冬で�
 What time is it? — It's ( ) o'clock.|seven|Monday|May|rainy|時刻は It's ～ o'clock.。
 What time do you get up? — I get up ( ) 6:30.|at|in|on|to|時刻の前は at。
 I ( ) breakfast at 7:00.|eat|am|can|go|「朝ごはんを食べる」は eat breakfast。
-I go to ( ) at 10:00.|bed|school|park|library|ねる時間は go to bed。
+I ( ) to bed at 10:00.|go|eat|play|wash|ねる時間は go to bed。
 I ( ) up at 6:30.|get|make|take|eat|「起きる」は get up。
-I ( ) home at 4:00.|go|get up|play|study|「家に帰る」は go home。
+I ( ) home at 4:00.|go|eat|play|study|「家に帰る」は go home。
 What do you do after school? — I ( ) soccer.|play|am|can|is|習いごとやスポーツは play。
 I ( ) my homework after dinner.|do|go|make|get|「宿題をする」は do my homework。
-I ( ) a bath at 8:00.|take|make|eat|have to|「おふろに入る」は take a bath。
+I ( ) a bath at 8:00.|take|make|eat|play|「おふろに入る」は take a bath。
 I ( ) lunch at 12:20.|have|take|go|get|「昼ごはんを食べる」は have lunch。
 What time do you go to school? — I go to school ( ) 8:00.|at|in|on|for|時刻の前は at。
 I ( ) TV after dinner.|watch|see|look|talk|テレビは watch を使う。
@@ -94,24 +94,24 @@ I ( ) my room on Sundays.|clean|brush|take|get|「へやをそうじする」は
 #行きたい所・したいこと
 Where do you want to go? — I want to ( ) to Italy.|go|going|goes|went|want to のあとは動詞の原形。
 I want to ( ) pizza.|eat|eating|eats|ate|want to のあとは原形。
-I ( ) to go to France.|want|like|can|am|「行きたい」は want to go。
+I ( ) to go to France.|want|am|can|do|「行きたい」は want to go。
 Where do you want to go? — I want to go ( ) Egypt.|to|in|at|on|行き先の前は to。
 Why do you want to go to Italy? — ( ) I want to eat pizza.|Because|But|So|Or|「なぜなら」は Because。
 Do you want to go to Australia? — Yes, I ( ).|do|can|am|like|Do you want ～? には do で答える。
 What do you want to ( ) in Kyoto?|see|seeing|saw|sees|want to のあとは原形。
 I want to see ( ) in Australia.|koalas|pizza|sushi|pandas|オーストラリアで見られる動物は koalas。
-I want to ( ) a castle in France.|visit|eat|draw|wash|「訪れる」は visit。
+I want to ( ) a castle in France.|visit|eat|cook|wash|「訪れる」は visit。
 Do you want to go to the zoo? — No, I ( ). I want to go to the aquarium.|don't|can't|am not|isn't|No のあとは don't。
 I want to ( ) the Pyramids.|see|eat|play|buy|ピラミッドは「見る」ものなので see。
 Where ( ) you want to go?|do|are|can|is|「行きたい」のたずね方は Where do you want to go?。
 I want to go to Brazil. I want to see ( ) soccer game.|a|an|two|many|「ひとつの試合」は a soccer game。
-Why do you want to go? — ( ) I like sushi.|Because|And|But|If|理由は Because で始める。
+Why do you want to go? — ( ) I like sushi.|Because|And|But|So|理由は Because で始める。
 I want to go to Peru. I want to ( ) Machu Picchu.|see|read|cook|swim|名所は「見る」。
 #道案内
 Excuse me. Where ( ) the station?|is|are|do|can|「～はどこ」は Where is ～?。
-Go ( ) for two blocks.|straight|right|left|corner|「まっすぐ行く」は go straight。
-( ) right at the corner.|Turn|Go|Stop|Make|「右に曲がる」は turn right。
-( ) left at the bank.|Turn|Take|Get|Look|左に曲がるは turn left。
+Go ( ) for two blocks.|straight|corner|turn|stop|「まっすぐ行く」は go straight。
+( ) right at the corner.|Turn|Eat|Stop|Cook|「右に曲がる」は turn right。
+( ) left at the bank.|Turn|Sit|Eat|Open|左に曲がるは turn left。
 You can see it on your ( ).|right|turning|go|corner|「右手に見える」は on your right。
 It's ( ) to the post office.|next|front|under|behind|「～のとなり」は next to。
 The library is ( ) the park.|near|go|turn|can|「近くに」は near。
@@ -132,11 +132,12 @@ How much are these oranges? — They ( ) 300 yen.|are|is|am|do|these は複数�
 What would you like? — I'd like ( ) ice cream, please.|an|a|two|many|ice は母音ではじまるので an。
 ( ) would you like? — I'd like spaghetti.|What|Where|Who|When|注文をたずねるのは What would you like?。
 I'd like a steak, ( ).|please|thanks|sorry|hello|注文のあとに please をつける。
-Anything ( )? — No, thank you.|else|more|each|most|「ほかに何か？」は Anything else?。
-Here you ( ). — Thank you.|are|do|go|can|ものを渡すときは Here you are.。
+Anything ( )? — No, thank you.|else|of|each|most|「ほかに何か？」は Anything else?。
+Here you ( ). — Thank you.|are|do|see|can|
+ものを渡すときは Here you are.。
 How ( ) apples do you want? — Two, please.|many|much|old|long|数をたずねるのは How many。
-Two ( ), please.|sandwiches|sandwich|a sandwich|sandwichs|2つ以上は es をつけて sandwiches。
-I'd like a ( ) of juice.|glass|cup|bag|piece|ジュースは glass（コップ）に入れる。
+Two ( ), please.|sandwiches|sandwich|a sandwich|one sandwich|2つ以上は es をつけて sandwiches。
+I'd like a ( ) of juice.|glass|pair|bag|piece|ジュースは glass（コップ）に入れる。
 How much is the cake? — It's 450 ( ).|yen|cakes|o'clock|years|金額の単位は yen。
 What would you like for dessert? — I'd like a ( ).|parfait|steak|salad|curry|デザートの答えは parfait。
 Would you like some tea? — Yes, ( ).|please|you're welcome|I'm fine|good night|すすめられて受けるときは Yes, please.。

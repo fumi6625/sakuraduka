@@ -58,7 +58,7 @@ function nextQ(){
  if(PL.roundFlag){PL.roundFlag=false;roundBanner()}
  if(PL.V.audio)setTimeout(()=>{if(PL&&PL.cur===e&&PL.phase==='q')Tts.say(PL.V.audio)},250);
 }
-/* 難易度のめやす（「中1・2学期レベル」）。桜塚の標準をこえるものは「チャレンジ」 */
+/* 難易度のめやす（「小5・2学期レベル」）。標準をこえるものは「チャレンジ」 */
 function lvChips(it){const L=levelOf(it);return L.text?`<span class="chp lv">${esc(L.text)}</span>${L.ch?'<span class="chp w">チャレンジ</span>':''}`:''}
 function choiceCols(V){const m=Math.max(...V.choices.map(c=>String(c.t).length));return m<=14?'c2':'c1'}
 function renderQ(){

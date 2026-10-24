@@ -1,157 +1,281 @@
-/* ===== 数学の自動生成ドリル（無限に出る）中1〜中2 =====
+/* ===== 算数の自動生成ドリル（5年）：無限に出る =====
    各ジェネレータ f(r, lv) は { q, a:[許す答え], disp, exp:[解説], ch?:[正解,誤1,誤2,誤3], unit?, v:()=>検算 } を返す。
-   lv は 1〜3。r は乱数（再現できる）。*/
+   lv は 1〜3。r は乱数（再現できる）。円周率は 3.14 を使う。*/
 const GEN={};
 const ri=(r,a,b)=>a+Math.floor(r()*(b-a+1));
 const rnz=(r,a,b)=>{let v=0,t=0;while(!v&&t++<60)v=ri(r,a,b);return v||1};
 const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){const t=a%b;a=b;b=t}return a};
 const lcm=(a,b)=>Math.abs(a*b)/gcd(a,b);
-const MI='−';
-const sg=n=>n<0?MI+Math.abs(n):String(n);
-const pr=n=>n<0?'('+MI+Math.abs(n)+')':String(n);
-const lin=(a,b,v='x')=>{let s='';if(a!==0)s+=(a===1?'':a===-1?MI:sg(a))+v;if(b!==0)s+=s?(b<0?' '+MI+' '+Math.abs(b):' + '+b):sg(b);return s||'0'};
-const lxy=(a,b)=>(a===1?'x':a===-1?MI+'x':sg(a)+'x')+(b<0?' '+MI+' '+(b===-1?'':Math.abs(b))+'y':' + '+(b===1?'':b)+'y');
-const q2=(a,b,c,v='x')=>{const t=[];if(a)t.push([a,v+'²']);if(b)t.push([b,v]);if(c)t.push([c,'']);let s='';t.forEach((x,i)=>{const k=x[0],m=x[1],ab=Math.abs(k),co=(ab===1&&m)?'':String(ab);s+=i===0?(k<0?MI:'')+co+m:(k<0?' '+MI+' ':' + ')+co+m});return s||'0'};
-const fr=(n,d)=>{const g=gcd(n,d)||1;n/=g;d/=g;if(d<0){n=-n;d=-d}return d===1?String(n):n+'/'+d};
+const nf=x=>String(+(+x).toFixed(6));
+const nz10=(r,a,b)=>{let v,t=0;do v=ri(r,a,b);while(v%10===0&&t++<60);return v};   // 10の倍数でない（小数で 5.0 のようにならない）
+const dq=(n,k)=>nf(n/10**k);                                                       // 整数 n を 10^k 分の1にした小数の表示
 const uniq4=(c,ws,fill)=>{const o=[c];for(const w of ws){if(w!==c&&!o.includes(w))o.push(w);if(o.length>=4)return o}let k=1;while(o.length<4&&k<80){const w=fill(k++);if(w!==c&&!o.includes(w))o.push(w)}return o};
 const decOK=(n,d)=>{const g=gcd(n,d);d/=g;while(d%2===0)d/=2;while(d%5===0)d/=5;return d===1};
-const fracAcc=(n,d)=>{const g=gcd(n,d);n/=g;d/=g;const a=[n+'/'+d];if(d===1)a.push(String(n));else if(decOK(n,d))a.push(String(+(n/d).toFixed(6)));return a};
+/* 分数は [分子,分母]（約分ずみ）で扱う */
+const rd=(n,d)=>{const g=gcd(n,d)||1;n/=g;d/=g;if(d<0){n=-n;d=-d}return[n,d]};
+const rs=x=>x[1]===1?String(x[0]):x[0]+'/'+x[1];
+const mixS=x=>x[1]>1&&x[0]>x[1]?Math.floor(x[0]/x[1])+'と'+(x[0]%x[1])+'/'+x[1]:rs(x);
+const rv=x=>x[0]/x[1];
+const radd=(a,b)=>rd(a[0]*b[1]+b[0]*a[1],a[1]*b[1]);
+const rsub=(a,b)=>rd(a[0]*b[1]-b[0]*a[1],a[1]*b[1]);
+const rmul=(a,b)=>rd(a[0]*b[0],a[1]*b[1]);
+const rdiv=(a,b)=>rd(a[0]*b[1],a[1]*b[0]);
+const fa=x=>{const a=[rs(x)];if(x[1]>1&&x[0]>x[1])a.push(mixS(x));if(x[1]>1&&decOK(x[0],x[1]))a.push(nf(x[0]/x[1]));return a};
+const fd=x=>x[1]>1&&x[0]>x[1]?rs(x)+'（'+mixS(x)+'）':rs(x);
+const pfr=(r,d)=>{let n,t=0;do n=ri(r,1,d-1);while(gcd(n,d)>1&&t++<30);return[n,d]};   // 約分できない真分数
+const divs=n=>{const o=[];for(let i=1;i<=n;i++)if(n%i===0)o.push(i);return o};
 
-GEN.pn_add={name:'正負の数の加減',f(r,lv){
- const n=[2,3,4][lv-1],lim=[9,15,20][lv-1];
- const a=rnz(r,-lim,lim),sc=[a];let q=sg(a);
- for(let i=1;i<n;i++){const b=rnz(r,-lim,lim),plus=r()<.5;q+=(plus?' + ':' − ')+pr(b);sc.push(plus?b:-b)}
- const val=sum(sc),P=sum(sc.filter(x=>x>0)),N=-sum(sc.filter(x=>x<0));
- return{q:q+' ＝ ？',a:[String(val)],disp:sg(val),exp:['ひき算は、符号を変えてたし算に直す：'+sc.map(pr).join(' + '),N===0?'負の数はないので、正の数の和 '+P+' がそのまま答え ＝ '+sg(val):P===0?'正の数はないので、負の数の和 '+MI+N+' がそのまま答え ＝ '+sg(val):'正の数の和 '+P+'、負の数の和 '+MI+N+' なので '+P+' − '+N+' ＝ '+sg(val)],v:()=>val===sum(sc)};
+GEN.dec_mul={name:'小数のかけ算',f(r,lv){
+ let A,ka,B,kb,q,unit='',w=null;
+ if(lv===1){A=nz10(r,12,99);ka=1;B=ri(r,2,9);kb=0}
+ else if(lv===2){A=nz10(r,12,99);ka=1;B=nz10(r,12,99);kb=1}
+ else if(r()<.5){A=nz10(r,101,499);ka=2;B=nz10(r,12,99);kb=1}
+ else{A=nz10(r,12,99);ka=1;B=nz10(r,12,99);kb=1;
+  const T=[[(a,b)=>`1mの重さが ${a}kg の鉄のぼうがある。${b}m の重さは？`,'kg'],[(a,b)=>`1Lで ${a}m² ぬれるペンキがある。${b}L では何m² ぬれる？`,'m²'],[(a,b)=>`1分間に ${a}L ずつ水が出る。${b}分間では何L？`,'L']];
+  w=pick(T,r);unit=w[1]}
+ const P=A*B,s=ka+kb,ans=dq(P,s),sa=dq(A,ka),sb=dq(B,kb);
+ q=w?w[0](sa,sb):`${sa} × ${sb} ＝ ？`;
+ return{q,a:[ans],disp:ans+unit,unit,exp:[`小数点がないものとして整数で計算：${A} × ${B} ＝ ${P}`,kb?`小数点の右は ${ka}けた＋${kb}けた＝${s}けた。${P} の右から ${s}けたのところに小数点を打つ`:`小数点の右は ${ka}けた。${P} の右から ${ka}けたのところに小数点を打つ`,`答えは ${ans}`],v:()=>Math.abs(+ans-(A/10**ka)*(B/10**kb))<1e-9};
 }};
-GEN.pn_mul={name:'正負の数の乗除・累乗',f(r,lv){
- if(lv===1){
-  if(r()<.5){const a=rnz(r,-9,9),b=rnz(r,-9,9),v=a*b;
-   return{q:`${pr(a)} × ${pr(b)} ＝ ？`,a:[String(v)],disp:sg(v),exp:[v>0?'同じ符号どうしの積は ＋':'ちがう符号どうしの積は −',Math.abs(a)+' × '+Math.abs(b)+' ＝ '+Math.abs(v)+'　→　'+sg(v)],v:()=>v===a*b};}
-  const k=rnz(r,-9,9),d=rnz(r,-9,9),n=k*d;
-  return{q:`${pr(n)} ÷ ${pr(d)} ＝ ？`,a:[String(k)],disp:sg(k),exp:[k>0?'同じ符号どうしの商は ＋':'ちがう符号どうしの商は −',Math.abs(n)+' ÷ '+Math.abs(d)+' ＝ '+Math.abs(k)+'　→　'+sg(k)],v:()=>k*d===n};
- }
+
+GEN.dec_div={name:'小数のわり算',f(r,lv){
+ let q,ans,exp,chk;
+ if(lv===1){const d=ri(r,2,9),Q=nz10(r,12,99),N=Q*d;ans=dq(Q,1);
+  q=`${dq(N,1)} ÷ ${d} ＝ ？`;exp=[`わられる数を10倍して、整数どうしで計算：${N} ÷ ${d} ＝ ${Q}`,`10倍した分をもどして、${Q} を 10 でわる → ${ans}`];chk=()=>Math.abs(N/10/d-Q/10)<1e-9}
+ else if(lv===2){
+  if(r()<.5){const D=nz10(r,12,99),Qi=ri(r,2,40),N=D*Qi;ans=String(Qi);
+   q=`${dq(N,1)} ÷ ${dq(D,1)} ＝ ？`;exp=[`わる数を整数にするため、わられる数もわる数も10倍する：${N} ÷ ${D}`,`${N} ÷ ${D} ＝ ${Qi}`];chk=()=>Math.abs(N/D-Qi)<1e-9}
+  else{const D=nz10(r,12,99),Q=nz10(r,12,60),N=D*Q;ans=dq(Q,1);
+   q=`${dq(N,2)} ÷ ${dq(D,1)} ＝ ？`;exp=[`わる数を整数にするため、わられる数もわる数も10倍する：${dq(N,1)} ÷ ${D}`,`${dq(N,1)} ÷ ${D} ＝ ${ans}`];chk=()=>Math.abs(N/100/(D/10)-Q/10)<1e-9}}
+ else if(r()<.5){let D,Qi,t=0;do{D=pick([2,4,5,8,15,25],r);Qi=ri(r,2,30)}while(Qi*D%10!==0&&t++<200);
+  if(Qi*D%10!==0){D=5;Qi=ri(r,2,15)*2}
+  const N=Qi*D/10;ans=String(Qi);q=`${N} ÷ ${dq(D,1)} ＝ ？`;
+  exp=[`わる数を整数にするため、わられる数もわる数も10倍する：${N*10} ÷ ${D}`,`${N*10} ÷ ${D} ＝ ${Qi}`];chk=()=>Math.abs(N/(D/10)-Qi)<1e-9}
+ else{const b=pick([4,5,8,20,25],r);let a,t=0;do a=ri(r,b+1,5*b);while(a%b===0&&t++<50);
+  ans=nf(a/b);q=`${a} ÷ ${b} ＝ ？（わりきれるまで計算する）`;
+  exp=[`わりきれるまで、0 をつけてわり進める`,`${a} ÷ ${b} ＝ ${ans}`];chk=()=>Math.abs(a/b-+ans)<1e-9}
+ return{q,a:[ans],disp:ans,exp,v:chk};
+}};
+
+GEN.vol={name:'直方体・立方体の体積',f(r,lv){
+ if(lv===1){const a=ri(r,2,9),b=ri(r,2,9),c=ri(r,2,9),V=a*b*c;
+  return{q:`たて ${a}cm、よこ ${b}cm、高さ ${c}cm の直方体の体積は？`,a:[String(V)],unit:'cm³',disp:V+'cm³',exp:['直方体の体積 ＝ たて × よこ × 高さ',`${a} × ${b} × ${c} ＝ ${V}`],v:()=>V===a*b*c}}
  if(lv===2){
-  const t=ri(r,0,5);
-  if(t===0){const a=ri(r,2,12),v=a*a;return{q:`(${MI}${a})² ＝ ？`,a:[String(v)],disp:String(v),exp:[`(${MI}${a})² は (${MI}${a}) を2回かける：(${MI}${a}) × (${MI}${a}) ＝ ${v}`],v:()=>v===(-a)**2}}
-  if(t===1){const a=ri(r,2,12),v=-a*a;return{q:`${MI}${a}² ＝ ？`,a:[String(v)],disp:sg(v),exp:[`${MI}${a}² は「${a}² に − をつけたもの」：${MI}(${a} × ${a}) ＝ ${sg(v)}`,`(${MI}${a})² とは別もの。かっこがあるか必ず確認`],v:()=>v===-(a*a)}}
-  if(t===3){const a=ri(r,2,6),b=ri(r,2,6),v=a*a*(-b);return{q:`(${MI}${a})² × (${MI}${b}) ＝ ？`,a:[String(v)],disp:sg(v),exp:[`(${MI}${a})² ＝ ${a*a}`,`${a*a} × (${MI}${b}) ＝ ${sg(v)}（ちがう符号の積は −）`],v:()=>v===(-a)**2*(-b)}}
-  if(t===4){const a=ri(r,2,9),b=ri(r,2,9),v=b*b-a*a;return{q:`${MI}${a}² ＋ ${b}² ＝ ？`,a:[String(v)],disp:sg(v),exp:[`${MI}${a}² ＝ ${MI}${a*a}（${a}² に − をつけたもの）`,`${b}² ＝ ${b*b}`,`${sg(-a*a)} ＋ ${b*b} ＝ ${sg(v)}`],v:()=>v===-(a*a)+b*b}}
-  if(t===5){const a=ri(r,2,4),v=a**4;return{q:`(${MI}${a})⁴ ＝ ？`,a:[String(v)],disp:String(v),exp:[`(${MI}${a})⁴ ＝ (${MI}${a}) を4回かける`,'マイナスが4個（偶数個）なので答えは ＋',`${a}⁴ ＝ ${v}`],v:()=>v===(-a)**4}}
-  const b=ri(r,2,5),v=(-b)**3;return{q:`(${MI}${b})³ ＝ ？`,a:[String(v)],disp:sg(v),exp:[`(${MI}${b})³ ＝ (${MI}${b}) × (${MI}${b}) × (${MI}${b})`,'マイナスが3個（奇数個）なので答えは −',`${b}³ ＝ ${b**3}　→　${sg(v)}`],v:()=>v===(-b)**3};
- }
- const a=ri(r,2,4),b=ri(r,2,5),d=ri(r,2,4),k=ri(r,1,4),c=d*k,v=a*a*b+k;
- return{q:`(${MI}${a})² × ${b} − ${c} ÷ (${MI}${d}) ＝ ？`,a:[String(v)],disp:String(v),exp:[`累乗が先：(${MI}${a})² ＝ ${a*a}　→　${a*a} × ${b} ＝ ${a*a*b}`,`わり算：${c} ÷ (${MI}${d}) ＝ ${MI}${k}`,`ひき算：${a*a*b} − (${MI}${k}) ＝ ${a*a*b} + ${k} ＝ ${v}`],v:()=>v===(-a)**2*b-c/(-d)};
+  if(r()<.5){const a=ri(r,3,12),V=a**3;
+   return{q:`1辺が ${a}cm の立方体の体積は？`,a:[String(V)],unit:'cm³',disp:V+'cm³',exp:['立方体の体積 ＝ 1辺 × 1辺 × 1辺',`${a} × ${a} × ${a} ＝ ${V}`],v:()=>V===a*a*a}}
+  const a=ri(r,2,9),b=ri(r,2,9),c=ri(r,3,12),V=a*b*c;
+  return{q:`体積が ${V}cm³、たてが ${a}cm、よこが ${b}cm の直方体がある。高さは？`,a:[String(c)],unit:'cm',disp:c+'cm',exp:['体積 ＝ たて × よこ × 高さ だから、高さ ＝ 体積 ÷（たて × よこ）',`${V} ÷（${a} × ${b}）＝ ${V} ÷ ${a*b} ＝ ${c}`],v:()=>a*b*c===V}}
+ const t=ri(r,0,2);
+ if(t===0){let a,b,c,k=0;do{a=pick([10,20,25,30,40,50],r);b=pick([10,20,25,30,40,50],r);c=pick([10,20,25,30,40,50],r)}while(a*b*c%1000!==0&&k++<200);
+  if(a*b*c%1000!==0){a=20;b=50;c=30}
+  const L=a*b*c/1000;
+  return{q:`内のりが たて ${a}cm、よこ ${b}cm、高さ ${c}cm の水そうがある。入る水は何L？（1L ＝ 1000cm³）`,a:[String(L)],unit:'L',disp:L+'L',exp:[`体積 ＝ ${a} × ${b} × ${c} ＝ ${a*b*c}cm³`,`1L ＝ 1000cm³ だから ${a*b*c} ÷ 1000 ＝ ${L}`],v:()=>L*1000===a*b*c}}
+ if(t===1){const a=ri(r,2,6),b=ri(r,2,6),c10=nz10(r,11,29),V=a*b*c10/10;
+  return{q:`たて ${a}m、よこ ${b}m、高さ ${dq(c10,1)}m の直方体の体積は？`,a:[nf(V)],unit:'m³',disp:nf(V)+'m³',exp:['体積 ＝ たて × よこ × 高さ',`${a} × ${b} × ${dq(c10,1)} ＝ ${nf(V)}`],v:()=>Math.abs(V-a*b*c10/10)<1e-9}}
+ const a=ri(r,6,10),b=ri(r,6,10),c=ri(r,3,8),d=ri(r,2,a-2),e=ri(r,2,b-2),V=a*b*c-d*e*c;
+ return{q:`たて ${a}cm、よこ ${b}cm、高さ ${c}cm の直方体から、たて ${d}cm、よこ ${e}cm、高さ ${c}cm の直方体を切り取った。残りの体積は？`,a:[String(V)],unit:'cm³',disp:V+'cm³',exp:[`もとの体積：${a} × ${b} × ${c} ＝ ${a*b*c}`,`切り取った体積：${d} × ${e} × ${c} ＝ ${d*e*c}`,`${a*b*c} − ${d*e*c} ＝ ${V}`],v:()=>V===c*(a*b-d*e)};
 }};
-GEN.lit_calc={name:'文字式の計算',f(r,lv){
- let A,B,q,wr,exp;
+
+GEN.angle={name:'三角形・四角形・多角形の角',f(r,lv){
+ const U='度';
+ if(lv===1){let a,b;do{a=ri(r,25,85);b=ri(r,25,85)}while(a+b>150);const c=180-a-b;
+  return{q:`三角形の 2つの角が ${a}度と ${b}度。のこりの角は何度？`,a:[String(c)],unit:U,disp:c+U,exp:['三角形の 3つの角の和は 180度',`180 − ${a} − ${b} ＝ ${c}`],v:()=>a+b+c===180}}
+ if(lv===2){
+  if(r()<.5){let a,b,c;do{a=ri(r,60,120);b=ri(r,60,120);c=ri(r,60,120)}while(a+b+c>330);const d=360-a-b-c;
+   return{q:`四角形の 3つの角が ${a}度、${b}度、${c}度。のこりの角は何度？`,a:[String(d)],unit:U,disp:d+U,exp:['四角形の 4つの角の和は 360度',`360 − ${a} − ${b} − ${c} ＝ ${d}`],v:()=>a+b+c+d===360}}
+  const top=ri(r,10,50)*2,base=(180-top)/2;
+  return{q:`二等辺三角形で、頂角（とうかく）が ${top}度。ひとつの底角（ていかく）は何度？`,a:[String(base)],unit:U,disp:base+U,exp:['三角形の 3つの角の和は 180度。2つの底角は等しい',`（180 − ${top}）÷ 2 ＝ ${base}`],v:()=>top+2*base===180}}
+ const t=ri(r,0,2);
+ if(t===0){const n=ri(r,5,10),S=(n-2)*180,nm=['','','','','','五','六','七','八','九','十'][n];
+  return{q:`${nm}角形の 内角の和は何度？`,a:[String(S)],unit:U,disp:S+U,exp:[`${nm}角形は、1つの頂点から対角線をひくと ${n-2}この三角形に分けられる`,`180 × ${n-2} ＝ ${S}`],v:()=>S===180*(n-2)}}
+ if(t===1){const n=pick([5,6,8,9,10,12],r),nm={5:'五',6:'六',8:'八',9:'九',10:'十',12:'十二'}[n],e=(n-2)*180/n;
+  return{q:`正${nm}角形の 1つの角は何度？`,a:[String(e)],unit:U,disp:e+U,exp:[`内角の和は 180 × ${n-2} ＝ ${(n-2)*180}度`,`正多角形は角がみな等しいので ${(n-2)*180} ÷ ${n} ＝ ${e}`],v:()=>e*n===(n-2)*180}}
+ let s=[],x;do{s=[ri(r,85,140),ri(r,85,140),ri(r,85,140),ri(r,85,140)];x=540-s[0]-s[1]-s[2]-s[3]}while(x<60||x>170);
+ return{q:`五角形の 4つの角が ${s.join('度、')}度。のこりの角は何度？`,a:[String(x)],unit:U,disp:x+U,exp:['五角形の内角の和は 180 × 3 ＝ 540度',`540 − ${s.join(' − ')} ＝ ${x}`],v:()=>sum(s)+x===540};
+}};
+
+GEN.multiple={name:'倍数・約数（公倍数・公約数）',f(r,lv){
+ const lst=(n,m)=>{const o=[];for(let i=n;i<=m;i+=n)o.push(i);return o.join('、')};
+ const lcmQ=()=>{let a,b;do{a=ri(r,2,9);b=ri(r,2,9)}while(a===b||gcd(a,b)===a||gcd(a,b)===b);const L=lcm(a,b);
+  return{q:`${a} と ${b} の最小公倍数（さいしょうこうばいすう）は？`,a:[String(L)],disp:String(L),exp:[`${a} の倍数：${lst(a,L)}`,`${b} の倍数：${lst(b,L)}`,`はじめて同じになる ${L} が最小公倍数`],v:()=>L%a===0&&L%b===0&&L===lcm(a,b)}};
+ const gcdQ=()=>{let m,n;do{m=ri(r,1,9);n=ri(r,1,9)}while(m===n||gcd(m,n)>1||m*n===1);const g=ri(r,2,9),a=g*m,b=g*n;
+  return{q:`${a} と ${b} の最大公約数（さいだいこうやくすう）は？`,a:[String(g)],disp:String(g),exp:[`${a} の約数：${divs(a).join('、')}`,`${b} の約数：${divs(b).join('、')}`,`共通する数の中でいちばん大きい ${g} が最大公約数`],v:()=>a%g===0&&b%g===0&&gcd(a,b)===g}};
  if(lv===1){
-  const a=rnz(r,-6,6),b=rnz(r,-9,9),c=rnz(r,-6,6),d=rnz(r,-9,9),sub=r()<.5;
-  A=sub?a-c:a+c;B=sub?b-d:b+d;q=`(${lin(a,b)}) ${sub?'−':'+'} (${lin(c,d)})`;
-  wr=sub?[[a-c,b+d],[a+c,b-d],[a+c,b+d]]:[[a-c,b+d],[a+c,b-d],[a-c,b-d]];
-  exp=[sub?'かっこの前が − なので、かっこの中の符号がすべて変わる':'かっこをそのままはずす','x の項：'+((sub?a-c:a+c)===0?'なし（0）':sg(sub?a-c:a+c)+'x')+' ／ 数の項：'+sg(B)];
- }else{
-  const a=rnz(r,-5,5),d=rnz(r,lv===3?-5:2,5),b=rnz(r,1,4),e=rnz(r,1,4),c=rnz(r,-6,6),f=rnz(r,-6,6);
-  A=a*b-d*e;B=a*c-d*f;
-  q=`${sg(a)}(${lin(b,c)}) − ${pr(d)}(${lin(e,f)})`;
-  wr=[[a*b+d*e,a*c-d*f],[a*b-d*e,a*c+d*f],[a*b+d*e,a*c+d*f],[a*b-d*e,c-d*f]];
-  exp=['分配法則でかっこをはずす：'+lin(a*b,a*c)+'　＋('+lin(-d*e,-d*f)+')','同類項をまとめる：x の項 '+sg(A)+'、数の項 '+sg(B)];
- }
- if(A===0&&B===0)return GEN.lit_calc.f(r,lv);
- const ans=lin(A,B);
- return{q:q+' を計算すると？',ch:uniq4(ans,wr.map(p=>lin(p[0],p[1])),k=>lin(A+(k%2?k:-k),B+(k%3?-k:k))),a:[],disp:ans,exp,v:()=>true};
+  if(r()<.5)return lcmQ();
+  const n=pick([12,16,18,20,24,28,30,32,36,40,45,48],r),d=divs(n);
+  return{q:`${n} の約数は、全部で何こある？`,a:[String(d.length)],unit:'こ',disp:d.length+'こ',exp:[`小さい順に書き出す：${d.join('、')}`,`全部で ${d.length}こ`],v:()=>d.length===divs(n).length&&d.every(x=>n%x===0)}}
+ if(lv===2){
+  if(r()<.4)return gcdQ();
+  let a,b;do{a=ri(r,4,15);b=ri(r,4,15)}while(a===b||lcm(a,b)>90||gcd(a,b)===a||gcd(a,b)===b);const L=lcm(a,b);
+  return{q:`A のバスは ${a}分おき、B のバスは ${b}分おきに出る。同時に出発したあと、次に同時に出るのは何分後？`,a:[String(L)],unit:'分後',disp:L+'分後',exp:[`${a} と ${b} の最小公倍数を求める`,`${a} の倍数：${lst(a,L)}`,`${b} の倍数：${lst(b,L)}　→　${L}分後`],v:()=>L%a===0&&L%b===0&&L===lcm(a,b)}}
+ const t=ri(r,0,2);
+ if(t===0){let a,b;do{a=ri(r,2,9);b=ri(r,2,9)}while(a===b||lcm(a,b)>40);const L=lcm(a,b),n=Math.floor(100/L);
+  return{q:`1から 100 までの整数のうち、${a} でも ${b} でもわりきれる数は何こ？`,a:[String(n)],unit:'こ',disp:n+'こ',exp:[`${a} と ${b} の最小公倍数は ${L}。公倍数は ${L} の倍数`,`100 ÷ ${L} ＝ ${n}あまり ${100-n*L} だから ${n}こ`],v:()=>{let c=0;for(let i=1;i<=100;i++)if(i%a===0&&i%b===0)c++;return c===n}}}
+ if(t===1){let a,b,c;do{a=ri(r,2,9);b=ri(r,2,9);c=ri(r,2,9)}while(new Set([a,b,c]).size<3||lcm(lcm(a,b),c)>120);const L=lcm(lcm(a,b),c);
+  return{q:`${a}、${b}、${c} の最小公倍数は？`,a:[String(L)],disp:String(L),exp:[`まず ${a} と ${b} の最小公倍数 ${lcm(a,b)} を求める`,`${lcm(a,b)} と ${c} の最小公倍数が答え ＝ ${L}`],v:()=>L%a===0&&L%b===0&&L%c===0}}
+ let m,n;do{m=ri(r,2,9);n=ri(r,2,9)}while(m===n||gcd(m,n)>1);const g=ri(r,2,6),a=g*m,b=g*n,k=m*n;
+ return{q:`たて ${a}cm、よこ ${b}cm の長方形の紙を、あまりなく同じ大きさの正方形に切り分ける。いちばん大きい正方形で切ると、何まいできる？`,a:[String(k)],unit:'まい',disp:k+'まい',exp:[`1辺は ${a} と ${b} の最大公約数 ${g}cm`,`たて ${a} ÷ ${g} ＝ ${m}まい、よこ ${b} ÷ ${g} ＝ ${n}まい`,`${m} × ${n} ＝ ${k}`],v:()=>gcd(a,b)===g&&(a/g)*(b/g)===k};
 }};
-GEN.lit_value={name:'式の値',f(r,lv){
- if(lv===1){const a=rnz(r,-5,5),b=rnz(r,-9,9),x=rnz(r,-5,5),v=a*x+b;
-  return{q:`x ＝ ${sg(x)} のとき、${lin(a,b)} の値は？`,a:[String(v)],disp:sg(v),exp:[`x に ${pr(x)} を入れる：${a}×${pr(x)} ${b<0?'−':'+'} ${Math.abs(b)}`,'＝ '+sg(v)],v:()=>v===a*x+b}}
- if(lv===2){const a=rnz(r,1,4),b=rnz(r,-5,5),x=rnz(r,-4,-1),v=a*x*x+b*x;
-  return{q:`x ＝ ${sg(x)} のとき、${q2(a,b,0)} の値は？`,a:[String(v)],disp:sg(v),exp:[`x² は ${pr(x)}² ＝ ${x*x}。x は ${pr(x)}`,`${a}×${x*x} ${b<0?'−':'+'} ${Math.abs(b)}×${pr(x)} ＝ ${a*x*x} ${b*x<0?'−':'+'} ${Math.abs(b*x)} ＝ ${sg(v)}`],v:()=>v===a*x*x+b*x}}
- const p=rnz(r,-4,6),q=rnz(r,1,5),a=rnz(r,-4,4),b=rnz(r,-4,4),v=p*a-q*b;
- return{q:`a ＝ ${sg(a)}、b ＝ ${sg(b)} のとき、${lin(p,0,'a')} − ${q===1?'':q}b の値は？`,a:[String(v)],disp:sg(v),exp:[`a に ${pr(a)}、b に ${pr(b)} を入れる：${p}×${pr(a)} − ${q}×${pr(b)}`,`＝ ${sg(p*a)} − ${pr(q*b)} ＝ ${sg(v)}`],v:()=>v===p*a-q*b};
+
+/* 分数のたし算・ひき算：terms=[{n,d,s,m}]（n/d は仮分数にしたもの。m は帯分数で書く）*/
+const asQ=T=>T.map((t,i)=>(i?(t.s>0?' ＋ ':' − '):'')+(t.m?mixS([t.n,t.d]):t.n+'/'+t.d)).join('');
+const asVal=T=>T.reduce((x,t)=>t.s>0?radd(x,[t.n,t.d]):rsub(x,[t.n,t.d]),[0,1]);
+function asExp(T,res){
+ const ex=[],ds=[...new Set(T.map(t=>t.d))],L=ds.reduce(lcm,1);
+ if(T.some(t=>t.m))ex.push('帯分数を仮分数に直す：'+T.map((t,i)=>(i?(t.s>0?' ＋ ':' − '):'')+t.n+'/'+t.d).join(''));
+ let N=0;T.forEach(t=>{N+=t.s*t.n*(L/t.d)});
+ if(ds.length>1)ex.push(`分母 ${ds.join('・')} の最小公倍数 ${L} にそろえる：`+T.map((t,i)=>(i?(t.s>0?' ＋ ':' − '):'')+(t.n*L/t.d)+'/'+L).join(''));
+ ex.push(`分子を計算して ${N}/${L}`+(gcd(N,L)>1?`、約分して ${rs(res)}`:''));
+ if(res[1]>1&&res[0]>res[1])ex.push(`帯分数にすると ${mixS(res)}`);
+ return ex;
+}
+GEN.frac_add={name:'分数のたし算・ひき算',f(r,lv){
+ let T;
+ if(lv===1){
+  const P=[[2,4],[3,6],[2,6],[4,8],[5,10],[2,8],[4,12],[3,9],[6,12],[5,5],[7,7],[6,6],[9,9],[8,8]],p=pick(P,r),x=pfr(r,p[0]),y=p[1]===p[0]?pfr(r,p[1]):pfr(r,p[1]);
+  let a=x,b=y,s=r()<.5?1:-1;if(p[0]===p[1]&&x[0]===y[0]&&s<0)s=1;
+  if(s<0&&rv(a)<rv(b)){const t=a;a=b;b=t}
+  if(s<0&&rv(a)===rv(b))s=1;
+  T=[{n:a[0],d:a[1],s:1},{n:b[0],d:b[1],s}]}
+ else if(lv===2){let d1,d2;do{d1=ri(r,2,9);d2=ri(r,2,9)}while(d1===d2||(d1%d2===0)||(d2%d1===0));
+  let a=pfr(r,d1),b=pfr(r,d2),s=r()<.5?1:-1;if(s<0&&rv(a)<rv(b)){const t=a;a=b;b=t}
+  T=[{n:a[0],d:a[1],s:1},{n:b[0],d:b[1],s}]}
+ else if(r()<.5){const D=[2,3,4,5,6,10,12];let d1=pick(D,r),d2=pick(D,r),d3=pick(D,r),k=0;
+  while(new Set([d1,d2,d3]).size<2&&k++<20)d2=pick(D,r);
+  const a=pfr(r,d1),b=pfr(r,d2),c=pfr(r,d3);
+  T=[{n:a[0],d:a[1],s:1},{n:b[0],d:b[1],s:1},{n:c[0],d:c[1],s:-1}];
+  if(rv(asVal(T))<=0)T[2].s=1}
+ else{const D=[2,3,4,5,6,8],d1=pick(D,r),d2=pick(D,r),w1=ri(r,1,3),w2=ri(r,1,3),a=pfr(r,d1),b=pfr(r,d2);
+  let s=r()<.5?1:-1;const A=[w1*d1+a[0],d1],B=[w2*d2+b[0],d2];
+  if(s<0&&rv(A)<=rv(B))s=1;
+  T=[{n:A[0],d:A[1],s:1,m:1},{n:B[0],d:B[1],s,m:1}]}
+ const res=asVal(T);
+ return{q:asQ(T)+' ＝ ？（約分する）',a:fa(res),disp:fd(res),exp:asExp(T,res),v:()=>{const x=T.reduce((z,t)=>z+t.s*t.n/t.d,0);return Math.abs(x-rv(res))<1e-9&&gcd(res[0],res[1])===1}};
 }};
-GEN.lin_eq={name:'一次方程式',f(r,lv){
- const x0=rnz(r,-9,9),ac=[String(x0),'x='+sg(x0)];
- if(lv===1){const a=rnz(r,-8,8),b=rnz(r,-12,12),c=a*x0+b;
-  return{q:`${lin(a,b)} ＝ ${sg(c)}　の x は？`,a:ac,disp:'x ＝ '+sg(x0),exp:[`数を右へ移項：${lin(a,0)} ＝ ${sg(c)} − ${pr(b)} ＝ ${sg(c-b)}`,`x ＝ ${sg(c-b)} ÷ ${pr(a)} ＝ ${sg(x0)}`],v:()=>a*x0+b===c}}
- if(lv===2){let a=rnz(r,-6,6),c=rnz(r,-6,6);if(a===c)c=a+1||2;const b=rnz(r,-10,10),d=a*x0+b-c*x0;
-  return{q:`${lin(a,b)} ＝ ${lin(c,d)}　の x は？`,a:ac,disp:'x ＝ '+sg(x0),exp:[`x の項を左、数を右に集める：${lin(a-c,0)} ＝ ${sg(d)} − ${pr(b)} ＝ ${sg(d-b)}`,`x ＝ ${sg(d-b)} ÷ ${pr(a-c)} ＝ ${sg(x0)}`],v:()=>a*x0+b===c*x0+d}}
- let a=rnz(r,2,6),c=rnz(r,-5,5);if(a===c)c=a+1;const b=rnz(r,-5,5),d=a*(x0-b)-c*x0;
- return{q:`${a}(x ${b<0?'+':'−'} ${Math.abs(b)}) ＝ ${lin(c,d)}　の x は？`,a:ac,disp:'x ＝ '+sg(x0),exp:[`かっこをはずす：${lin(a,-a*b)} ＝ ${lin(c,d)}`,`x の項を左、数を右へ：${lin(a-c,0)} ＝ ${sg(d)} + ${a*b<0?pr(-a*b):a*b}　→　${lin(a-c,0)} ＝ ${sg(d+a*b)}`,`x ＝ ${sg(d+a*b)} ÷ ${pr(a-c)} ＝ ${sg(x0)}`],v:()=>a*(x0-b)===c*x0+d};
+
+GEN.frac_dec={name:'分数と小数・整数',f(r,lv){
+ if(lv===1){const d=pick([2,4,5,8,10,20,25],r),n=ri(r,1,d-1),ans=nf(n/d);
+  return{q:`${n}/${d} を小数で表すと？`,a:[ans],disp:ans,exp:['分数は「分子 ÷ 分母」',`${n} ÷ ${d} ＝ ${ans}`],v:()=>Math.abs(n/d-+ans)<1e-9}}
+ if(lv===2){let n;do n=ri(r,1,99);while(n%10===0&&r()<.7);const x=rd(n,100);
+  return{q:`${dq(n,2)} を分数で表すと？（約分する）`,a:[rs(x)],disp:rs(x),exp:[`${dq(n,2)} ＝ ${n}/100`,`約分して ${rs(x)}`],v:()=>Math.abs(rv(x)-n/100)<1e-9&&gcd(x[0],x[1])===1}}
+ const t=ri(r,0,2);
+ if(t===0){let a,b;do{a=ri(r,2,11);b=ri(r,2,11)}while(a%b===0||a===b);const x=rd(a,b);
+  return{q:`${a} ÷ ${b} の商を、分数で表すと？（約分する）`,a:fa(x),disp:fd(x),exp:['整数どうしのわり算の商は、分数で表せる：わられる数が分子、わる数が分母',`${a} ÷ ${b} ＝ ${a}/${b}`+(gcd(a,b)>1?` ＝ ${rs(x)}`:'')],v:()=>Math.abs(rv(x)-a/b)<1e-9}}
+ if(t===1){const d=ri(r,2,9),w=ri(r,1,4),n=pfr(r,d)[0],imp=w*d+n,ans=w+'と'+n+'/'+d;
+  return{q:`仮分数 ${imp}/${d} を、帯分数で表すと？`,a:[ans],disp:ans,exp:[`${imp} ÷ ${d} ＝ ${w}あまり ${n}`,`整数部分が ${w}、分子が ${n} だから ${ans}`],v:()=>w*d+n===imp}}
+ const n=pick([125,15,25,35,45,75,225,12,24,16,32],r),w=pick([1,2],r),tot=w*100+(n<100?n:n%100),x=rd(tot,100);
+ return{q:`${dq(tot,2)} を分数で表すと？（約分する）`,a:fa(x),disp:fd(x),exp:[`${dq(tot,2)} ＝ ${tot}/100`,`約分して ${rs(x)}`+(x[0]>x[1]?`（${mixS(x)}）`:'')],v:()=>Math.abs(rv(x)-tot/100)<1e-9};
 }};
-GEN.lin_frac={name:'分数をふくむ方程式',f(r,lv){
- const p=pick(lv===1?[2,3,4]:[2,3,4,5,6],r);let s=pick(lv===1?[2,3,4]:[3,4,5,6],r);if(s===p)s=p+1;
- const L=lcm(p,s),k=rnz(r,-3,3),x0=L*k,a=rnz(r,-5,5),b=x0/p+a-x0/s;
- const t=(c,v)=>c===0?'':(c<0?' − '+Math.abs(c):' + '+c);
- return{q:`x/${p}${t(a)} ＝ x/${s}${t(b)}　の x は？`,a:[String(x0),'x='+sg(x0)],disp:'x ＝ '+sg(x0),exp:[`分母 ${p} と ${s} の最小公倍数 ${L} を両辺にかけて分母をはらう`,`${L/p}x${t(L*a)} ＝ ${L/s}x${t(L*b)}`,`x の項を左、数を右へ：${lin(L/p-L/s,0)} ＝ ${sg(L*b-L*a)}　→　x ＝ ${sg(x0)}`],v:()=>x0/p+a===x0/s+b};
+
+GEN.avg={name:'平均',f(r,lv){
+ if(lv===1){const n=ri(r,3,4);let xs,t=0;do{xs=[];for(let i=0;i<n;i++)xs.push(ri(r,50,100))}while(sum(xs)%n!==0&&t++<500);
+  if(sum(xs)%n!==0)xs[n-1]+=n-sum(xs)%n;const m=sum(xs)/n;
+  return{q:`テストの点が ${xs.join('点、')}点。平均は何点？`,a:[String(m)],unit:'点',disp:m+'点',exp:['平均 ＝ 合計 ÷ 個数',`合計：${xs.join(' ＋ ')} ＝ ${sum(xs)}`,`${sum(xs)} ÷ ${n} ＝ ${m}`],v:()=>sum(xs)===m*n}}
+ if(lv===2){const n=ri(r,4,8),m=ri(r,40,95);
+  if(r()<.5)return{q:`${n}人の平均点が ${m}点だった。${n}人の合計点は何点？`,a:[String(m*n)],unit:'点',disp:m*n+'点',exp:['合計 ＝ 平均 × 個数',`${m} × ${n} ＝ ${m*n}`],v:()=>m*n/n===m};
+  const S=m*n;return{q:`合計が ${S}点で、平均が ${m}点だった。人数は何人？`,a:[String(n)],unit:'人',disp:n+'人',exp:['個数 ＝ 合計 ÷ 平均',`${S} ÷ ${m} ＝ ${n}`],v:()=>S/m===n}}
+ if(r()<.5){let m,x,m2,t=0;do{m=ri(r,60,90);x=ri(r,50,100);m2=(4*m+x)/5}while(!Number.isInteger(m2)&&t++<500);
+  if(!Number.isInteger(m2)){m=80;x=100;m2=84}
+  return{q:`4回のテストの平均が ${m}点。5回目をうけて、5回の平均が ${m2}点になった。5回目は何点？`,a:[String(x)],unit:'点',disp:x+'点',exp:[`5回の合計 ＝ ${m2} × 5 ＝ ${m2*5}`,`4回の合計 ＝ ${m} × 4 ＝ ${m*4}`,`5回目 ＝ ${m2*5} − ${m*4} ＝ ${x}`],v:()=>m*4+x===m2*5}}
+ let n1,n2,a,b,t=0,M;do{n1=ri(r,2,6);n2=ri(r,2,6);a=ri(r,30,50);b=ri(r,30,50);M=(n1*a+n2*b)/(n1+n2)}while((!Number.isInteger(M)||a===b)&&t++<800);
+ if(!Number.isInteger(M)){n1=2;n2=3;a=40;b=30;M=34}
+ return{q:`男子 ${n1}人の平均が ${a}kg、女子 ${n2}人の平均が ${b}kg。${n1+n2}人全体の平均は何kg？`,a:[String(M)],unit:'kg',disp:M+'kg',exp:[`男子の合計：${a} × ${n1} ＝ ${a*n1}`,`女子の合計：${b} × ${n2} ＝ ${b*n2}`,`全体の平均 ＝（${a*n1} ＋ ${b*n2}）÷ ${n1+n2} ＝ ${M}`],v:()=>M*(n1+n2)===n1*a+n2*b};
 }};
-GEN.lin_word={name:'方程式の文章題',f(r,lv){
- const t=lv===1?0:lv===2?1:ri(r,1,2);
- if(t===0){const x0=ri(r,3,12),a=pick([40,50,60,80,100,120,150],r),b=pick([100,150,200,250,300],r),c=a*x0+b;
-  return{q:`1個${a}円のりんごを何個か買い、${b}円の箱代も払ったら、合計は${c}円になった。りんごは何個買った？`,a:[String(x0)],unit:'個',disp:x0+'個',exp:[`りんごの数を x 個とすると　${a}x ＋ ${b} ＝ ${c}`,`${a}x ＝ ${c} − ${b} ＝ ${c-b}　→　x ＝ ${x0}`],v:()=>a*x0+b===c}}
- if(t===1){const x0=ri(r,4,15),a=ri(r,2,6),k=ri(r,1,3),c=a+k,tot=k*x0,b=ri(r,1,tot-1),d=tot-b;
-  return{q:`みかんを何人かの子どもに配る。1人に${a}個ずつ配ると${b}個あまり、${c}個ずつ配ると${d}個足りない。子どもは何人？`,a:[String(x0)],unit:'人',disp:x0+'人',exp:[`子どもを x 人とする。みかんの数は　${a}x ＋ ${b}　と　${c}x − ${d}`,`${a}x ＋ ${b} ＝ ${c}x − ${d}　→　${k}x ＝ ${b+d}　→　x ＝ ${x0}`],v:()=>a*x0+b===c*x0-d}}
- const x0=ri(r,8,16),a=ri(r,2,6),S=2*x0+a;
- return{q:`兄は弟より${a}歳年上で、2人の年齢の和は${S}歳。弟は何歳？`,a:[String(x0)],unit:'歳',disp:x0+'歳',exp:[`弟を x 歳とすると、兄は x ＋ ${a} 歳　　x ＋ (x ＋ ${a}) ＝ ${S}`,`2x ＝ ${S-a}　→　x ＝ ${x0}`],v:()=>x0+(x0+a)===S};
+
+GEN.per_unit={name:'単位量あたりの大きさ',f(r,lv){
+ if(lv===1){const A=ri(r,2,20),d=ri(r,5,100)*10,P=A*d;
+  return{q:`人口 ${P}人、面積 ${A}km² の町がある。人口密度（じんこうみつど）は、1km²あたり何人？`,a:[String(d)],unit:'人',disp:d+'人',exp:['人口密度 ＝ 人口 ÷ 面積',`${P} ÷ ${A} ＝ ${d}`],v:()=>d*A===P}}
+ if(lv===2){const A=pick([2,4,5,8,10,20,25],r),B=ri(r,3,60),q=B/A,ans=nf(q),t=ri(r,0,2);
+  const T=[[`${A}m² の畑から、いもが ${B}kg とれた。1m² あたり何kg とれた？`,'kg'],[`ガソリン ${A}L で ${B}km 走る車は、1L あたり何km 走る？`,'km'],[`${A}分間で ${B}L の水が出る。1分間あたり何L？`,'L']][t];
+  return{q:T[0],a:[ans],unit:T[1],disp:ans+T[1],exp:['1あたりの大きさ ＝ 全体 ÷ いくつ分',`${B} ÷ ${A} ＝ ${ans}`],v:()=>Math.abs(q*A-B)<1e-9}}
+ const t=ri(r,0,2);
+ if(t===0){const A=ri(r,3,15),d=ri(r,5,60)*10,P=A*d;
+  return{q:`人口密度が 1km² あたり ${d}人の町がある。面積が ${A}km² のとき、人口は何人？`,a:[String(P)],unit:'人',disp:P+'人',exp:['人口 ＝ 人口密度 × 面積',`${d} × ${A} ＝ ${P}`],v:()=>P/A===d}}
+ if(t===1){const L=ri(r,2,5),k=ri(r,8,20),X=ri(r,6,15),KM=k*X;
+  return{q:`1Lで ${k}km 走る車で ${KM}km 走るには、ガソリンは何L必要？`,a:[String(X)],unit:'L',disp:X+'L',exp:['1Lで走れる道のり ×（使うL数）＝ 走る道のり',`${KM} ÷ ${k} ＝ ${X}`],v:()=>k*X===KM};}
+ const n=ri(r,3,6),k=ri(r,5,15),m=ri(r,7,12),T=n*k,ans=k*m;
+ return{q:`${n}L で ${T}m² ぬれるペンキがある。${m}L では何m² ぬれる？`,a:[String(ans)],unit:'m²',disp:ans+'m²',exp:[`1Lあたり：${T} ÷ ${n} ＝ ${k}m²`,`${m}L では：${k} × ${m} ＝ ${ans}`],v:()=>ans/m===T/n};
 }};
-GEN.sim_add={name:'連立方程式（加減法）',f(r,lv){
- const x0=rnz(r,-6,6),y0=rnz(r,-6,6);let a1,b1,a2,b2,t=0;
- do{
-  if(lv===1){b1=rnz(r,1,5);b2=-b1;a1=rnz(r,-5,5)||1;a2=rnz(r,-5,5)||1}
-  else if(lv===2){b1=r()<.5?1:-1;b2=rnz(r,2,4)*(r()<.5?1:-1);a1=rnz(r,-5,5)||1;a2=rnz(r,-5,5)||1}
-  else{b1=pick([2,3,-2,-3],r);b2=pick([3,4,5,-3,-4,-5],r);a1=rnz(r,-5,5);a2=rnz(r,-5,5)}
- }while(a1*b2-a2*b1===0&&t++<200);
- const c1=a1*x0+b1*y0,c2=a2*x0+b2*y0,L=lcm(b1,b2),m=L/Math.abs(b1),n=L/Math.abs(b2);
- const A1=a1*m,B1=b1*m,C1=c1*m,A2=a2*n,B2=b2*n,C2=c2*n,add=B1+B2===0,X=add?A1+A2:A1-A2,Cx=add?C1+C2:C1-C2;
- const st=[],adj=m!==1||n!==1,e1=adj?'①′':'①',e2=adj?'②′':'②';
- if(adj)st.push(`y の係数の絶対値をそろえる：${[m!==1?'①×'+m:'',n!==1?'②×'+n:''].filter(Boolean).join('、')}　→　①′ ${lxy(A1,B1)} ＝ ${sg(C1)}、②′ ${lxy(A2,B2)} ＝ ${sg(C2)}`);
- st.push(`${e1}と${e2}を${add?'たす':'ひく（'+e1+' − '+e2+'）'}と y が消える：${lin(X,0)} ＝ ${sg(Cx)}　→　x ＝ ${sg(x0)}`);
- st.push(`x ＝ ${sg(x0)} を①に代入すると　y ＝ ${sg(y0)}`);
- return{q:`①　${lxy(a1,b1)} ＝ ${sg(c1)}\n②　${lxy(a2,b2)} ＝ ${sg(c2)}`,a:['x='+sg(x0)+',y='+sg(y0),sg(x0)+','+sg(y0),'('+sg(x0)+','+sg(y0)+')'],unit:'x,y の順に（例 x=3,y=2）',disp:'x ＝ '+sg(x0)+'、y ＝ '+sg(y0),exp:st,v:()=>a1*x0+b1*y0===c1&&a2*x0+b2*y0===c2&&X*x0===Cx&&X!==0};
+
+GEN.speed={name:'速さ・道のり・時間',f(r,lv){
+ if(lv===1){
+  if(r()<.5){const v=ri(r,3,12)*10,t=ri(r,2,6),d=v*t;
+   return{q:`${d}km を ${t}時間で走る電車の速さは、時速何km？`,a:[String(v)],unit:'km/時',disp:'時速 '+v+'km',exp:['速さ ＝ 道のり ÷ 時間',`${d} ÷ ${t} ＝ ${v}`],v:()=>v*t===d}}
+  const v=ri(r,4,12)*10,t=ri(r,3,12),d=v*t;
+  return{q:`${d}m を ${t}分で歩く人の速さは、分速何m？`,a:[String(v)],unit:'m/分',disp:'分速 '+v+'m',exp:['速さ ＝ 道のり ÷ 時間',`${d} ÷ ${t} ＝ ${v}`],v:()=>v*t===d}}
+ if(lv===2){const t=ri(r,0,2);
+  if(t===0){const v=ri(r,4,10)*10,h=ri(r,2,6),d=v*h;
+   return{q:`時速 ${v}km の車が ${h}時間走ると、道のりは何km？`,a:[String(d)],unit:'km',disp:d+'km',exp:['道のり ＝ 速さ × 時間',`${v} × ${h} ＝ ${d}`],v:()=>d/h===v}}
+  if(t===1){const v=ri(r,5,12)*10,m=ri(r,4,15),d=v*m;
+   return{q:`分速 ${v}m で ${d}m 歩くには、何分かかる？`,a:[String(m)],unit:'分',disp:m+'分',exp:['時間 ＝ 道のり ÷ 速さ',`${d} ÷ ${v} ＝ ${m}`],v:()=>v*m===d}}
+  const v=ri(r,3,9)*10,h=ri(r,2,8),d=v*h;
+  return{q:`${d}km はなれた町まで、時速 ${v}km で進むと何時間かかる？`,a:[String(h)],unit:'時間',disp:h+'時間',exp:['時間 ＝ 道のり ÷ 速さ',`${d} ÷ ${v} ＝ ${h}`],v:()=>v*h===d}}
+ const t=ri(r,0,3);
+ if(t===0){const v=pick([5,10,15,20,25],r),k=v*3.6;
+  return{q:`秒速 ${v}m で走る電車の速さは、時速何km？（1時間 ＝ 3600秒）`,a:[nf(k)],unit:'km/時',disp:'時速 '+nf(k)+'km',exp:[`1時間 ＝ 3600秒だから、1時間に進む道のりは ${v} × 3600 ＝ ${v*3600}m`,`${v*3600}m ＝ ${nf(k)}km`],v:()=>Math.abs(v*3600/1000-k)<1e-9}}
+ if(t===1){const k=ri(r,1,8)*3,m=k*1000/60;
+  return{q:`時速 ${k}km は、分速何m？（1時間 ＝ 60分）`,a:[String(m)],unit:'m/分',disp:'分速 '+m+'m',exp:[`時速 ${k}km ＝ 1時間に ${k*1000}m 進む`,`${k*1000} ÷ 60 ＝ ${m}`],v:()=>m*60===k*1000}}
+ if(t===2){let v,m,x=0,k=0;do{v=ri(r,3,9)*10;m=pick([10,15,20,30,40,45],r);k=v*m/60}while(!Number.isInteger(k)&&x++<300);
+  if(!Number.isInteger(k)){v=60;m=20;k=20}
+  return{q:`時速 ${v}km で ${m}分間走ると、道のりは何km？`,a:[String(k)],unit:'km',disp:k+'km',exp:[`${m}分 ＝ ${m}/60 時間`,`${v} × ${m} ÷ 60 ＝ ${k}`],v:()=>k*60===v*m}}
+ const a=ri(r,4,9)*10,b=ri(r,4,9)*10,m=ri(r,3,10);
+ return{q:`2人が 同じ場所から反対向きに歩き出す。分速は ${a}m と ${b}m。${m}分後に、2人は何m はなれている？`,a:[String((a+b)*m)],unit:'m',disp:(a+b)*m+'m',exp:[`1分間にはなれる道のり：${a} ＋ ${b} ＝ ${a+b}m`,`${a+b} × ${m} ＝ ${(a+b)*m}`],v:()=>a*m+b*m===(a+b)*m};
 }};
-GEN.sim_sub={name:'連立方程式（代入法）',f(r,lv){
- const x0=rnz(r,-5,5),y0=rnz(r,-6,6);let a,c,d,t=0;
- do{a=rnz(r,-3,3);c=rnz(r,-4,4);d=rnz(r,lv===1?1:-4,4)||1}while(c+d*a===0&&t++<100);
- const b=y0-a*x0,e=c*x0+d*y0,X=c+d*a,Rhs=e-d*b;
- return{q:`①　y ＝ ${lin(a,b)}\n②　${lxy(c,d)} ＝ ${sg(e)}`,a:['x='+sg(x0)+',y='+sg(y0),sg(x0)+','+sg(y0),'('+sg(x0)+','+sg(y0)+')'],unit:'x,y の順に（例 x=3,y=2）',disp:'x ＝ '+sg(x0)+'、y ＝ '+sg(y0),exp:[`①を②の y に代入：${c===0?'':c===1?'x':c===-1?MI+'x':sg(c)+'x'} ${d<0?'−':'+'} ${Math.abs(d)===1?'':Math.abs(d)}(${lin(a,b)}) ＝ ${sg(e)}`,`かっこをはずして整理：${lin(X,0)} ＝ ${sg(Rhs)}　→　x ＝ ${sg(x0)}`,`①に代入して　y ＝ ${sg(y0)}`],v:()=>X*x0===Rhs&&y0===a*x0+b&&c*x0+d*y0===e};
+
+GEN.area={name:'三角形・四角形の面積',f(r,lv){
+ const U='cm²';
+ if(lv===1){
+  if(r()<.5){const b=ri(r,3,15),h=ri(r,3,12),S=b*h;
+   return{q:`底辺 ${b}cm、高さ ${h}cm の平行四辺形の面積は？`,a:[String(S)],unit:U,disp:S+U,exp:['平行四辺形の面積 ＝ 底辺 × 高さ',`${b} × ${h} ＝ ${S}`],v:()=>S===b*h}}
+  let b,h;do{b=ri(r,3,16);h=ri(r,3,12)}while(b*h%2);const S=b*h/2;
+  return{q:`底辺 ${b}cm、高さ ${h}cm の三角形の面積は？`,a:[String(S)],unit:U,disp:S+U,exp:['三角形の面積 ＝ 底辺 × 高さ ÷ 2',`${b} × ${h} ÷ 2 ＝ ${S}`],v:()=>S*2===b*h}}
+ if(lv===2){
+  if(r()<.5){let a,b,h;do{a=ri(r,3,10);b=ri(r,a+1,16);h=ri(r,3,10)}while((a+b)*h%2);const S=(a+b)*h/2;
+   return{q:`上底 ${a}cm、下底 ${b}cm、高さ ${h}cm の台形の面積は？`,a:[String(S)],unit:U,disp:S+U,exp:['台形の面積 ＝（上底 ＋ 下底）× 高さ ÷ 2',`（${a} ＋ ${b}）× ${h} ÷ 2 ＝ ${S}`],v:()=>S*2===(a+b)*h}}
+  let a,b;do{a=ri(r,4,16);b=ri(r,4,16)}while(a*b%2);const S=a*b/2;
+  return{q:`対角線が ${a}cm と ${b}cm のひし形の面積は？`,a:[String(S)],unit:U,disp:S+U,exp:['ひし形の面積 ＝ 対角線 × 対角線 ÷ 2',`${a} × ${b} ÷ 2 ＝ ${S}`],v:()=>S*2===a*b}}
+ const t=ri(r,0,2);
+ if(t===0){const b=ri(r,3,14),h=ri(r,3,12),S=b*h/2;
+  if(b*h%2)return GEN.area.f(r,lv);
+  return{q:`面積が ${S}cm²、底辺が ${b}cm の三角形がある。高さは何cm？`,a:[String(h)],unit:'cm',disp:h+'cm',exp:['三角形の面積 ＝ 底辺 × 高さ ÷ 2 だから、高さ ＝ 面積 × 2 ÷ 底辺',`${S} × 2 ÷ ${b} ＝ ${h}`],v:()=>b*h===S*2}}
+ if(t===1){let a,b,h;do{a=ri(r,3,9);b=ri(r,a+1,14);h=ri(r,3,10)}while((a+b)*h%2);const S=(a+b)*h/2;
+  return{q:`上底 ${a}cm、下底 ${b}cm で、面積が ${S}cm² の台形がある。高さは何cm？`,a:[String(h)],unit:'cm',disp:h+'cm',exp:['台形の面積 ＝（上底 ＋ 下底）× 高さ ÷ 2 だから、高さ ＝ 面積 × 2 ÷（上底 ＋ 下底）',`${S} × 2 ÷（${a} ＋ ${b}）＝ ${S*2} ÷ ${a+b} ＝ ${h}`],v:()=>S*2===(a+b)*h}}
+ const b=ri(r,3,12),h=ri(r,3,10),S=b*h;
+ return{q:`面積が ${S}cm²、高さが ${h}cm の平行四辺形がある。底辺は何cm？`,a:[String(b)],unit:'cm',disp:b+'cm',exp:['平行四辺形の面積 ＝ 底辺 × 高さ だから、底辺 ＝ 面積 ÷ 高さ',`${S} ÷ ${h} ＝ ${b}`],v:()=>b*h===S};
 }};
-GEN.sim_word={name:'連立方程式の文章題',f(r,lv){
- if(lv===1){const x0=ri(r,8,30),y0=ri(r,2,x0-1),S=x0+y0,D=x0-y0;
-  return{q:`2つの数の和は ${S}、差は ${D} です。大きいほうの数は？`,a:[String(x0)],disp:String(x0),exp:[`大きい数を x、小さい数を y とする：x ＋ y ＝ ${S}、x − y ＝ ${D}`,`たすと 2x ＝ ${S+D}　→　x ＝ ${x0}`],v:()=>x0+y0===S&&x0-y0===D}}
- let a1,b1,a2,b2,t=0;
- do{a1=ri(r,1,lv===2?4:7);b1=ri(r,1,lv===2?4:7);a2=ri(r,1,lv===2?4:7);b2=ri(r,1,lv===2?4:7)}while((a1*b2-a2*b1===0||(a1===a2&&b1===b2))&&t++<100);
- const tpl=r()<.5;
- const p=tpl?pick([40,50,60,80,90,100,120],r):pick([500,600,800,1000,1200],r),n=tpl?pick([100,120,150,180,200,250],r):pick([300,400,500,600,700],r);
- const c1=a1*p+b1*n,c2=a2*p+b2*n,askN=r()<.5,nm=tpl?['鉛筆1本','ノート1冊']:['大人1人','子ども1人'];
- const s1=tpl?`鉛筆${a1}本とノート${b1}冊で${c1}円`:`大人${a1}人と子ども${b1}人で${c1}円`,s2=tpl?`鉛筆${a2}本とノート${b2}冊で${c2}円`:`大人${a2}人と子ども${b2}人で${c2}円`;
- const ans=askN?n:p;
- return{q:`${s1}、${s2}です。${nm[askN?1:0]}の値段は？`,a:[String(ans)],unit:'円',disp:ans+'円',exp:[`${nm[0]}を x円、${nm[1]}を y円とする：${lxy(a1,b1)} ＝ ${c1}、${lxy(a2,b2)} ＝ ${c2}`,`加減法で解くと　x ＝ ${p}、y ＝ ${n}`,`答え：${nm[askN?1:0]}は ${ans}円`],v:()=>a1*p+b1*n===c1&&a2*p+b2*n===c2&&a1*b2-a2*b1!==0};
+
+GEN.percent={name:'割合・百分率・歩合',f(r,lv){
+ const P=pick([20,25,40,50,80,100,200,250,400,500],r);
+ const pOf=(B)=>{let p,t=0;do p=ri(r,2,98);while(B*p%100!==0&&t++<200);return B*p%100===0?p:50};
+ if(lv===1){
+  if(r()<.7){const p=pOf(P),A=P*p/100;
+   return{q:`${A} は ${P} の何％？`,a:[String(p)],unit:'％',disp:p+'％',exp:['割合 ＝ 比べる量 ÷ もとにする量',`${A} ÷ ${P} ＝ ${nf(A/P)}　→　100をかけて ${p}％`],v:()=>A*100/P===p}}
+  const n=ri(r,1,99),x=dq(n,2);
+  return{q:`割合 ${x} を、百分率（ひゃくぶんりつ）で表すと？`,a:[String(n)],unit:'％',disp:n+'％',exp:['割合の 0.01 が 1％',`${x} × 100 ＝ ${n}　→　${n}％`],v:()=>Math.abs(n/100-+x)<1e-9}}
+ if(lv===2){const t=ri(r,0,2);
+  if(t===0){const p=pOf(P),A=P*p/100;
+   return{q:`${P}人の ${p}％ は、何人？`,a:[String(A)],unit:'人',disp:A+'人',exp:['比べる量 ＝ もとにする量 × 割合',`${p}％ ＝ ${dq(p,2)}　→　${P} × ${dq(p,2)} ＝ ${A}`],v:()=>A*100===P*p}}
+  if(t===1){const w=ri(r,1,9),f=ri(r,1,9),ans=w+'割'+f+'分';
+   return{q:`${dq(w*10+f,2)} を、歩合（ぶあい）で表すと？（例：3割5分）`,a:[ans],disp:ans,exp:['割合の 0.1 が 1割、0.01 が 1分',`${dq(w*10+f,2)} ＝ ${w}割${f}分`],v:()=>Math.abs((w*10+f)/100-+dq(w*10+f,2))<1e-9}}
+  const w=ri(r,1,9),f=ri(r,1,9),p=w*10+f;
+  return{q:`${w}割${f}分 は、何％？`,a:[String(p)],unit:'％',disp:p+'％',exp:['1割 ＝ 10％、1分 ＝ 1％',`${w}割${f}分 ＝ ${w*10}％ ＋ ${f}％ ＝ ${p}％`],v:()=>w*10+f===p}}
+ const t=ri(r,0,2);
+ if(t===0){const B=pick([20,40,50,60,80,100,120,200,250,300,400],r),p=pOf(B),A=B*p/100;
+  return{q:`ある数の ${p}％ が ${A}。ある数は？`,a:[String(B)],disp:String(B),exp:['もとにする量 ＝ 比べる量 ÷ 割合',`${p}％ ＝ ${dq(p,2)}　→　${A} ÷ ${dq(p,2)} ＝ ${B}`],v:()=>B*p===A*100}}
+ if(t===1){const Pr=ri(r,3,20)*100,w=ri(r,1,5),ans=Pr*(10-w)/10;
+  return{q:`定価 ${Pr}円の品物を ${w}割引きで売る。ねだんは何円？`,a:[String(ans)],unit:'円',disp:ans+'円',exp:[`${w}割引き ＝ 定価の ${10-w}割で売る`,`${Pr} × ${dq(10-w,1)} ＝ ${ans}`],v:()=>ans*10===Pr*(10-w)}}
+ const B=ri(r,4,30)*50,p=pick([10,20,30,40,50],r),ans=B*(100+p)/100;
+ return{q:`去年の来場者は ${B}人。今年は去年より ${p}％ふえた。今年は何人？`,a:[String(ans)],unit:'人',disp:ans+'人',exp:[`${p}％ふえたので、去年の ${100+p}％ ＝ ${dq(100+p,2)}倍`,`${B} × ${dq(100+p,2)} ＝ ${ans}`],v:()=>ans*100===B*(100+p)};
 }};
-GEN.prop={name:'比例・反比例',f(r,lv){
- if(lv===1||r()<.5){const k=rnz(r,-6,6),x1=rnz(r,1,6),x2=rnz(r,-6,8);
-  return{q:`y は x に比例し、x ＝ ${x1} のとき y ＝ ${sg(k*x1)} です。x ＝ ${sg(x2)} のとき y は？`,a:[String(k*x2)],disp:sg(k*x2),exp:[`y ＝ ax とおく。x ＝ ${x1}、y ＝ ${sg(k*x1)} を入れると a ＝ ${sg(k)}`,`y ＝ ${k===1?'':k===-1?MI:sg(k)}x に x ＝ ${sg(x2)} を入れて　y ＝ ${sg(k*x2)}`],v:()=>true}}
- const P=pick([12,18,24,30,36,40,48,60],r),x1=pick([1,2,3,4,6].filter(d=>P%d===0),r),sgn=r()<.5?1:-1,divs=[1,2,3,4,5,6,8,10,12].filter(d=>P%d===0&&d!==x1),x2=pick(divs,r);
- return{q:`y は x に反比例し、x ＝ ${x1} のとき y ＝ ${sg(sgn*P/x1)} です。x ＝ ${x2} のとき y は？`,a:[String(sgn*P/x2)],disp:sg(sgn*P/x2),exp:[`y ＝ a/x とおく。x ＝ ${x1}、y ＝ ${sg(sgn*P/x1)} を入れると a ＝ ${sg(sgn*P)}（xy が一定）`,`x ＝ ${x2} のとき　y ＝ ${sg(sgn*P)} ÷ ${x2} ＝ ${sg(sgn*P/x2)}`],v:()=>true};
-}};
-GEN.lf_form={name:'一次関数の式',f(r,lv){
- const a=rnz(r,-5,5),b=rnz(r,-8,8),f=(A,B)=>'y ＝ '+lin(A,B);
- if(lv===1)return{q:`グラフが、傾き ${sg(a)}、切片 ${sg(b)} の直線になる一次関数の式は？`,ch:uniq4(f(a,b),[f(b,a),f(-a,b),f(a,-b)],k=>f(a+k,b)),a:[],disp:f(a,b),exp:['y ＝ ax ＋ b の a が傾き、b が切片',`a ＝ ${sg(a)}、b ＝ ${sg(b)} を入れて　${f(a,b)}`],v:()=>true};
- if(lv===2){const p=rnz(r,-4,4),q=a*p+b;
-  return{q:`傾きが ${sg(a)} で、点 (${sg(p)}, ${sg(q)}) を通る直線の式は？`,ch:uniq4(f(a,b),[f(a,q),f(a,q+a*p),f(a,-b)],k=>f(a,b+k)),a:[],disp:f(a,b),exp:[`y ＝ ${lin(a,0)} ＋ b に x ＝ ${sg(p)}、y ＝ ${sg(q)} を入れる`,`${sg(q)} ＝ ${pr(a)}×${pr(p)} ＋ b　→　b ＝ ${sg(b)}`,`答え：${f(a,b)}`],v:()=>a*p+b===q};}
- const x1=rnz(r,-3,3);let x2=rnz(r,-3,4);if(x2===x1)x2=x1+2;const y1=a*x1+b,y2=a*x2+b;
- return{q:`2点 (${sg(x1)}, ${sg(y1)})、(${sg(x2)}, ${sg(y2)}) を通る直線の式は？`,ch:uniq4(f(a,b),[f(-a,b),f(a,-b),f(a,y1)],k=>f(a,b+k)),a:[],disp:f(a,b),exp:[`傾き ＝ (${sg(y2)} − ${pr(y1)}) ÷ (${sg(x2)} − ${pr(x1)}) ＝ ${sg(a)}`,`y ＝ ${lin(a,0)} ＋ b に (${sg(x1)}, ${sg(y1)}) を入れて b ＝ ${sg(b)}`,`答え：${f(a,b)}`],v:()=>true};
-}};
-GEN.lf_rate={name:'変化の割合・増加量',f(r,lv){
- const a=rnz(r,-5,5),b=rnz(r,-6,6),p=rnz(r,-3,2),d=ri(r,2,5),qq=p+d;
- if(lv===1)return{q:`一次関数 y ＝ ${lin(a,b)} の変化の割合は？`,a:[String(a)],disp:sg(a),exp:['一次関数 y ＝ ax ＋ b の変化の割合は、いつも a（傾き）'],v:()=>true};
- if(lv===2)return{q:`一次関数 y ＝ ${lin(a,b)} で、x が ${sg(p)} から ${sg(qq)} まで増加するとき、y の増加量は？`,a:[String(a*d)],disp:sg(a*d),exp:[`x の増加量は ${sg(qq)} − ${pr(p)} ＝ ${d}`,`y の増加量 ＝ 変化の割合 × x の増加量 ＝ ${sg(a)} × ${d} ＝ ${sg(a*d)}`],v:()=>true};
- return{q:`一次関数で、x ＝ ${sg(p)} のとき y ＝ ${sg(a*p+b)}、x ＝ ${sg(qq)} のとき y ＝ ${sg(a*qq+b)} です。変化の割合は？`,a:[String(a)],disp:sg(a),exp:[`変化の割合 ＝ (y の増加量) ÷ (x の増加量)`,`＝ (${sg(a*qq+b)} − ${pr(a*p+b)}) ÷ (${sg(qq)} − ${pr(p)}) ＝ ${sg(a*d)} ÷ ${d} ＝ ${sg(a)}`],v:()=>true};
-}};
-GEN.lf_cross={name:'2直線の交点',f(r,lv){
- const x0=rnz(r,-5,5);let a1=rnz(r,-4,4),a2=rnz(r,-4,4),t=0;while(a1===a2&&t++<50)a2=rnz(r,-4,4);
- if(lv===3&&a1===-1)a1=2;
- const b1=rnz(r,-6,6),y0=a1*x0+b1,ac=['('+sg(x0)+','+sg(y0)+')',sg(x0)+','+sg(y0)];
- if(lv<3){const b2=y0-a2*x0;
-  return{q:`2つの直線　y ＝ ${lin(a1,b1)}　と　y ＝ ${lin(a2,b2)}　の交点の座標は？`,a:ac,unit:'(x, y) の形で',disp:`(${sg(x0)}, ${sg(y0)})`,exp:['交点の座標は、2つの式を同時に満たす（連立方程式の解）',`${lin(a1,b1)} ＝ ${lin(a2,b2)} を解いて　x ＝ ${sg(x0)}`,`y ＝ ${lin(a1,b1)} に入れて　y ＝ ${sg(y0)}`],v:()=>a1*x0+b1===a2*x0+b2}}
- const c2=x0+y0;
- return{q:`2つの直線　y ＝ ${lin(a1,b1)}　と　x ＋ y ＝ ${sg(c2)}　の交点の座標は？`,a:ac,unit:'(x, y) の形で',disp:`(${sg(x0)}, ${sg(y0)})`,exp:[`y ＝ ${lin(a1,b1)} を x ＋ y ＝ ${sg(c2)} に代入：x ＋ (${lin(a1,b1)}) ＝ ${sg(c2)}`,`${lin(1+a1,0)} ＝ ${sg(c2-b1)}　→　x ＝ ${sg(x0)}`,`y ＝ ${sg(y0)}`],v:()=>1+a1!==0&&x0+a1*x0+b1===c2};
+
+GEN.circle_len={name:'円周',f(r,lv){
+ const L=(d)=>nf(d*314/100);
+ if(lv===1){const d=ri(r,2,20),c=L(d);
+  return{q:`直径が ${d}cm の円の、円周は何cm？（円周率は 3.14）`,a:[c],unit:'cm',disp:c+'cm',exp:['円周 ＝ 直径 × 円周率',`${d} × 3.14 ＝ ${c}`],v:()=>Math.abs(+c-d*3.14)<1e-9}}
+ if(lv===2){const R=ri(r,2,15),d=2*R,c=L(d);
+  return{q:`半径が ${R}cm の円の、円周は何cm？（円周率は 3.14）`,a:[c],unit:'cm',disp:c+'cm',exp:[`直径 ＝ 半径 × 2 ＝ ${d}cm`,`円周 ＝ 直径 × 3.14 ＝ ${d} × 3.14 ＝ ${c}`],v:()=>Math.abs(+c-2*R*3.14)<1e-9}}
+ if(r()<.5){const d=ri(r,3,30),c=L(d);
+  return{q:`円周が ${c}cm の円の、直径は何cm？（円周率は 3.14）`,a:[String(d)],unit:'cm',disp:d+'cm',exp:['直径 ＝ 円周 ÷ 円周率',`${c} ÷ 3.14 ＝ ${d}`],v:()=>Math.abs(d*3.14-+c)<1e-9}}
+ const d=ri(r,2,10)*2,c=nf(d*3.14/2+d);
+ return{q:`直径 ${d}cm の半円の、まわりの長さは何cm？（円周率は 3.14）`,a:[c],unit:'cm',disp:c+'cm',exp:[`曲がった部分は、円周の半分：${d} × 3.14 ÷ 2 ＝ ${nf(d*3.14/2)}`,`まっすぐな部分（直径）：${d}`,`${nf(d*3.14/2)} ＋ ${d} ＝ ${c}`],v:()=>Math.abs(+c-(d*3.14/2+d))<1e-9};
 }};

@@ -2,7 +2,7 @@
 const LVMAX=40;
 const LVX=n=>n<=0?0:Math.round(40000*Math.pow(n/LVMAX,1.5));      // レベル n に必要な累計XP
 const lvOf=xp=>{let l=1;while(l<LVMAX&&xp>=LVX(l))l++;return l};
-const RANKS=[[1,'ルーキー'],[5,'わかば'],[10,'つぼみ'],[15,'ほころび'],[20,'五分咲き'],[25,'満開'],[30,'花吹雪'],[35,'サクラ名人'],[40,'サクラマスター']];
+const RANKS=[[1,'ルーキー'],[5,'わかば'],[10,'つぼみ'],[15,'ほころび'],[20,'五分咲き'],[25,'満開'],[30,'花吹雪'],[35,'サクラ名人'],[40,'まなびマスター']];
 const rankOf=l=>{let r=RANKS[0][1];RANKS.forEach(x=>{if(l>=x[0])r=x[1]});return r};
 const lvInfo=xp=>{const lv=lvOf(xp),lo=LVX(lv-1),hi=lv>=LVMAX?null:LVX(lv);return{lv,name:rankOf(lv),lo,hi,pct:hi?(xp-lo)/(hi-lo):1}};
 function addXP(n){
@@ -17,17 +17,17 @@ const canLight=date=>!!(S.pinOn&&S.pin)||lightUsed(date)<2;
 
 /* ----- 連続記録 ----- */
 const stageKeys=rec=>Object.keys(rec.stg||{});
-/* 合格ラインの日：ならし期は「ドリルを1つ」、ふつう以上は「ドリル1つ＋もう1つ」。
+/* クリアラインの日：ならし期は「ドリルを1つ」、ふつう以上は「ドリル1つ＋もう1つ」。
    数えるのは「正答4割以上のドリル」と、保護者OK（暗証番号）をオンにしているときの「宿題」だけ。
    てきとうに押したドリルや、自己採点のふりかえりでは、連続記録をのばせない */
 const goodOf=rec=>{
  const pin=!!(S.pinOn&&S.pin),k=stageKeys(rec).filter(x=>x!=='diag');
  return{sess:k.filter(x=>{if(x==='hw'||x==='ref')return false;const g=rec.stg[x];return !g.n||g.ok/g.n>=.4}).length,hw:pin&&k.includes('hw')?1:0};
 };
-/* 正答4割に届かなかったドリル（goodOf の反対）。やりなおして4割以上とれたら、合格ラインに数える */
+/* 正答4割に届かなかったドリル（goodOf の反対）。やりなおして4割以上とれたら、クリアラインに数える */
 const lowRes=g=>!!(g&&g.n&&g.ok/g.n<.4);
 const dayOK=(rec,tier)=>{const g=goodOf(rec);return tier===1?g.sess>=1:(g.sess>=1&&g.sess+g.hw>=2)};
-/* 合格ラインまで、あと何つか */
+/* クリアラインまで、あと何つか */
 const dayNeed=(rec,tier)=>{const g=goodOf(rec);return tier===1?Math.max(0,1-g.sess):Math.max(g.sess>=1?0:1,2-g.sess-g.hw)};
 const curStreak=()=>{const t=today();if(S.last===t||S.last===addDays(t,-1))return S.streak;if(S.last===addDays(t,-2)&&S.freeze>0)return S.streak;return 0};
 const STREAK_BONUS={3:30,7:70,14:150,30:300,60:500,100:1000};
@@ -77,7 +77,7 @@ function completeStage(date,id,r){
  const rt=S.rt&&S.rt.d===date?S.rt.stg:[];
  if(!d.full&&good&&rt.length&&rt.every(p=>d.stg[p.id]||(p.kind==='session'&&!p.ids.length))){d.full=1;out.full=true;out.fullBonus=20;const l2=addXP(20);out.lv=out.lv||l2}
  out.coin=out.xp+out.fullBonus;
- snapPath(date);   // 週ごとの「合格への道のり」の記録
+ snapPath(date);   // 週ごとの「6年生のまとめへの道のり」の記録
  return out;
 }
 /* 自由練習のXP（1日60まで）。ルート外の練習をたくさんしても、やりすぎにならないように */
@@ -106,22 +106,22 @@ const BADGES=[
  ['s30','30日連続','1か月続けた',()=>S.best>=30],['s100','100日連続','100日続けた',()=>S.best>=100],
  ['q100','100問','合計100問に答えた',()=>S.tot.n>=100],['q1000','1,000問','合計1,000問に答えた',()=>S.tot.n>=1000],
  ['q5000','5,000問','合計5,000問に答えた',()=>S.tot.n>=5000],['q20000','20,000問','合計20,000問に答えた',()=>S.tot.n>=20000],
- ['w100','英単語100語','英単語を100語おぼえた',()=>masteredBy('EW')>=100],['w300','英単語300語','英単語を300語おぼえた',()=>masteredBy('EW')>=300],['w450','英単語450語','英単語を450語おぼえた',()=>masteredBy('EW')>=450],
+ ['w100','英単語100語','英単語を100語おぼえた',()=>masteredBy('EW')>=100],['w300','英単語200語','英単語を200語おぼえた',()=>masteredBy('EW')>=200],['w450','英単語300語','英単語を300語おぼえた',()=>masteredBy('EW')>=300],
  ['k80','漢字80語','漢字の読みを80語おぼえた',()=>masteredBy('JK')>=80],
  ['all500','500問マスター','500問をおぼえた（箱4以上）',()=>masteredCount()>=500],['all1500','1500問マスター','1500問をおぼえた（箱4以上）',()=>masteredCount()>=1500],
  ['diag','現在地を知った','ミニ診断を5教科おわらせた',()=>SJL.every(s=>S.diag[s]&&S.diag[s].done)],
- ['nai','内申の作戦','内申の目標を決めた',()=>!!S.nai.set],
+ ['nai','テストの記録','学校のテストの点を記録した',()=>S.tl.length>0],
  ['mist10','ミス退治 10体','ミスを10体たおした',()=>mistakeStats().dead>=10],['mist50','ミス退治 50体','ミスを50体たおした',()=>mistakeStats().dead>=50],
  ['boss3','週ボス3勝','週ボスを3回クリア',()=>wkWins()>=3],['boss10','週ボス10勝','週ボスを10回クリア',()=>wkWins()>=10],
  ['full7','全クリ7日','全ステージクリアを7日',()=>Object.values(S.days).filter(d=>d.full).length>=7],
  ['h50','50時間','学習が合計50時間',()=>hours()>=50],['h100','100時間','学習が合計100時間',()=>hours()>=100],
  ['h300','300時間','学習が合計300時間',()=>hours()>=300],['h500','500時間','学習が合計500時間',()=>hours()>=500],
  ['m1','最初の宝箱','月のマイルストーンを初クリア',()=>Object.keys(S.mc).length>=1],
- ['p1','第1章クリア','土台づくりを完了',()=>phDone(1)],['p2','第2章クリア','内申と基礎の完成',()=>phDone(2)],
- ['p3','第3章クリア','実戦力を完了',()=>phDone(3)],['p4','最終章クリア','ゴールに到達',()=>phDone(4)],
- ['eiken','英検に挑戦','英検の目標をクリア',()=>!!(S.ms[gid('2027-06',0)]||S.ms[gid('2027-10',1)])],
+ ['p1','第1章クリア','土台づくりを完了',()=>phDone(1)],['p2','第2章クリア','6年生のスタートを完了',()=>phDone(2)],
+ ['p3','第3章クリア','ぐんぐんのびるを完了',()=>phDone(3)],['p4','最終章クリア','ゴールに到達',()=>phDone(4)],
+ ['eiken','月の目標 9回','月のマイルストーンを9回クリア',()=>Object.keys(S.mc).length>=9],
  ['lv10','Lv.10','レベル10に到達',()=>lvOf(S.xp)>=10],['lv20','Lv.20','レベル20に到達',()=>lvOf(S.xp)>=20],
- ['lv30','Lv.30','レベル30に到達',()=>lvOf(S.xp)>=30],['lv40','Lv.40 サクラマスター','最高レベルに到達',()=>lvOf(S.xp)>=40]
+ ['lv30','Lv.30','レベル30に到達',()=>lvOf(S.xp)>=30],['lv40','Lv.40 まなびマスター','最高レベルに到達',()=>lvOf(S.xp)>=40]
 ];
 /* 新しく取れたバッジの名前を返す */
 function checkBadges(){
@@ -130,7 +130,7 @@ function checkBadges(){
 
 /* ----- 月のマイルストーン ----- */
 /* 記録から自動で決まる目標（自己申告にしない）。キー：月|番号 */
-/* ペース：直近4週間に、合格ラインをこえた日の割合（週5日を1とする。いちばん下は .5。はじめの2週間は1）。
+/* ペース：直近4週間に、クリアラインをこえた日の割合（週5日を1とする。いちばん下は .5。はじめの2週間は1）。
    数のある自動の目標は、この子のペースでそろえる（週3日の子が、どの月も達成0にならないように）。週5日の子は、そのままの数 */
 function paceF(date=today()){
  if(!S.start)return 1;
@@ -210,5 +210,5 @@ function reportText(){
  const mon=monday(today()),days=[...Array(7)].map((_,i)=>addDays(mon,i));let ok=0,full=0,n=0,c=0;const min={};
  days.forEach(d=>{const r=S.days[d];if(r){ok+=r.ok?1:0;full+=r.full?1:0;n+=r.n||0;c+=r.c||0;for(const k in r.min)min[k]=(min[k]||0)+r.min[k]}});
  const tot=sum(Object.values(min)),w=S.wk[mon],m=ROADMAP.find(x=>x.k===curMonth()),st=mStat(m),L=lvInfo(S.xp),ms=mistakeStats();
- return `【さくらクエスト 週報】${S.nick||'（呼び名なし）'}\n期間：${mon}〜${days[6]}\n合格ラインの日：${ok}/7日（全ステージクリア：${full}日）　いまの段階：${TIERS[S.rt&&S.rt.tier||1].name}\n連続記録：${curStreak()}日\n答えた問題：${n}問（正解 ${c}問・${n?Math.round(c/n*100):0}%）\n学習時間：${tot}分（${Object.keys(min).map(k=>SJN[k]+min[k]+'分').join('、')||'記録なし'}）\n週ボス：${w?w.sc+'/10問':'まだ'}\nミス：登録${ms.all}体／たおした${ms.dead}体／のこり${ms.open}体\nおぼえた問題（箱4以上）：${masteredCount()}問\n${pathReportLine()}\n今月のマイルストーン：${st.d}/${st.n}\nレベル：Lv.${L.lv}「${L.name}」（${S.xp}XP）\nひとこと：`;
+ return `【まなびクエスト 週報】${S.nick||'（呼び名なし）'}\n期間：${mon}〜${days[6]}\nクリアラインの日：${ok}/7日（全ステージクリア：${full}日）　いまの段階：${TIERS[S.rt&&S.rt.tier||1].name}\n連続記録：${curStreak()}日\n答えた問題：${n}問（正解 ${c}問・${n?Math.round(c/n*100):0}%）\n学習時間：${tot}分（${Object.keys(min).map(k=>SJN[k]+min[k]+'分').join('、')||'記録なし'}）\n週ボス：${w?w.sc+'/10問':'まだ'}\nミス：登録${ms.all}体／たおした${ms.dead}体／のこり${ms.open}体\nおぼえた問題（箱4以上）：${masteredCount()}問\n${pathReportLine()}\n今月のマイルストーン：${st.d}/${st.n}\nレベル：Lv.${L.lv}「${L.name}」（${S.xp}XP）\nひとこと：`;
 }

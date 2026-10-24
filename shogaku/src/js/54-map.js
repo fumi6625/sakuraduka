@@ -20,7 +20,7 @@ function turfHTML(){
    cells+=`<span class="tl ${c}" aria-hidden="true"></span>`;
   }
   return `<div class="mr"><span class="ml">${String(y).slice(2)}/${pad(m)}</span><div class="ms">${cells}</div></div>`}).join('')}</div>
-  <div class="lg" style="margin-top:12px"><span><i style="background:var(--team);box-shadow:0 0 6px var(--team)"></i>ぜんぶクリア</span><span><i style="background:rgba(var(--team-rgb),.78)"></i>合格ライン</span><span><i style="background:rgba(var(--team-rgb),.38)"></i>ちょっとやった</span><span><i style="background:var(--tl-mis-bg)"></i>おやすみ</span><span><i style="background:var(--yellow)"></i>入試</span></div>`;
+  <div class="lg" style="margin-top:12px"><span><i style="background:var(--team);box-shadow:0 0 6px var(--team)"></i>ぜんぶクリア</span><span><i style="background:rgba(var(--team-rgb),.78)"></i>クリアライン</span><span><i style="background:rgba(var(--team-rgb),.38)"></i>ちょっとやった</span><span><i style="background:var(--tl-mis-bg)"></i>おやすみ</span><span><i style="background:var(--yellow)"></i>入試</span></div>`;
 }
 function renderMap(){
  const T=totals(),t=today(),base=S.start&&S.start>START_DAY?S.start:START_DAY,el=Math.max(1,diff(base,t)+1),total=diff(START_DAY,S.exam)+1;
@@ -28,7 +28,7 @@ function renderMap(){
  if(!mapInit){openM.add(curMonth());mapInit=true}
  $('#v-map').innerHTML=pathCard()+`<div class="card"><span class="lb">ナワバリマップ</span>
   <h2 style="margin-top:10px">500日を、ぜんぶ ぬりつぶせ！</h2>
-  <p class="mini">1マス＝1日。合格ライン（2ステージ以上）をこえた日が、あなたの色にぬられていく。入試の日（黄色）まで、${Math.max(0,diff(t,S.exam))}日。</p>
+  <p class="mini">1マス＝1日。クリアライン（2ステージ以上）をこえた日が、あなたの色にぬられていく。6年生のまとめの日（黄色）まで、${Math.max(0,diff(t,S.exam))}日。</p>
   <div class="res"><div><b>${T.ok}<small>/${total}日</small></b><span>ぬった日</span></div><div><b>${rate}<small>%</small></b><span>ぬった率</span></div><div><b>${T.full}<small>日</small></b><span>ぜんぶクリア</span></div><div><b>${S.streak}<small>日</small></b><span>れんぞく（最高${S.best}）</span></div></div>
   <div class="res"><div><b>${T.n}<small>問</small></b><span>答えた問題</span></div><div><b>${T.n?Math.round(T.acc*100):0}<small>%</small></b><span>せいかい率</span></div><div><b>${T.mastered}<small>問</small></b><span>おぼえた問題</span></div><div><b>${T.hours.toFixed(1)}<small>時間</small></b><span>勉強した時間</span></div></div>
   ${turfHTML()}</div>
