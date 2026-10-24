@@ -58,6 +58,8 @@ function nextQ(){
  if(PL.roundFlag){PL.roundFlag=false;roundBanner()}
  if(PL.V.audio)setTimeout(()=>{if(PL&&PL.cur===e&&PL.phase==='q')Tts.say(PL.V.audio)},250);
 }
+/* 難易度のめやす（「中1・2学期レベル」）。桜塚の標準をこえるものは「チャレンジ」 */
+function lvChips(it){const L=levelOf(it);return L.text?`<span class="chp lv">${esc(L.text)}</span>${L.ch?'<span class="chp w">チャレンジ</span>':''}`:''}
 function choiceCols(V){const m=Math.max(...V.choices.map(c=>String(c.t).length));return m<=14?'c2':'c1'}
 function renderQ(){
  plRoot().classList.remove('fbon');
@@ -99,7 +101,7 @@ function renderQ(){
  const pass=V.passage?`<details class="pass" open><summary>${ico('book')}長文を読む：${esc(V.passage.title)}</summary><div class="ptx">${esc(V.passage.text)}</div></details>`:'';
  const aud=V.audio?`<button class="bt sm cy sayb" data-act="plSay" aria-label="もう一度きく">${ico('vol')}もう一度きく</button>`:'';
  plRoot().innerHTML=`${topBar()}<div class="plb"><div class="qa ${V.kind}${useKb?' kbd':''}">
-  <div class="qcard" data-s="${it.subj}"><div class="qsp">${splatSVG(hashStr(it.id)%97,'#fff',{drops:5})}</div><div class="qm"><span class="cat">${esc(itemCat(it))}</span>${e.rep?'<span class="chp w">リトライ</span>':''}${isNew?'<span class="chp t">新しい問題</span>':''}</div>
+  <div class="qcard" data-s="${it.subj}"><div class="qsp">${splatSVG(hashStr(it.id)%97,'#fff',{drops:5})}</div><div class="qm"><span class="cat">${esc(itemCat(it))}</span>${lvChips(it)}${e.rep?'<span class="chp w">リトライ</span>':''}${isNew?'<span class="chp t">新しい問題</span>':''}</div>
   <div class="qbody">${V.sub&&V.sub!==itemCat(it)?`<div class="qs">${esc(V.sub)}</div>`:''}${pass}<div class="qt${long}">${esc(V.q)}</div>${aud}</div></div>
   <div class="ans">${ans}</div></div></div><div class="fb" id="fb"></div><div class="cmb" id="cmb" hidden></div>`;
  if(V.kind==='order')drawOrder();

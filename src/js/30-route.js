@@ -310,6 +310,20 @@ function capDay(out,tier){
  }
  return out;
 }
+/* 毎日、理科か社会の問題を、最低1問は出す（国・数・英にかたよらないように）。ほかの教材でぜんぜん出ない日は、暗記バトルに1問足す。
+   理科と社会は、日がわりで交互に。足す問題は、復習の期限がきたもの → あたらしい問題 → 見たことのある問題 の順 */
+function ensureRS(out,date,cur,ex){
+ if(out.some(s=>s.items.some(it=>it.subj==='理'||it.subj==='社')))return;
+ const mem=out.find(s=>s.id==='mem');if(!mem)return;
+ let it=null;
+ for(const b of dn(date)%2?['SQ','OQ']:['OQ','SQ']){
+  it=dueItems(x=>x.bank===b&&!ex.has(x.id),1)[0]||newItems(b,1,{prefs:b==='SQ'?cur.sc:cur.so,ex})[0]||shuffle(seenItems(x=>x.bank===b&&!ex.has(x.id)),mulberry(seedOf(date+b)))[0];
+  if(it)break;
+ }
+ if(!it)return;
+ mem.items.splice(Math.min(2,mem.items.length),0,it);ex.add(it.id);
+ mem.min=estMin(mem.items);mem.brk=breakdown(mem.items);mem.desc=jn([mem.desc,(it.bank==='SQ'?'理科':'社会')+'1問']);
+}
 /* その日のルートを新しく組み立てる（保存はしない）。順番：暗記（かんたんな勝ち）→ 数学 → 今日の教科 → ミス退治 → 宿題チェック → ふりかえり */
 function buildRoute(date,tier){
  const wd=dt(date).getDay(),cur=curOf(date),ex=new Set(),out=[];
@@ -322,6 +336,7 @@ function buildRoute(date,tier){
  if(dg)out.push({id:'diag',t:'ミニ診断：'+SJN[dg],kind:'check',subj:dg,min:3,items:[],desc:'いまの実力を知る。6問・約3分。点数が低くても大丈夫。（+10XP）'});
  out.push({id:'hw',t:'宿題・提出物',kind:'check',subj:'総',min:0,items:[],desc:'学校の宿題と提出物をおわらせる。内申に直結します。'+(S.pinOn&&S.pin?'おうちの人のOKが必要です。':'')});
  out.push({id:'ref',t:'ふりかえり',kind:'reflect',subj:'総',min:2,items:[],desc:'今日の自分に点数をつけて、データと くらべてみよう。'});
+ ensureRS(out,date,cur,ex);
  return capDay(out,tier);
 }
 /* 保存形式 ↔ 実体 */

@@ -1204,6 +1204,12 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
    <li><b>入っていないもの：</b>応用問題・過去問・作文・内申点。本当の実力は、学校のテストや模試の点で確かめてください。</li>
    <li><b>テスト・模試の記録：</b>「診断・内申シミュレーター」に、返ってきた点を記録できます（暗証番号をオンにしていると、おうちの人のOKが要ります）。合格圏のめやす（約640点）までの距離が出ます。</li></ul>
   <p class="mini">どの数字も推定のめやすで、<b>合格をほしょうするものではありません</b>。公式の合格ラインでもありません。</p></div>
+ <div class="card"><span class="eyebrow px">LEVEL</span><h2>問題の「難易度」の見かた（めやす）</h2>
+  <ul>
+   <li><b>「中1・2学期レベル」：</b>出題画面の上に出ます。教科書の標準的な単元の順番からの<b>目安</b>で、学校によって1学期ぶんほどずれます。公式のものではありません。学期がわからない教材は、学年だけ（中2レベル）か、「基本」「標準」「入試B問題」で出します。</li>
+   <li><b>「チャレンジ」：</b>桜塚（大阪府B問題）の標準をこえる、または中学の範囲をこえる問題につきます。英検準2級の単語・漢字の「発展」・計算のLv.3・数学の証明や補助線の考え方です。できなくても気にしない、背のびの問題です。</li>
+   <li><b>いまの教材の位置づけ：</b>基礎〜標準（A問題〜B問題の土台）が中心です。入試そのままの形（資料の読み取り・記述・大問の応用）はふくまないので、2027年の夏ごろから、過去問を重ねてください。</li>
+   <li><b>毎日の教科：</b>国語・数学・英語にかたよらないよう、毎日かならず、理科か社会を1問以上出します。</li></ul></div>
  <div class="grid">
   <div class="card"><h2>週1回、日曜の10分</h2><ol><li>週報（下のボタンでコピー）を見る</li><li>ほめるポイントを<b>2つ</b>、行動で伝える（例：「毎日続けたね」「ミスを直したね」）</li><li>質問を<b>1つ</b>だけ（「いま、いちばん困っていることは？」）</li><li>来週のごほうびの約束を確認</li></ol>
    <button class="bt pri sm" data-act="report">週報をコピー</button><textarea id="rpt" readonly style="margin-top:8px" placeholder="ここに週報が出ます" aria-label="週報"></textarea></div>
@@ -1344,7 +1350,7 @@ const ROADMAP=[
 
 /* 合格への近づき具合の「予定」：週5日（月〜金）・正答率85%で続けた子の、実力の見こみ(K)の進み（月末と入試の日の値）。
    scripts/plan-curve.mjs で作る。教材やルートを変えたら作りなおす（tests/path.test.mjs が、古くなっていないかを確かめる） */
-const PLAN_PATH={"d":["2026-10-18","2026-10-31","2026-11-30","2026-12-31","2027-01-31","2027-02-28","2027-03-31","2027-04-30","2027-05-31","2027-06-30","2027-07-31","2027-08-31","2027-09-30","2027-10-31","2027-11-30","2027-12-31","2028-01-31","2028-02-29","2028-03-01"],"K":{英:[0,10,51,101,146,187,221,255,293,319,348,383,419,453,493,530,565,595,596],国:[0,7,27,62,105,131,161,182,206,241,263,283,307,335,358,390,414,450,451],数:[0,16,63,97,130,168,219,225,245,277,288,306,341,358,365,373,385,385,381],理:[0,0,9,28,51,74,101,123,143,170,195,213,237,257,275,306,339,362,365],社:[0,0,12,33,53,72,100,123,139,157,176,193,216,234,253,288,317,349,350]}};
+const PLAN_PATH={"d":["2026-10-18","2026-10-31","2026-11-30","2026-12-31","2027-01-31","2027-02-28","2027-03-31","2027-04-30","2027-05-31","2027-06-30","2027-07-31","2027-08-31","2027-09-30","2027-10-31","2027-11-30","2027-12-31","2028-01-31","2028-02-29","2028-03-01"],"K":{英:[0,9,50,93,141,188,216,254,276,311,339,379,412,445,489,527,561,592,593],国:[0,8,28,65,100,133,154,174,197,221,245,274,295,329,355,386,413,444,445],数:[0,12,44,93,127,162,210,229,253,277,294,305,342,350,354,362,374,380,380],理:[0,1,11,29,47,69,94,118,145,167,189,210,237,255,277,304,331,356,361],社:[0,2,14,33,55,74,99,126,148,160,177,199,214,235,254,285,322,350,350]}};
 const SJ=[
  {id:'数',c:'#27358a',goal:'大阪府B問題で7割（63点）以上。安全圏は8割。',
   rhythm:['毎日：計算5問（5分）','月・水・金：教科書の例題→類題→章末（各20〜30分）','土：ミス図鑑の再戦と、弱点の単元','日：週ボス（数学2問）'],
@@ -9076,6 +9082,20 @@ function capDay(out,tier){
  }
  return out;
 }
+/* 毎日、理科か社会の問題を、最低1問は出す（国・数・英にかたよらないように）。ほかの教材でぜんぜん出ない日は、暗記バトルに1問足す。
+   理科と社会は、日がわりで交互に。足す問題は、復習の期限がきたもの → あたらしい問題 → 見たことのある問題 の順 */
+function ensureRS(out,date,cur,ex){
+ if(out.some(s=>s.items.some(it=>it.subj==='理'||it.subj==='社')))return;
+ const mem=out.find(s=>s.id==='mem');if(!mem)return;
+ let it=null;
+ for(const b of dn(date)%2?['SQ','OQ']:['OQ','SQ']){
+  it=dueItems(x=>x.bank===b&&!ex.has(x.id),1)[0]||newItems(b,1,{prefs:b==='SQ'?cur.sc:cur.so,ex})[0]||shuffle(seenItems(x=>x.bank===b&&!ex.has(x.id)),mulberry(seedOf(date+b)))[0];
+  if(it)break;
+ }
+ if(!it)return;
+ mem.items.splice(Math.min(2,mem.items.length),0,it);ex.add(it.id);
+ mem.min=estMin(mem.items);mem.brk=breakdown(mem.items);mem.desc=jn([mem.desc,(it.bank==='SQ'?'理科':'社会')+'1問']);
+}
 /* その日のルートを新しく組み立てる（保存はしない）。順番：暗記（かんたんな勝ち）→ 数学 → 今日の教科 → ミス退治 → 宿題チェック → ふりかえり */
 function buildRoute(date,tier){
  const wd=dt(date).getDay(),cur=curOf(date),ex=new Set(),out=[];
@@ -9088,6 +9108,7 @@ function buildRoute(date,tier){
  if(dg)out.push({id:'diag',t:'ミニ診断：'+SJN[dg],kind:'check',subj:dg,min:3,items:[],desc:'いまの実力を知る。6問・約3分。点数が低くても大丈夫。（+10XP）'});
  out.push({id:'hw',t:'宿題・提出物',kind:'check',subj:'総',min:0,items:[],desc:'学校の宿題と提出物をおわらせる。内申に直結します。'+(S.pinOn&&S.pin?'おうちの人のOKが必要です。':'')});
  out.push({id:'ref',t:'ふりかえり',kind:'reflect',subj:'総',min:2,items:[],desc:'今日の自分に点数をつけて、データと くらべてみよう。'});
+ ensureRS(out,date,cur,ex);
  return capDay(out,tier);
 }
 /* 保存形式 ↔ 実体 */
@@ -9478,6 +9499,47 @@ function flowState(date=today()){
   hwWait:!!(hw&&!hw.done&&PINON()),tier,
   steps:left+(redo?1:0)};   // 道にのこっている数
 }
+/* ===== 出題の難易度の「めやす」（画面に触れない部分） =====
+   問題ごとに「中1・2学期レベル」のように出す。学年・学期は、ふつうの教科書の単元の順にあわせたもの（学校によって、1学期ぶんほどずれる）。
+   学期のわからない教材は、学年だけ（中2レベル）か、「基本」「標準」「入試B問題」で出す。
+   チャレンジ＝桜塚（大阪府B問題）の標準をこえる・中学の範囲をこえる問題：英検準2級の単語／漢字の発展／計算のLv.3／数学の証明・補助線。
+   学年・学期のわり当ては、教科書の標準的な順番からのおおまかな目安で、公式のものではない */
+const lvText=(g,t)=>'中'+g+(t?'・'+t+'学期':'')+'レベル';
+/* 数学（きほん・計算）：単元 → [学年,学期] */
+const LV_MATH={'正負の数・文字式':[1,1],'方程式':[1,2],'比例・反比例':[1,2],'平面図形':[1,3],'空間図形':[1,3],'データの活用':[1,3],'式の計算':[2,1],'連立方程式':[2,1],'一次関数':[2,2],'平行と合同':[2,2],'三角形・四角形':[2,3],'確率':[2,3],'式の展開・因数分解':[3,1],'平方根':[3,1],'二次方程式':[3,2],'関数 y=ax²':[3,2],'相似':[3,2],'円':[3,3],'三平方の定理':[3,3],'標本調査':[3,3]};
+const LV_GEN={pn_add:[1,1],pn_mul:[1,1],lit_calc:[1,1],lit_value:[1,1],lin_eq:[1,2],lin_frac:[1,2],lin_word:[1,2],prop:[1,2],area_vol:[1,3],stat:[1,3],sim_add:[2,1],sim_sub:[2,1],sim_word:[2,1],eq_trans:[2,1],lf_form:[2,2],lf_rate:[2,2],lf_cross:[2,2],geo_tri:[2,2],geo_poly:[2,2],prob:[2,3],expand:[3,1],factor:[3,1],sqrt:[3,1],quad_eq:[3,2],quad_fn:[3,2],similar:[3,2],circle_ang:[3,3],pythag:[3,3],
+ dens:[1,2],conc:[1,2],press:[1,3],hooke:[1,3],chem_ratio:[2,1],ohm:[2,2],power:[2,2],speed:[3,1],work:[3,2],buoy:[3,2]};
+const LV_EG={'be・一般動詞':[1,1],'疑問・否定':[1,1],'代名詞':[1,1],'過去':[1,2],'進行形':[1,2],'疑問詞':[1,2],'未来':[1,3],'There is':[1,3],'前置詞':[1,3],'助動詞':[2,1],'不定詞':[2,1],'動名詞':[2,2],'比較':[2,2],'受け身':[2,3],'接続詞':[2,3],'現在完了':[3,1],'関係代名詞':[3,2],'その他':[3,3]};
+const LV_JG={'品詞':1,'文の成分':1,'接続詞・副詞':1,'熟語の構成':1,'ことばの単位':1,'歴史的仮名遣い':1,'活用':2,'助詞・助動詞':2,'敬語':2,'古語の意味':2,'古文のきまり':2,'古典の作品':2,'和歌・俳句':2,'漢文':2,'表現技法':2,'文学作品':3};
+const LV_SQ={'物理/光と音':[1,2],'物理/力':[1,3],'物理/電流':[2,2],'物理/運動':[3,1],'化学/物質':[1,2],'化学/化学変化':[2,1],'化学/イオン':[3,1],'生物/植物':[1,1],'生物/動物':[2,2],'生物/細胞':[2,2],'生物/遺伝':[3,2],'生物/自然界':[3,3],'地学/大地':[1,3],'地学/天気':[2,3],'地学/天体':[3,3]};
+const LV_OQ={'歴史/古代':[1,2],'歴史/中世':[1,3],'歴史/近世':[2,1],'歴史/近代':[2,3],'歴史/現代':[3,1],'地理/世界':[1,1],'地理/日本':[2,1],'公民/政治':[3,2],'公民/経済':[3,2],'公民/国際':[3,3],'公民/政治/憲法':[3,1],'公民/政治/人権':[3,1]};
+const LV_OT={'古代':[1,2],'中世':[1,3],'近世':[2,1],'近代':[2,3],'現代':[3,1],'世界史':[3,0]};
+const LV_MS={'証明の型':1,'図形の補助線':1};   // 数学の考え方：入試の後半に出る型は、チャレンジ
+/* 戻り値：{text:'中1・2学期レベル', ch:チャレンジなら1}。ミスの登録など、決められないものは text:'' */
+function levelOf(it){
+ if(it._lv)return it._lv;
+ const gt=(a,ch)=>({text:a?lvText(a[0],a[1]):'',ch:ch?1:0}),T=it.tag||'',p=T.split('/'),two=p.slice(0,2).join('/');
+ let r={text:'',ch:0};
+ if(it.k==='gen'){const a=LV_GEN[it.gid];r=gt(a,it.lv>=3)}
+ else switch(it.bank){
+  case 'EW':r=+it.grp===4?{text:'英検準2級レベル',ch:1}:{text:lvText(+it.grp,0),ch:0};break;
+  case 'EV':r={text:'中1〜中3レベル',ch:0};break;
+  case 'EG':r=gt(LV_EG[T]);break;
+  case 'EO':case 'EC':r={text:/^中[123]$/.test(T)?lvText(T[1],0):'標準レベル',ch:0};break;
+  case 'EL':r={text:'標準レベル',ch:0};break;
+  case 'ER':r={text:'入試B問題レベル',ch:0};break;
+  case 'JK':r={text:T==='発展'?'発展レベル':T==='基本'?'基本レベル':'標準レベル',ch:T==='発展'?1:0};break;
+  case 'JW':case 'JI':case 'JS':case 'JC':r={text:'標準レベル',ch:0};break;
+  case 'JG':r={text:LV_JG[T]?lvText(LV_JG[T],0):'標準レベル',ch:0};break;
+  case 'JR':r={text:+String(it.pid||'').slice(1)>=41?'入試B問題レベル':'標準レベル',ch:0};break;
+  case 'MQ':r=gt(LV_MATH[T]);break;
+  case 'MS':r={text:LV_MS[T]?'応用レベル':'標準レベル',ch:LV_MS[T]?1:0};break;
+  case 'SQ':r=gt(LV_SQ[two]);break;
+  case 'OQ':r=gt(LV_OQ[p.slice(0,3).join('/')]||LV_OQ[two]);break;
+  case 'OT':r=gt(LV_OT[T]);break;
+ }
+ return it._lv=r;
+}
 /* ===== 画面の共通部品：アイコン・インクの飛沫・音・読み上げ・演出 ===== */
 /* 色を白とまぜてやわらかくする（先生ごとのこい色を、明るいテーマの画面にあわせて使う） */
 const soft=(hex,k=.55)=>{const n=parseInt(String(hex).replace('#',''),16);if(isNaN(n))return hex;const m=c=>Math.round(c+(255-c)*k);return 'rgb('+m(n>>16&255)+','+m(n>>8&255)+','+m(n&255)+')'};
@@ -9823,6 +9885,8 @@ function nextQ(){
  if(PL.roundFlag){PL.roundFlag=false;roundBanner()}
  if(PL.V.audio)setTimeout(()=>{if(PL&&PL.cur===e&&PL.phase==='q')Tts.say(PL.V.audio)},250);
 }
+/* 難易度のめやす（「中1・2学期レベル」）。桜塚の標準をこえるものは「チャレンジ」 */
+function lvChips(it){const L=levelOf(it);return L.text?`<span class="chp lv">${esc(L.text)}</span>${L.ch?'<span class="chp w">チャレンジ</span>':''}`:''}
 function choiceCols(V){const m=Math.max(...V.choices.map(c=>String(c.t).length));return m<=14?'c2':'c1'}
 function renderQ(){
  plRoot().classList.remove('fbon');
@@ -9864,7 +9928,7 @@ function renderQ(){
  const pass=V.passage?`<details class="pass" open><summary>${ico('book')}長文を読む：${esc(V.passage.title)}</summary><div class="ptx">${esc(V.passage.text)}</div></details>`:'';
  const aud=V.audio?`<button class="bt sm cy sayb" data-act="plSay" aria-label="もう一度きく">${ico('vol')}もう一度きく</button>`:'';
  plRoot().innerHTML=`${topBar()}<div class="plb"><div class="qa ${V.kind}${useKb?' kbd':''}">
-  <div class="qcard" data-s="${it.subj}"><div class="qsp">${splatSVG(hashStr(it.id)%97,'#fff',{drops:5})}</div><div class="qm"><span class="cat">${esc(itemCat(it))}</span>${e.rep?'<span class="chp w">リトライ</span>':''}${isNew?'<span class="chp t">新しい問題</span>':''}</div>
+  <div class="qcard" data-s="${it.subj}"><div class="qsp">${splatSVG(hashStr(it.id)%97,'#fff',{drops:5})}</div><div class="qm"><span class="cat">${esc(itemCat(it))}</span>${lvChips(it)}${e.rep?'<span class="chp w">リトライ</span>':''}${isNew?'<span class="chp t">新しい問題</span>':''}</div>
   <div class="qbody">${V.sub&&V.sub!==itemCat(it)?`<div class="qs">${esc(V.sub)}</div>`:''}${pass}<div class="qt${long}">${esc(V.q)}</div>${aud}</div></div>
   <div class="ans">${ans}</div></div></div><div class="fb" id="fb"></div><div class="cmb" id="cmb" hidden></div>`;
  if(V.kind==='order')drawOrder();
