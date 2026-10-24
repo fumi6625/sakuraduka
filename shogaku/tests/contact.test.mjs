@@ -38,7 +38,7 @@ test('マスト：自動で空のステージは入れない。保護者OKがオ
   assert.ok(!on.includes('hw') && on.includes('ref') && on.includes('mem'), '保護者OK：宿題はおうちの人のOKがいるので、マストに入れない');
 });
 
-test('一本道：順番どおりに「つぎ」が進み、ぜんぶ終わって合格ラインに届いたときだけ ready', () => {
+test('一本道：順番どおりに「つぎ」が進み、ぜんぶ終わってクリアラインに届いたときだけ ready', () => {
   const C = fresh();
   const route = C.routeFor(START), must = C.mustStages(route);
   let F = C.flowState();
@@ -53,7 +53,7 @@ test('一本道：順番どおりに「つぎ」が進み、ぜんぶ終わっ�
   }
   F = C.flowState();
   assert.equal(F.next, null);
-  assert.equal(F.ok, true, '正答8割台で全部やったので、合格ライン');
+  assert.equal(F.ok, true, '正答8割台で全部やったので、クリアライン');
   assert.equal(F.ready, true);
   assert.equal(F.steps, 0);
 });
@@ -73,7 +73,7 @@ test('ぜんぶ終わっても、正答4割に届かなかった日は押せな�
   must.forEach((s) => play(C, START, s, 0.1));   // ぜんぶ、てきとうに押した
   let F = C.flowState();
   assert.equal(F.all, true);
-  assert.equal(F.ok, false, '正答4割未満のドリルは、合格ラインに数えない');
+  assert.equal(F.ok, false, '正答4割未満のドリルは、クリアラインに数えない');
   assert.equal(F.ready, false);
   assert.ok(F.redo && F.redo.kind === 'session' && C.lowRes(F.redo.res), 'やりなおす先が出る');
   assert.equal(F.target, F.redo);
@@ -88,7 +88,7 @@ test('ぜんぶ終わっても、正答4割に届かなかった日は押せな�
   assert.equal(C.peekDay(START).stg[id].xp, Math.round(C.XPST[id] * (0.4 + 0.6 * ok / n)) + (ok === n ? 10 : 0), 'そのステージのXP＝ふつうに1回クリアしたぶん（二重にならない）');
   assert.equal(C.S.xp - before, r.xp + r.fullBonus, '入ったXPは、返ってきた数と同じ');
   F = C.flowState();
-  assert.equal(F.ok, true, '合格ラインに届いた（ならし期は、ドリル1つでOK）');
+  assert.equal(F.ok, true, 'クリアラインに届いた（ならし期は、ドリル1つでOK）');
   assert.equal(F.ready, true);
   assert.equal(C.S.streak >= 1, true, '連続記録ものびる');
   // もう一度やっても、これ以上は数えない
@@ -97,7 +97,7 @@ test('ぜんぶ終わっても、正答4割に届かなかった日は押せな�
   assert.equal(again.xp, 0);
 });
 
-test('てきとうに押し続けて、4割未満のやりなおしをくり返しても、XPも合格ラインも動かない', () => {
+test('てきとうに押し続けて、4割未満のやりなおしをくり返しても、XPもクリアラインも動かない', () => {
   const C = fresh();
   const route = C.routeFor(START);
   C.mustStages(route).forEach((s) => play(C, START, s, 0));
@@ -110,9 +110,9 @@ test('てきとうに押し続けて、4割未満のやりなおしをくり返�
   assert.equal(C.flowState().ready, false);
 });
 
-test('合格ラインに数えられるドリルが、どうやっても作れない日は、行き止まりにしない（redoが無ければ ready）', () => {
+test('クリアラインに数えられるドリルが、どうやっても作れない日は、行き止まりにしない（redoが無ければ ready）', () => {
   const C = fresh();
-  // 「ふつう」期（15日目〜）で、ドリルが1つしかない日をつくる（ふつう以上は、ドリル2つ必要なので、合格ラインには届かない）
+  // 「ふつう」期（15日目〜）で、ドリルが1つしかない日をつくる（ふつう以上は、ドリル2つ必要なので、クリアラインには届かない）
   for (let i = 0; i < 14; i++) { const d = C.addDays(START, i); C.setToday(d); C.routeFor(d).forEach((st) => play(C, d, st)); }
   const date = C.addDays(START, 14);
   C.setToday(date);
@@ -122,7 +122,7 @@ test('合格ラインに数えられるドリルが、どうやっても作れ�
   C.flowState().must.forEach((s) => play(C, date, s, 0.9));
   const F = C.flowState(date);
   assert.equal(F.all, true);
-  assert.equal(F.ok, false, 'ドリル1つだけでは、ふつう期の合格ラインに届かない');
+  assert.equal(F.ok, false, 'ドリル1つだけでは、ふつう期のクリアラインに届かない');
   assert.equal(F.redo, null, 'やりなおす先もない');
   assert.equal(F.ready, true, 'それでも、れんらくは押せる');
 });

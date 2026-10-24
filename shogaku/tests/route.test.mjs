@@ -1,4 +1,4 @@
-// 毎日のルート・段階（ならし→ふつう→しっかり）・合格ライン・ツッコミバトルの動きを確かめる。
+// 毎日のルート・段階（ならし→ふつう→しっかり）・クリアライン・ツッコミバトルの動きを確かめる。
 //   node --test tests/route.test.mjs
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -8,7 +8,7 @@ const NAMES = ['S', 'setToday', 'routeFor', 'present', 'judge', 'recordAnswer', 
   'toTF', 'drillItems', 'BK', 'ITEMS', 'GEN', 'makeGen', 'tierFor', 'baseTier', 'TIERS', 'peekDay', 'stageKeys', 'correctText', 'drillXP', 'curStreak', 'correctText'];
 const START = '2026-10-19';
 
-/** 1日ぶんを、正答率 acc で最後までやる（宿題・ふりかえりも）。やった日の合格ライン判定も返す */
+/** 1日ぶんを、正答率 acc で最後までやる（宿題・ふりかえりも）。やった日のクリアライン判定も返す */
 function doDay(C, date, acc = 0.8, only = null) {
   C.setToday(date);
   const route = C.routeFor(date);
@@ -50,7 +50,7 @@ test('おやすみが多い週のあとは、段階はそのままで、量を�
   for (let i = 1; i < mem.length; i++) assert.ok(mem[i] - mem[i - 1] <= 12, `1日で急にふえない：${mem.join(',')}`);
 });
 
-test('ならし期は、短くて、宿題とふりかえり以外は暗記と数学だけ', () => {
+test('ならし期は、短くて、宿題とふりかえり以外は暗記と算数だけ', () => {
   const C = loadCore(NAMES);
   const route = doDay(C, START, 0.8);
   const ids = route.map((s) => s.id);
@@ -88,12 +88,12 @@ test('ルートは1日のあいだ変わらない（問題に答えても、ほ�
   assert.deepEqual(a, b);
 });
 
-test('合格ライン：ならし期はドリル1つ、ふつう以上はドリル＋もう1つ', () => {
+test('クリアライン：ならし期はドリル1つ、ふつう以上はドリル＋もう1つ', () => {
   const C = loadCore(NAMES);
   C.setToday(START);
   C.routeFor();
   C.completeStage(START, 'hw', { n: 0, min: 5 });
-  assert.equal(C.dayOK(C.peekDay(START), 1), false, '宿題だけでは合格ラインにならない');
+  assert.equal(C.dayOK(C.peekDay(START), 1), false, '宿題だけではクリアラインにならない');
   C.completeStage(START, 'mem', { ok: 5, n: 6, sec: 60 });
   assert.equal(C.dayOK(C.peekDay(START), 1), true);
   assert.equal(C.peekDay(START).ok, 1, 'ならし期は mem + hw で連続記録');
@@ -141,18 +141,18 @@ test('ツッコミバトル：4択の問題から ○× を作り、判定でき
   assert.ok(right > 20 && wrong > 20, '正しい／まちがいが、まんべんなく出る');
 });
 
-test('数学の正答率が低い（75%未満）あいだは、かるめの日をなくして毎日しっかり。高いときは、いつものとおり1日おき', () => {
+test('算数の正答率が低い（75%未満）あいだは、かるめの日をなくして毎日しっかり。高いときは、いつものとおり1日おき', () => {
   const C = loadCore([...NAMES, 'mathAcc']);
   for (let i = 0; i < 60; i++) doDay(C, C.addDays(START, i), 0.85);
   const days = [60, 61, 62, 63].map((i) => C.addDays(START, i));
   const mathN = (acc) => {
-    // 直前14日の数学ドリルの成績を、正答率 acc にそろえる
+    // 直前14日の算数ドリルの成績を、正答率 acc にそろえる
     for (let j = 1; j <= 14; j++) { const d = C.S.days[C.addDays(days[0], -j)]; if (d && d.stg.math) { d.stg.math.n = 8; d.stg.math.ok = Math.round(8 * acc); } }
     return days.map((d) => { C.setToday(d); C.S.rt = null; return C.routeFor(d).find((s) => s.id === 'math').items.length; });
   };
   const good = mathN(0.9), weak = mathN(0.55);
   C.setToday(days[0]);
-  assert.ok(C.mathAcc(days[0]) < 0.75, `数学の正答率 ${C.mathAcc(days[0])}`);
+  assert.ok(C.mathAcc(days[0]) < 0.75, `算数の正答率 ${C.mathAcc(days[0])}`);
   assert.ok(Math.max(...good) - Math.min(...good) >= 3, `ふつうの子は、1日おきに多い・少ない：${good}`);
   assert.ok(Math.min(...weak) >= Math.min(...good) + 2 && Math.min(...weak) >= 10, `苦手な子は毎日しっかり：${weak}（ふつう ${good}）`);
 });

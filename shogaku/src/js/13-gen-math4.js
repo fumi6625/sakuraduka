@@ -76,7 +76,7 @@ GEN.area_rect={name:'長方形・正方形の面積',f(r,lv){
   return{q:`面積が ${a*b}cm² で、たてが ${a}cm の長方形がある。よこの長さは？`,a:[String(b)],unit:'cm',disp:b+'cm',exp:['よこ ＝ 面積 ÷ たて',`${a*b} ÷ ${a} ＝ ${b}`],v:()=>a*b/a===b&&m>0}}
  const t=ri(r,0,2);
  if(t===0){const a=ri(r,2,9),b=ri(r,2,9);
-  return{q:`たて ${a}m、よこ ${b}m の長方形の面積は何 m²？また、何 cm² ？ cm² で答えよう。（1m² ＝ 10000cm²）`,a:[String(a*b*10000)],unit:'cm²',disp:comma(a*b*10000)+'cm²',exp:[`面積 ＝ ${a} × ${b} ＝ ${a*b}m²`,`1m² ＝ 10000cm² だから ${a*b} × 10000 ＝ ${a*b*10000}`],v:()=>true}}
+  return{q:`たて ${a}m、よこ ${b}m の長方形の面積は何 cm²？（1m² ＝ 10000cm²）`,a:[String(a*b*10000)],unit:'cm²',disp:comma(a*b*10000)+'cm²',exp:[`面積 ＝ ${a} × ${b} ＝ ${a*b}m²`,`1m² ＝ 10000cm² だから ${a*b} × 10000 ＝ ${a*b*10000}`],v:()=>true}}
  if(t===1){const a=ri(r,6,15),b=ri(r,6,15),c=ri(r,2,a-3),d=ri(r,2,b-3);
   return{q:`たて ${a}cm、よこ ${b}cm の長方形から、たて ${c}cm、よこ ${d}cm の長方形を切り取った。のこりの面積は？`,a:[String(a*b-c*d)],unit:'cm²',disp:(a*b-c*d)+'cm²',exp:[`もとの面積 ${a} × ${b} ＝ ${a*b}`,`切り取った面積 ${c} × ${d} ＝ ${c*d}`,`${a*b} − ${c*d} ＝ ${a*b-c*d}`],v:()=>true}}
  const a=ri(r,3,9),b=ri(r,3,9),c=ri(r,3,9),d=ri(r,2,9),S=a*b+c*d;

@@ -1,4 +1,4 @@
-// 「合格への道のり」（実力の見こみ・予定との差・入試の日の見こみ・伸び・週報の文）を確かめる。
+// 「6年生のまとめへの道のり」（身につき具合の見こみ・予定との差・まとめの日の見こみ・伸び・週報の文）を確かめる。
 //   node --test tests/path.test.mjs
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -6,7 +6,7 @@ import { loadCore } from '../scripts/headless.mjs';
 import { planCurve } from '../scripts/plan-curve.mjs';
 
 const NAMES = ['S', 'setToday', 'routeFor', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'restoreGx', 'monday',
-  'pathNow', 'pathMsg', 'pathReportLine', 'accTrend', 'knowNow', 'PLAN_PATH', 'NAI_LINE', 'NAI_SAFE'];
+  'pathNow', 'pathMsg', 'pathReportLine', 'accTrend', 'knowNow', 'PLAN_PATH'];
 const START = '2026-10-19';
 const rng = (seed) => { let r = seed; return () => { r = (r * 1664525 + 1013904223) >>> 0; return r / 4294967296; }; };
 
@@ -42,14 +42,14 @@ test('予定のカーブ（15-plan-path.js）が、いまの教材とルート�
   assert.deepEqual(off, [], '教材やルートを変えました。node scripts/plan-curve.mjs で予定のカーブを作りなおしてください');
 });
 
-test('予定のカーブ：5教科とも、日がたつと増える（大きく減らない）。入試の日に、はじめの数倍になる', () => {
+test('予定のカーブ：5教科とも、日がたつと増える（大きく減らない）。6年生のまとめの日に、はじめの数倍になる', () => {
   const { PLAN_PATH: P } = loadCore(['PLAN_PATH']);
   for (const s of ['英', '国', '数', '理', '社']) {
     const v = P.K[s];
     assert.equal(v.length, P.d.length, s + 'の点の数');
     assert.equal(v[0], 0);
     for (let i = 1; i < v.length; i++) assert.ok(v[i] >= v[i - 1] * 0.97, `${s}：${P.d[i]} で減りすぎ ${v[i - 1]}→${v[i]}`);
-    assert.ok(v.at(-1) > 100, `${s}の入試の日 ${v.at(-1)}`);
+    assert.ok(v.at(-1) > 100, `${s}の6年生のまとめの日 ${v.at(-1)}`);
   }
 });
 
@@ -101,19 +101,19 @@ test('教科ごとの正答率が週ごとにたまり、2週間ぶんで「直�
   for (const k in C.S.kh) assert.ok(C.S.kh[k] >= 0 && C.S.kh[k] < 1.6, `${k}: ${C.S.kh[k]}`);
 });
 
-test('一言はどの状態でも責めない。週報の文は「推定・ほしょうしない」を添え、合格確率を数字で出さない', () => {
+test('一言はどの状態でも責めない。週報の文は「推定のめやす」と添え、確率を数字で出さない', () => {
   const C = loadCore(NAMES);
   for (const state of ['early', 'ahead', 'on', 'behind', 'far']) for (const off of [-300, -45, -12, 0, 12, 40]) {
     const m = C.pathMsg({ state, off });
     assert.ok(m.head && m.sub, state);
-    assert.ok(!/サボ|さぼ|だめ|ダメ|怠|遅れ|おくれ|努力不足|やる気がない|合格率|確率/.test(m.head + m.sub), `${state}/${off}: ${m.head} ${m.sub}`);
+    assert.ok(!/サボ|さぼ|だめ|ダメ|怠|遅れ|おくれ|努力不足|やる気がない|合格|確率/.test(m.head + m.sub), `${state}/${off}: ${m.head} ${m.sub}`);
   }
   run(C, 25);
-  C.S.tl.push({ d: C.addDays(START, 20), tot: 612, nn: 300, gk: 300, label: '校外の模試' });
+  C.S.tl.push({ d: C.addDays(START, 20), tot: 72, gk: 72, label: '算数のテスト' });
   const line = C.pathReportLine();
-  assert.match(line, /合格への道のり（めやす）/);
-  assert.match(line, /ほしょうするものではありません/);
-  assert.match(line, /612点/);
-  assert.match(line, new RegExp('めやす約' + C.NAI_LINE + '点'));
-  assert.ok(!/合格率|確率/.test(line), line);
+  assert.match(line, /6年生のまとめへの道のり（めやす）/);
+  assert.match(line, /推定のめやすです/);
+  assert.match(line, /72点/);
+  assert.ok(!/合格圏|安全圏|640|700/.test(line), '点数のめやすの線は出さない');
+  assert.ok(!/合格|確率/.test(line), line);
 });

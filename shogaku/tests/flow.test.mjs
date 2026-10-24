@@ -65,7 +65,7 @@ test('まちがえた問題は、たいてい次の日のうちにもう一度�
   assert.ok(next >= 0.6, `翌日に戻った割合 ${Math.round(next * 100)}%（6割は欲しい）`);
 });
 
-test('ミニ診断：3日目から1日1教科ずつ、5教科でおわり。合格ラインには数えない。しっかり期には出ない', () => {
+test('ミニ診断：3日目から1日1教科ずつ、5教科でおわり。クリアラインには数えない。しっかり期には出ない', () => {
   const C = loadCore(NAMES), rand = rng(3);
   const subj = [];
   for (let i = 0; i < 40; i++) {
@@ -85,7 +85,7 @@ test('ミニ診断：3日目から1日1教科ずつ、5教科でおわり。合�
   assert.equal(subj.length, C.SJL.length, `ミニ診断が出た回数: ${subj.length}`);
   assert.equal(new Set(subj).size, subj.length, '同じ教科が2回出ていない');
   assert.ok(C.SJL.every((s) => C.S.diag[s] && C.S.diag[s].done), '5教科ぶん、受けたことになる');
-  // 診断とふりかえりだけでは合格ラインにならない
+  // 診断とふりかえりだけではクリアラインにならない
   assert.equal(C.dayOK({ stg: { diag: {}, hw: {}, ref: {} } }, 1), false);
 });
 
@@ -113,10 +113,10 @@ test('英単語のつづり：同じ意味・同じ品詞のことばは、ど�
   }
 });
 
-test('長文：国語・英語とも40題あり、どの問いも4択で、正解が選択肢に1つだけ入る', () => {
+test('長文：国語30題・英語24題以上あり、どの問いも4択で、正解が選択肢に1つだけ入る', () => {
   const C = loadCore(NAMES);
-  assert.ok(C.PASS.J.length >= 40, `国語の長文 ${C.PASS.J.length}`);
-  assert.ok(C.PASS.E.length >= 40, `英語の長文 ${C.PASS.E.length}`);
+  assert.ok(C.PASS.J.length >= 30, `国語の長文 ${C.PASS.J.length}`);
+  assert.ok(C.PASS.E.length >= 24, `英語の長文 ${C.PASS.E.length}`);
   for (const arr of [C.PASS.J, C.PASS.E]) {
     assert.equal(new Set(arr.map((p) => p.id)).size, arr.length, '長文のIDが重ならない');
     for (const p of arr) {
@@ -124,13 +124,13 @@ test('長文：国語・英語とも40題あり、どの問いも4択で、正�
       for (const q of p.qs) assert.equal(new Set(q.slice(1, 5)).size, 4, `${p.id}: 選択肢が重なる`);
     }
   }
-  // 国語の長文：入試の長さ（800字以上）が10題以上ある
-  assert.ok(C.PASS.J.filter((p) => p.text.length >= 800).length >= 10, `800字以上の国語の長文 ${C.PASS.J.filter((p) => p.text.length >= 800).length}題`);
-  // 英語の長文：どれも100語以上で、設問の2つは英語（入試B問題の形）。英語の設問の正解が、英文の中に根拠をもつ
+  // 国語の長文：やや長い読解（800字以上）が5題以上ある
+  assert.ok(C.PASS.J.filter((p) => p.text.length >= 800).length >= 5, `800字以上の国語の長文 ${C.PASS.J.filter((p) => p.text.length >= 800).length}題`);
+  // 英語の長文：どれも40語以上で、設問の一部は英語。英語の設問の正解が、英文の中に根拠をもつ
   for (const p of C.PASS.E) {
-    assert.ok(p.text.trim().split(/\s+/).length >= 100, `${p.id} が短い：${p.text.trim().split(/\s+/).length}語`);
+    assert.ok(p.text.trim().split(/\s+/).length >= 40, `${p.id} が短い：${p.text.trim().split(/\s+/).length}語`);
     const en = p.qs.filter((q) => /^[A-Za-z]/.test(q[0]));
-    assert.ok(en.length >= 2, `${p.id} の英語の設問が${en.length}つ`);
+    assert.ok(en.length >= 1, `${p.id} の英語の設問が${en.length}つ`);
   }
 });
 
@@ -206,12 +206,12 @@ test('7日以上休んだあとは、量をもどして、少しずつ戻す', (
   assert.ok(back[7] > back[0] + 8, `すこしずつ戻る：${back.join(',')}`);
 });
 
-test('正答が4割に届かないドリルでは、合格ライン・連続記録に数えない', () => {
+test('正答が4割に届かないドリルでは、クリアライン・連続記録に数えない', () => {
   const C = loadCore(NAMES);
   assert.equal(C.dayOK({ stg: { mem: { ok: 0, n: 10 }, hw: {} } }, 1), false);
   assert.equal(C.dayOK({ stg: { mem: { ok: 3, n: 10 }, hw: {} } }, 1), false);
   assert.equal(C.dayOK({ stg: { mem: { ok: 4, n: 10 }, hw: {} } }, 1), true);
-  assert.equal(C.dayOK({ stg: { mem: { ok: 1, n: 10 }, math: { ok: 8, n: 10 } } }, 2), false, '2つとも4割以上でないと、ふつう以上では合格ラインにならない');
+  assert.equal(C.dayOK({ stg: { mem: { ok: 1, n: 10 }, math: { ok: 8, n: 10 } } }, 2), false, '2つとも4割以上でないと、ふつう以上ではクリアラインにならない');
   assert.equal(C.dayOK({ stg: { mem: { ok: 5, n: 10 }, math: { ok: 8, n: 10 } } }, 2), true);
   assert.equal(C.dayOK({ stg: { mem: { ok: 8, n: 10 }, ref: {} } }, 2), false, 'ふりかえり（自己採点）は、2つ目に数えない');
   assert.equal(C.dayOK({ stg: { mem: { ok: 8, n: 10 }, hw: {} } }, 2), false, '保護者OKがオフなら、宿題は2つ目に数えない');
@@ -333,25 +333,25 @@ test('月の目標：自動で付く目標は、ふつうのペース（月〜�
       at[marks[date]] = { ew: C.bankStats('EW').seen, m90: C.mathDays90(), qn: q.n, qa: q.acc, dead: m.dead };
     }
   }
-  assert.ok(at.nov.ew >= 40 && at.nov.m90 >= 3, `11月末：英単語 ${at.nov.ew}語（出題ずみ）、数学90%の日 ${at.nov.m90}`);
+  assert.ok(at.nov.ew >= 40 && at.nov.m90 >= 3, `11月末：英単語 ${at.nov.ew}語（出題ずみ）、算数90%の日 ${at.nov.m90}`);
   assert.ok(at.feb.qn >= 800 && at.feb.qa >= 0.8, `2月末：理社 ${at.feb.qn}問 正答率 ${at.feb.qa.toFixed(2)}`);
   assert.ok(at.feb.dead >= 100, `2月末：たおした ${at.feb.dead}`);
   assert.ok(at.may.dead >= 250, `5月末：たおした ${at.may.dead}`);
   for (const key of ['2026-11|1', '2026-11|2', '2027-02|2', '2027-02|3', '2027-05|3']) assert.ok(C.GOAL_AUTO[key], `${key} は自動の目標`);
 });
 
-test('英単語：群1（中1）・群2（中2）は並行して出て、群3（中3）・群4（英検準2級）は、開く日になったら、群1・2をやりきる前にも出はじめる', () => {
+test('英単語：群1（5年前半）・群2（5年後半）は並行して出て、群3（6年前半）・群4（6年後半）は、開く日になったら、群1・2をやりきる前にも出はじめる', () => {
   const C = loadCore([...NAMES, 'BK']);
   const rand = rng(21);
   let g2early = 0;
-  for (let i = 0; i <= 300; i++) {
+  for (let i = 0; i <= 420; i++) {
     const date = C.addDays(START, i), wd = new Date(date + 'T00:00:00').getDay();
     if (wd >= 1 && wd <= 5) doDay(C, date, rand, 0.85);
     if (i === 100) g2early = C.BK.EW.items.filter((it) => +it.grp === 2 && C.S.srs[it.id]).length;
   }
   const by = {};
   for (const it of C.BK.EW.items) if (C.S.srs[it.id]) by[it.grp] = (by[it.grp] || 0) + 1;
-  assert.ok(g2early >= 30, `100日めまでに、群2（中2の語）が ${g2early}語`);
+  assert.ok(g2early >= 30, `100日めまでに、群2の語が ${g2early}語`);
   assert.ok((by[3] || 0) >= 20, `群3 ${by[3] || 0}語`);
   assert.ok((by[4] || 0) >= 8, `群4 ${by[4] || 0}語`);
   const g12 = C.BK.EW.items.filter((it) => +it.grp <= 2).length;
@@ -410,7 +410,7 @@ test('月の目標：数のある自動の目標は、その子のペース（�
   const pf = slow.paceF(d);
   assert.ok(pf >= 0.5 && pf <= 0.75, `週3日のペース ${pf.toFixed(2)}`);
   assert.ok(slow.goalN('2027-02|2') < 800 && slow.goalN('2027-02|2') >= 400, `理社の延べ問題 ${slow.goalN('2027-02|2')}`);
-  assert.ok(slow.goalOK('2026-11|1') && slow.goalOK('2026-11|2'), '週3日でも、11月の英単語と数学の目標には届く');
+  assert.ok(slow.goalOK('2026-11|1') && slow.goalOK('2026-11|2'), '週3日でも、11月の英単語と算数の目標には届く');
   const m = slow.ROADMAP.find((x) => x.k === '2027-02');
   assert.ok(!slow.goalText(m, 2).includes('{n}') && slow.goalText(m, 2).includes(String(slow.goalN('2027-02|2'))), '文の {n} が、ペースの数になる');
   const fast = loadCore(NAMES), r2 = rng(32);

@@ -1,7 +1,7 @@
 // 教材データの形式・重複・選択肢をチェックする。  node scripts/validate-data.mjs
 import { loadCore } from './headless.mjs';
 
-const C = loadCore(['RAW', 'BANKS', 'BK', 'ITEMS', 'PASS', 'present', 'judge', 'GEN', 'CUR']);
+const C = loadCore(['RAW', 'BANKS', 'BK', 'ITEMS', 'PASS', 'present', 'judge', 'GEN', 'CUR', 'levelOf']);
 const errs = [];
 const warn = [];
 const bad = (m) => errs.push(m);
@@ -47,6 +47,17 @@ for (const [kind, arr] of Object.entries(C.PASS)) {
     if (new Set(q.slice(1, 5)).size !== 4) bad(`長文${p.id}-${i}: 選択肢が重複`);
   }));
 }
+// 4b) 長文の数と長さ（小5・6年用：英語24題・国語30題。英語は40語以上、国語は400字以上で、800字以上が5題）
+if (C.PASS.E.length < 24) bad(`英語の長文が ${C.PASS.E.length} 題（24題以上）`);
+if (C.PASS.J.length < 30) bad(`国語の長文が ${C.PASS.J.length} 題（30題以上）`);
+for (const p of C.PASS.E) if (p.text.trim().split(/\s+/).length < 40) bad(`英語の長文 ${p.id} が40語未満`);
+for (const p of C.PASS.J) if (p.text.length < 400) bad(`国語の長文 ${p.id} が400字未満`);
+if (C.PASS.J.filter((p) => p.text.length >= 800).length < 5) bad('国語の長文：800字以上が5題未満');
+// 4c) どの問題にも難易度（小4〜小6）が付く
+for (const [id] of C.BANKS) for (const it of C.BK[id].items) {
+  const t = C.levelOf(it).text;
+  if (!/^(小[456](・[123]学期)?レベル|標準レベル|応用レベル)$/.test(t)) { bad(`${id}:${it.id} 難易度が決まらない「${t}」`); break; }
+}
 // 5) 実際に出題の形にできるか（全問）
 let made = 0;
 for (const [id] of C.BANKS) {
@@ -62,7 +73,9 @@ for (const [id] of C.BANKS) {
     } catch (e) { bad(`${id}:${it.id} present() で例外: ${e.message}`); }
   }
 }
-// 6) カリキュラムが指すジェネレータの存在
+// 6) カリキュラムが指すジェネレータ・タグの存在
+const tagsOf = (b) => [...new Set(C.BK[b].items.map((i) => i.tag || ''))];
+for (const c of C.CUR) for (const [k, b] of [['jk', 'JK'], ['sc', 'SQ'], ['so', 'OQ'], ['g', 'EG']]) for (const p of c[k]) if (!tagsOf(b).some((t) => t.startsWith(p))) bad(`CUR ${c.from}.${k}: タグ「${p}」に合う ${b} の問題がありません`);
 for (const c of C.CUR) for (const k of ['m', 'rv', 'w', 's']) for (const g of c[k]) if (!C.GEN[g]) bad(`CUR ${c.from}.${k}: ジェネレータ ${g} がありません`);
 
 const total = Object.values(C.BK).reduce((t, b) => t + b.items.length, 0);

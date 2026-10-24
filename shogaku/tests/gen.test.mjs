@@ -4,7 +4,7 @@ import { loadCore } from '../scripts/headless.mjs';
 
 const C = loadCore(['GEN', 'makeGen', 'present', 'judge', 'ITEMS', 'BK']);
 
-test('数学・理科ジェネレータ：落ちない／答えが成り立つ／選択肢が重ならない', () => {
+test('算数・理科ジェネレータ：落ちない／答えが成り立つ／選択肢が重ならない', () => {
   const fails = [];
   for (const id of Object.keys(C.GEN)) {
     for (let lv = 1; lv <= 3; lv++) {
@@ -37,11 +37,12 @@ test('数学・理科ジェネレータ：落ちない／答えが成り立つ�
 
 const IDS = ['dec_mul', 'dec_div', 'vol', 'angle', 'multiple', 'frac_add', 'frac_dec', 'avg', 'per_unit', 'speed', 'area', 'percent', 'circle_len',
   'frac_mul', 'frac_div', 'frac_mix', 'letter_x', 'ratio', 'circle_area', 'prism_vol', 'prop_inv', 'comb', 'scale', 'stat6',
-  'pendulum', 'dissolve', 'lever'];
+  'pendulum', 'dissolve', 'lever',
+  'div_long', 'round', 'dec_add', 'frac_same', 'area_rect', 'calc_rule', 'big_num'];
 
-test('ジェネレータは 27種（算数24・理科3）で、id がそろっている', () => {
+test('ジェネレータは 34種（算数31・理科3）で、id がそろっている', () => {
   const ids = Object.keys(C.GEN);
-  assert.equal(ids.length, 27, 'ジェネレータ数 ' + ids.length);
+  assert.equal(ids.length, 34, 'ジェネレータ数 ' + ids.length);
   assert.deepEqual([...ids].sort(), [...IDS].sort());
   for (const id of IDS) assert.equal(C.GEN[id].subj, ['pendulum', 'dissolve', 'lever'].includes(id) ? '理' : '数', id);
 });

@@ -111,15 +111,15 @@ GEN.prism_vol={name:'角柱・円柱の体積',f(r,lv){
   if(r()<.5){const S=ri(r,10,60),H=ri(r,3,12),V=S*H;
    return{q:`底面積が ${S}cm²、高さが ${H}cm の角柱の体積は？`,a:[String(V)],unit:U,disp:V+U,exp:['柱の体積 ＝ 底面積 × 高さ',`${S} × ${H} ＝ ${V}`],v:()=>V/H===S}}
   const[b,h,S]=tri(),H=ri(r,3,12),V=S*H;
-  return{q:`底面が、底辺 ${b}cm・高さ ${h}cm の三角形で、高さが ${H}cm の三角柱の体積は？`,a:[String(V)],unit:U,disp:V+U,exp:[`底面積：${b} × ${h} ÷ 2 ＝ ${S}cm²`,`体積 ＝ ${S} × ${H} ＝ ${V}`],v:()=>V*2===b*h*H}}
+  return{q:`底面が、底辺 ${b}cm・高さ ${h}cm の三角形で、三角柱の高さが ${H}cm のとき、体積は？`,a:[String(V)],unit:U,disp:V+U,exp:[`底面積：${b} × ${h} ÷ 2 ＝ ${S}cm²`,`体積 ＝ ${S} × ${H} ＝ ${V}`],v:()=>V*2===b*h*H}}
  if(lv===2){
   if(r()<.7){const R=ri(r,2,10),H=ri(r,3,15),V=nf(R*R*H*314/100);
    return{q:`底面の半径が ${R}cm、高さが ${H}cm の円柱の体積は？（円周率は 3.14）`,a:[V],unit:U,disp:V+U,exp:[`底面積：${R} × ${R} × 3.14 ＝ ${nf(R*R*314/100)}cm²`,`体積 ＝ ${nf(R*R*314/100)} × ${H} ＝ ${V}`],v:()=>Math.abs(+V-R*R*3.14*H)<1e-9}}
   const[b,h,S]=tri(),H=ri(r,4,15),V=S*H;
-  return{q:`底面が、底辺 ${b}cm・高さ ${h}cm の三角形で、高さが ${H}cm の三角柱の体積は？`,a:[String(V)],unit:U,disp:V+U,exp:[`底面積：${b} × ${h} ÷ 2 ＝ ${S}cm²`,`体積 ＝ ${S} × ${H} ＝ ${V}`],v:()=>V*2===b*h*H}}
+  return{q:`底面が、底辺 ${b}cm・高さ ${h}cm の三角形で、三角柱の高さが ${H}cm のとき、体積は？`,a:[String(V)],unit:U,disp:V+U,exp:[`底面積：${b} × ${h} ÷ 2 ＝ ${S}cm²`,`体積 ＝ ${S} × ${H} ＝ ${V}`],v:()=>V*2===b*h*H}}
  const t=ri(r,0,2);
  if(t===0){let a,b,h;do{a=ri(r,2,8);b=ri(r,a+1,12);h=ri(r,3,8)}while((a+b)*h%2);const H=ri(r,3,10),S=(a+b)*h/2,V=S*H;
-  return{q:`底面が、上底 ${a}cm・下底 ${b}cm・高さ ${h}cm の台形で、高さが ${H}cm の四角柱の体積は？`,a:[String(V)],unit:U,disp:V+U,exp:[`底面積：（${a} ＋ ${b}）× ${h} ÷ 2 ＝ ${S}cm²`,`体積 ＝ ${S} × ${H} ＝ ${V}`],v:()=>V*2===(a+b)*h*H}}
+  return{q:`底面が、上底 ${a}cm・下底 ${b}cm・高さ ${h}cm の台形で、四角柱の高さが ${H}cm の四角柱の体積は？`,a:[String(V)],unit:U,disp:V+U,exp:[`底面積：（${a} ＋ ${b}）× ${h} ÷ 2 ＝ ${S}cm²`,`体積 ＝ ${S} × ${H} ＝ ${V}`],v:()=>V*2===(a+b)*h*H}}
  if(t===1){const R=ri(r,2,10),H=ri(r,3,12),V=nf(R*R*314/100*H);
   return{q:`体積が ${V}cm³、底面の半径が ${R}cm の円柱がある。高さは何cm？（円周率は 3.14）`,a:[String(H)],unit:'cm',disp:H+'cm',exp:[`底面積：${R} × ${R} × 3.14 ＝ ${nf(R*R*314/100)}cm²`,`高さ ＝ 体積 ÷ 底面積 ＝ ${V} ÷ ${nf(R*R*314/100)} ＝ ${H}`],v:()=>Math.abs(R*R*3.14*H-+V)<1e-9}}
  const R=ri(r,2,8),H=ri(r,3,12),V=nf(R*R*314*H/200);

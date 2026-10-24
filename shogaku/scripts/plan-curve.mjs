@@ -1,4 +1,4 @@
-// 「合格への近づき具合」の予定カーブを作る：週5日（月〜金）・正答率85%で続けた子の、実力の見こみ(K)の進み。
+// 「6年生のまとめへの近づき具合」の予定カーブを作る：週5日（月〜金）・正答率85%で続けた子の、実力の見こみ(K)の進み。
 //   node scripts/plan-curve.mjs           src/data/15-plan-path.js を書く
 //   node scripts/plan-curve.mjs --check   いまの教材・ルートで作りなおした値と、15-plan-path.js のずれを出す
 // 教材やルートを変えたら、作りなおす（tests/path.test.mjs が、古くなっていないかを確かめる）。
@@ -11,7 +11,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(root, 'src/data/15-plan-path.js');
 const START = '2026-10-19', EXAM = '2028-03-01';
 
-/** 標準の子の、チェックポイント（月末と入試の日）ごとのK。{d:[日付…], K:{英:[…],…}} */
+/** 標準の子の、チェックポイント（月末と6年生のまとめの日）ごとのK。{d:[日付…], K:{英:[…],…}} */
 export function planCurve({ acc = 0.85, dows = [1, 2, 3, 4, 5], seed = 42 } = {}) {
   const C = loadCore(['S', 'setToday', 'routeFor', 'recordAnswer', 'noteAnswer', 'completeStage', 'addDays', 'restoreGx', 'knowNow', 'diff']);
   let r = seed;
@@ -45,7 +45,7 @@ export function planCurve({ acc = 0.85, dows = [1, 2, 3, 4, 5], seed = 42 } = {}
   return { d: checks, K };
 }
 
-const text = (c) => `/* 合格への近づき具合の「予定」：週5日（月〜金）・正答率85%で続けた子の、実力の見こみ(K)の進み（月末と入試の日の値）。
+const text = (c) => `/* 6年生のまとめへの近づき具合の「予定」：週5日（月〜金）・正答率85%で続けた子の、実力の見こみ(K)の進み（月末と6年生のまとめの日の値）。
    scripts/plan-curve.mjs で作る。教材やルートを変えたら作りなおす（tests/path.test.mjs が、古くなっていないかを確かめる） */
 const PLAN_PATH=${JSON.stringify(c).replace(/"(英|国|数|理|社)":/g, '$1:')};\n`;
 

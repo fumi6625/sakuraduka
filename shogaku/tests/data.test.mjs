@@ -43,7 +43,7 @@ test('一問一答：正解の別名（ソ連とソビエト連邦、中国と�
   }
 });
 
-test('しっかり期：国語の日に作文の問題、数学ドリルに「考え方」の問題が入る', () => {
+test('しっかり期：国語の日に作文の問題、算数ドリルに「考え方」の問題が入る', () => {
   const C = loadCore(NAMES);
   let jc = 0, ms = 0;
   for (let i = 0; i < 70; i++) {
@@ -150,9 +150,9 @@ test('長文：国語の長文は、短いもの2題につき長いもの（800�
   const ord = C.passOrder('JR'), len = (pid) => C.BK.JR.items.find((i) => i.pid === pid).text.length;
   assert.equal(ord.length, new Set(ord).size);
   assert.equal(ord.length, new Set(C.BK.JR.items.map((i) => i.pid)).size, 'すべての長文が入っている');
-  const first30 = ord.slice(0, 30).filter((p) => len(p) >= 700).length;
-  assert.equal(first30, 10, `はじめの30題に長い長文が ${first30}`);
-  assert.ok(len(ord[2]) >= 700 && len(ord[0]) < 700 && len(ord[1]) < 700, '短・短・長の順');
+  const first15 = ord.slice(0, 15).filter((p) => len(p) >= 600).length;
+  assert.equal(first15, 5, `はじめの15題に長い長文が ${first15}`);
+  assert.ok(len(ord[2]) >= 600 && len(ord[0]) < 600 && len(ord[1]) < 600, '短・短・長の順');
   assert.equal(C.passOrder('ER').join(), [...new Set(C.BK.ER.items.map((i) => i.pid))].join(), '英語の長文は、もとの順（長さがそろっている）');
 });
 
