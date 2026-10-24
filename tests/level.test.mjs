@@ -17,8 +17,8 @@ test('どの問題にも難易度が付く（ミスの登録以外）。学年�
   }
   for (const id of Object.keys(C.GEN)) for (let lv = 1; lv <= 3; lv++) {
     const L = C.levelOf(C.makeGen(id, lv, 7));
-    if (!/^中[123]・[123]学期レベル$/.test(L.text)) bad.push(`GEN ${id}: 「${L.text}」`);
-    assert.equal(L.ch, lv >= 3 ? 1 : 0, `計算 ${id} Lv.${lv} のチャレンジ`);
+    if (!/^(中[123]・[123]学期|小学[56]年)レベル$/.test(L.text)) bad.push(`GEN ${id}: 「${L.text}」`);
+    assert.equal(L.ch, lv >= 3 && !/^小/.test(L.text) ? 1 : 0, `計算 ${id} Lv.${lv} のチャレンジ`);
   }
   assert.deepEqual(bad.slice(0, 5), [], `難易度が決まらない問題が ${bad.length} 件`);
   for (const t of ['中1・1学期レベル', '中2・2学期レベル', '中3・3学期レベル', '標準レベル', '入試B問題レベル']) assert.ok(seen.has(t), t + ' が1問も出ない');
@@ -36,6 +36,10 @@ test('単元ごとの難易度の例（教科書の標準的な順番）', () =>
   assert.equal(of('OQ', '公民/政治/人権').text, '中3・1学期レベル');
   assert.equal(of('JG', '敬語').text, '中2レベル');
   assert.equal(C.levelOf(C.makeGen('pythag', 1, 3)).text, '中3・3学期レベル');
+  assert.equal(C.levelOf(C.makeGen('speed', 1, 3)).text, '小学5年レベル');
+  assert.equal(C.levelOf(C.makeGen('geo_poly', 1, 3)).text, '小学5年レベル');
+  assert.equal(C.levelOf(C.makeGen('geo_poly', 2, 3)).text, '中2・2学期レベル');
+  assert.equal(C.levelOf(C.makeGen('speed', 3, 3)).ch, 0, '小学の問題はチャレンジにしない');
 });
 
 test('チャレンジ：英検準2級の単語・漢字の発展・計算のLv.3・数学の証明/補助線。ふつうの問題には付けない', () => {
