@@ -1,7 +1,7 @@
 /* ===== 理科の計算ドリル（自動生成・無限）：ふりこ・ものがとける量・てこ ===== */
 GEN.pendulum={name:'ふりこの周期',subj:'理',f(r,lv){
- if(lv===1){const T=ri(r,10,20),t=nf(T/10);
-  return{q:`ふりこが 10往復するのに ${T}秒かかった。1往復にかかる時間は何秒？`,a:[t],unit:'秒',disp:t+'秒',exp:['1往復の時間 ＝ 10往復の時間 ÷ 10',`${T} ÷ 10 ＝ ${t}`],v:()=>Math.abs(+t*10-T)<1e-9}}
+ if(lv===1){const N=pick([10,10,20],r),T=N===10?ri(r,10,20):ri(r,20,40),t=nf(T/N);
+  return{q:`ふりこが ${N}往復するのに ${T}秒かかった。1往復にかかる時間は何秒？`,a:[t],unit:'秒',disp:t+'秒',exp:[`1往復の時間 ＝ ${N}往復の時間 ÷ ${N}`,`${T} ÷ ${N} ＝ ${t}`],v:()=>Math.abs(+t*N-T)<1e-9}}
  if(lv===2){
   if(r()<.4){const long=r()<.5,c=long?'ふりこの長さを長くする':'ふりこの長さを短くする',ws=['おもりを重くする','おもりを軽くする',long?'ふれはばを大きくする':'ふれはばを小さくする'];
    return{q:long?'ふりこが1往復する時間を、長くするには？':'ふりこが1往復する時間を、短くするには？',ch:[c,...ws],disp:c,exp:['1往復の時間は、ふりこの長さできまる。長いほど長くなる','おもりの重さやふれはばを変えても、1往復の時間は変わらない'],v:()=>!ws.includes(c)}}
@@ -14,9 +14,9 @@ GEN.pendulum={name:'ふりこの周期',subj:'理',f(r,lv){
 }};
 
 GEN.dissolve={name:'ものがとける量',subj:'理',f(r,lv){
- const S=pick([['食塩',18],['ミョウバン',3],['ホウ酸',2.5]],r),per50=S[1],name=S[0];
+ const S=pick([['食塩',18,[10,20,30],20],['ミョウバン',3,[3,4,5],20],['ホウ酸',2.5,[2,3,4],20]],r),per50=S[1],name=S[0],SAFE=S[2];
  const lim=W=>nf(per50*W/50);
- if(lv===1){const k=ri(r,2,4),W=50*k,ans=lim(W);
+ if(lv===1){const k=ri(r,2,8),W=50*k,ans=lim(W);
   return{q:`水 50mL に、${name}は 20℃で ${nf(per50)}g までとける。水 ${W}mL には、何gまでとける？`,a:[ans],unit:'g',disp:ans+'g',exp:['とける量は、水の量に比例する',`${W}mL は 50mL の ${k}倍だから ${nf(per50)} × ${k} ＝ ${ans}`],v:()=>Math.abs(+ans-per50*W/50)<1e-9}}
  if(lv===2){const W=pick([100,150,200],r),L=per50*W/50;
   if(r()<.5){const x=nf(+(L*pick([.4,.5,.6],r)).toFixed(2)),rest=nf(L-+x);
@@ -24,7 +24,7 @@ GEN.dissolve={name:'ものがとける量',subj:'理',f(r,lv){
   const x=nf(+(L+pick([1,2,3,4],r)*(per50>5?2:.5)).toFixed(2)),left=nf(+x-L);
   return{q:`20℃の水 ${W}mL に、${name}を ${x}g 入れてよくかきまぜた。とけのこるのは何g？（20℃で水 50mL に ${nf(per50)}g までとける）`,a:[left],unit:'g',disp:left+'g',exp:[`${W}mL にとける量 ＝ ${nf(per50)} × ${W/50} ＝ ${nf(L)}g`,`とけのこり ＝ ${x} − ${nf(L)} ＝ ${left}`],v:()=>Math.abs(+left+L-+x)<1e-9}}
  const t=ri(r,0,1);
- if(t===0){const W=pick([50,100,150,200],r),s=pick([5,10,15,20,30],r),tot=W+s;
+ if(t===0){const W=pick([50,100,150,200],r),s=pick(SAFE.map(x=>x*W/100),r),tot=W+s;
   return{q:`水 ${W}g に ${name} ${s}g をすべてとかした。できた水よう液の重さは何g？`,a:[String(tot)],unit:'g',disp:tot+'g',exp:['ものがとけても、全体の重さは変わらない（とけたものの重さも ふくまれる）',`${W} ＋ ${s} ＝ ${tot}`],v:()=>tot-s===W}}
  const W=pick([100,150,200,250],r),L=per50*W/50,ans=nf(W+L);
  return{q:`20℃の水 ${W}g に、${name}をとけるだけとかした。できた水よう液の重さは何g？（20℃で水 50g に ${nf(per50)}g までとける）`,a:[ans],unit:'g',disp:ans+'g',exp:[`とけた ${name} ＝ ${nf(per50)} × ${W/50} ＝ ${nf(L)}g`,`水よう液の重さ ＝ ${W} ＋ ${nf(L)} ＝ ${ans}`],v:()=>Math.abs(+ans-W-L)<1e-9};

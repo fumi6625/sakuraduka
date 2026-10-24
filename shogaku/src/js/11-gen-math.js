@@ -157,7 +157,7 @@ GEN.frac_dec={name:'分数と小数・整数',f(r,lv){
  if(lv===1){const d=pick([2,4,5,8,10,20,25],r),n=ri(r,1,d-1),ans=nf(n/d);
   return{q:`${n}/${d} を小数で表すと？`,a:[ans],disp:ans,exp:['分数は「分子 ÷ 分母」',`${n} ÷ ${d} ＝ ${ans}`],v:()=>Math.abs(n/d-+ans)<1e-9}}
  if(lv===2){let n;do n=ri(r,1,99);while(n%10===0&&r()<.7);const x=rd(n,100);
-  return{q:`${dq(n,2)} を分数で表すと？（約分する）`,a:[rs(x)],disp:rs(x),exp:[`${dq(n,2)} ＝ ${n}/100`,`約分して ${rs(x)}`],v:()=>Math.abs(rv(x)-n/100)<1e-9&&gcd(x[0],x[1])===1}}
+  return{q:`${dq(n,2)} を分数で表すと？（約分する）`,a:[rs(x)],disp:rs(x),exp:[`${dq(n,2)} ＝ ${n}/100`,x[1]===100?`これ以上 約分できないので ${rs(x)}`:`約分して ${rs(x)}`],v:()=>Math.abs(rv(x)-n/100)<1e-9&&gcd(x[0],x[1])===1}}
  const t=ri(r,0,2);
  if(t===0){let a,b;do{a=ri(r,2,11);b=ri(r,2,11)}while(a%b===0||a===b);const x=rd(a,b);
   return{q:`${a} ÷ ${b} の商を、分数で表すと？（約分する）`,a:fa(x),disp:fd(x),exp:['整数どうしのわり算の商は、分数で表せる：わられる数が分子、わる数が分母',`${a} ÷ ${b} ＝ ${a}/${b}`+(gcd(a,b)>1?` ＝ ${rs(x)}`:'')],v:()=>Math.abs(rv(x)-a/b)<1e-9}}
@@ -270,12 +270,12 @@ GEN.percent={name:'割合・百分率・歩合',f(r,lv){
 
 GEN.circle_len={name:'円周',f(r,lv){
  const L=(d)=>nf(d*314/100);
- if(lv===1){const d=ri(r,2,20),c=L(d);
+ if(lv===1){const d=ri(r,2,30),c=L(d);
   return{q:`直径が ${d}cm の円の、円周は何cm？（円周率は 3.14）`,a:[c],unit:'cm',disp:c+'cm',exp:['円周 ＝ 直径 × 円周率',`${d} × 3.14 ＝ ${c}`],v:()=>Math.abs(+c-d*3.14)<1e-9}}
- if(lv===2){const R=ri(r,2,15),d=2*R,c=L(d);
+ if(lv===2){const R=ri(r,2,25),d=2*R,c=L(d);
   return{q:`半径が ${R}cm の円の、円周は何cm？（円周率は 3.14）`,a:[c],unit:'cm',disp:c+'cm',exp:[`直径 ＝ 半径 × 2 ＝ ${d}cm`,`円周 ＝ 直径 × 3.14 ＝ ${d} × 3.14 ＝ ${c}`],v:()=>Math.abs(+c-2*R*3.14)<1e-9}}
- if(r()<.5){const d=ri(r,3,30),c=L(d);
+ if(r()<.5){const d=ri(r,3,40),c=L(d);
   return{q:`円周が ${c}cm の円の、直径は何cm？（円周率は 3.14）`,a:[String(d)],unit:'cm',disp:d+'cm',exp:['直径 ＝ 円周 ÷ 円周率',`${c} ÷ 3.14 ＝ ${d}`],v:()=>Math.abs(d*3.14-+c)<1e-9}}
- const d=ri(r,2,10)*2,c=nf(d*3.14/2+d);
+ const d=ri(r,2,15)*2,c=nf(d*3.14/2+d);
  return{q:`直径 ${d}cm の半円の、まわりの長さは何cm？（円周率は 3.14）`,a:[c],unit:'cm',disp:c+'cm',exp:[`曲がった部分は、円周の半分：${d} × 3.14 ÷ 2 ＝ ${nf(d*3.14/2)}`,`まっすぐな部分（直径）：${d}`,`${nf(d*3.14/2)} ＋ ${d} ＝ ${c}`],v:()=>Math.abs(+c-(d*3.14/2+d))<1e-9};
 }};

@@ -76,7 +76,7 @@ GEN.ratio={name:'比',f(r,lv){
   if(r()<.5){const g=ri(r,2,9);
    return{q:`${g*m}:${g*n} を、いちばん簡単な整数の比にすると？`,a:[`${m}:${n}`],disp:`${m}:${n}`,exp:['比の両方を、同じ数でわっても比は変わらない',`${g*m} と ${g*n} を ${g} でわって ${m}:${n}`],v:()=>(g*m)/g===m&&(g*n)/g===n&&gcd(m,n)===1}}
   const x=rd(m,n);
-  return{q:`${m}:${n} の比の値（ひのあたい）は？`,a:fa(x),disp:fd(x),exp:['比の値 ＝ 前の数 ÷ 後ろの数',`${m} ÷ ${n} ＝ ${fq(x)}`],v:()=>Math.abs(rv(x)-m/n)<1e-9}}
+  return{q:`${m}:${n} の比の値（ひのあたい）は？`,a:fa(x),disp:fd(x),exp:['比の値 ＝ 前の数 ÷ 後ろの数',`${m} ÷ ${n} ＝ ${n===1?m:fq(x)}`],v:()=>Math.abs(rv(x)-m/n)<1e-9}}
  if(lv===2){const a=ri(r,1,9),b=ri(r,2,9),k=ri(r,2,9);if(a===b)return GEN.ratio.f(r,lv);
   if(r()<.5)return{q:`${a}:${b} ＝ ${a*k}:x　のとき、x は？`,a:[String(b*k)],disp:String(b*k),exp:[`前の数が ${a} から ${a*k} で ${k}倍`,`後ろの数も ${k}倍：${b} × ${k} ＝ ${b*k}`],v:()=>a*(b*k)===b*(a*k)};
   return{q:`${a}:${b} ＝ x:${b*k}　のとき、x は？`,a:[String(a*k)],disp:String(a*k),exp:[`後ろの数が ${b} から ${b*k} で ${k}倍`,`前の数も ${k}倍：${a} × ${k} ＝ ${a*k}`],v:()=>a*(b*k)===b*(a*k)}}
@@ -91,12 +91,12 @@ GEN.ratio={name:'比',f(r,lv){
 
 GEN.circle_area={name:'円の面積',f(r,lv){
  const A2=(x)=>nf(x*314/100);
- if(lv===1){const R=ri(r,2,12),S=A2(R*R);
+ if(lv===1){const R=ri(r,2,20),S=A2(R*R);
   return{q:`半径が ${R}cm の円の面積は何cm²？（円周率は 3.14）`,a:[S],unit:'cm²',disp:S+'cm²',exp:['円の面積 ＝ 半径 × 半径 × 円周率',`${R} × ${R} × 3.14 ＝ ${S}`],v:()=>Math.abs(+S-R*R*3.14)<1e-9}}
- if(lv===2){const d=ri(r,2,12)*2,R=d/2,S=A2(R*R);
+ if(lv===2){const d=ri(r,2,15)*2,R=d/2,S=A2(R*R);
   return{q:`直径が ${d}cm の円の面積は何cm²？（円周率は 3.14）`,a:[S],unit:'cm²',disp:S+'cm²',exp:[`半径 ＝ ${d} ÷ 2 ＝ ${R}cm`,`${R} × ${R} × 3.14 ＝ ${S}`],v:()=>Math.abs(+S-R*R*3.14)<1e-9}}
  const t=ri(r,0,2);
- if(t===0){const R=ri(r,2,10),S=nf(R*R*3.14/2);
+ if(t===0){const R=ri(r,2,16),S=nf(R*R*3.14/2);
   return{q:`半径 ${R}cm の半円の面積は何cm²？（円周率は 3.14）`,a:[S],unit:'cm²',disp:S+'cm²',exp:[`円の面積：${R} × ${R} × 3.14 ＝ ${A2(R*R)}`,`半円は、その半分：${A2(R*R)} ÷ 2 ＝ ${S}`],v:()=>Math.abs(+S-R*R*3.14/2)<1e-9}}
  if(t===1){const R=ri(r,4,12),s=ri(r,2,R-1),S=A2(R*R-s*s);
   return{q:`半径 ${R}cm の円から、同じ中心で半径 ${s}cm の円をくりぬいた。のこりの面積は何cm²？（円周率は 3.14）`,a:[S],unit:'cm²',disp:S+'cm²',exp:[`大きい円：${R} × ${R} × 3.14 ＝ ${A2(R*R)}`,`小さい円：${s} × ${s} × 3.14 ＝ ${A2(s*s)}`,`${A2(R*R)} − ${A2(s*s)} ＝ ${S}`],v:()=>Math.abs(+S-(R*R-s*s)*3.14)<1e-9}}
@@ -119,7 +119,7 @@ GEN.prism_vol={name:'角柱・円柱の体積',f(r,lv){
   return{q:`底面が、底辺 ${b}cm・高さ ${h}cm の三角形で、三角柱の高さが ${H}cm のとき、体積は？`,a:[String(V)],unit:U,disp:V+U,exp:[`底面積：${b} × ${h} ÷ 2 ＝ ${S}cm²`,`体積 ＝ ${S} × ${H} ＝ ${V}`],v:()=>V*2===b*h*H}}
  const t=ri(r,0,2);
  if(t===0){let a,b,h;do{a=ri(r,2,8);b=ri(r,a+1,12);h=ri(r,3,8)}while((a+b)*h%2);const H=ri(r,3,10),S=(a+b)*h/2,V=S*H;
-  return{q:`底面が、上底 ${a}cm・下底 ${b}cm・高さ ${h}cm の台形で、四角柱の高さが ${H}cm の四角柱の体積は？`,a:[String(V)],unit:U,disp:V+U,exp:[`底面積：（${a} ＋ ${b}）× ${h} ÷ 2 ＝ ${S}cm²`,`体積 ＝ ${S} × ${H} ＝ ${V}`],v:()=>V*2===(a+b)*h*H}}
+  return{q:`底面が、上底 ${a}cm・下底 ${b}cm・高さ ${h}cm の台形で、四角柱の高さが ${H}cm のとき、体積は？`,a:[String(V)],unit:U,disp:V+U,exp:[`底面積：（${a} ＋ ${b}）× ${h} ÷ 2 ＝ ${S}cm²`,`体積 ＝ ${S} × ${H} ＝ ${V}`],v:()=>V*2===(a+b)*h*H}}
  if(t===1){const R=ri(r,2,10),H=ri(r,3,12),V=nf(R*R*314/100*H);
   return{q:`体積が ${V}cm³、底面の半径が ${R}cm の円柱がある。高さは何cm？（円周率は 3.14）`,a:[String(H)],unit:'cm',disp:H+'cm',exp:[`底面積：${R} × ${R} × 3.14 ＝ ${nf(R*R*314/100)}cm²`,`高さ ＝ 体積 ÷ 底面積 ＝ ${V} ÷ ${nf(R*R*314/100)} ＝ ${H}`],v:()=>Math.abs(R*R*3.14*H-+V)<1e-9}}
  const R=ri(r,2,8),H=ri(r,3,12),V=nf(R*R*314*H/200);
@@ -150,23 +150,33 @@ GEN.comb={name:'場合の数',f(r,lv){
  const perm=(n,k)=>k===0?1:n*perm(n-1,k-1);
  const brute=(n,k,ordered)=>{let c=0;const go=(used,cnt,last)=>{if(cnt===k){c++;return}for(let i=ordered?0:last+1;i<n;i++)if(ordered?!used.includes(i):true)go([...used,i],cnt+1,i)};go([],0,-1);return c};
  const NM=['A','B','C','D','E','F','G','H'];
+ const mk=(q,ans,exp,v,unit='通り')=>({q,a:[String(ans)],unit,disp:ans+unit,exp,v});
  if(lv===1){
-  if(r()<.7){const n=ri(r,3,4),L=NM.slice(0,n),ans=F(n);
-   return{q:`${L.join('、')} の ${n}人が 1列にならぶ。ならび方は何通り？`,a:[String(ans)],unit:'通り',disp:ans+'通り',exp:[n===3?'1番目は3通り、2番目は2通り、3番目は1通り':'1番目は4通り、2番目は3通り、3番目は2通り、4番目は1通り',n===3?'3 × 2 × 1 ＝ 6':'4 × 3 × 2 × 1 ＝ 24'],v:()=>brute(n,n,true)===ans}}
-  const a=ri(r,2,4),b=ri(r,2,4),ans=a*b;
-  return{q:`シャツが ${a}種類、ズボンが ${b}種類ある。シャツとズボンの組み合わせは何通り？`,a:[String(ans)],unit:'通り',disp:ans+'通り',exp:[`シャツ1種類ごとに、ズボンが ${b}通り`,`${a} × ${b} ＝ ${ans}`],v:()=>{let c=0;for(let i=0;i<a;i++)for(let j=0;j<b;j++)c++;return c===ans}}}
- if(lv===2){const t=ri(r,0,2);
+  const t=ri(r,0,3);
+  if(t===0){const n=ri(r,3,4),L=NM.slice(0,n),ans=F(n),who=pick(['人が 1列にならぶ','人がリレーの走る順番を決める','人が 1列に ならんで写真をとる'],r);
+   return mk(`${L.join('、')} の ${n}${who}。ならび方は何通り？`,ans,[n===3?'1番目は3通り、2番目は2通り、3番目は1通り':'1番目は4通り、2番目は3通り、3番目は2通り、4番目は1通り',n===3?'3 × 2 × 1 ＝ 6':'4 × 3 × 2 × 1 ＝ 24'],()=>brute(n,n,true)===ans)}
+  const a=ri(r,2,4),b=ri(r,2,4),ans=a*b,[x,y]=pick([['シャツ','ズボン'],['おにぎり','飲み物'],['ケーキ','紅茶'],['帽子','くつ'],['主食','おかず']],r),u=pick(['種類','種類'],r);
+  if(t===1)return mk(`${x}が ${a}${u}、${y}が ${b}${u}ある。${x}と${y}を 1つずつえらぶ組み合わせは何通り？`,ans,[`${x}1${u}ごとに、${y}が ${b}通り`,`${a} × ${b} ＝ ${ans}`],()=>{let c=0;for(let i=0;i<a;i++)for(let j=0;j<b;j++)c++;return c===ans});
+  if(t===2){const p=ri(r,2,3),q=ri(r,2,3),ans2=p*q;
+   return mk(`A町から B町へ行く道が ${p}本、B町から C町へ行く道が ${q}本ある。A町から B町を通って C町へ行く行き方は何通り？`,ans2,[`A町から B町が ${p}通り、そのそれぞれに B町から C町が ${q}通り`,`${p} × ${q} ＝ ${ans2}`],()=>{let c=0;for(let i=0;i<p;i++)for(let j=0;j<q;j++)c++;return c===ans2})}
+  const n=ri(r,3,4),cs=Array.from({length:n},(_,i)=>i+1),ans3=n*(n-1);
+  return mk(`${cs.join('、')} の数字カードが 1まいずつある。2まい えらんで ならべ、2けたの整数を作る。何通りできる？`,ans3,[`十の位は ${n}通り、一の位は のこりの ${n-1}通り`,`${n} × ${n-1} ＝ ${ans3}`],()=>brute(n,2,true)===ans3)}
+ if(lv===2){const t=ri(r,0,3);
   if(t===0){const n=ri(r,4,7),ans=perm(n,2);
-   return{q:`${n}人の中から、委員長と副委員長を 1人ずつえらぶ。えらび方は何通り？`,a:[String(ans)],unit:'通り',disp:ans+'通り',exp:[`委員長は ${n}通り。そのうえで副委員長は、のこりの ${n-1}通り`,`${n} × ${n-1} ＝ ${ans}`],v:()=>brute(n,2,true)===ans}}
-  if(t===1){const n=ri(r,4,5),ans=perm(n,3),cs=Array.from({length:n},(_, i)=>i+1);
-   return{q:`${cs.join('、')} の数字カードが 1まいずつある。3まい えらんで ならべ、3けたの整数を作る。何通りできる？`,a:[String(ans)],unit:'通り',disp:ans+'通り',exp:[`百の位は ${n}通り、十の位は ${n-1}通り、一の位は ${n-2}通り`,`${n} × ${n-1} × ${n-2} ＝ ${ans}`],v:()=>brute(n,3,true)===ans}}
-  const k=ri(r,3,4),ans=2**k;
-  return{q:`10円玉を ${k}回なげる。表と裏の出方は、全部で何通り？`,a:[String(ans)],unit:'通り',disp:ans+'通り',exp:['1回ごとに、表か裏の 2通り',`${Array(k).fill(2).join(' × ')} ＝ ${ans}`],v:()=>{let c=1;for(let i=0;i<k;i++)c*=2;return c===ans}}}
- const t=ri(r,0,2);
+   return mk(`${n}人の中から、委員長と副委員長を 1人ずつえらぶ。えらび方は何通り？`,ans,[`委員長は ${n}通り。そのうえで副委員長は、のこりの ${n-1}通り`,`${n} × ${n-1} ＝ ${ans}`],()=>brute(n,2,true)===ans)}
+  if(t===1){const n=ri(r,4,6),ans=perm(n,3),cs=Array.from({length:n},(_, i)=>i+1);
+   return mk(`${cs.join('、')} の数字カードが 1まいずつある。3まい えらんで ならべ、3けたの整数を作る。何通りできる？`,ans,[`百の位は ${n}通り、十の位は ${n-1}通り、一の位は ${n-2}通り`,`${n} × ${n-1} × ${n-2} ＝ ${ans}`],()=>brute(n,3,true)===ans)}
+  if(t===2){const k=ri(r,3,4),ans=2**k;
+   return mk(`10円玉を ${k}回なげる。表と裏の出方は、全部で何通り？`,ans,['1回ごとに、表か裏の 2通り',`${Array(k).fill(2).join(' × ')} ＝ ${ans}`],()=>{let c=1;for(let i=0;i<k;i++)c*=2;return c===ans})}
+  const n=ri(r,5,6),ans=F(n);
+  return mk(`${NM.slice(0,n).join('、')} の ${n}人が 1列にならぶ。ならび方は何通り？`,ans,[`1番目は${n}通り、2番目は${n-1}通り、…と 1つずつ へっていく`,`${Array.from({length:n},(_,i)=>n-i).join(' × ')} ＝ ${ans}`],()=>F(n)===ans)}
+ const t=ri(r,0,3);
  if(t<2){const n=ri(r,4,8),ans=n*(n-1)/2;
-  return{q:`${n}チームで、どのチームとも 1回ずつ試合をする。試合は全部で何試合？`,a:[String(ans)],unit:'試合',disp:ans+'試合',exp:[`1チームが ${n-1}試合、${n}チームで ${n} × ${n-1} ＝ ${n*(n-1)}`,`1試合を2回数えているので 2 でわって ${ans}`],v:()=>brute(n,2,false)===ans}}
+  return mk(`${n}チームで、どのチームとも 1回ずつ試合をする。試合は全部で何試合？`,ans,[`1チームが ${n-1}試合、${n}チームで ${n} × ${n-1} ＝ ${n*(n-1)}`,`1試合を2回数えているので 2 でわって ${ans}`],()=>brute(n,2,false)===ans,'試合')}
+ if(t===2){const n=ri(r,4,8),ans=n*(n-1)/2;
+  return mk(`${n}人が 1人ずつ ぜんいんと あく手をする。あく手は全部で何回？`,ans,[`1人が ${n-1}回、${n}人で ${n} × ${n-1} ＝ ${n*(n-1)}`,`同じ2人を 2回数えているので 2 でわって ${ans}`],()=>brute(n,2,false)===ans,'回')}
  const n=ri(r,5,7),ans=n*(n-1)*(n-2)/6;
- return{q:`${n}人の中から、そうじ当番を 3人えらぶ。えらび方は何通り？（順番は関係ない）`,a:[String(ans)],unit:'通り',disp:ans+'通り',exp:[`順番を決めてえらぶと ${n} × ${n-1} × ${n-2} ＝ ${n*(n-1)*(n-2)}通り`,`同じ3人を 3 × 2 × 1 ＝ 6通りに数えているので ${n*(n-1)*(n-2)} ÷ 6 ＝ ${ans}`],v:()=>brute(n,3,false)===ans};
+ return mk(`${n}人の中から、そうじ当番を 3人えらぶ。えらび方は何通り？（順番は関係ない）`,ans,[`順番を決めてえらぶと ${n} × ${n-1} × ${n-2} ＝ ${n*(n-1)*(n-2)}通り`,`同じ3人を 3 × 2 × 1 ＝ 6通りに数えているので ${n*(n-1)*(n-2)} ÷ 6 ＝ ${ans}`],()=>brute(n,3,false)===ans);
 }};
 
 GEN.scale={name:'拡大図・縮図・縮尺',f(r,lv){
