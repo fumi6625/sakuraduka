@@ -50,7 +50,7 @@ test('どのテーマも、同じ色のもと（--変数）をぜんぶ持って
 });
 
 test('CSSが使う var(--…) は、すべて定義されている（要素ごとにJSがつける変数だけは除く）', () => {
-  const dyn = new Set(['c', 'cs', 'mc', 'cb', 'cc', 'sc', 'sct', 'w', 'p', 'p1', 'p2', 'fbh', 'ta', 'tb', 'tc', 'tk']);
+  const dyn = new Set(['c', 'cs', 'mc', 'cb', 'cc', 'sc', 'sct', 'w', 'p', 'p1', 'p2', 'fbh', 'ta', 'tb', 'tc', 'tk', 'pc']);
   const def = new Set([...Object.keys(ROOT), ...[...css.matchAll(/--([\w-]+):/g)].map((m) => m[1])]);
   const bad = new Set();
   for (const m of css.matchAll(/var\(--([\w-]+)/g)) if (!def.has(m[1]) && !dyn.has(m[1])) bad.add(m[1]);

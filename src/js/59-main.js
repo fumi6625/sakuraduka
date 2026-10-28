@@ -102,6 +102,7 @@ const ACT={
  light(){const d=today(),set=()=>{S.light[d]=1;save();refresh();toast('いそがしい日モード：量をへらしたよ')};if(S.light[d]){delete S.light[d];save();refresh();toast('ふつうのルートにもどしたよ')}else if(!canLight(d))toast('ミニの日は 週2回まで。おうちの人と暗証番号を決めると、相談して使えるよ');else needPin('きょうを「ミニの日」にします（量をへらす）。',set)},
  nickSet(){const v=($('#nickIn').value||'').trim().slice(0,12);if(!v){toast('なまえを入れてね');return}S.nick=v;save();toast(v+'、よろしく！');FX.confetti(50);refresh()},
  /* ---- プレイヤー ---- */
+ memoOpen(){memoOpen()},memoClose(){memoClose()},memoColor(a){memoColor(+a)},memoEraser(){memoEraser()},memoUndo(){memoUndo()},memoClear(){memoClear()},
  plGo(){plGo()},plQuit(){plQuit()},plClose(){closeOv();plClose()},plNext(){plNext()},
  plPick(i){answerQ(+i)},
  plKey(c){

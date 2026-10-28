@@ -35,7 +35,7 @@
  --okc-b:#6fcf9f;--ngc-a:#fbd7d0;--ngc-b:#ef9988;--ngc-tx:var(--on);--optok:#dcf6e6;--optng:#fde6e2;--rkS-a:#fff3b8;--rkS-b:#ffd23f;--rkS-c:#ff9a3c;
  --rkC:#eadfc6;--bdon-ta:.6;--bdon-b:rgba(255,255,255,.85);--sel-bd:var(--teamd);--seg-cur:var(--yellow);--seg-ng2:#d97460;
  --seg-ok-glow:rgba(60,196,136,.7);--hp-glow:none;--hp-x-tx:#d0cabb;--hp-x-bg:#f3efe7;--on-green:var(--on);--rbn-stroke:3px;--cnt-sh:none;--qt-sh:none;
- --tsh:rgba(255,255,255,.75);--tsh2:rgba(255,255,255,.5);
+ --tsh:rgba(255,255,255,.75);--tsh2:rgba(255,255,255,.5);--memo-sheet:rgba(255,255,255,.5);
  /* マップ・背景・飛沫・グラフ */
  --tl-bg:rgba(37,64,51,.07);--tl-bd:rgba(37,64,51,.1);--tl-fut-bg:transparent;--tl-fut-bd:rgba(37,64,51,.3);--tl-mis-bg:rgba(37,64,51,.16);
  --tl-mis-bd:rgba(37,64,51,.08);--scrim-a:rgba(37,64,51,.55);--scrim-b:rgba(37,64,51,.5);--blob-ta:.30;--blob-tp:.24;--blob-b:rgba(77,179,236,.22);
@@ -72,7 +72,7 @@ html[data-theme=soft]{color-scheme:light;
  --okc-b:#8fdcae;--ngc-a:#fbded8;--ngc-b:#f1a89a;--ngc-tx:var(--on);--optok:#e0f7e9;--optng:#fdeae6;--rkS-a:#fff8d6;--rkS-b:#ffe27a;--rkS-c:#ffc48f;
  --rkC:#eee4d1;--bdon-ta:.55;--bdon-b:rgba(255,255,255,.85);--sel-bd:var(--teamd);--seg-cur:var(--yellow);--seg-ng2:#e08775;
  --seg-ok-glow:rgba(143,220,174,.9);--hp-glow:none;--hp-x-tx:#d0cabf;--hp-x-bg:#efece6;--on-green:var(--on);--rbn-stroke:3px;--cnt-sh:none;
- --qt-sh:none;--tsh:rgba(255,255,255,.7);--tsh2:rgba(255,255,255,.5);
+ --qt-sh:none;--tsh:rgba(255,255,255,.7);--tsh2:rgba(255,255,255,.5);--memo-sheet:rgba(255,255,255,.5);
  --tl-bg:rgba(70,100,85,.07);--tl-bd:rgba(70,100,85,.1);--tl-fut-bg:transparent;--tl-fut-bd:rgba(70,100,85,.32);--tl-mis-bg:rgba(70,100,85,.16);
  --tl-mis-bd:rgba(70,100,85,.08);--scrim-a:rgba(70,100,85,.5);--scrim-b:rgba(70,100,85,.45);--blob-ta:.40;--blob-tp:.32;--blob-b:rgba(166,220,245,.36);
  --blob-c:rgba(185,230,160,.30);--blob-b2:rgba(166,220,245,.34);--glowk:.78;--spl1:.42;--spl2:.40;--spl3:.36;--spl4:.34;--ring-arc:var(--teamd);
@@ -105,7 +105,7 @@ html[data-theme=neon]{color-scheme:dark;
  --okc-b:#25e06f;--ngc-a:#622223;--ngc-b:#1a3931;--ngc-tx:#ffd4d0;--optok:#255347;--optng:#6e1b12;--rkS-a:#fff3a0;--rkS-b:#ffd400;--rkS-c:#ff8f1f;
  --rkC:#a2cbc1;--bdon-ta:.45;--bdon-b:rgba(0,0,0,.3);--sel-bd:var(--team);--seg-cur:#ffffff;--seg-ng2:#6e170d;--seg-ok-glow:rgba(52,240,138,.75);
  --hp-glow:0 0 6px var(--red);--hp-x-tx:#22443b;--hp-x-bg:#112620;--on-green:#0b1815;--rbn-stroke:0px;--cnt-sh:2px 2px 0 #000;
- --qt-sh:2px 2px 0 rgba(0,0,0,.45);--tsh:#000000;--tsh2:rgba(0,0,0,.4);
+ --qt-sh:2px 2px 0 rgba(0,0,0,.45);--tsh:#000000;--tsh2:rgba(0,0,0,.4);--memo-sheet:rgba(255,255,255,.5);
  --tl-bg:#193730;--tl-bd:rgba(255,255,255,.08);--tl-fut-bg:rgba(255,255,255,.04);--tl-fut-bd:rgba(255,255,255,.38);--tl-mis-bg:#345c52;
  --tl-mis-bd:rgba(255,255,255,.12);--scrim-a:rgba(8,17,15,.78);--scrim-b:rgba(8,17,15,.72);--blob-ta:.30;--blob-tp:.22;--blob-b:rgba(30,230,255,.16);
  --blob-c:rgba(184,255,0,.12);--blob-b2:rgba(30,230,255,.14);--glowk:1;--spl1:.30;--spl2:.22;--spl3:.20;--spl4:.16;--ring-arc:var(--team);
@@ -138,7 +138,7 @@ html[data-theme=night]{color-scheme:dark;
  --okc-b:#55b985;--ngc-a:#552a2b;--ngc-b:#1e3b2c;--ngc-tx:#ffd4d0;--optok:#224b36;--optng:#62251d;--rkS-a:#f7e7a8;--rkS-b:#e9c35b;--rkS-c:#eba25f;
  --rkC:#94c3ac;--bdon-ta:.4;--bdon-b:rgba(0,0,0,.3);--sel-bd:var(--team);--seg-cur:#ffffff;--seg-ng2:#6e3229;--seg-ok-glow:rgba(98,194,147,.6);
  --hp-glow:none;--hp-x-tx:#2f5341;--hp-x-bg:#12281d;--on-green:#0c1a13;--rbn-stroke:3px;--cnt-sh:2px 2px 0 rgba(0,0,0,.8);
- --qt-sh:2px 2px 0 rgba(0,0,0,.35);--tsh:rgba(0,0,0,.8);--tsh2:rgba(0,0,0,.35);
+ --qt-sh:2px 2px 0 rgba(0,0,0,.35);--tsh:rgba(0,0,0,.8);--tsh2:rgba(0,0,0,.35);--memo-sheet:rgba(255,255,255,.5);
  --tl-bg:#193527;--tl-bd:rgba(255,255,255,.08);--tl-fut-bg:rgba(255,255,255,.03);--tl-fut-bd:rgba(255,255,255,.3);--tl-mis-bg:#2a503d;
  --tl-mis-bd:rgba(255,255,255,.1);--scrim-a:rgba(7,17,12,.78);--scrim-b:rgba(7,17,12,.72);--blob-ta:.22;--blob-tp:.16;--blob-b:rgba(98,180,228,.14);
  --blob-c:rgba(121,197,139,.1);--blob-b2:rgba(98,180,228,.12);--glowk:.7;--spl1:.22;--spl2:.18;--spl3:.16;--spl4:.14;--ring-arc:var(--team);
@@ -172,7 +172,7 @@ html[data-theme=pop]{color-scheme:light;
  --okc-b:#2ed48a;--ngc-a:#ffc9bf;--ngc-b:#ff836b;--ngc-tx:var(--on);--optok:#d3f6e3;--optng:#ffe0da;--rkS-a:#fff3a8;--rkS-b:#ffd91f;--rkS-c:#ffa12e;
  --rkC:#e6ddc3;--bdon-ta:.65;--bdon-b:rgba(255,255,255,.9);--sel-bd:var(--teamd);--seg-cur:var(--yellow);--seg-ng2:#d9543a;
  --seg-ok-glow:rgba(46,212,138,.7);--hp-glow:none;--hp-x-tx:#d2ccba;--hp-x-bg:#f4f1e9;--on-green:var(--on);--rbn-stroke:3px;--cnt-sh:none;--qt-sh:none;
- --tsh:rgba(255,255,255,.8);--tsh2:rgba(255,255,255,.55);
+ --tsh:rgba(255,255,255,.8);--tsh2:rgba(255,255,255,.55);--memo-sheet:rgba(255,255,255,.5);
  --tl-bg:rgba(17,31,24,.07);--tl-bd:rgba(17,31,24,.12);--tl-fut-bg:transparent;--tl-fut-bd:rgba(17,31,24,.34);--tl-mis-bg:rgba(17,31,24,.18);
  --tl-mis-bd:rgba(17,31,24,.1);--scrim-a:rgba(17,31,24,.6);--scrim-b:rgba(17,31,24,.55);--blob-ta:.22;--blob-tp:.18;--blob-b:rgba(51,184,255,.16);
  --blob-c:rgba(255,217,31,.2);--blob-b2:rgba(51,184,255,.14);--glowk:.6;--spl1:.3;--spl2:.28;--spl3:.26;--spl4:.24;--ring-arc:var(--teamd);
@@ -1047,3 +1047,15 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 .stars5 button:disabled{opacity:.5}.stars5 button[aria-pressed=true]:disabled{opacity:1}
 .nm #nmR .rn{display:inline}
 @media (max-width:430px){.nm #nmR .rn{display:none}}
+
+/* ===== メモ（手書き） ===== */
+.plt .memob{min-width:44px;padding:0 12px;gap:4px}.plt .memob span{font-size:13px}
+#memo{position:fixed;inset:0;z-index:55;pointer-events:none}
+#memo canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+#memo.on{pointer-events:auto;background:var(--memo-sheet)}
+#memo .mmtb{display:none;position:absolute;left:50%;top:calc(var(--sat) + 8px);transform:translateX(-50%);max-width:calc(100% - 16px);flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;padding:8px 10px;background:var(--pn);border:3px solid var(--ink);border-radius:18px;box-shadow:0 4px 0 var(--ghost-sh)}
+#memo.on .mmtb{display:flex}
+#memo .mmc{flex:none;width:44px;height:44px;border-radius:50%;border:3px solid var(--ink);background:var(--pc);cursor:pointer;padding:0}
+#memo .mmc.sel{box-shadow:0 0 0 4px var(--yellow)}
+#memo .mmb.sel{outline:3px solid var(--yellow)}
+#memo .mmb{min-height:44px;white-space:nowrap}

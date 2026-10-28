@@ -47,9 +47,10 @@ function topBar(){
  }else{
   prog=`<div class="tank sm"><i style="--w:${Math.round(PL.segs.filter(x=>x).length/PL.total*100)}%"></i></div>`;
  }
- return `<div class="plt"><button class="bt sm gh" data-act="plQuit" aria-label="やめる">${ico('close')}</button><div class="ttl">${sjTag(o.subj)}<b>${esc(o.title)}</b></div><div class="cnt"><b>${n}</b>/${PL.total}</div></div>${prog}`;
+ return `<div class="plt"><button class="bt sm gh" data-act="plQuit" aria-label="やめる">${ico('close')}</button><div class="ttl">${sjTag(o.subj)}<b>${esc(o.title)}</b></div>${PL.phase==='q'?`<button class="bt sm gh memob" data-act="memoOpen" aria-label="メモ（手書き）">${ico('pen')}<span>メモ</span></button>`:''}<div class="cnt"><b>${n}</b>/${PL.total}</div></div>${prog}`;
 }
 function nextQ(){
+ memoReset();
  clearTimeout(PL.timer);
  const e=PL.queue.shift();
  if(!e){finishSession();return}
@@ -252,7 +253,7 @@ function levelUp(lv){
 }
 function plClose(){
  flowCdStop();clearTimeout(PL&&PL.timer);try{speechSynthesis.cancel()}catch(e){}
- PL=null;const r=plRoot();r.hidden=true;r.innerHTML='';document.body.style.overflow='';document.body.classList.remove('inpl');
+ memoReset();PL=null;const r=plRoot();r.hidden=true;r.innerHTML='';document.body.style.overflow='';document.body.classList.remove('inpl');
  flushSave();refresh();
 }
 function plQuit(){
