@@ -1070,12 +1070,13 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 #memo{position:fixed;inset:0;z-index:55;pointer-events:none}
 #memo canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 #memo.on{pointer-events:auto;background:var(--memo-sheet)}
-#memo .mmtb{display:none;position:absolute;left:50%;top:calc(var(--sat) + 8px);transform:translateX(-50%);max-width:calc(100% - 16px);flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;padding:8px 10px;background:var(--pn);border:3px solid var(--ink);border-radius:18px;box-shadow:0 4px 0 var(--ghost-sh)}
+#memo .mmtb{display:none;position:absolute;left:0;right:0;margin:0 auto;top:calc(var(--sat) + 6px);width:max-content;max-width:calc(100% - 16px);flex-direction:column;align-items:center;gap:6px;padding:8px 10px;background:var(--pn);border:3px solid var(--ink);border-radius:18px;box-shadow:0 4px 0 var(--ghost-sh)}
+#memo .mmg{display:flex;align-items:center;justify-content:center;gap:8px}
 #memo.on .mmtb{display:flex}
-#memo .mmc{flex:none;width:44px;height:44px;border-radius:50%;border:3px solid var(--ink);background:var(--pc);cursor:pointer;padding:0}
+#memo .mmc{flex:none;width:42px;height:42px;border-radius:50%;border:3px solid var(--ink);background:var(--pc);cursor:pointer;padding:0}
 #memo .mmc.sel{box-shadow:0 0 0 4px var(--yellow)}
 #memo .mmb.sel{outline:3px solid var(--yellow)}
-#memo .mmb{min-height:44px;white-space:nowrap}
+#memo .mmb{min-height:44px;white-space:nowrap;padding:0 12px}
 </style>
 <div id="bg" aria-hidden="true"></div>
 <div class="app">
@@ -1264,7 +1265,7 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 <canvas id="fx" aria-hidden="true"></canvas>
 <script id="data">
 /* アプリのバージョン。直したら、ここの数字と日付を上げる（ホームの右上とメニューの下に出る） */
-const APP_VER='さくらクエスト v2.2（10/28・メモ機能）';
+const APP_VER='さくらクエスト v2.3（10/28・メモを小さく）';
 const SJL=['国','数','英','理','社'];
 const SJN={国:'国語',数:'数学',英:'英語',理:'理科',社:'社会',総:'総合'};
 const NAI_SUBJ=['国語','社会','数学','理科','英語','音楽','美術','保健体育','技術・家庭'];
@@ -10200,7 +10201,7 @@ let MM=null;
 function memoEnsure(){
  if(MM)return MM;
  const w=document.createElement('div');w.id='memo';w.hidden=true;
- w.innerHTML=`<canvas id="mmc"></canvas><div class="mmtb" role="toolbar" aria-label="メモのどうぐ">${MEMO_COLORS.map((c,i)=>`<button class="mmc" data-act="memoColor" data-a="${i}" aria-label="${c[0]}" style="--pc:${c[1]}"></button>`).join('')}<button class="bt sm gh mmb" data-act="memoEraser">けしゴム</button><button class="bt sm gh mmb" data-act="memoUndo">${ico('redo')}もどす</button><button class="bt sm gh mmb" data-act="memoClear">ぜんぶ消す</button><button class="bt sm pri mmb" data-act="memoClose">とじる</button></div>`;
+ w.innerHTML=`<canvas id="mmc"></canvas><div class="mmtb" role="toolbar" aria-label="メモのどうぐ"><div class="mmg">${MEMO_COLORS.map((c,i)=>`<button class="mmc" data-act="memoColor" data-a="${i}" aria-label="${c[0]}" style="--pc:${c[1]}"></button>`).join('')}<button class="bt sm gh mmb" data-act="memoEraser">けしゴム</button></div><div class="mmg"><button class="bt sm gh mmb" data-act="memoUndo">${ico('redo')}もどす</button><button class="bt sm gh mmb" data-act="memoClear">ぜんぶ消す</button><button class="bt sm pri mmb" data-act="memoClose">とじる</button></div></div>`;
  document.body.appendChild(w);
  const cv=w.querySelector('canvas'),M={w,cv,cx:cv.getContext('2d'),strokes:[],ci:0,er:false,open:false,pen:false,cur:null};
  const pt=e=>{const r=cv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};

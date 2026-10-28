@@ -7,7 +7,7 @@ let MM=null;
 function memoEnsure(){
  if(MM)return MM;
  const w=document.createElement('div');w.id='memo';w.hidden=true;
- w.innerHTML=`<canvas id="mmc"></canvas><div class="mmtb" role="toolbar" aria-label="メモのどうぐ">${MEMO_COLORS.map((c,i)=>`<button class="mmc" data-act="memoColor" data-a="${i}" aria-label="${c[0]}" style="--pc:${c[1]}"></button>`).join('')}<button class="bt sm gh mmb" data-act="memoEraser">けしゴム</button><button class="bt sm gh mmb" data-act="memoUndo">${ico('redo')}もどす</button><button class="bt sm gh mmb" data-act="memoClear">ぜんぶ消す</button><button class="bt sm pri mmb" data-act="memoClose">とじる</button></div>`;
+ w.innerHTML=`<canvas id="mmc"></canvas><div class="mmtb" role="toolbar" aria-label="メモのどうぐ"><div class="mmg">${MEMO_COLORS.map((c,i)=>`<button class="mmc" data-act="memoColor" data-a="${i}" aria-label="${c[0]}" style="--pc:${c[1]}"></button>`).join('')}<button class="bt sm gh mmb" data-act="memoEraser">けしゴム</button></div><div class="mmg"><button class="bt sm gh mmb" data-act="memoUndo">${ico('redo')}もどす</button><button class="bt sm gh mmb" data-act="memoClear">ぜんぶ消す</button><button class="bt sm pri mmb" data-act="memoClose">とじる</button></div></div>`;
  document.body.appendChild(w);
  const cv=w.querySelector('canvas'),M={w,cv,cx:cv.getContext('2d'),strokes:[],ci:0,er:false,open:false,pen:false,cur:null};
  const pt=e=>{const r=cv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};

@@ -1053,9 +1053,10 @@ html[data-theme=neon] .disk,html[data-theme=night] .disk{color:#fff}
 #memo{position:fixed;inset:0;z-index:55;pointer-events:none}
 #memo canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 #memo.on{pointer-events:auto;background:var(--memo-sheet)}
-#memo .mmtb{display:none;position:absolute;left:50%;top:calc(var(--sat) + 8px);transform:translateX(-50%);max-width:calc(100% - 16px);flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;padding:8px 10px;background:var(--pn);border:3px solid var(--ink);border-radius:18px;box-shadow:0 4px 0 var(--ghost-sh)}
+#memo .mmtb{display:none;position:absolute;left:0;right:0;margin:0 auto;top:calc(var(--sat) + 6px);width:max-content;max-width:calc(100% - 16px);flex-direction:column;align-items:center;gap:6px;padding:8px 10px;background:var(--pn);border:3px solid var(--ink);border-radius:18px;box-shadow:0 4px 0 var(--ghost-sh)}
+#memo .mmg{display:flex;align-items:center;justify-content:center;gap:8px}
 #memo.on .mmtb{display:flex}
-#memo .mmc{flex:none;width:44px;height:44px;border-radius:50%;border:3px solid var(--ink);background:var(--pc);cursor:pointer;padding:0}
+#memo .mmc{flex:none;width:42px;height:42px;border-radius:50%;border:3px solid var(--ink);background:var(--pc);cursor:pointer;padding:0}
 #memo .mmc.sel{box-shadow:0 0 0 4px var(--yellow)}
 #memo .mmb.sel{outline:3px solid var(--yellow)}
-#memo .mmb{min-height:44px;white-space:nowrap}
+#memo .mmb{min-height:44px;white-space:nowrap;padding:0 12px}
