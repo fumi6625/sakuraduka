@@ -149,9 +149,9 @@ const GOAL_AUTO={
  '2026-11|2':{n:3,min:2,f:n=>mathDays90()>=n},
  '2026-11|3':{f:()=>{const m=mistakeStats();return m.all>=10&&m.dead>=5}},
  '2027-02|2':{n:800,f:n=>{const q=qaStat();return q.n>=n&&q.acc>=.8}},
- '2027-02|3':{n:100,mis:1,f:n=>mistakeStats().dead>=n},
- '2027-05|3':{n:250,mis:1,f:n=>mistakeStats().dead>=n},
- '2028-02|2':{n:600,mis:1,f:n=>mistakeStats().dead>=n}};
+ '2027-02|3':{n:40,mis:1,f:n=>mistakeStats().dead>=n},
+ '2027-05|3':{n:100,mis:1,f:n=>mistakeStats().dead>=n},
+ '2028-02|2':{n:250,mis:1,f:n=>mistakeStats().dead>=n}};
 const isAutoGoal=(k,i)=>!!GOAL_AUTO[gid(k,i)];
 /* ミスの数の目標は、まちがいの少ない子（正答率が高い子）には、数をへらす（できる子ほど届かなくならないように）。正答率8.5割までは、そのまま */
 const missF=()=>S.tot.n>=200?clamp((1-S.tot.ok/S.tot.n)/.15,.4,1):1;

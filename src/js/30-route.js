@@ -194,9 +194,9 @@ const OLDW={'英':1,'国':1,'数':.6,'理':1.4,'社':1.4};
 function bMem(date,tier,cur,ex){
  const kk=kOf(date,tier),th=throttle(date);
  const late=date>='2028-01-15'?2:date>='2027-12-01'?1:0;
- const total=tier>=3?Math.round(14+22*Math.max(0,kk-.8)/.2):Math.max(6,Math.round(18*kk)),minNew=[3,2,1][late],slots=total-minNew;   // しっかり期は、1問ずつが短い暗記バトルを、18問から30問まで少しずつ長くする
+ const total=tier>=3?Math.round(14+22*Math.max(0,kk-.8)/.2):Math.max(6,Math.round(18*kk)),minNew=late?[3,2,1][late]:Math.max(3,Math.round(total*.5*th)),slots=total-minNew;   // ふだんは、新しい問題を、かならず4〜5割は入れる（復習でうめつくして、新しい問題が出なくなるのを防ぐ）   // しっかり期は、1問ずつが短い暗記バトルを、18問から30問まで少しずつ長くする
  const old1=oldDue(ex,Math.min(slots,Math.round(slots*[.17,.6,.8][late])),date,late>0),x1=exSet(ex,old1);
- const young=dueItems(it=>REVB(it)&&!x1.has(it.id)&&boxOf(it)<=3,slots-old1.length);
+ const young=dueItems(it=>REVB(it)&&!x1.has(it.id)&&boxOf(it)<=3,Math.min(slots-old1.length,late?slots:Math.max(2,Math.round(total*.4))));   // まちがえたて・おぼえかけの復習は、ふだんは4割まで（毎日おなじ問題ばかりにならないように）
  const old2=oldDue(exSet(x1,young),slots-old1.length-young.length,date,late>0);   // わかい復習が足りない日は、古い復習でうめる
  const due=[...young,...old1,...old2];
  const newN=Math.max(minNew,Math.round((total-due.length)*th));
@@ -208,6 +208,10 @@ function bMem(date,tier,cur,ex){
  const jgs=cnt.JG?newItems('JG',cnt.JG,{ex:sx}):[],jis=cnt.JI?newItems('JI',cnt.JI,{ex:sx}):[],jss=cnt.JS?newItems('JS',cnt.JS,{ex:sx}):[];
  const fresh=[...ews,...jks,...sqs,...oqs,...jgs,...jis,...jss],lack=newN-fresh.length;
  if(lack>0)fresh.push(...ewNew(lack,exSet(sx,fresh),date));   // 出しきった教材の分は、英単語でおぎなう
+ if(!late&&due.length+fresh.length<total){   // 新しい問題が出しつくされて足りない分は、期限がきた復習でおぎなう（短くなりすぎないように）
+  const sx2=exSet(sx,fresh),gap=total-due.length-fresh.length,more=dueItems(it=>REVB(it)&&!sx2.has(it.id),gap);
+  due.push(...more,...oldDue(exSet(sx2,more),gap-more.length,date,false));
+ }
  let items=interleave([...due,...fresh]);
  const minN=tier===1?6:10;
  if(items.length<minN)items=items.concat(shuffle(seenItems(it=>MEMB.includes(it.bank)&&!items.includes(it)&&!ex.has(it.id)),mulberry(seedOf(date))).slice(0,minN-items.length));

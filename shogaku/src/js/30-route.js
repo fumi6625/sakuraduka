@@ -5,7 +5,7 @@
    【考え方】勉強の習慣づくりの途中の子向け。最初は「3分」から。量は段階的に増やす。*/
 const curOf=date=>{const k=date.slice(0,7);let c=CUR[0];for(const x of CUR)if(x.from<=k)c=x;return c};
 const MEMB=['EW','EV','JK','JI','JS','SQ','OQ'];
-const EW_OPEN3='2027-03-01',EW_OPEN4='2027-06-01';   // 群3（6年前半）・群4（6年後半）が開く日
+const EW_OPEN3='2026-12-14',EW_OPEN4='2027-03-01';   // 群3（6年前半）・群4（6年後半）が開く日
 const ewOpen=it=>+it.grp<=2||(+it.grp===3&&today()>=EW_OPEN3)||(+it.grp===4&&today()>=EW_OPEN4);
 /* 新しい英単語を n 語えらぶ。群1（5年前半）・群2（5年後半）・群3（6年前半・2027-03〜）・群4（6年後半・2027-06〜）を、
    「まだ出ていない語の数」に比例した割合で並行して出す（開いたばかりの群がたくさん出て、どの群も卒業までに出きる。週に3日の子でも群3・4が届く。
@@ -205,9 +205,9 @@ const OLDW={'英':1,'国':1,'数':.6,'理':1.4,'社':1.4};
 function bMem(date,tier,cur,ex){
  const kk=kOf(date,tier),th=throttle(date),M=mulOf(date,tier);
  const late=date>='2028-01-15'?2:date>='2027-12-01'?1:0;
- const total=tier>=3?Math.round((14+22*Math.max(0,kk-.8)/.2)*M):Math.max(6,Math.round(18*kk*M)),minNew=[3,2,1][late],slots=total-minNew;   // しっかり期は、1問ずつが短い暗記バトルを、21問から54問まで少しずつ長くする（むかしの1.5倍）
+ const total=tier>=3?Math.round((14+22*Math.max(0,kk-.8)/.2)*M):Math.max(6,Math.round(18*kk*M)),minNew=late?[3,2,1][late]:Math.max(3,Math.round(total*.5*th)),slots=total-minNew;   // ふだんは、新しい問題を、かならず4〜5割は入れる（復習でうめつくして、新しい問題が出なくなるのを防ぐ）   // しっかり期は、1問ずつが短い暗記バトルを、21問から54問まで少しずつ長くする（むかしの1.5倍）
  const old1=oldDue(ex,Math.min(slots,Math.round(slots*[.17,.6,.8][late])),date,late>0),x1=exSet(ex,old1);
- const young=dueItems(it=>REVB(it)&&!x1.has(it.id)&&boxOf(it)<=3,slots-old1.length);
+ const young=dueItems(it=>REVB(it)&&!x1.has(it.id)&&boxOf(it)<=3,Math.min(slots-old1.length,late?slots:Math.max(2,Math.round(total*.4))));   // まちがえたて・おぼえかけの復習は、ふだんは4割まで（毎日おなじ問題ばかりにならないように）
  const old2=oldDue(exSet(x1,young),slots-old1.length-young.length,date,late>0);   // わかい復習が足りない日は、古い復習でうめる
  const due=[...young,...old1,...old2];
  const newN=Math.max(minNew,Math.round((total-due.length)*th));
@@ -223,6 +223,10 @@ function bMem(date,tier,cur,ex){
  const kew=tier>=2?ewNew(1+(dn(date)%3===0?1:0),exSet(kx,[...kjk,...kjw]),date):[];   // 英単語も、毎日かならず新しい語を1〜2つ足す（週に3日の子でも、6年の語（群3・4）まで届くように）
  const fresh=[...ews,...jks,...kjk,...kjw,...kew,...sqs,...oqs,...jgs,...jis,...jss],lack=newN-(fresh.length-kjk.length-kjw.length-kew.length);
  if(lack>0)fresh.push(...ewNew(lack,exSet(sx,fresh),date));   // 出しきった教材の分は、英単語でおぎなう
+ if(!late&&due.length+fresh.length<total){   // 新しい問題が出しつくされて足りない分は、期限がきた復習でおぎなう（短くなりすぎないように）
+  const sx2=exSet(sx,fresh),gap=total-due.length-fresh.length,more=dueItems(it=>REVB(it)&&!sx2.has(it.id),gap);
+  due.push(...more,...oldDue(exSet(sx2,more),gap-more.length,date,false));
+ }
  let items=interleave([...due,...fresh]);
  const minN=Math.round((tier===1?6:10)*M);
  if(items.length<minN)items=items.concat(shuffle(seenItems(it=>MEMB.includes(it.bank)&&!items.includes(it)&&!ex.has(it.id)),mulberry(seedOf(date))).slice(0,minN-items.length));

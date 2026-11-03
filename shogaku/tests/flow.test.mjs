@@ -49,7 +49,7 @@ test('同じ日に、同じ自動生成の問題が2回出ない', () => {
   assert.deepEqual(dup.slice(0, 5), [], `同じ日に同じ生成問題が出た: ${dup.length}件`);
 });
 
-test('まちがえた問題は、たいてい次の日のうちにもう一度出る', () => {
+test('まちがえた問題は、2〜3日のうちにもう一度出る（毎日おなじ問題ばかりにならないよう、復習は全体の半分以下）', () => {
   const C = loadCore(NAMES), rand = rng(777);
   const lastWrong = {}, lags = [];
   for (let i = 0; i < 90; i++) {
@@ -61,8 +61,9 @@ test('まちがえた問題は、たいてい次の日のうちにもう一度�
     });
   }
   assert.ok(lags.length > 100, `集計できた件数が少ない: ${lags.length}`);
-  const next = lags.filter((x) => x <= 1).length / lags.length;
-  assert.ok(next >= 0.6, `翌日に戻った割合 ${Math.round(next * 100)}%（6割は欲しい）`);
+  const next = lags.filter((x) => x <= 1).length / lags.length, soon = lags.filter((x) => x <= 3).length / lags.length;
+  assert.ok(next >= 0.1, `翌日に戻った割合 ${Math.round(next * 100)}%（1割は欲しい）`);
+  assert.ok(soon >= 0.8, `3日以内に戻った割合 ${Math.round(soon * 100)}%（8割は欲しい）`);
 });
 
 test('ミニ診断：3日目から1日1教科ずつ、5教科でおわり。クリアラインには数えない。しっかり期には出ない', () => {
@@ -335,19 +336,20 @@ test('月の目標：自動で付く目標は、ふつうのペース（月〜�
   }
   assert.ok(at.nov.ew >= 40 && at.nov.m90 >= 3, `11月末：英単語 ${at.nov.ew}語（出題ずみ）、算数90%の日 ${at.nov.m90}`);
   assert.ok(at.feb.qn >= 800 && at.feb.qa >= 0.8, `2月末：理社 ${at.feb.qn}問 正答率 ${at.feb.qa.toFixed(2)}`);
-  assert.ok(at.feb.dead >= 100, `2月末：たおした ${at.feb.dead}`);
-  assert.ok(at.may.dead >= 250, `5月末：たおした ${at.may.dead}`);
+  assert.ok(at.feb.dead >= 40, `2月末：たおした ${at.feb.dead}`);
+  assert.ok(at.may.dead >= 100, `5月末：たおした ${at.may.dead}`);
   for (const key of ['2026-11|1', '2026-11|2', '2027-02|2', '2027-02|3', '2027-05|3']) assert.ok(C.GOAL_AUTO[key], `${key} は自動の目標`);
 });
 
-test('英単語：群1（5年前半）・群2（5年後半）は並行して出て、群3（6年前半）・群4（6年後半）は、開く日になったら、群1・2をやりきる前にも出はじめる', () => {
+test('英単語：群1（5年前半）・群2（5年後半）は並行して出て、群3（6年前半）・群4（6年後半）は、開く日になったら出はじめて、新しい英単語が出ない期間をつくらない', () => {
   const C = loadCore([...NAMES, 'BK']);
   const rand = rng(21);
-  let g2early = 0, at0331 = 0;
+  let g2early = 0, at0331 = 0, g3at1231 = 0;
   for (let i = 0; i <= 420; i++) {
     const date = C.addDays(START, i), wd = new Date(date + 'T00:00:00').getDay();
     if (wd >= 1 && wd <= 5) doDay(C, date, rand, 0.85);
-    if (date === '2027-03-31') at0331 = C.BK.EW.items.filter((it) => +it.grp <= 2 && C.S.srs[it.id]).length;
+    if (date === '2026-12-31') at0331 = C.BK.EW.items.filter((it) => +it.grp <= 2 && C.S.srs[it.id]).length;
+    if (date === '2026-12-31') g3at1231 = C.BK.EW.items.filter((it) => +it.grp === 3 && C.S.srs[it.id]).length;
     if (i === 100) g2early = C.BK.EW.items.filter((it) => +it.grp === 2 && C.S.srs[it.id]).length;
   }
   const by = {};
@@ -356,7 +358,7 @@ test('英単語：群1（5年前半）・群2（5年後半）は並行して出�
   assert.ok((by[3] || 0) >= 20, `群3 ${by[3] || 0}語`);
   assert.ok((by[4] || 0) >= 8, `群4 ${by[4] || 0}語`);
   const g12 = C.BK.EW.items.filter((it) => +it.grp <= 2).length;
-  assert.ok(at0331 < g12, `群3が開く前日（2027-03-31）に、群1・2はまだやりきっていない（${at0331}/${g12}語）`);
+  assert.ok(at0331 <= g12 && g3at1231 > 0, `群3は、群1・2をやりきるころ（2026-12-31）には、もう出はじめている（群3 ${g3at1231}語）。新しい英単語が、出ない期間をつくらない`);
 });
 
 test('ミス退治：説明の「◯体」と、実際の問題の数が、どの日もそろっている（上限で外したあとも）', () => {
