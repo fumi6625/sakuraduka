@@ -35,7 +35,7 @@ function goalCard(F){
 
 /* つぎへ進むブロック。F.target があれば「つぎのステージ」 */
 function nextBlock(F,o={}){
- const t=F.target,rest=o.rest===false?'':`<button class="bt gh sm" data-act="plHome">${ico('home')}ひとやすみ（ホームへ）</button>`;
+ const t=F.target,rest='';   // 「ひとやすみ（ホームへ）」は出さない（同じ日にもう一度やることはほとんどなく、1つで終わりだと思ってしまうため）
  if(t){
   const redo=t===F.redo,m=t.kind==='session'?`約${Math.max(1,t.min)}分・${t.items.length}問`:t.id==='diag'?'約3分・6問':t.id==='ref'?'約2分':'',lab=t.id==='diag'?'ミニ診断（'+SJN[t.subj]+'）':flowName(t);
   return `<div class="nxt"><span class="lb sm y">${redo?'もう一度':'つぎ'}</span>

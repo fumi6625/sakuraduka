@@ -317,10 +317,11 @@ function capDay(out,tier){
 /* 毎日、理科か社会の問題を、最低1問は出す（国・数・英にかたよらないように）。ほかの教材でぜんぜん出ない日は、暗記バトルに1問足す。
    理科と社会は、日がわりで交互に。足す問題は、復習の期限がきたもの → あたらしい問題 → 見たことのある問題 の順 */
 function ensureRS(out,date,cur,ex){
- if(out.some(s=>s.items.some(it=>it.subj==='理'||it.subj==='社')))return;
+ const want=dn(date)%2?'理':'社';   // 理科と社会は日がわり：その日の担当の教科が出ていなければ、1問足す（片方の教科ばかりが続かないように）
+ if(out.some(s=>s.items.some(it=>it.subj===want)))return;
  const mem=out.find(s=>s.id==='mem');if(!mem)return;
  let it=null;
- for(const b of dn(date)%2?['SQ','OQ']:['OQ','SQ']){
+ for(const b of want==='理'?['SQ','OQ']:['OQ','SQ']){
   it=dueItems(x=>x.bank===b&&!ex.has(x.id),1)[0]||newItems(b,1,{prefs:b==='SQ'?cur.sc:cur.so,ex})[0]||shuffle(seenItems(x=>x.bank===b&&!ex.has(x.id)),mulberry(seedOf(date+b)))[0];
   if(it)break;
  }

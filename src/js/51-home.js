@@ -61,7 +61,7 @@ const briefDesc=(d,n=22)=>{
 function nowCard(next,tier,okDay,rec){
  const T=TIERS[tier],isS=next.kind==='session';
  const need=dayNeed(rec,tier);
- const goal=okDay?`<span class="chp ok">✓ きょうの合格ライン達成！</span> れんぞく ${curStreak()}日`:`<span class="chp w">合格ライン</span> ${tier===1?'どれか1つクリアでOK！':'あと'+Math.max(1,need)+'つクリアでOK！'}`;
+ const FL=flowState(),left=FL.left,tot=FL.must.length,goal=okDay?`<span class="chp ok">✓ きょうの合格ライン達成！</span> れんぞく ${curStreak()}日${left?` ／ のこり ${left}つ`:''}`:`<span class="chp w">きょうは ${tot}つ</span> のこり ${Math.max(1,left)}つ。ぜんぶ やろう！`;   // 「1つクリアでOK」と書くと、1つで終わりだと思ってしまう
  return `<div class="nowc" data-s="${next.subj}"><div class="sp1">${splatSVG(9,'var(--yellow)',{drops:7,stroke:'var(--ink)',sw:5})}</div>
   <span class="lb">${next.redo?'もう一度 やること':'いま やること'}</span>
   <div class="nrow"><div class="nico">${ico(stageIcon(next))}</div><div class="ntx"><h2>${esc(next.t)}</h2><p>${esc(briefDesc(next.desc))}</p></div></div>
